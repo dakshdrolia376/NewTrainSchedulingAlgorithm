@@ -1,36 +1,21 @@
 *********************************************************
-2018/01/16 17:44:53
+2018/01/17 00:00:17
 Avg speed: 80.0
 Start: 0:0
 End: 23:0
 Nodes size: 53
-Edge size: 4097738
-Best path found : 
-Duration: 71967ms
-*********************************************************
-2018/01/16 17:46:04
-Avg speed: 80.0
-Start: 0:0
-End: 23:0
-Nodes size: 53
-Edge size: 4098982
-Best path found : 
-Duration: 64560ms
-*********************************************************
-2018/01/16 17:47:09
-Avg speed: 80.0
-Start: 0:0
-End: 23:0
-Nodes size: 53
-Edge size: 4098987
-Best path found : 
-Duration: 74550ms
-*********************************************************
-2018/01/16 17:48:24
-Avg speed: 80.0
-Start: 0:0
-End: 23:0
-Nodes size: 53
-Edge size: 4100231
-Best path found : 
-Duration: 75345ms
+Edge size: 2948084
+source
+dest:17:15
+10
+[source, pnbe:12:39, scy:12:41, pws:12:44, dnr:12:47, neo:12:52, gnhi:12:55, sde:12:59, patl:13:01, bta:13:03, pail:13:08, vhch:13:09, kwr:13:11, kua:13:14, jmir:13:19, ara:13:23, jgwl:13:26, krs:13:31, kya:13:35, xsan:13:37, rnte:13:39, bea:13:42, asjp:13:45, byn:13:47, skri:13:51, rpr:13:55, vkdh:13:59, twg:14:03, vvg:14:07, dure:14:10, bue:14:16, ndon:14:21, bxr:14:24, pwxp:14:31, csa:14:33, bqw:14:38, gmr:14:41, kkrh:14:44, bwh:14:47, usk:14:50, dln:14:54, drv:15:00, zna:15:05, bhcl:15:09, dha:15:15, tlam:15:21, sld:15:33, kca:15:39, eocm:15:53, mgso:16:03, mgmy:16:19, mgs:16:32, dest:17:15] cost: 276.0
+[source, pnbe:12:39, scy:12:41, pws:12:44, dnr:12:47, neo:12:52, gnhi:12:55, sde:12:59, patl:13:01, bta:13:03, pail:13:08, vhch:13:09, kwr:13:11, kua:13:14, jmir:13:19, ara:13:23, jgwl:13:26, krs:13:31, kya:13:35, xsan:13:37, rnte:13:39, bea:13:42, asjp:13:45, byn:13:47, skri:13:51, rpr:13:55, vkdh:13:59, twg:14:03, vvg:14:07, dure:14:10, bue:14:16, ndon:14:21, bxr:14:24, pwxp:14:31, csa:14:33, bqw:14:38, gmr:14:41, kkrh:14:44, bwh:14:47, usk:14:50, dln:14:54, drv:15:00, zna:15:05, bhcl:15:09, dha:15:16, tlam:15:22, sld:15:27, kca:15:33, eocm:15:47, mgso:16:20, mgmy:16:31, mgs:16:34, dest:17:15] cost: 276.0
+[source, pnbe:12:39, scy:12:41, pws:12:44, dnr:12:47, neo:12:52, gnhi:12:55, sde:12:59, patl:13:01, bta:13:03, pail:13:08, vhch:13:09, kwr:13:11, kua:13:14, jmir:13:19, ara:13:23, jgwl:13:26, krs:13:31, kya:13:35, xsan:13:37, rnte:13:39, bea:13:42, asjp:13:45, byn:13:47, skri:13:51, rpr:13:55, vkdh:13:59, twg:14:03, vvg:14:07, dure:14:10, bue:14:16, ndon:14:21, bxr:14:24, pwxp:14:31, csa:14:33, bqw:14:38, gmr:14:41, kkrh:14:45, bwh:14:48, usk:14:51, dln:14:55, drv:15:08, zna:15:13, bhcl:15:23, dha:15:29, tlam:15:37, sld:15:43, kca:16:17, eocm:16:22, mgso:16:26, mgmy:16:31, mgs:16:36, dest:17:15] cost: 276.0
+[source, pnbe:12:39, scy:12:41, pws:12:44, dnr:12:47, neo:12:52, gnhi:12:55, sde:12:59, patl:13:01, bta:13:03, pail:13:08, vhch:13:09, kwr:13:11, kua:13:14, jmir:13:19, ara:13:23, jgwl:13:26, krs:13:31, kya:13:35, xsan:13:37, rnte:13:39, bea:13:42, asjp:13:45, byn:13:47, skri:13:51, rpr:13:55, vkdh:13:59, twg:14:03, vvg:14:07, dure:14:10, bue:14:16, ndon:14:21, bxr:14:24, pwxp:14:31, csa:14:33, bqw:14:38, gmr:14:41, kkrh:14:44, bwh:14:47, usk:14:50, dln:14:54, drv:15:00, zna:15:05, bhcl:15:09, dha:15:15, tlam:15:21, sld:15:27, kca:15:33, eocm:15:40, mgso:16:01, mgmy:16:20, mgs:16:32, dest:17:15] cost: 276.0
+[source, pnbe:12:39, scy:12:41, pws:12:44, dnr:12:47, neo:12:52, gnhi:12:55, sde:12:59, patl:13:01, bta:13:03, pail:13:08, vhch:13:09, kwr:13:11, kua:13:14, jmir:13:19, ara:13:23, jgwl:13:26, krs:13:31, kya:13:35, xsan:13:37, rnte:13:39, bea:13:42, asjp:13:45, byn:13:47, skri:13:51, rpr:13:55, vkdh:13:59, twg:14:03, vvg:14:07, dure:14:10, bue:14:16, ndon:14:21, bxr:14:24, pwxp:14:31, csa:14:33, bqw:14:38, gmr:14:41, kkrh:14:44, bwh:14:47, usk:14:50, dln:14:54, drv:15:00, zna:15:05, bhcl:15:09, dha:15:15, tlam:15:21, sld:15:33, kca:15:39, eocm:15:53, mgso:16:03, mgmy:16:19, mgs:16:31, dest:17:15] cost: 276.0
+[source, pnbe:12:39, scy:12:41, pws:12:44, dnr:12:47, neo:12:52, gnhi:12:55, sde:12:59, patl:13:01, bta:13:03, pail:13:08, vhch:13:09, kwr:13:11, kua:13:14, jmir:13:19, ara:13:23, jgwl:13:26, krs:13:31, kya:13:35, xsan:13:37, rnte:13:39, bea:13:42, asjp:13:45, byn:13:47, skri:13:51, rpr:13:55, vkdh:13:59, twg:14:03, vvg:14:07, dure:14:10, bue:14:16, ndon:14:21, bxr:14:24, pwxp:14:31, csa:14:33, bqw:14:38, gmr:14:41, kkrh:14:44, bwh:14:47, usk:14:51, dln:14:55, drv:15:01, zna:15:06, bhcl:15:10, dha:15:16, tlam:15:22, sld:15:34, kca:15:41, eocm:15:48, mgso:16:02, mgmy:16:18, mgs:16:31, dest:17:15] cost: 276.0
+[source, pnbe:12:39, scy:12:41, pws:12:44, dnr:12:47, neo:12:52, gnhi:12:55, sde:12:59, patl:13:01, bta:13:03, pail:13:08, vhch:13:09, kwr:13:11, kua:13:14, jmir:13:19, ara:13:23, jgwl:13:26, krs:13:31, kya:13:35, xsan:13:37, rnte:13:39, bea:13:42, asjp:13:45, byn:13:47, skri:13:51, rpr:13:55, vkdh:13:59, twg:14:03, vvg:14:07, dure:14:10, bue:14:16, ndon:14:21, bxr:14:24, pwxp:14:31, csa:14:33, bqw:14:38, gmr:14:41, kkrh:14:44, bwh:14:47, usk:14:51, dln:14:55, drv:15:01, zna:15:06, bhcl:15:10, dha:15:16, tlam:15:22, sld:15:34, kca:15:41, eocm:15:48, mgso:16:02, mgmy:16:20, mgs:16:30, dest:17:15] cost: 276.0
+[source, pnbe:12:39, scy:12:41, pws:12:44, dnr:12:47, neo:12:52, gnhi:12:55, sde:12:59, patl:13:01, bta:13:03, pail:13:08, vhch:13:09, kwr:13:11, kua:13:14, jmir:13:19, ara:13:23, jgwl:13:26, krs:13:31, kya:13:35, xsan:13:37, rnte:13:39, bea:13:42, asjp:13:45, byn:13:47, skri:13:51, rpr:13:55, vkdh:13:59, twg:14:03, vvg:14:07, dure:14:10, bue:14:16, ndon:14:21, bxr:14:24, pwxp:14:31, csa:14:33, bqw:14:38, gmr:14:41, kkrh:14:44, bwh:14:47, usk:14:50, dln:14:54, drv:15:02, zna:15:11, bhcl:15:17, dha:15:26, tlam:15:34, sld:15:41, kca:15:48, eocm:16:22, mgso:16:32, mgmy:16:35, mgs:16:39, dest:17:15] cost: 276.0
+[source, pnbe:12:39, scy:12:41, pws:12:44, dnr:12:47, neo:12:52, gnhi:12:55, sde:12:59, patl:13:01, bta:13:03, pail:13:08, vhch:13:09, kwr:13:11, kua:13:14, jmir:13:19, ara:13:23, jgwl:13:26, krs:13:31, kya:13:35, xsan:13:37, rnte:13:39, bea:13:42, asjp:13:45, byn:13:47, skri:13:51, rpr:13:55, vkdh:13:59, twg:14:03, vvg:14:07, dure:14:10, bue:14:16, ndon:14:21, bxr:14:24, pwxp:14:31, csa:14:33, bqw:14:38, gmr:14:41, kkrh:14:44, bwh:14:47, usk:14:50, dln:14:54, drv:15:00, zna:15:05, bhcl:15:10, dha:15:16, tlam:15:22, sld:15:27, kca:15:33, eocm:15:35, mgso:15:39, mgmy:16:18, mgs:16:32, dest:17:15] cost: 276.0
+[source, pnbe:12:39, scy:12:41, pws:12:44, dnr:12:47, neo:12:52, gnhi:12:55, sde:12:59, patl:13:01, bta:13:03, pail:13:08, vhch:13:09, kwr:13:11, kua:13:14, jmir:13:19, ara:13:23, jgwl:13:26, krs:13:31, kya:13:35, xsan:13:37, rnte:13:39, bea:13:42, asjp:13:45, byn:13:47, skri:13:51, rpr:13:55, vkdh:13:59, twg:14:03, vvg:14:07, dure:14:10, bue:14:16, ndon:14:21, bxr:14:24, pwxp:14:31, csa:14:33, bqw:14:38, gmr:14:41, kkrh:14:44, bwh:14:47, usk:14:50, dln:14:54, drv:15:00, zna:15:05, bhcl:15:09, dha:15:15, tlam:15:21, sld:15:27, kca:15:33, eocm:15:40, mgso:16:01, mgmy:16:35, mgs:16:41, dest:17:15] cost: 276.0
+Duration: 84766ms

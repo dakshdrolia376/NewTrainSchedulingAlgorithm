@@ -3,22 +3,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-class adjListNode{
-    int dest;
-    long weight;
-    adjListNode(int dest, long weight) {
-        super();
-        this.dest = dest;
-        this.weight = weight;
+class GraphBestPath {
+    class adjListNode{
+        int dest;
+        long weight;
+        adjListNode(int dest, long weight) {
+            super();
+            this.dest = dest;
+            this.weight = weight;
+        }
     }
-}
 
-public class Graph {
     private ArrayList<Node> nodes;
     private HashMap< String, Integer> hashMap =  new HashMap<>();
     private ArrayList<LinkedList<adjListNode>> adjListArray;
 
-    Graph(){
+    GraphBestPath(){
         super();
         this.adjListArray = new ArrayList<>();
         this.nodes = new ArrayList<>();
@@ -139,3 +139,5 @@ public class Graph {
         return bestPath;
     }
 }
+
+
