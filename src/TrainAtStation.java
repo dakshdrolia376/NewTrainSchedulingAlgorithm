@@ -8,7 +8,6 @@ public class TrainAtStation {
     private LocalTime departure;
 
     TrainAtStation(String stationId, int trainNo, LocalTime arrival, LocalTime departure) {
-        super();
         this.stationId = stationId;
         this.trainNo =trainNo;
         this.arrival =arrival;

@@ -23,13 +23,32 @@ public class Scheduler {
         return number;
     }
 
-    private static String getNodeLabel(Node node) {
-        if(node.getTime()==null){
-            return node.getStationId().toLowerCase();
+    public static String getNodeLabel(String id, LocalTime time) {
+        if(time==null){
+            return id.toLowerCase();
         }
         else{
-            return (node.getStationId()+":"+node.getTime().toString()).toLowerCase();
+            return (id+":"+time.toString()).toLowerCase();
         }
+    }
+
+    private static Pair<String, LocalTime> getNodeData(String label) {
+        String[] labelData = label.split(":");
+        Pair<String, LocalTime> pair = new Pair<>();
+        try {
+            if(!pair.updateFirst(labelData[0])){
+                return null;
+            }
+            if (labelData.length == 3) {
+                if(!pair.updateSecond(LocalTime.of(Integer.parseInt(labelData[1]), Integer.parseInt(labelData[2])))){
+                    return null;
+                }
+            }
+        }
+        catch (Exception e){
+            System.out.println("Invalid time info for node");
+        }
+        return pair;
     }
 
     public static LocalTime addMinutes(LocalTime localTime, int minutes) {
@@ -68,6 +87,22 @@ public class Scheduler {
         return LocalTime.of(hrs, minutes);
     }
 
+    private static Integer getTimeDiff(LocalTime localTime1, LocalTime localTime2) {
+
+        int startHrs = localTime2.getHour();
+        int startMinutes = localTime2.getMinute();
+        int endHrs = localTime1.getHour();
+        int endMinutes = localTime1.getMinute();
+        int diff;
+        if(endHrs>startHrs || (endHrs==startHrs && endMinutes>startMinutes)) {
+            diff = (endHrs-startHrs)*60 + (endMinutes- startMinutes);
+        }
+        else {
+            diff = (24 + endHrs -startHrs )* 60 + endMinutes-startMinutes;
+        }
+        return diff;
+    }
+
     private Double analyzeRouteFile(String pathRoute){
         Double destDist=0.0;
         try {
@@ -83,7 +118,7 @@ public class Scheduler {
                 Double stationDist = Double.parseDouble(data[1]);
                 this.PATH.add(new Station(stationId, data[0], stationDist));
                 destDist = stationDist;
-                // if(stationId.equals("ara")){
+                // if(stationId.equalsIgnoreCase("ara")){
                 //     break;
                 // }
             }
@@ -167,212 +202,6 @@ public class Scheduler {
         return destDist;
     }
 
-    @SuppressWarnings("unused")
-    private void scheduleBestPath(LocalTime sourceTime, LocalTime destTime, int maxDelayBwStations, ArrayList<Double> waitTime, Double destDist, String pathBestRouteFile, Double avgSpeed, int startHrs, int startMinutes, int endHrs, int endMinutes){
-        
-        long milli = new Date().getTime();
-        System.out.println("*********************************************************");
-        System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
-        System.out.println("Avg speed: " + avgSpeed);
-        System.out.println("Start: "+startHrs+":"+startMinutes);
-        System.out.println("End: "+ endHrs+":"+startMinutes);
-        
-        try{
-            ArrayList<ArrayList<Node>> nodes = this.route.findSchedule(waitTime,startHrs,startMinutes,endHrs,endMinutes);
-            ArrayList<String> stationList = this.route.getStationList();
-            stationList.add(0,"SOURCE");
-            
-            ArrayList<Node> nodeSrcList = new ArrayList<>();
-            nodeSrcList.add(new Node(sourceTime, "SOURCE", 0.0, 0.0));
-            nodes.add(0,nodeSrcList);
-
-            stationList.add("DEST");
-            ArrayList<Node> nodeDestList = new ArrayList<>();
-            nodeDestList.add(new Node(destTime, "DEST", destDist, 0.0));
-            nodes.add(nodeDestList);
-
-            GraphBestPath graphBestPath = new GraphBestPath();
-            long edgeCount=0;
-
-            for(ArrayList<Node> nodeStation: nodes) {
-                for(Node node: nodeStation) {
-                    graphBestPath.addNode(node);
-                }
-            }
-            System.out.println("Nodes size: " +nodes.size());
-            if(nodes.size() != stationList.size()) {
-                System.out.println("Invalid nodes in graph... exiting");
-                return;
-            }
-
-            Node nodeStart;
-            Node nodeEnd;
-
-            for(int i=0;i<stationList.size()-1;i++) {
-                // System.out.println("Nodes station " + (i+1) + "size: " + nodes.get(i).size());
-                // System.out.println("Nodes station " + (i+2) + "size: " + nodes.get(i+1).size());
-                if(nodes.get(i).isEmpty()) {
-                    System.out.println("No path found as no available slot for station "+ stationList.get(i));
-                    return;
-                }
-                if(nodes.get(i+1).isEmpty()) {
-                    System.out.println("No path found as no available slot for station "+ stationList.get(i+1));
-                    return;
-                }
-                if(!nodes.get(i).get(0).getStationId().equals(stationList.get(i)) || !nodes.get(i+1).get(0).getStationId().equals(stationList.get(i+1))) {
-                    System.out.println("Invalid path Info.");
-                    return;
-                }
-
-                for(int j=0;j<nodes.get(i).size();j++) {
-                    nodeStart = nodes.get(i).get(j);
-                    for(int k=0;k<nodes.get(i+1).size();k++) {
-                        nodeEnd = nodes.get(i+1).get(k);
-                        
-                        if(nodeStart.getTime()==null || nodeEnd.getTime()==null){
-                            if(graphBestPath.addEdge(nodeStart, nodeEnd,0)){
-                                edgeCount++;
-                                // System.err.println("Added " + nodeStart.getStationId() + " -> " + nodeEnd.getStationId());
-                            }
-                            // else{
-                            //     System.out.println("Unable to add edge in graph " + nodeStart.getStationId() + ":"+ nodeStart.getTime() + " -> " + nodeEnd.getStationId() + ":"+ nodeEnd.getTime());
-                            // }
-                        }
-                        else{
-                            Double distancePrevStation = nodeEnd.getDistance() - nodeStart.getDistance();
-                            int delay = (int)(nextDecimal(((distancePrevStation/avgSpeed )*60))/1);
-                            delay = (delay + (int)(nodeEnd.getWaitTime()/1));
-                            
-                            LocalTime earliestTimeToReach = addMinutes(nodeStart.getTime(), delay);
-                            LocalTime maxTimeToReach = addMinutes(earliestTimeToReach, maxDelayBwStations);
-
-                            int compEarliestAndNode = earliestTimeToReach.compareTo(nodeEnd.getTime());
-                            int compNodeAndMax = nodeEnd.getTime().compareTo(maxTimeToReach);
-                            int caseId=0;
-                            if(maxTimeToReach.compareTo(earliestTimeToReach)<=0) {
-                                if(earliestTimeToReach.compareTo(nodeEnd.getTime())<=0 && nodeEnd.getTime().compareTo(maxTimeToReach)>=0) {
-                                    compEarliestAndNode = -1;
-                                    compNodeAndMax = -1;
-                                    caseId = 1;
-                                }
-                                else if(nodeEnd.getTime().compareTo(maxTimeToReach)<=0 && nodeEnd.getTime().compareTo(earliestTimeToReach)<=0) {
-                                    compEarliestAndNode = -1;
-                                    compNodeAndMax = -1;
-                                    caseId = 2;
-                                }
-                            }
-
-                            if(compEarliestAndNode <=0 && compNodeAndMax <=0){
-                                boolean crossAnotherTrain = false;
-                                if(!nodeStart.getStationId().equalsIgnoreCase("SOURCE") && !nodeEnd.getStationId().equalsIgnoreCase("DEST") ) {
-                                    for (Train train : TRAIN_LIST) {
-                                        LocalTime oldTrainDept = train.getDept(nodeStart.getStationId());
-                                        LocalTime oldTrainArr = train.getArr(nodeEnd.getStationId());
-                                        int compOldTrainDeptAndNodeStart = oldTrainDept.compareTo(nodeStart.getTime());
-                                        int compOldTrainArrAndNodeEnd = oldTrainArr.compareTo(nodeEnd.getTime());
-
-                                        if (oldTrainDept.compareTo(oldTrainArr) > 0) {
-                                            //need to take care of next day stoppage trains
-                                            if (caseId == 0 || caseId == 1) {
-                                                compOldTrainArrAndNodeEnd = 1;
-                                            }
-                                        } else {
-                                            if (caseId == 2) {
-                                                compOldTrainArrAndNodeEnd = -1;
-                                            }
-                                        }
-
-                                        if (compOldTrainDeptAndNodeStart != compOldTrainArrAndNodeEnd) {
-                                            //if depart at same time...  must arrive at same time at next station.
-                                            // System.out.println(train.getTrainNo() + " " + compOldTrainDeptAndNodeStart + " " + compOldTrainArrAndNodeEnd);
-                                            crossAnotherTrain = true;
-                                            break;
-                                        }
-                                    }
-                                }
-
-                                if(!crossAnotherTrain) {
-                                    int startHrs1 = nodeStart.getTime().getHour();
-                                    int startMinutes1 = nodeStart.getTime().getMinute();
-                                    int endHrs1 = nodeEnd.getTime().getHour();
-                                    int endMinutes1 = nodeEnd.getTime().getMinute();
-                                    int edgeCost;
-                                    if(endHrs1>startHrs1 || (endHrs1==startHrs1 && endMinutes1>startMinutes1)) {
-                                        edgeCost = (endHrs1-startHrs1)*60 + (endMinutes1- startMinutes1);
-                                    }
-                                    else {
-                                        edgeCost = (24 + endHrs1 -startHrs1 )* 60 + endMinutes1-startMinutes1;
-                                    }
-                                    
-                                    if(edgeCost >= 0 && graphBestPath.addEdge(nodeStart, nodeEnd,edgeCost)){
-                                        edgeCount++;
-                                        // System.err.println("Added " + nodeStart.getStationId() +" " +nodeStart.getTime() + " -> " + nodeEnd.getStationId() +" " +nodeEnd.getTime());
-                                    }
-                                    // else{
-                                    //     System.err.println("Unable to add edge in graph " + nodeStart.getStationId() + ":"+ nodeStart.getTime() + " -> " + nodeEnd.getStationId() + ":"+ nodeEnd.getTime());
-                                    // }
-                                }
-                                // else {
-                                //     System.err.println("Rejected to avoid collision : " + nodeStart.getStationId() +" " + nodeEnd.getTime() + " -> " + nodeEnd.getStationId() +" " + nodeEnd.getTime());
-                                // }
-                            }
-                            // else if(compEarliestAndNode>0){
-                            //     System.err.println("Rejected as too early to reach " + nodeStart.getStationId() +" " +nodeStart.getTime() + " -> " + nodeEnd.getStationId() +" " +nodeEnd.getTime());
-                            // }
-                            // else {
-                            //     System.err.println("Rejected as too late to reach " + nodeStart.getStationId() +" " +nodeStart.getTime() + " -> " + nodeEnd.getStationId() +" " +nodeEnd.getTime());
-                            // }
-                        }
-                    }
-                }
-            }
-
-            BufferedWriter bWriter;
-            FileWriter fWriter;
-            fWriter = new FileWriter(pathBestRouteFile);
-            bWriter = new BufferedWriter(fWriter);
-            
-            System.out.println("Edge size: " +edgeCount);
-            // graphBestPath.printGraph();
-            // route.printInfo();
-            ArrayList<Node> bestRoute = graphBestPath.dijkstra();
-
-            //removing SOURCE & DEST node
-            if(bestRoute.size()>=2) {
-                System.out.println("Best path found : ");
-                bestRoute.remove(0);
-                bestRoute.remove(bestRoute.size()-1);
-                String arrivalTimeStation;
-                Double distancePrevStation = 0.0;
-                LocalTime timePrevStation= null;
-                
-                for(Node bestRouteNode: bestRoute) {
-                    if(timePrevStation!=null) {
-                        int delay = (int)(nextDecimal((bestRouteNode.getDistance() - distancePrevStation)/avgSpeed * 60)/1);
-                        arrivalTimeStation = addMinutes(timePrevStation, delay) +"";
-                    }
-                    else {
-                        arrivalTimeStation = subMinutes(bestRouteNode.getTime(),2) + "";
-                    }
-                    bWriter.write(bestRouteNode.getStationId() + "\t" + arrivalTimeStation + "\t" + bestRouteNode.getTime() + "\t" + bestRouteNode.getDistance());
-                    bWriter.write("\n");
-                    distancePrevStation = bestRouteNode.getDistance();
-                    timePrevStation = bestRouteNode.getTime();
-                }
-            }
-            else {
-                System.out.println("No path found");
-            }
-            milli = new Date().getTime() - milli;
-            System.out.println("Duration: " + milli + "ms");
-            bWriter.close();
-            fWriter.close();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
     private void writeToFilePaths(List<Path<String>> paths, String pathBestRouteFile, ArrayList<Double> waitTime, Double avgSpeed){
         try {
             BufferedWriter bWriter;
@@ -394,7 +223,7 @@ public class Scheduler {
                     LocalTime timeResult = LocalTime.of(Integer.parseInt(nodeResultData[1]), Integer.parseInt(nodeResultData[2]));
                     Node tempPseudoResultNode = pseudoResultNodeList.get(i - 1);
                     if (!tempPseudoResultNode.getStationId().equalsIgnoreCase(stationIdResult)) {
-                        System.out.println("Invalid path found...");
+                        System.out.println("Invalid path found... ");
                         break;
                     }
                     nodePathBestRoute.add(new Node(timeResult, stationIdResult, tempPseudoResultNode.getDistance(), tempPseudoResultNode.getWaitTime()));
@@ -427,8 +256,90 @@ public class Scheduler {
         }
     }
 
+    private ArrayList<ArrayList<String>> getNodesFreeSlot(LocalTime sourceTime, LocalTime destTime,int startHrs, int startMinutes, int endHrs, int endMinutes){
+        ArrayList<ArrayList<String>> nodes = this.route.getFreeSlots(startHrs,startMinutes,endHrs,endMinutes);
+        if(nodes==null){
+            return null;
+        }
+        ArrayList<String> nodeSrcList = new ArrayList<>();
+        nodeSrcList.add(getNodeLabel("source",sourceTime));
+        nodes.add(0,nodeSrcList);
+        ArrayList<String> nodeDestList = new ArrayList<>();
+        nodeDestList.add(getNodeLabel("dest", destTime));
+        nodes.add(nodeDestList);
+        return nodes;
+    }
+
+    private ArrayList<String> getStationList(){
+        ArrayList<String> stationList = this.route.getStationList();
+        if(stationList==null){
+            return null;
+        }
+        stationList.add(0,"source");
+        stationList.add("dest");
+        return stationList;
+    }
+
+    private int checkIfValidCase(Double distanceBwStation, Double avgSpeed, Double waitTimeStationEnd, LocalTime nodeStartTime, LocalTime nodeEndTime, int maxDelayBwStations){
+        int delay = (int)(nextDecimal(((distanceBwStation/avgSpeed )*60))/1);
+        delay = (delay + (int)(waitTimeStationEnd/1));
+        LocalTime earliestTimeToReach = addMinutes(nodeStartTime, delay);
+        LocalTime maxTimeToReach = addMinutes(earliestTimeToReach, maxDelayBwStations);
+
+        int compEarliestAndNode = earliestTimeToReach.compareTo(nodeEndTime);
+        int compNodeAndMax = nodeEndTime.compareTo(maxTimeToReach);
+        int caseId=0;
+        if(maxTimeToReach.compareTo(earliestTimeToReach)<=0) {
+            if(earliestTimeToReach.compareTo(nodeEndTime)<=0 && nodeEndTime.compareTo(maxTimeToReach)>=0) {
+                compEarliestAndNode = -1;
+                compNodeAndMax = -1;
+                caseId = 1;
+            }
+            else if(nodeEndTime.compareTo(maxTimeToReach)<=0 && nodeEndTime.compareTo(earliestTimeToReach)<=0) {
+                compEarliestAndNode = -1;
+                compNodeAndMax = -1;
+                caseId = 2;
+            }
+        }
+
+        if(compEarliestAndNode <=0 && compNodeAndMax <=0){
+            return caseId;
+        }
+        return -1;
+    }
+
+    private boolean checkIfCrossingWithAnotherTrain(String nodeStartId, String nodeEndId, LocalTime nodeStartTime, LocalTime nodeEndTime, int caseId){
+        boolean crossAnotherTrain = false;
+        if(!nodeStartId.equalsIgnoreCase("source") && !nodeEndId.equalsIgnoreCase("dest") ) {
+            for (Train train : TRAIN_LIST) {
+                LocalTime oldTrainDept = train.getDept(nodeStartId);
+                LocalTime oldTrainArr = train.getArr(nodeEndId);
+                int compOldTrainDeptAndNodeStart = oldTrainDept.compareTo(nodeStartTime);
+                int compOldTrainArrAndNodeEnd = oldTrainArr.compareTo(nodeEndTime);
+
+                if (oldTrainDept.compareTo(oldTrainArr) > 0) {
+                    //need to take care of next day stoppage trains
+                    if (caseId == 0 || caseId == 1) {
+                        compOldTrainArrAndNodeEnd = 1;
+                    }
+                } else {
+                    if (caseId == 2) {
+                        compOldTrainArrAndNodeEnd = -1;
+                    }
+                }
+
+                if (compOldTrainDeptAndNodeStart != compOldTrainArrAndNodeEnd) {
+                    //if depart at same time...  must arrive at same time at next station.
+                    crossAnotherTrain = true;
+                    break;
+                }
+            }
+        }
+        return crossAnotherTrain;
+    }
+
     @SuppressWarnings("unused")
-    private void scheduleKBestPath(int noOfPaths, LocalTime sourceTime, LocalTime destTime, int maxDelayBwStations, ArrayList<Double> waitTime, Double destDist, String pathBestRouteFile, Double avgSpeed, int startHrs, int startMinutes, int endHrs, int endMinutes){
+    private void scheduleKBestPathOptimized(int noOfPaths, LocalTime sourceTime, LocalTime destTime, int maxDelayBwStations, ArrayList<Double> waitTime, Double destDist, String pathBestRouteFile, Double avgSpeed, int startHrs, int startMinutes, int endHrs, int endMinutes){
         long milli = new Date().getTime();
         System.out.println("*********************************************************");
         System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
@@ -436,34 +347,42 @@ public class Scheduler {
         System.out.println("Start: "+startHrs+":"+startMinutes);
         System.out.println("End: "+ endHrs+":"+startMinutes);
         try{
-            ArrayList<ArrayList<Node>> nodes = this.route.findSchedule(waitTime,startHrs,startMinutes,endHrs,endMinutes);
-            ArrayList<String> stationList = this.route.getStationList();
-            stationList.add(0,"SOURCE");
-
-            ArrayList<Node> nodeSrcList = new ArrayList<>();
-            Node nodeSrc = new Node(sourceTime, "SOURCE", 0.0, 0.0);
-            nodeSrcList.add(nodeSrc);
-            nodes.add(0,nodeSrcList);
-
-            stationList.add("DEST");
-            ArrayList<Node> nodeDestList = new ArrayList<>();
-            Node nodeDest = new Node(destTime, "DEST", destDist, 0.0);
-            nodeDestList.add(nodeDest);
-            nodes.add(nodeDestList);
-
-            GraphKBestPath<String> graphKBestPath = new GraphKBestPath<>();
-            long edgeCount=0;
-
-            System.out.println("Nodes size: " +nodes.size());
+            ArrayList<String> stationList = getStationList();
+            ArrayList<ArrayList<String>> nodes = getNodesFreeSlot(sourceTime, destTime, startHrs, startMinutes, endHrs, endMinutes);
+            if(nodes==null || stationList==null){
+                System.out.println("Error in loading data");
+                return;
+            }
             if(nodes.size() != stationList.size()) {
                 System.out.println("Invalid nodes in graph... exiting");
                 return;
             }
 
-            Node nodeStart;
-            Node nodeEnd;
+            GraphKBestPath<String> graphKBestPath = new GraphKBestPath<>();
+            long edgeCount=0;
+            System.out.println("Nodes size: " +nodes.size());
+            String nodeStartId;
+            LocalTime nodeStartTime;
+            String nodeStartLabel;
+            String  nodeEndId;
+            LocalTime nodeEndTime;
+            String nodeEndLabel;
+            Pair<String, LocalTime> pairNodeStartData;
+            Pair<String, LocalTime> pairNodeEndData;
+
+            Double distanceStationStart;
+            Double distanceStationEnd = 0.0;
+            Double waitTimeStationEnd = 0.0;
+            Double distanceBwStation;
 
             for(int i=0;i<stationList.size()-1;i++) {
+                distanceStationStart = distanceStationEnd;
+                if(i<this.PATH.size()) {
+                    distanceStationEnd = this.PATH.get(i).getDistance();
+                    waitTimeStationEnd = waitTime.get(i);
+                }
+                distanceBwStation = distanceStationEnd - distanceStationStart;
+
                 if(nodes.get(i).isEmpty()) {
                     System.out.println("No path found as no available slot for station "+ stationList.get(i));
                     return;
@@ -472,87 +391,42 @@ public class Scheduler {
                     System.out.println("No path found as no available slot for station "+ stationList.get(i+1));
                     return;
                 }
-                if(!nodes.get(i).get(0).getStationId().equals(stationList.get(i)) || !nodes.get(i+1).get(0).getStationId().equals(stationList.get(i+1))) {
+
+                if(!nodes.get(i).get(0).split(":")[0].equalsIgnoreCase(stationList.get(i)) || !nodes.get(i+1).get(0).split(":")[0].equalsIgnoreCase(stationList.get(i+1))){
                     System.out.println("Invalid path Info.");
                     return;
                 }
 
                 for(int j=0;j<nodes.get(i).size();j++) {
-                    nodeStart = nodes.get(i).get(j);
+                    nodeStartLabel = nodes.get(i).get(j);
+                    pairNodeStartData = getNodeData(nodeStartLabel);
+                    if(pairNodeStartData==null){
+                        System.out.println("Some error occurred in pair update...");
+                        return;
+                    }
+                    nodeStartId = pairNodeStartData.getFirst();
+                    nodeStartTime = pairNodeStartData.getSecond();
                     for(int k=0;k<nodes.get(i+1).size();k++) {
-                        nodeEnd = nodes.get(i+1).get(k);
+                        nodeEndLabel = nodes.get(i+1).get(k);
+                        pairNodeEndData = getNodeData(nodeEndLabel);
+                        if(pairNodeEndData==null){
+                            System.out.println("Some error occurred pair update...");
+                            return;
+                        }
+                        nodeEndId = pairNodeEndData.getFirst();
+                        nodeEndTime = pairNodeEndData.getSecond();
 
-                        if(nodeStart.getTime()==null || nodeEnd.getTime()==null){
-                            if(graphKBestPath.addEdge(new Edge<>(getNodeLabel(nodeStart), getNodeLabel(nodeEnd),0))){
+                        if(nodeStartTime==null || nodeEndTime==null){
+                            if(graphKBestPath.addEdge(new Edge<>(nodeStartLabel, nodeEndLabel,0))){
                                 edgeCount++;
                             }
                         }
                         else{
-                            Double distancePrevStation = nodeEnd.getDistance() - nodeStart.getDistance();
-                            int delay = (int)(nextDecimal(((distancePrevStation/avgSpeed )*60))/1);
-                            delay = (delay + (int)(nodeEnd.getWaitTime()/1));
-
-                            LocalTime earliestTimeToReach = addMinutes(nodeStart.getTime(), delay);
-                            LocalTime maxTimeToReach = addMinutes(earliestTimeToReach, maxDelayBwStations);
-
-                            int compEarliestAndNode = earliestTimeToReach.compareTo(nodeEnd.getTime());
-                            int compNodeAndMax = nodeEnd.getTime().compareTo(maxTimeToReach);
-                            int caseId=0;
-                            if(maxTimeToReach.compareTo(earliestTimeToReach)<=0) {
-                                if(earliestTimeToReach.compareTo(nodeEnd.getTime())<=0 && nodeEnd.getTime().compareTo(maxTimeToReach)>=0) {
-                                    compEarliestAndNode = -1;
-                                    compNodeAndMax = -1;
-                                    caseId = 1;
-                                }
-                                else if(nodeEnd.getTime().compareTo(maxTimeToReach)<=0 && nodeEnd.getTime().compareTo(earliestTimeToReach)<=0) {
-                                    compEarliestAndNode = -1;
-                                    compNodeAndMax = -1;
-                                    caseId = 2;
-                                }
-                            }
-
-                            if(compEarliestAndNode <=0 && compNodeAndMax <=0){
-                                boolean crossAnotherTrain = false;
-                                if(!nodeStart.getStationId().equalsIgnoreCase("SOURCE") && !nodeEnd.getStationId().equalsIgnoreCase("DEST") ) {
-                                    for (Train train : TRAIN_LIST) {
-                                        LocalTime oldTrainDept = train.getDept(nodeStart.getStationId());
-                                        LocalTime oldTrainArr = train.getArr(nodeEnd.getStationId());
-                                        int compOldTrainDeptAndNodeStart = oldTrainDept.compareTo(nodeStart.getTime());
-                                        int compOldTrainArrAndNodeEnd = oldTrainArr.compareTo(nodeEnd.getTime());
-
-                                        if (oldTrainDept.compareTo(oldTrainArr) > 0) {
-                                            //need to take care of next day stoppage trains
-                                            if (caseId == 0 || caseId == 1) {
-                                                compOldTrainArrAndNodeEnd = 1;
-                                            }
-                                        } else {
-                                            if (caseId == 2) {
-                                                compOldTrainArrAndNodeEnd = -1;
-                                            }
-                                        }
-
-                                        if (compOldTrainDeptAndNodeStart != compOldTrainArrAndNodeEnd) {
-                                            //if depart at same time...  must arrive at same time at next station.
-                                            crossAnotherTrain = true;
-                                            break;
-                                        }
-                                    }
-                                }
-
-                                if(!crossAnotherTrain) {
-                                    int startHrs1 = nodeStart.getTime().getHour();
-                                    int startMinutes1 = nodeStart.getTime().getMinute();
-                                    int endHrs1 = nodeEnd.getTime().getHour();
-                                    int endMinutes1 = nodeEnd.getTime().getMinute();
-                                    int edgeCost;
-                                    if(endHrs1>startHrs1 || (endHrs1==startHrs1 && endMinutes1>startMinutes1)) {
-                                        edgeCost = (endHrs1-startHrs1)*60 + (endMinutes1- startMinutes1);
-                                    }
-                                    else {
-                                        edgeCost = (24 + endHrs1 -startHrs1 )* 60 + endMinutes1-startMinutes1;
-                                    }
-
-                                    if(edgeCost >= 0 && graphKBestPath.addEdge(new Edge<>(getNodeLabel(nodeStart), getNodeLabel(nodeEnd),edgeCost))){
+                            int caseId = checkIfValidCase(distanceBwStation,avgSpeed,waitTimeStationEnd,nodeStartTime,nodeEndTime,maxDelayBwStations);
+                            if(caseId>=0){
+                                if(!checkIfCrossingWithAnotherTrain(nodeStartId,nodeEndId,nodeStartTime,nodeEndTime,caseId)) {
+                                    int edgeCost = getTimeDiff(nodeEndTime, nodeStartTime);
+                                    if(edgeCost >= 0 && graphKBestPath.addEdge(new Edge<>(nodeStartLabel, nodeEndLabel,edgeCost))){
                                         edgeCount++;
                                     }
                                 }
@@ -564,9 +438,9 @@ public class Scheduler {
 
             System.out.println("Edge size: " +edgeCount);
             List<Path<String>> paths;
-            System.out.println(getNodeLabel(nodeSrc));
-            System.out.println(getNodeLabel(nodeDest));
-            paths= new DefaultKShortestPathFinder<String>().findShortestPaths(getNodeLabel(nodeSrc), getNodeLabel(nodeDest), graphKBestPath, noOfPaths);
+
+            paths= new DefaultKShortestPathFinder<String>().findShortestPaths(getNodeLabel("source",sourceTime), getNodeLabel("dest", destTime), graphKBestPath, noOfPaths);
+
             writeToFilePaths(paths, pathBestRouteFile, waitTime, avgSpeed);
             milli = new Date().getTime() - milli;
             System.out.println("Duration: " + milli + "ms");
@@ -603,16 +477,16 @@ public class Scheduler {
         String pathBestRouteFile;
         int noOfPaths = 10;
 
-        // pathBestRouteFile = pathBestRoute + File.separator + "Type 1 AvgSpeed "+avgSpeed + " Start "+startHrs+"_"+startMinutes +" End " + endHrs +"_"+endMinutes;
-        // scheduleKBestPath(noOfPaths, sourceTime, destTime, maxDelayBwStations,waitTime,destDist,pathBestRouteFile,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
+        pathBestRouteFile = pathBestRoute + File.separator + "Type 1 AvgSpeed "+avgSpeed + " Start "+startHrs+"_"+startMinutes +" End " + endHrs +"_"+endMinutes;
+        scheduleKBestPathOptimized(noOfPaths, sourceTime, destTime, maxDelayBwStations,waitTime,destDist,pathBestRouteFile,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
 
-        // pathBestRouteFile = pathBestRoute + File.separator + "Type 2 AvgSpeed "+avgSpeed + " Start "+startHrs+"_"+startMinutes +" End " + endHrs +"_"+endMinutes;
-        // scheduleKBestPath(noOfPaths, sourceTime, null, maxDelayBwStations,waitTime,destDist,pathBestRouteFile,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
-        //
+        pathBestRouteFile = pathBestRoute + File.separator + "Type 2 AvgSpeed "+avgSpeed + " Start "+startHrs+"_"+startMinutes +" End " + endHrs +"_"+endMinutes;
+        scheduleKBestPathOptimized(noOfPaths, sourceTime, null, maxDelayBwStations,waitTime,destDist,pathBestRouteFile,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
+
         pathBestRouteFile = pathBestRoute + File.separator + "Type 3 AvgSpeed "+avgSpeed + " Start "+startHrs+"_"+startMinutes +" End " + endHrs +"_"+endMinutes;
-        scheduleKBestPath(noOfPaths, null, destTime, maxDelayBwStations,waitTime,destDist,pathBestRouteFile,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
+        scheduleKBestPathOptimized(noOfPaths, null, destTime, maxDelayBwStations,waitTime,destDist,pathBestRouteFile,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
 
-        // pathBestRouteFile = pathBestRoute + File.separator + "Type 4 AvgSpeed "+avgSpeed + " Start "+startHrs+"_"+startMinutes +" End " + endHrs +"_"+endMinutes;
-        // scheduleKBestPath(noOfPaths,null, null, maxDelayBwStations,waitTime,destDist,pathBestRouteFile,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
+        pathBestRouteFile = pathBestRoute + File.separator + "Type 4 AvgSpeed "+avgSpeed + " Start "+startHrs+"_"+startMinutes +" End " + endHrs +"_"+endMinutes;
+        scheduleKBestPathOptimized(noOfPaths,null, null, maxDelayBwStations,waitTime,destDist,pathBestRouteFile,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
     }
 }

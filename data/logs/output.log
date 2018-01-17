@@ -1,21 +1,151 @@
+Start Used memory is bytes: 1723816
+Start Used memory is megabytes: 1
+Start Used memory is bytes: 1722440
+Start Used memory is megabytes: 1
+Start Used memory is bytes: 1881824
+Start Used memory is megabytes: 1
+Start Used memory is bytes: 2059720
+Start Used memory is megabytes: 1
 *********************************************************
-2018/01/17 00:00:17
+2018/01/17 15:55:29
 Avg speed: 80.0
 Start: 0:0
 End: 23:0
+Start Used memory is bytes: 2743624
+Start Used memory is megabytes: 2
+Start Used memory is bytes: 8649336
+Start Used memory is megabytes: 8
 Nodes size: 53
-Edge size: 2948084
+Start Used memory is bytes: 8663424
+Start Used memory is megabytes: 8
+Start Used memory is bytes: 8662456
+Start Used memory is megabytes: 8
+Start Used memory is bytes: 8859368
+Start Used memory is megabytes: 8
+Start Used memory is bytes: 20125304
+Start Used memory is megabytes: 19
+Start Used memory is bytes: 31493752
+Start Used memory is megabytes: 30
+Start Used memory is bytes: 43161976
+Start Used memory is megabytes: 41
+Start Used memory is bytes: 54177864
+Start Used memory is megabytes: 51
+Start Used memory is bytes: 65191040
+Start Used memory is megabytes: 62
+Start Used memory is bytes: 76224816
+Start Used memory is megabytes: 72
+Start Used memory is bytes: 87344016
+Start Used memory is megabytes: 83
+Start Used memory is bytes: 98548944
+Start Used memory is megabytes: 93
+Start Used memory is bytes: 109426144
+Start Used memory is megabytes: 104
+Start Used memory is bytes: 120323728
+Start Used memory is megabytes: 114
+Start Used memory is bytes: 131097216
+Start Used memory is megabytes: 125
+Start Used memory is bytes: 142052832
+Start Used memory is megabytes: 135
+Start Used memory is bytes: 152971152
+Start Used memory is megabytes: 145
+Start Used memory is bytes: 164222384
+Start Used memory is megabytes: 156
+Start Used memory is bytes: 175022624
+Start Used memory is megabytes: 166
+Start Used memory is bytes: 185981376
+Start Used memory is megabytes: 177
+Start Used memory is bytes: 196820800
+Start Used memory is megabytes: 187
+Start Used memory is bytes: 207781760
+Start Used memory is megabytes: 198
+Start Used memory is bytes: 218871568
+Start Used memory is megabytes: 208
+Start Used memory is bytes: 230062976
+Start Used memory is megabytes: 219
+Start Used memory is bytes: 241137808
+Start Used memory is megabytes: 229
+Start Used memory is bytes: 252239696
+Start Used memory is megabytes: 240
+Start Used memory is bytes: 263412080
+Start Used memory is megabytes: 251
+Start Used memory is bytes: 274607392
+Start Used memory is megabytes: 261
+Start Used memory is bytes: 285525232
+Start Used memory is megabytes: 272
+Start Used memory is bytes: 296443968
+Start Used memory is megabytes: 282
+Start Used memory is bytes: 307282400
+Start Used memory is megabytes: 293
+Start Used memory is bytes: 318286448
+Start Used memory is megabytes: 303
+Start Used memory is bytes: 329262688
+Start Used memory is megabytes: 314
+Start Used memory is bytes: 339937776
+Start Used memory is megabytes: 324
+Start Used memory is bytes: 350960368
+Start Used memory is megabytes: 334
+Start Used memory is bytes: 361604416
+Start Used memory is megabytes: 344
+Start Used memory is bytes: 372153760
+Start Used memory is megabytes: 354
+Start Used memory is bytes: 382757856
+Start Used memory is megabytes: 365
+Start Used memory is bytes: 393443696
+Start Used memory is megabytes: 375
+Start Used memory is bytes: 404145280
+Start Used memory is megabytes: 385
+Start Used memory is bytes: 415695488
+Start Used memory is megabytes: 396
+Start Used memory is bytes: 426386848
+Start Used memory is megabytes: 406
+Start Used memory is bytes: 437227328
+Start Used memory is megabytes: 416
+Start Used memory is bytes: 447802752
+Start Used memory is megabytes: 427
+Start Used memory is bytes: 458666960
+Start Used memory is megabytes: 437
+Start Used memory is bytes: 469840448
+Start Used memory is megabytes: 448
+Start Used memory is bytes: 481152640
+Start Used memory is megabytes: 458
+Start Used memory is bytes: 492133536
+Start Used memory is megabytes: 469
+Start Used memory is bytes: 503252000
+Start Used memory is megabytes: 479
+Start Used memory is bytes: 514892320
+Start Used memory is megabytes: 491
+Start Used memory is bytes: 525865088
+Start Used memory is megabytes: 501
+Start Used memory is bytes: 537110176
+Start Used memory is megabytes: 512
+Start Used memory is bytes: 548082304
+Start Used memory is megabytes: 522
+Start Used memory is bytes: 559256944
+Start Used memory is megabytes: 533
+Start Used memory is bytes: 559637744
+Start Used memory is megabytes: 533
+Edge size: 2949388
 source
-dest:17:15
+dest
+Start Used memory is bytes: 559637384
+Start Used memory is megabytes: 533
+Start Used memory is bytes: 560582544
+Start Used memory is megabytes: 534
 10
-[source, pnbe:12:39, scy:12:41, pws:12:44, dnr:12:47, neo:12:52, gnhi:12:55, sde:12:59, patl:13:01, bta:13:03, pail:13:08, vhch:13:09, kwr:13:11, kua:13:14, jmir:13:19, ara:13:23, jgwl:13:26, krs:13:31, kya:13:35, xsan:13:37, rnte:13:39, bea:13:42, asjp:13:45, byn:13:47, skri:13:51, rpr:13:55, vkdh:13:59, twg:14:03, vvg:14:07, dure:14:10, bue:14:16, ndon:14:21, bxr:14:24, pwxp:14:31, csa:14:33, bqw:14:38, gmr:14:41, kkrh:14:44, bwh:14:47, usk:14:50, dln:14:54, drv:15:00, zna:15:05, bhcl:15:09, dha:15:15, tlam:15:21, sld:15:33, kca:15:39, eocm:15:53, mgso:16:03, mgmy:16:19, mgs:16:32, dest:17:15] cost: 276.0
-[source, pnbe:12:39, scy:12:41, pws:12:44, dnr:12:47, neo:12:52, gnhi:12:55, sde:12:59, patl:13:01, bta:13:03, pail:13:08, vhch:13:09, kwr:13:11, kua:13:14, jmir:13:19, ara:13:23, jgwl:13:26, krs:13:31, kya:13:35, xsan:13:37, rnte:13:39, bea:13:42, asjp:13:45, byn:13:47, skri:13:51, rpr:13:55, vkdh:13:59, twg:14:03, vvg:14:07, dure:14:10, bue:14:16, ndon:14:21, bxr:14:24, pwxp:14:31, csa:14:33, bqw:14:38, gmr:14:41, kkrh:14:44, bwh:14:47, usk:14:50, dln:14:54, drv:15:00, zna:15:05, bhcl:15:09, dha:15:16, tlam:15:22, sld:15:27, kca:15:33, eocm:15:47, mgso:16:20, mgmy:16:31, mgs:16:34, dest:17:15] cost: 276.0
-[source, pnbe:12:39, scy:12:41, pws:12:44, dnr:12:47, neo:12:52, gnhi:12:55, sde:12:59, patl:13:01, bta:13:03, pail:13:08, vhch:13:09, kwr:13:11, kua:13:14, jmir:13:19, ara:13:23, jgwl:13:26, krs:13:31, kya:13:35, xsan:13:37, rnte:13:39, bea:13:42, asjp:13:45, byn:13:47, skri:13:51, rpr:13:55, vkdh:13:59, twg:14:03, vvg:14:07, dure:14:10, bue:14:16, ndon:14:21, bxr:14:24, pwxp:14:31, csa:14:33, bqw:14:38, gmr:14:41, kkrh:14:45, bwh:14:48, usk:14:51, dln:14:55, drv:15:08, zna:15:13, bhcl:15:23, dha:15:29, tlam:15:37, sld:15:43, kca:16:17, eocm:16:22, mgso:16:26, mgmy:16:31, mgs:16:36, dest:17:15] cost: 276.0
-[source, pnbe:12:39, scy:12:41, pws:12:44, dnr:12:47, neo:12:52, gnhi:12:55, sde:12:59, patl:13:01, bta:13:03, pail:13:08, vhch:13:09, kwr:13:11, kua:13:14, jmir:13:19, ara:13:23, jgwl:13:26, krs:13:31, kya:13:35, xsan:13:37, rnte:13:39, bea:13:42, asjp:13:45, byn:13:47, skri:13:51, rpr:13:55, vkdh:13:59, twg:14:03, vvg:14:07, dure:14:10, bue:14:16, ndon:14:21, bxr:14:24, pwxp:14:31, csa:14:33, bqw:14:38, gmr:14:41, kkrh:14:44, bwh:14:47, usk:14:50, dln:14:54, drv:15:00, zna:15:05, bhcl:15:09, dha:15:15, tlam:15:21, sld:15:27, kca:15:33, eocm:15:40, mgso:16:01, mgmy:16:20, mgs:16:32, dest:17:15] cost: 276.0
-[source, pnbe:12:39, scy:12:41, pws:12:44, dnr:12:47, neo:12:52, gnhi:12:55, sde:12:59, patl:13:01, bta:13:03, pail:13:08, vhch:13:09, kwr:13:11, kua:13:14, jmir:13:19, ara:13:23, jgwl:13:26, krs:13:31, kya:13:35, xsan:13:37, rnte:13:39, bea:13:42, asjp:13:45, byn:13:47, skri:13:51, rpr:13:55, vkdh:13:59, twg:14:03, vvg:14:07, dure:14:10, bue:14:16, ndon:14:21, bxr:14:24, pwxp:14:31, csa:14:33, bqw:14:38, gmr:14:41, kkrh:14:44, bwh:14:47, usk:14:50, dln:14:54, drv:15:00, zna:15:05, bhcl:15:09, dha:15:15, tlam:15:21, sld:15:33, kca:15:39, eocm:15:53, mgso:16:03, mgmy:16:19, mgs:16:31, dest:17:15] cost: 276.0
-[source, pnbe:12:39, scy:12:41, pws:12:44, dnr:12:47, neo:12:52, gnhi:12:55, sde:12:59, patl:13:01, bta:13:03, pail:13:08, vhch:13:09, kwr:13:11, kua:13:14, jmir:13:19, ara:13:23, jgwl:13:26, krs:13:31, kya:13:35, xsan:13:37, rnte:13:39, bea:13:42, asjp:13:45, byn:13:47, skri:13:51, rpr:13:55, vkdh:13:59, twg:14:03, vvg:14:07, dure:14:10, bue:14:16, ndon:14:21, bxr:14:24, pwxp:14:31, csa:14:33, bqw:14:38, gmr:14:41, kkrh:14:44, bwh:14:47, usk:14:51, dln:14:55, drv:15:01, zna:15:06, bhcl:15:10, dha:15:16, tlam:15:22, sld:15:34, kca:15:41, eocm:15:48, mgso:16:02, mgmy:16:18, mgs:16:31, dest:17:15] cost: 276.0
-[source, pnbe:12:39, scy:12:41, pws:12:44, dnr:12:47, neo:12:52, gnhi:12:55, sde:12:59, patl:13:01, bta:13:03, pail:13:08, vhch:13:09, kwr:13:11, kua:13:14, jmir:13:19, ara:13:23, jgwl:13:26, krs:13:31, kya:13:35, xsan:13:37, rnte:13:39, bea:13:42, asjp:13:45, byn:13:47, skri:13:51, rpr:13:55, vkdh:13:59, twg:14:03, vvg:14:07, dure:14:10, bue:14:16, ndon:14:21, bxr:14:24, pwxp:14:31, csa:14:33, bqw:14:38, gmr:14:41, kkrh:14:44, bwh:14:47, usk:14:51, dln:14:55, drv:15:01, zna:15:06, bhcl:15:10, dha:15:16, tlam:15:22, sld:15:34, kca:15:41, eocm:15:48, mgso:16:02, mgmy:16:20, mgs:16:30, dest:17:15] cost: 276.0
-[source, pnbe:12:39, scy:12:41, pws:12:44, dnr:12:47, neo:12:52, gnhi:12:55, sde:12:59, patl:13:01, bta:13:03, pail:13:08, vhch:13:09, kwr:13:11, kua:13:14, jmir:13:19, ara:13:23, jgwl:13:26, krs:13:31, kya:13:35, xsan:13:37, rnte:13:39, bea:13:42, asjp:13:45, byn:13:47, skri:13:51, rpr:13:55, vkdh:13:59, twg:14:03, vvg:14:07, dure:14:10, bue:14:16, ndon:14:21, bxr:14:24, pwxp:14:31, csa:14:33, bqw:14:38, gmr:14:41, kkrh:14:44, bwh:14:47, usk:14:50, dln:14:54, drv:15:02, zna:15:11, bhcl:15:17, dha:15:26, tlam:15:34, sld:15:41, kca:15:48, eocm:16:22, mgso:16:32, mgmy:16:35, mgs:16:39, dest:17:15] cost: 276.0
-[source, pnbe:12:39, scy:12:41, pws:12:44, dnr:12:47, neo:12:52, gnhi:12:55, sde:12:59, patl:13:01, bta:13:03, pail:13:08, vhch:13:09, kwr:13:11, kua:13:14, jmir:13:19, ara:13:23, jgwl:13:26, krs:13:31, kya:13:35, xsan:13:37, rnte:13:39, bea:13:42, asjp:13:45, byn:13:47, skri:13:51, rpr:13:55, vkdh:13:59, twg:14:03, vvg:14:07, dure:14:10, bue:14:16, ndon:14:21, bxr:14:24, pwxp:14:31, csa:14:33, bqw:14:38, gmr:14:41, kkrh:14:44, bwh:14:47, usk:14:50, dln:14:54, drv:15:00, zna:15:05, bhcl:15:10, dha:15:16, tlam:15:22, sld:15:27, kca:15:33, eocm:15:35, mgso:15:39, mgmy:16:18, mgs:16:32, dest:17:15] cost: 276.0
-[source, pnbe:12:39, scy:12:41, pws:12:44, dnr:12:47, neo:12:52, gnhi:12:55, sde:12:59, patl:13:01, bta:13:03, pail:13:08, vhch:13:09, kwr:13:11, kua:13:14, jmir:13:19, ara:13:23, jgwl:13:26, krs:13:31, kya:13:35, xsan:13:37, rnte:13:39, bea:13:42, asjp:13:45, byn:13:47, skri:13:51, rpr:13:55, vkdh:13:59, twg:14:03, vvg:14:07, dure:14:10, bue:14:16, ndon:14:21, bxr:14:24, pwxp:14:31, csa:14:33, bqw:14:38, gmr:14:41, kkrh:14:44, bwh:14:47, usk:14:50, dln:14:54, drv:15:00, zna:15:05, bhcl:15:09, dha:15:15, tlam:15:21, sld:15:27, kca:15:33, eocm:15:40, mgso:16:01, mgmy:16:35, mgs:16:41, dest:17:15] cost: 276.0
-Duration: 84766ms
+[source, pnbe:17:24, scy:17:26, pws:17:29, dnr:17:32, neo:17:37, gnhi:17:40, sde:17:44, patl:17:46, bta:17:48, pail:17:53, vhch:17:54, kwr:17:56, kua:17:59, jmir:18:04, ara:18:08, jgwl:18:11, krs:18:16, kya:18:20, xsan:18:22, rnte:18:24, bea:18:27, asjp:18:30, byn:18:32, skri:18:36, rpr:18:40, vkdh:18:44, twg:18:48, vvg:18:52, dure:18:55, bue:19:01, ndon:19:06, bxr:19:09, pwxp:19:16, csa:19:18, bqw:19:23, gmr:19:26, kkrh:19:29, bwh:19:32, usk:19:35, dln:19:39, drv:19:45, zna:19:50, bhcl:19:54, dha:20:00, tlam:20:06, sld:20:11, kca:20:17, eocm:20:19, mgso:20:23, mgmy:20:25, mgs:20:27, dest] cost: 183.0
+[source, pnbe:01:25, scy:01:27, pws:01:30, dnr:01:33, neo:01:38, gnhi:01:41, sde:01:45, patl:01:47, bta:01:49, pail:01:54, vhch:01:55, kwr:01:57, kua:02:00, jmir:02:05, ara:02:09, jgwl:02:12, krs:02:17, kya:02:21, xsan:02:23, rnte:02:25, bea:02:28, asjp:02:31, byn:02:33, skri:02:37, rpr:02:41, vkdh:02:45, twg:02:49, vvg:02:53, dure:02:56, bue:03:02, ndon:03:07, bxr:03:10, pwxp:03:17, csa:03:19, bqw:03:24, gmr:03:27, kkrh:03:30, bwh:03:33, usk:03:36, dln:03:40, drv:03:46, zna:03:51, bhcl:03:55, dha:04:01, tlam:04:07, sld:04:12, kca:04:18, eocm:04:20, mgso:04:24, mgmy:04:26, mgs:04:28, dest] cost: 183.0
+[source, pnbe:01:37, scy:01:39, pws:01:42, dnr:01:45, neo:01:50, gnhi:01:53, sde:01:57, patl:01:59, bta:02:01, pail:02:06, vhch:02:07, kwr:02:09, kua:02:12, jmir:02:17, ara:02:21, jgwl:02:24, krs:02:29, kya:02:33, xsan:02:35, rnte:02:37, bea:02:40, asjp:02:43, byn:02:45, skri:02:49, rpr:02:53, vkdh:02:57, twg:03:01, vvg:03:05, dure:03:08, bue:03:14, ndon:03:19, bxr:03:22, pwxp:03:29, csa:03:31, bqw:03:36, gmr:03:39, kkrh:03:42, bwh:03:45, usk:03:48, dln:03:52, drv:03:58, zna:04:03, bhcl:04:07, dha:04:13, tlam:04:19, sld:04:24, kca:04:30, eocm:04:32, mgso:04:36, mgmy:04:38, mgs:04:40, dest] cost: 183.0
+[source, pnbe:16:37, scy:16:39, pws:16:42, dnr:16:45, neo:16:50, gnhi:16:53, sde:16:57, patl:16:59, bta:17:01, pail:17:06, vhch:17:07, kwr:17:09, kua:17:12, jmir:17:17, ara:17:21, jgwl:17:24, krs:17:29, kya:17:33, xsan:17:35, rnte:17:37, bea:17:40, asjp:17:43, byn:17:45, skri:17:49, rpr:17:53, vkdh:17:57, twg:18:01, vvg:18:05, dure:18:08, bue:18:14, ndon:18:19, bxr:18:22, pwxp:18:29, csa:18:31, bqw:18:36, gmr:18:39, kkrh:18:42, bwh:18:45, usk:18:48, dln:18:52, drv:18:58, zna:19:03, bhcl:19:07, dha:19:13, tlam:19:19, sld:19:24, kca:19:30, eocm:19:32, mgso:19:36, mgmy:19:38, mgs:19:40, dest] cost: 183.0
+[source, pnbe:07:12, scy:07:14, pws:07:17, dnr:07:20, neo:07:25, gnhi:07:28, sde:07:32, patl:07:34, bta:07:36, pail:07:41, vhch:07:42, kwr:07:44, kua:07:47, jmir:07:52, ara:07:56, jgwl:07:59, krs:08:04, kya:08:08, xsan:08:10, rnte:08:12, bea:08:15, asjp:08:18, byn:08:20, skri:08:24, rpr:08:28, vkdh:08:32, twg:08:36, vvg:08:40, dure:08:43, bue:08:49, ndon:08:54, bxr:08:57, pwxp:09:04, csa:09:06, bqw:09:11, gmr:09:14, kkrh:09:17, bwh:09:20, usk:09:23, dln:09:27, drv:09:33, zna:09:38, bhcl:09:42, dha:09:48, tlam:09:54, sld:09:59, kca:10:05, eocm:10:07, mgso:10:11, mgmy:10:13, mgs:10:15, dest] cost: 183.0
+[source, pnbe:16:17, scy:16:19, pws:16:22, dnr:16:25, neo:16:30, gnhi:16:33, sde:16:37, patl:16:39, bta:16:41, pail:16:46, vhch:16:47, kwr:16:49, kua:16:52, jmir:16:57, ara:17:01, jgwl:17:04, krs:17:09, kya:17:13, xsan:17:15, rnte:17:17, bea:17:20, asjp:17:23, byn:17:25, skri:17:29, rpr:17:33, vkdh:17:37, twg:17:41, vvg:17:45, dure:17:48, bue:17:54, ndon:17:59, bxr:18:02, pwxp:18:09, csa:18:11, bqw:18:16, gmr:18:19, kkrh:18:22, bwh:18:25, usk:18:28, dln:18:32, drv:18:38, zna:18:43, bhcl:18:47, dha:18:53, tlam:18:59, sld:19:04, kca:19:10, eocm:19:12, mgso:19:16, mgmy:19:18, mgs:19:20, dest] cost: 183.0
+[source, pnbe:17:57, scy:17:59, pws:18:02, dnr:18:05, neo:18:10, gnhi:18:13, sde:18:17, patl:18:19, bta:18:21, pail:18:26, vhch:18:27, kwr:18:29, kua:18:32, jmir:18:37, ara:18:41, jgwl:18:44, krs:18:49, kya:18:53, xsan:18:55, rnte:18:57, bea:19:00, asjp:19:03, byn:19:05, skri:19:09, rpr:19:13, vkdh:19:17, twg:19:21, vvg:19:25, dure:19:28, bue:19:34, ndon:19:39, bxr:19:42, pwxp:19:49, csa:19:51, bqw:19:56, gmr:19:59, kkrh:20:02, bwh:20:05, usk:20:08, dln:20:12, drv:20:18, zna:20:23, bhcl:20:27, dha:20:33, tlam:20:39, sld:20:44, kca:20:50, eocm:20:52, mgso:20:56, mgmy:20:58, mgs:21:00, dest] cost: 183.0
+[source, pnbe:16:25, scy:16:27, pws:16:30, dnr:16:33, neo:16:38, gnhi:16:41, sde:16:45, patl:16:47, bta:16:49, pail:16:54, vhch:16:55, kwr:16:57, kua:17:00, jmir:17:05, ara:17:09, jgwl:17:12, krs:17:17, kya:17:21, xsan:17:23, rnte:17:25, bea:17:28, asjp:17:31, byn:17:33, skri:17:37, rpr:17:41, vkdh:17:45, twg:17:49, vvg:17:53, dure:17:56, bue:18:02, ndon:18:07, bxr:18:10, pwxp:18:17, csa:18:19, bqw:18:24, gmr:18:27, kkrh:18:30, bwh:18:33, usk:18:36, dln:18:40, drv:18:46, zna:18:51, bhcl:18:55, dha:19:01, tlam:19:07, sld:19:12, kca:19:18, eocm:19:20, mgso:19:24, mgmy:19:26, mgs:19:28, dest] cost: 183.0
+[source, pnbe:05:35, scy:05:37, pws:05:40, dnr:05:43, neo:05:48, gnhi:05:51, sde:05:55, patl:05:57, bta:05:59, pail:06:04, vhch:06:05, kwr:06:07, kua:06:10, jmir:06:15, ara:06:19, jgwl:06:22, krs:06:27, kya:06:31, xsan:06:33, rnte:06:35, bea:06:38, asjp:06:41, byn:06:43, skri:06:47, rpr:06:51, vkdh:06:55, twg:06:59, vvg:07:03, dure:07:06, bue:07:12, ndon:07:17, bxr:07:20, pwxp:07:27, csa:07:29, bqw:07:34, gmr:07:37, kkrh:07:40, bwh:07:43, usk:07:46, dln:07:50, drv:07:56, zna:08:01, bhcl:08:05, dha:08:11, tlam:08:17, sld:08:22, kca:08:28, eocm:08:30, mgso:08:34, mgmy:08:36, mgs:08:38, dest] cost: 183.0
+[source, pnbe:15:01, scy:15:03, pws:15:06, dnr:15:09, neo:15:14, gnhi:15:17, sde:15:21, patl:15:23, bta:15:25, pail:15:30, vhch:15:31, kwr:15:33, kua:15:36, jmir:15:41, ara:15:45, jgwl:15:48, krs:15:53, kya:15:57, xsan:15:59, rnte:16:01, bea:16:04, asjp:16:07, byn:16:09, skri:16:13, rpr:16:17, vkdh:16:21, twg:16:25, vvg:16:29, dure:16:32, bue:16:38, ndon:16:43, bxr:16:46, pwxp:16:53, csa:16:55, bqw:17:00, gmr:17:03, kkrh:17:06, bwh:17:09, usk:17:12, dln:17:16, drv:17:22, zna:17:27, bhcl:17:31, dha:17:37, tlam:17:43, sld:17:48, kca:17:54, eocm:17:56, mgso:18:00, mgmy:18:02, mgs:18:04, dest] cost: 183.0
+Duration: 119612ms
+Start Used memory is bytes: 560767976
+Start Used memory is megabytes: 534
+Start Used memory is bytes: 2977512
+Start Used memory is megabytes: 2
+Start Used memory is bytes: 2861712
+Start Used memory is megabytes: 2

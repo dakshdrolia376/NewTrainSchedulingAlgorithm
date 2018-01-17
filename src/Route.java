@@ -19,7 +19,6 @@ public class Route {
         return this.path.get(this.path.size()-1);
     }
 
-    @SuppressWarnings("unused")
     public Station getStation(String id) {
         for (Station station: this.path) {
             if(station.getId().equals(id)){
@@ -37,7 +36,6 @@ public class Route {
         }
     }
 
-    @SuppressWarnings("unused")
     public ArrayList<String> getStationList() {
         ArrayList<String> stationList = new ArrayList<>();
         for (Station station: this.path) {
@@ -46,108 +44,40 @@ public class Route {
         return stationList;
     }
 
-    @SuppressWarnings("unused")
-    public ArrayList<ArrayList<Node>> findSchedule(){
-        ArrayList<Double> waitTime = new ArrayList<>();
-        for(int i=0;i<this.path.size();i++) {
-            waitTime.add(0.0);
-        }
-        return findFreeSchedule(waitTime,0,0,23,59);
-    }
-
-    @SuppressWarnings("unused")
-    public ArrayList<ArrayList<Node>> findSchedule(int startHrs, int startMinutes, int endHrs, int endMinutes){
-        ArrayList<Double> waitTime = new ArrayList<>();
-        for(int i=0;i<this.path.size();i++) {
-            waitTime.add(0.0);
-        }
-        return findFreeSchedule(waitTime, startHrs, startMinutes, endHrs, endMinutes);
-    }
-
-    @SuppressWarnings("unused")
-    public ArrayList<ArrayList<Node>> findSchedule(int endHrs, int endMinutes){
-        ArrayList<Double> waitTime = new ArrayList<>();
-        for(int i=0;i<this.path.size();i++) {
-            waitTime.add(0.0);
-        }
-        return findFreeSchedule(waitTime, 0, 0, endHrs, endMinutes);
-    }
-
-    @SuppressWarnings("unused")
-    public ArrayList<ArrayList<Node>> findSchedule(int hrs, int minutes, boolean start){
-        ArrayList<Double> waitTime = new ArrayList<>();
-        for(int i=0;i<this.path.size();i++) {
-            waitTime.add(0.0);
-        }
-        if(start) {
-            return findFreeSchedule(waitTime, hrs, minutes, 23, 59);
-        }
-        else {
-            return findFreeSchedule(waitTime, 0, 0, hrs, minutes);
-        }
-    }
-
-    @SuppressWarnings("unused")
-    public ArrayList<ArrayList<Node>> findSchedule(ArrayList<Double> waitTime){
-        return findFreeSchedule(waitTime,0,0,23,59);
-    }
-
-    @SuppressWarnings("unused")
-    public ArrayList<ArrayList<Node>> findSchedule(ArrayList<Double> waitTime,int startHrs, int startMinutes, int endHrs, int endMinutes){
-        return findFreeSchedule(waitTime, startHrs, startMinutes, endHrs, endMinutes);
-    }
-
-    @SuppressWarnings("unused")
-    public ArrayList<ArrayList<Node>> findSchedule(ArrayList<Double> waitTime,int endHrs, int endMinutes){
-        return findFreeSchedule(waitTime, 0, 0, endHrs, endMinutes);
-    }
-
-    @SuppressWarnings("unused")
-    public ArrayList<ArrayList<Node>> findSchedule(ArrayList<Double> waitTime,int hrs, int minutes, boolean start){
-        if(start) {
-            return findFreeSchedule(waitTime, hrs, minutes, 23, 59);
-        }
-        else {
-            return findFreeSchedule(waitTime, 0, 0, hrs, minutes);
-        }
-    }
-
-    private ArrayList<ArrayList<Node>> findFreeSchedule(ArrayList<Double> waitTime, int startHrs, int startMinutes, int endHrs, int endMinutes) {
-        ArrayList<ArrayList<Node>> nextDayNodes = new ArrayList<>();
+    ArrayList<ArrayList<String>> getFreeSlots(int startHrs, int startMinutes, int endHrs, int endMinutes) {
+        ArrayList<ArrayList<String>> nextDaySlots = new ArrayList<>();
         if(endHrs<startHrs || (endHrs==startHrs && endMinutes < startMinutes)) {
-            nextDayNodes = findFreeSchedule(waitTime,0,0,endHrs,endMinutes);
+            nextDaySlots = getFreeSlots(0,0,endHrs,endMinutes);
             endHrs = 23;
             endMinutes = 59;
         }
-        
+
         LocalTime start,end,slotDept;
         LocalTime scheduleSlotDept,scheduleSlotDept1,scheduleSlotDept2;
 
         start = LocalTime.of(startHrs, startMinutes);
         end = LocalTime.of(endHrs, endMinutes);
-        ArrayList<ArrayList<Node>> nodes = new ArrayList<>();
-        
+        ArrayList<ArrayList<String>> nodes = new ArrayList<>();
+
         LocalTime temp1;
-        Station station;
-        
-        for(int i=0;i<this.path.size();i++) {
+        String stationId;
+
+        for(Station station: this.path) {
             slotDept = start;
-            station = this.path.get(i);
+            stationId = station.getId();
             station.sortDept();
-
             ArrayList<TrainAtStation> schedule = station.getStationSchedule();
-            ArrayList<Node> stationNodes = new ArrayList<>();
+
+            ArrayList<String> stationNodes = new ArrayList<>();
             boolean endNodeRequired = true;
-
             for(TrainAtStation trainAtStation: schedule) {
-
                 scheduleSlotDept  = trainAtStation.getDept();
                 scheduleSlotDept1 = Scheduler.subMinutes(scheduleSlotDept, 3);
                 scheduleSlotDept2 = Scheduler.addMinutes(scheduleSlotDept, 3);
 
                 temp1 = slotDept;
                 while(temp1.compareTo(scheduleSlotDept1)<=0 && temp1.compareTo(end)<=0) {
-                    stationNodes.add(new Node(temp1, station.getId(), station.getDistance(), waitTime.get(i)));
+                    stationNodes.add(Scheduler.getNodeLabel(stationId,temp1));
                     temp1 = Scheduler.addMinutes(temp1, 1);
                 }
 
@@ -164,7 +94,7 @@ public class Route {
                 temp1 = slotDept;
                 int comp = temp1.compareTo(end);
                 while(comp<=0) {
-                    stationNodes.add(new Node(temp1, station.getId(), station.getDistance(), waitTime.get(i)));
+                    stationNodes.add(Scheduler.getNodeLabel(stationId,temp1));
                     if(comp==0) {
                         break;
                     }
@@ -174,8 +104,8 @@ public class Route {
             }
             nodes.add(stationNodes);
         }
-        for(int i=0;i<nextDayNodes.size();i++) {
-            nodes.get(i).addAll(nextDayNodes.get(i));
+        for(int i=0;i<nextDaySlots.size();i++) {
+            nodes.get(i).addAll(nextDaySlots.get(i));
         }
         return nodes;
     }

@@ -21,6 +21,24 @@ public class Main {
         }
     }
 
+    private static final long MEGABYTE = 1024L * 1024L;
+
+    private static long bytesToMegabytes(long bytes) {
+        return bytes / MEGABYTE;
+    }
+    @SuppressWarnings("unused")
+    public static void getRuntimeMemory(){
+        Runtime runtime = Runtime.getRuntime();
+        // Run the garbage collector
+        runtime.gc();
+        // Calculate the used memory
+        long memory = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("Start Used memory is bytes: " + memory);
+        System.out.println("Start Used memory is megabytes: " + bytesToMegabytes(memory));
+    }
+
+
+
     public static void main(String[] args) {
         String pathTrainList = "data" + File.separator +"train_list.txt";
         String pathTemp = "data"+File.separator+"temp";

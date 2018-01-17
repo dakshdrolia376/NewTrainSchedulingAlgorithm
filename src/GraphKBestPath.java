@@ -1,10 +1,7 @@
 import java.util.*;
 
-import static java.lang.String.*;
-
 public class GraphKBestPath<V> {
 
-    //could be replaced by http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/collect/Table.html
     private Map<V,Map<V,Edge<V>>> vertexEdgeMap = new HashMap<>();
 
     GraphKBestPath() {

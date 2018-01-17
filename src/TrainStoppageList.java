@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+@SuppressWarnings("unused")
 public class TrainStoppageList {
 
     private void getWebsite(String url, String pathFile) {
@@ -20,7 +21,6 @@ public class TrainStoppageList {
         }
         catch (Exception e){
             e.printStackTrace();
-            System.out.println("Error in fetching train schedule");
         }
     }
 
