@@ -44,10 +44,10 @@ public class Route {
         return stationList;
     }
 
-    ArrayList<ArrayList<String>> getFreeSlots(int startHrs, int startMinutes, int endHrs, int endMinutes) {
+    ArrayList<ArrayList<String>> getFreeSlots(int minDelayBwTrains, int startHrs, int startMinutes, int endHrs, int endMinutes) {
         ArrayList<ArrayList<String>> nextDaySlots = new ArrayList<>();
         if(endHrs<startHrs || (endHrs==startHrs && endMinutes < startMinutes)) {
-            nextDaySlots = getFreeSlots(0,0,endHrs,endMinutes);
+            nextDaySlots = getFreeSlots(minDelayBwTrains, 0,0,endHrs,endMinutes);
             endHrs = 23;
             endMinutes = 59;
         }
@@ -72,8 +72,8 @@ public class Route {
             boolean endNodeRequired = true;
             for(TrainAtStation trainAtStation: schedule) {
                 scheduleSlotDept  = trainAtStation.getDept();
-                scheduleSlotDept1 = Scheduler.subMinutes(scheduleSlotDept, 3);
-                scheduleSlotDept2 = Scheduler.addMinutes(scheduleSlotDept, 3);
+                scheduleSlotDept1 = Scheduler.subMinutes(scheduleSlotDept, minDelayBwTrains);
+                scheduleSlotDept2 = Scheduler.addMinutes(scheduleSlotDept, minDelayBwTrains);
 
                 temp1 = slotDept;
                 while(temp1.compareTo(scheduleSlotDept1)<=0 && temp1.compareTo(end)<=0) {

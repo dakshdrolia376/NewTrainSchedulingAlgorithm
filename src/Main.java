@@ -1,3 +1,5 @@
+import org.jfree.ui.RefineryUtilities;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -107,11 +109,32 @@ public class Main {
            // new TrainList().getTrainList(pathTrainList);
            // new TrainStoppageList().getTrainStoppageFromFile(pathTrainList,pathTemp,pathFinal);
 
-            new Scheduler().scheduleNewTrain(pathRoute, pathBestRoute, pathOldTrainSchedule);
+            // new Scheduler().scheduleNewTrain(pathRoute, pathBestRoute, pathOldTrainSchedule);
+
+
+            String titlePlot = "Train Schedule";
+            int windowHeight = 600;
+            int windowWidth = 1000;
+            int newTrainNo = 9910;
+            int heightPlotFile = 600;
+            int widthPlotFile = 1000;
+            String pathPlotFile = "data"+File.separator+"plot"+File.separator+"plot1.pdf";
+            file = new File(pathPlotFile);
+            if(!file.getParentFile().exists()){
+                if(!file.getParentFile().mkdirs()){
+                    System.out.println("Unable to create file " + pathPlotFile);
+                    System.exit(0);
+                }
+            }
+            String pathNewTrainFile = "data"+File.separator+"bestRoute"+File.separator+"Type 4 AvgSpeed 80.0 Start 0_0 End 23_59 path 1 cost 183.0";
+            LinePlotTrains demo = new LinePlotTrains(titlePlot, windowHeight, windowWidth, newTrainNo, heightPlotFile, widthPlotFile, pathPlotFile, pathRoute, pathOldTrainSchedule, pathNewTrainFile);
+            demo.pack();
+            RefineryUtilities.centerFrameOnScreen(demo);
+            demo.setVisible(true);
+            // demo.removeAll();
         }
         catch (Exception e){
             e.printStackTrace();
         }
     }
-
 }

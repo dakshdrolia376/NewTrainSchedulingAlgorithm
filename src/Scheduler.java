@@ -51,40 +51,37 @@ public class Scheduler {
         return pair;
     }
 
-    public static LocalTime addMinutes(LocalTime localTime, int minutes) {
-        if(minutes>60) {
-            localTime = addMinutes(localTime, (minutes- 60));
-            minutes = 60;
-        }
-        int hrs = localTime.getHour();
-        minutes += localTime.getMinute();
+    private static LocalTime addHrs(LocalTime localTime, int hrs) {
+        hrs += localTime.getHour();
+        int minutes = localTime.getMinute();
+        hrs = Math.floorMod(hrs, 24);
+        return LocalTime.of(hrs, minutes);
+    }
 
-        if(minutes>=60) {
-            hrs++;
-            minutes = minutes-60;
-            if(hrs>=24) {
-                hrs=0;
-            }
-        }
+    public static LocalTime addMinutes(LocalTime localTime, int minutes) {
+        minutes+= localTime.getMinute();
+        localTime = addHrs(localTime, minutes/60);
+        minutes = Math.floorMod(minutes, 60);
+        int hrs = localTime.getHour();
+        return LocalTime.of(hrs, minutes);
+    }
+
+    private static LocalTime subHrs(LocalTime localTime, int hrs) {
+        hrs = localTime.getHour()-hrs;
+        int minutes = localTime.getMinute();
+        hrs = Math.floorMod(hrs, 24);
         return LocalTime.of(hrs, minutes);
     }
 
     public static LocalTime subMinutes(LocalTime localTime, int minutes) {
-        if(minutes>60) {
-            localTime = subMinutes(localTime, (minutes- 60));
-            minutes = 60;
+        minutes = localTime.getMinute() - minutes;
+        if(minutes>=0){
+            return LocalTime.of(localTime.getHour(), minutes);
         }
-        int hrs = localTime.getHour();
-        minutes = localTime.getMinute()-minutes;
-
-        if(minutes<0) {
-            hrs--;
-            minutes = minutes+60;
-            if(hrs<0) {
-                hrs=23;
-            }
-        }
-        return LocalTime.of(hrs, minutes);
+        int hrsToSub = (-minutes)/60+1;
+        localTime = subHrs(localTime, hrsToSub);
+        minutes = Math.floorMod(minutes, 60);
+        return LocalTime.of(localTime.getHour(), minutes);
     }
 
     private static Integer getTimeDiff(LocalTime localTime1, LocalTime localTime2) {
@@ -256,8 +253,8 @@ public class Scheduler {
         }
     }
 
-    private ArrayList<ArrayList<String>> getNodesFreeSlot(LocalTime sourceTime, LocalTime destTime,int startHrs, int startMinutes, int endHrs, int endMinutes){
-        ArrayList<ArrayList<String>> nodes = this.route.getFreeSlots(startHrs,startMinutes,endHrs,endMinutes);
+    private ArrayList<ArrayList<String>> getNodesFreeSlot(int minDelayBwTrains, LocalTime sourceTime, LocalTime destTime,int startHrs, int startMinutes, int endHrs, int endMinutes){
+        ArrayList<ArrayList<String>> nodes = this.route.getFreeSlots(minDelayBwTrains, startHrs,startMinutes,endHrs,endMinutes);
         if(nodes==null){
             return null;
         }
@@ -339,7 +336,7 @@ public class Scheduler {
     }
 
     @SuppressWarnings("unused")
-    private void scheduleKBestPathOptimized(int noOfPaths, LocalTime sourceTime, LocalTime destTime, int maxDelayBwStations, ArrayList<Double> waitTime, Double destDist, String pathBestRouteFile, Double avgSpeed, int startHrs, int startMinutes, int endHrs, int endMinutes){
+    private void scheduleKBestPathOptimized(int noOfPaths, LocalTime sourceTime, LocalTime destTime, int maxDelayBwStations, int minDelayBwTrains, ArrayList<Double> waitTime, Double destDist, String pathBestRouteFile, Double avgSpeed, int startHrs, int startMinutes, int endHrs, int endMinutes){
         long milli = new Date().getTime();
         System.out.println("*********************************************************");
         System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
@@ -348,7 +345,7 @@ public class Scheduler {
         System.out.println("End: "+ endHrs+":"+startMinutes);
         try{
             ArrayList<String> stationList = getStationList();
-            ArrayList<ArrayList<String>> nodes = getNodesFreeSlot(sourceTime, destTime, startHrs, startMinutes, endHrs, endMinutes);
+            ArrayList<ArrayList<String>> nodes = getNodesFreeSlot(minDelayBwTrains, sourceTime, destTime, startHrs, startMinutes, endHrs, endMinutes);
             if(nodes==null || stationList==null){
                 System.out.println("Error in loading data");
                 return;
@@ -472,21 +469,22 @@ public class Scheduler {
 
 
         int maxDelayBwStations = 60;
+        int minDelayBwTrains = 3;
         LocalTime sourceTime = LocalTime.of(12,12);
         LocalTime destTime = LocalTime.of(17,15);
         String pathBestRouteFile;
         int noOfPaths = 10;
 
         pathBestRouteFile = pathBestRoute + File.separator + "Type 1 AvgSpeed "+avgSpeed + " Start "+startHrs+"_"+startMinutes +" End " + endHrs +"_"+endMinutes;
-        scheduleKBestPathOptimized(noOfPaths, sourceTime, destTime, maxDelayBwStations,waitTime,destDist,pathBestRouteFile,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
+        scheduleKBestPathOptimized(noOfPaths, sourceTime, destTime, maxDelayBwStations, minDelayBwTrains, waitTime,destDist,pathBestRouteFile,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
 
         pathBestRouteFile = pathBestRoute + File.separator + "Type 2 AvgSpeed "+avgSpeed + " Start "+startHrs+"_"+startMinutes +" End " + endHrs +"_"+endMinutes;
-        scheduleKBestPathOptimized(noOfPaths, sourceTime, null, maxDelayBwStations,waitTime,destDist,pathBestRouteFile,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
+        scheduleKBestPathOptimized(noOfPaths, sourceTime, null, maxDelayBwStations, minDelayBwTrains, waitTime,destDist,pathBestRouteFile,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
 
         pathBestRouteFile = pathBestRoute + File.separator + "Type 3 AvgSpeed "+avgSpeed + " Start "+startHrs+"_"+startMinutes +" End " + endHrs +"_"+endMinutes;
-        scheduleKBestPathOptimized(noOfPaths, null, destTime, maxDelayBwStations,waitTime,destDist,pathBestRouteFile,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
+        scheduleKBestPathOptimized(noOfPaths, null, destTime, maxDelayBwStations, minDelayBwTrains, waitTime,destDist,pathBestRouteFile,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
 
         pathBestRouteFile = pathBestRoute + File.separator + "Type 4 AvgSpeed "+avgSpeed + " Start "+startHrs+"_"+startMinutes +" End " + endHrs +"_"+endMinutes;
-        scheduleKBestPathOptimized(noOfPaths,null, null, maxDelayBwStations,waitTime,destDist,pathBestRouteFile,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
+        scheduleKBestPathOptimized(noOfPaths,null, null, maxDelayBwStations, minDelayBwTrains, waitTime,destDist,pathBestRouteFile,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
     }
 }
