@@ -1,57 +1,40 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import org.jfree.ui.RefineryUtilities;
+
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static java.util.Objects.requireNonNull;
+
 public class Scheduler {
 
-    private Route route;
-    private ArrayList<Train> TRAIN_LIST = new ArrayList<>();
-    private ArrayList<Station> PATH = new ArrayList<>();
+    private List<String> stationId;
+    private List<String> stationName;
+    private List<Double> stationDistance;
 
-    private static Double nextDecimal(Double number) {
-        Double temp = number%1;
-        if(temp>0) {
-            number=number/1 + 1.0;
-        }
-        return number;
-    }
-
-    public static String getNodeLabel(String id, LocalTime time) {
-        if(time==null){
-            return id.toLowerCase();
-        }
-        else{
-            return (id+":"+time.toString()).toLowerCase();
-        }
-    }
-
-    private static Pair<String, LocalTime> getNodeData(String label) {
-        String[] labelData = label.split(":");
-        Pair<String, LocalTime> pair = new Pair<>();
+    private static boolean isNetAvailable() {
         try {
-            if(!pair.updateFirst(labelData[0])){
-                return null;
-            }
-            if (labelData.length == 3) {
-                if(!pair.updateSecond(LocalTime.of(Integer.parseInt(labelData[1]), Integer.parseInt(labelData[2])))){
-                    return null;
-                }
-            }
+            final URL url = new URL("http://www.iitp.ac.in");
+            final URLConnection conn = url.openConnection();
+            conn.connect();
+            return true;
         }
-        catch (Exception e){
-            System.out.println("Invalid time info for node");
+        catch (MalformedURLException e) {
+            throw new RuntimeException(e);
         }
-        return pair;
+        catch (IOException e) {
+            return false;
+        }
     }
 
     private static LocalTime addHrs(LocalTime localTime, int hrs) {
+        requireNonNull(localTime, "Time is null.");
         hrs += localTime.getHour();
         int minutes = localTime.getMinute();
         hrs = Math.floorMod(hrs, 24);
@@ -59,6 +42,7 @@ public class Scheduler {
     }
 
     public static LocalTime addMinutes(LocalTime localTime, int minutes) {
+        requireNonNull(localTime, "Time is null.");
         minutes+= localTime.getMinute();
         localTime = addHrs(localTime, minutes/60);
         minutes = Math.floorMod(minutes, 60);
@@ -67,6 +51,7 @@ public class Scheduler {
     }
 
     private static LocalTime subHrs(LocalTime localTime, int hrs) {
+        requireNonNull(localTime, "Time is null.");
         hrs = localTime.getHour()-hrs;
         int minutes = localTime.getMinute();
         hrs = Math.floorMod(hrs, 24);
@@ -74,6 +59,7 @@ public class Scheduler {
     }
 
     public static LocalTime subMinutes(LocalTime localTime, int minutes) {
+        requireNonNull(localTime, "Time is null.");
         minutes = localTime.getMinute() - minutes;
         if(minutes>=0){
             return LocalTime.of(localTime.getHour(), minutes);
@@ -84,38 +70,44 @@ public class Scheduler {
         return LocalTime.of(localTime.getHour(), minutes);
     }
 
-    private static Integer getTimeDiff(LocalTime localTime1, LocalTime localTime2) {
-
-        int startHrs = localTime2.getHour();
-        int startMinutes = localTime2.getMinute();
-        int endHrs = localTime1.getHour();
-        int endMinutes = localTime1.getMinute();
-        int diff;
-        if(endHrs>startHrs || (endHrs==startHrs && endMinutes>startMinutes)) {
-            diff = (endHrs-startHrs)*60 + (endMinutes- startMinutes);
-        }
-        else {
-            diff = (24 + endHrs -startHrs )* 60 + endMinutes-startMinutes;
-        }
-        return diff;
+    public static int ceilOfDecimal(double number) {
+        return (int) Math.ceil(number);
     }
 
-    private Double analyzeRouteFile(String pathRoute){
-        Double destDist=0.0;
+    private static final long MEGABYTE = 1024L * 1024L;
+
+    private static long bytesToMegabytes(long bytes) {
+        return bytes / MEGABYTE;
+    }
+    @SuppressWarnings("unused")
+    public static void getRuntimeMemory(){
+        Runtime runtime = Runtime.getRuntime();
+        // Run the garbage collector
+        runtime.gc();
+        // Calculate the used memory
+        long memory = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("Start Used memory is bytes: " + memory);
+        System.out.println("Start Used memory is megabytes: " + bytesToMegabytes(memory));
+    }
+
+    private boolean addRouteFromFile(String pathRoute){
+        stationId = new ArrayList<>();
+        stationName = new ArrayList<>();
+        stationDistance = new ArrayList<>();
         try {
-            FileReader fReader;
-            BufferedReader bReader;
-            fReader = new FileReader(pathRoute);
-            bReader = new BufferedReader(fReader);
+            FileReader fReader = new FileReader(pathRoute);
+            BufferedReader bReader = new BufferedReader(fReader);
             String line;
             while((line = bReader.readLine()) != null) {
                 String data[] = line.split("\\s+");
                 String station_code[] = data[0].split("-");
-                String stationId = station_code[station_code.length-1];
-                Double stationDist = Double.parseDouble(data[1]);
-                this.PATH.add(new Station(stationId, data[0], stationDist));
-                destDist = stationDist;
-                // if(stationId.equalsIgnoreCase("ara")){
+                String id = station_code[station_code.length-1];
+
+                double stationDist = Double.parseDouble(data[1]);
+                stationId.add(id);
+                stationName.add(data[0]);
+                stationDistance.add(stationDist);
+                // if(id.equalsIgnoreCase("pws")){
                 //     break;
                 // }
             }
@@ -124,90 +116,30 @@ public class Scheduler {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return false;
         }
-        this.route = new Route(this.PATH);
-        return destDist;
-    }
-    
-    private Double analyzeOldTrainScheduleFile(String pathRoute, String pathOldTrainSchedule){
-        Double destDist = analyzeRouteFile(pathRoute);
-        
-        File[] listOfFiles = new File(pathOldTrainSchedule).listFiles();
-        int newTrainNo = 1;
-        
-        if(listOfFiles==null) {
-            System.out.println("No old trains found");
-            return destDist;
-        }
-
-        FileReader fReader;
-        BufferedReader bReader;
-
-        for (File file: listOfFiles) {
-            if (file.isFile()) {
-                String TrainNo = file.getName().split("\\.")[0];
-                Train train;
-                try {
-                    train = new Train(Integer.parseInt(TrainNo), "--");
-                }
-                catch (NumberFormatException e) {
-                    train = new Train(newTrainNo++, "--");
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                    continue;
-                }
-
-                try {
-                    fReader = new FileReader(file);
-                    bReader = new BufferedReader(fReader);
-                    String line;
-                    LocalTime arrival, departure;
-                    String stationId;
-                    while((line = bReader.readLine()) != null) {
-                        String data[] = line.split("\\s+");
-                        String stationCode[] = data[0].split("-");
-                        stationId = stationCode[stationCode.length-1];
-                        
-                        String data1[] =data[1].split(":");
-                        arrival = LocalTime.of(Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
-                        
-                        data1 =data[2].split(":");
-                        departure = LocalTime.of(Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
-                        
-                        Station station = route.getStation(stationId);
-                        
-                        if(station!=null) {
-                            if(!train.addStoppage(station, arrival, departure)){
-                                System.out.println("Error in adding station" + station.getName() +"to train" +train.getName() +" " + train.getTrainNo());
-                            }
-                        }
-                        else{
-                            System.out.println("Invalid station id: " + stationId);
-                        }
-                    }
-                    fReader.close();
-                    bReader.close();
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-                TRAIN_LIST.add(train);
-            }
-        }
-        return destDist;
+        return true;
     }
 
-    private void writeToFilePaths(List<Path<String>> paths, String pathBestRouteFile, ArrayList<Double> waitTime, Double avgSpeed){
+
+    private boolean addRoute(List<String> stationIdList, List<String> stationNameList, List<Double> stationDistanceList){
+        requireNonNull(stationIdList, "Station id list is null.");
+        requireNonNull(stationNameList, "Station name list is null.");
+        requireNonNull(stationDistanceList, "Station distance list is null.");
+        if(stationIdList.size() != stationNameList.size() || stationNameList.size() != stationDistanceList.size()){
+            throw new IllegalArgumentException("Invalid arguments for route");
+        }
+        this.stationId = stationIdList;
+        this.stationName = stationNameList;
+        this.stationDistance = stationDistanceList;
+        return true;
+    }
+
+
+    private void writeToFilePaths(List<Path<String>> paths, String pathBestRouteFile, ArrayList<Double> stopTime, double avgSpeed){
         try {
             BufferedWriter bWriter;
             FileWriter fWriter;
-            System.out.println(paths.size());
-            ArrayList<Node> pseudoResultNodeList = new ArrayList<>();
-            for (int i = 0; i < this.PATH.size(); i++) {
-                pseudoResultNodeList.add(new Node(null, this.PATH.get(i).getId(), this.PATH.get(i).getDistance(), waitTime.get(i)));
-            }
             int countPath = 0;
             for (Path<String> path : paths) {
                 countPath++;
@@ -218,23 +150,23 @@ public class Scheduler {
                     String nodeResultData[] = nodeResult.split(":");
                     String stationIdResult = nodeResultData[0];
                     LocalTime timeResult = LocalTime.of(Integer.parseInt(nodeResultData[1]), Integer.parseInt(nodeResultData[2]));
-                    Node tempPseudoResultNode = pseudoResultNodeList.get(i - 1);
-                    if (!tempPseudoResultNode.getStationId().equalsIgnoreCase(stationIdResult)) {
+                    if (!stationId.get(i-1).equalsIgnoreCase(stationIdResult)) {
                         System.out.println("Invalid path found... ");
                         break;
                     }
-                    nodePathBestRoute.add(new Node(timeResult, stationIdResult, tempPseudoResultNode.getDistance(), tempPseudoResultNode.getWaitTime()));
+                    nodePathBestRoute.add(new Node(timeResult, stationName.get(i-1), stationDistance.get(i-1), stopTime.get(i-1)));
                 }
-                System.out.println(path.toString() + " cost: " + path.pathCost());
+                // System.out.println(path.toString() + " cost: " + path.pathCost());
                 String arrivalTimeStation;
-                Double distancePrevStation = 0.0;
+                double distancePrevStation = 0.0;
                 LocalTime timePrevStation = null;
-                fWriter = new FileWriter(pathBestRouteFile + " path " + countPath + " cost " + path.pathCost());
+                fWriter = new FileWriter(pathBestRouteFile + " path " + countPath + " cost " + path.pathCost() + " .path");
                 bWriter = new BufferedWriter(fWriter);
 
                 for (Node bestRouteNode : nodePathBestRoute) {
                     if (timePrevStation != null) {
-                        int delay = (int) (nextDecimal((bestRouteNode.getDistance() - distancePrevStation) / avgSpeed * 60) / 1);
+
+                        int delay = ceilOfDecimal(((bestRouteNode.getDistance() - distancePrevStation) / avgSpeed) * 60);
                         arrivalTimeStation = addMinutes(timePrevStation, delay) + "";
                     } else {
                         arrivalTimeStation = subMinutes(bestRouteNode.getTime(), 2) + "";
@@ -253,238 +185,134 @@ public class Scheduler {
         }
     }
 
-    private ArrayList<ArrayList<String>> getNodesFreeSlot(int minDelayBwTrains, LocalTime sourceTime, LocalTime destTime,int startHrs, int startMinutes, int endHrs, int endMinutes){
-        ArrayList<ArrayList<String>> nodes = this.route.getFreeSlots(minDelayBwTrains, startHrs,startMinutes,endHrs,endMinutes);
-        if(nodes==null){
-            return null;
+    private static boolean createFolder(String path){
+        File file = new File(path);
+        if(!file.exists() && !file.mkdirs()){
+                System.out.println("Unable to create folder " + path);
+                return false;
         }
-        ArrayList<String> nodeSrcList = new ArrayList<>();
-        nodeSrcList.add(getNodeLabel("source",sourceTime));
-        nodes.add(0,nodeSrcList);
-        ArrayList<String> nodeDestList = new ArrayList<>();
-        nodeDestList.add(getNodeLabel("dest", destTime));
-        nodes.add(nodeDestList);
-        return nodes;
+        return true;
     }
 
-    private ArrayList<String> getStationList(){
-        ArrayList<String> stationList = this.route.getStationList();
-        if(stationList==null){
-            return null;
-        }
-        stationList.add(0,"source");
-        stationList.add("dest");
-        return stationList;
+    private static boolean createParentFolder(String path){
+        File file = new File(path);
+        return  createFolder(file.getParentFile().getPath());
     }
 
-    private int checkIfValidCase(Double distanceBwStation, Double avgSpeed, Double waitTimeStationEnd, LocalTime nodeStartTime, LocalTime nodeEndTime, int maxDelayBwStations){
-        int delay = (int)(nextDecimal(((distanceBwStation/avgSpeed )*60))/1);
-        delay = (delay + (int)(waitTimeStationEnd/1));
-        LocalTime earliestTimeToReach = addMinutes(nodeStartTime, delay);
-        LocalTime maxTimeToReach = addMinutes(earliestTimeToReach, maxDelayBwStations);
 
-        int compEarliestAndNode = earliestTimeToReach.compareTo(nodeEndTime);
-        int compNodeAndMax = nodeEndTime.compareTo(maxTimeToReach);
-        int caseId=0;
-        if(maxTimeToReach.compareTo(earliestTimeToReach)<=0) {
-            if(earliestTimeToReach.compareTo(nodeEndTime)<=0 && nodeEndTime.compareTo(maxTimeToReach)>=0) {
-                compEarliestAndNode = -1;
-                compNodeAndMax = -1;
-                caseId = 1;
-            }
-            else if(nodeEndTime.compareTo(maxTimeToReach)<=0 && nodeEndTime.compareTo(earliestTimeToReach)<=0) {
-                compEarliestAndNode = -1;
-                compNodeAndMax = -1;
-                caseId = 2;
-            }
+    public static void main(String[] args) {
+        String pathTrainList = "data" + File.separator +"train_list.txt";
+        String pathRoute = "data"+File.separator+"route"+File.separator+"route.txt";
+        String pathPlotFile = "data"+File.separator+"plot"+File.separator+"plot1.pdf";
+
+        String pathTemp = "data"+File.separator+"temp";
+        String pathLog = "data"+File.separator+"logs";
+        String pathFinal = "data"+File.separator+"final";
+        String pathBestRoute = "data"+File.separator+"bestRoute";
+        String pathOldTrainSchedule = "data"+File.separator+"final" + File.separator + "dayall";
+
+        if(!createParentFolder(pathTrainList) && !createParentFolder(pathRoute) && !createParentFolder(pathPlotFile)
+                && createFolder(pathTemp) && createFolder(pathLog) && createFolder(pathFinal)
+                && createFolder(pathBestRoute) && createFolder(pathOldTrainSchedule)){
+            System.exit(1);
         }
 
-        if(compEarliestAndNode <=0 && compNodeAndMax <=0){
-            return caseId;
+        if(!isNetAvailable()){
+            System.out.println("No internet Connection.. Try again");
+            System.exit(0);
         }
-        return -1;
-    }
 
-    private boolean checkIfCrossingWithAnotherTrain(String nodeStartId, String nodeEndId, LocalTime nodeStartTime, LocalTime nodeEndTime, int caseId){
-        boolean crossAnotherTrain = false;
-        if(!nodeStartId.equalsIgnoreCase("source") && !nodeEndId.equalsIgnoreCase("dest") ) {
-            for (Train train : TRAIN_LIST) {
-                LocalTime oldTrainDept = train.getDept(nodeStartId);
-                LocalTime oldTrainArr = train.getArr(nodeEndId);
-                int compOldTrainDeptAndNodeStart = oldTrainDept.compareTo(nodeStartTime);
-                int compOldTrainArrAndNodeEnd = oldTrainArr.compareTo(nodeEndTime);
+        try {
+            // Creating a File object that represents the disk file.
+            PrintStream o = new PrintStream(new File(pathLog + File.separator+"err.log"));
+            PrintStream o1 = new PrintStream(new File(pathLog + File.separator+"output.log"));
+           // Store current System.out before assigning a new value
+           // PrintStream console = System.err;
+           // PrintStream console1 = System.out;
+           //
+           // Assign o to output stream
+            System.setErr(o);
+            System.setOut(o1);
+            Scheduler scheduler = new Scheduler();
 
-                if (oldTrainDept.compareTo(oldTrainArr) > 0) {
-                    //need to take care of next day stoppage trains
-                    if (caseId == 0 || caseId == 1) {
-                        compOldTrainArrAndNodeEnd = 1;
-                    }
-                } else {
-                    if (caseId == 2) {
-                        compOldTrainArrAndNodeEnd = -1;
-                    }
-                }
 
-                if (compOldTrainDeptAndNodeStart != compOldTrainArrAndNodeEnd) {
-                    //if depart at same time...  must arrive at same time at next station.
-                    crossAnotherTrain = true;
-                    break;
-                }
+           // new TrainList().getTrainList(pathTrainList);
+           // new TrainStoppageList().getTrainStoppageFromFile(pathTrainList,pathTemp,pathFinal);
+
+            if(!scheduler.addRouteFromFile(pathRoute)){
+                System.out.println("Unable to load route file");
+                System.exit(0);
             }
+
+            ArrayList<String> stationIdComplete= new ArrayList<>(scheduler.stationId);
+            ArrayList<String> stationNameComplete= new ArrayList<>(scheduler.stationName);
+            ArrayList<Double> stationDistanceComplete= new ArrayList<>(scheduler.stationDistance);
+            ArrayList<Double> stopTime = new ArrayList<>();
+            for(int i=0;i<scheduler.stationId.size();i++) {
+                stopTime.add(0.0);
+            }
+            // stopTime.set(5, 2.0);
+            // stopTime.set(12, 4.0);
+            // stopTime.set(22, 4.0);
+
+            Double avgSpeed = 80.0;
+            int minDelayBwTrains = 3;
+            LocalTime sourceTime = null;
+            LocalTime destTime = LocalTime.of(17,15);
+            String pathBestRouteFile;
+            int noOfPaths = 1;
+            int hrs1=-1;
+            int minutes1=-1;
+
+            for(int i=0;i<stationIdComplete.size();i+=9){
+                pathBestRouteFile = pathBestRoute + File.separator + "Type 4 AvgSpeed "+avgSpeed +" part " + i/10;
+                Scheduler scheduler1 = new Scheduler();
+                int last = ((i+10)>stationIdComplete.size())?stationIdComplete.size():(i+10);
+                scheduler1.addRoute(new ArrayList<>(stationIdComplete.subList(i,last)),new ArrayList<>(stationNameComplete.subList(i,last)),new ArrayList<>(stationDistanceComplete.subList(i,last)));
+                long milli = new Date().getTime();
+                System.out.println("*********************************************************");
+                System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
+                System.out.println("Avg speed: " + avgSpeed);
+                if(hrs1>=0 && minutes1>=0) {
+                    sourceTime = LocalTime.of(hrs1,minutes1);
+                }
+
+                List<Path<String>> paths= new KBestSchedule().getScheduleNewTrain(scheduler1.stationId, scheduler1.stationName, scheduler1.stationDistance, noOfPaths, sourceTime, null, minDelayBwTrains, avgSpeed, new ArrayList<>(stopTime.subList(i,last)), pathOldTrainSchedule);
+                milli = new Date().getTime() - milli;
+                System.out.println("Duration: " + milli + "ms");
+                System.out.println(paths.size());
+                for(Path<String> path: paths) {
+                    System.out.println(path.toString() + " cost: " + path.pathCost());
+                }
+                String dataLastNode[] = paths.get(0).getNodeList().get(paths.get(0).getNodeList().size()-2).split(":");
+                hrs1 = Integer.parseInt(dataLastNode[1]);
+                minutes1 = Integer.parseInt(dataLastNode[2]);
+                scheduler1.writeToFilePaths(paths,pathBestRouteFile,stopTime,avgSpeed);
+            }
+
+            // pathBestRouteFile = pathBestRoute + File.separator + "Type 1 AvgSpeed "+avgSpeed;
+            // new Scheduler().getScheduleNewTrain(noOfPaths, pathBestRouteFile, sourceTime, destTime, minDelayBwTrains, avgSpeed, stopTime, pathRoute, pathBestRoute, pathOldTrainSchedule);
+            // pathBestRouteFile = pathBestRoute + File.separator + "Type 2 AvgSpeed "+avgSpeed;
+            // new Scheduler().getScheduleNewTrain(noOfPaths, pathBestRouteFile, sourceTime, null, minDelayBwTrains, avgSpeed, stopTime, pathRoute, pathBestRoute, pathOldTrainSchedule);
+            // pathBestRouteFile = pathBestRoute + File.separator + "Type 3 AvgSpeed "+avgSpeed;
+            // destTime = LocalTime.of(16,20);
+            // new Scheduler().getScheduleNewTrain(noOfPaths, pathBestRouteFile, null, destTime, minDelayBwTrains, avgSpeed, stopTime, pathRoute, pathBestRoute, pathOldTrainSchedule);
+
+            // String titlePlot = "Train Schedule";
+            // int windowHeight = 600;
+            // int windowWidth = 1000;
+            // int newTrainNo = 9910;
+            // int heightPlotFile = 600;
+            // int widthPlotFile = 1000;
+            //
+            // String pathNewTrainFile = pathBestRoute+File.separator+"Type 4 AvgSpeed 80.0 path 1 cost 182.0 .path";
+            // LinePlotTrains demo = new LinePlotTrains(titlePlot, windowHeight, windowWidth, newTrainNo, heightPlotFile, widthPlotFile, pathPlotFile, pathRoute, pathOldTrainSchedule, pathNewTrainFile);
+            // demo.pack();
+            // RefineryUtilities.centerFrameOnScreen(demo);
+            // demo.setVisible(true);
         }
-        return crossAnotherTrain;
-    }
-
-    @SuppressWarnings("unused")
-    private void scheduleKBestPathOptimized(int noOfPaths, LocalTime sourceTime, LocalTime destTime, int maxDelayBwStations, int minDelayBwTrains, ArrayList<Double> waitTime, Double destDist, String pathBestRouteFile, Double avgSpeed, int startHrs, int startMinutes, int endHrs, int endMinutes){
-        long milli = new Date().getTime();
-        System.out.println("*********************************************************");
-        System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
-        System.out.println("Avg speed: " + avgSpeed);
-        System.out.println("Start: "+startHrs+":"+startMinutes);
-        System.out.println("End: "+ endHrs+":"+startMinutes);
-        try{
-            ArrayList<String> stationList = getStationList();
-            ArrayList<ArrayList<String>> nodes = getNodesFreeSlot(minDelayBwTrains, sourceTime, destTime, startHrs, startMinutes, endHrs, endMinutes);
-            if(nodes==null || stationList==null){
-                System.out.println("Error in loading data");
-                return;
-            }
-            if(nodes.size() != stationList.size()) {
-                System.out.println("Invalid nodes in graph... exiting");
-                return;
-            }
-
-            GraphKBestPath<String> graphKBestPath = new GraphKBestPath<>();
-            long edgeCount=0;
-            System.out.println("Nodes size: " +nodes.size());
-            String nodeStartId;
-            LocalTime nodeStartTime;
-            String nodeStartLabel;
-            String  nodeEndId;
-            LocalTime nodeEndTime;
-            String nodeEndLabel;
-            Pair<String, LocalTime> pairNodeStartData;
-            Pair<String, LocalTime> pairNodeEndData;
-
-            Double distanceStationStart;
-            Double distanceStationEnd = 0.0;
-            Double waitTimeStationEnd = 0.0;
-            Double distanceBwStation;
-
-            for(int i=0;i<stationList.size()-1;i++) {
-                distanceStationStart = distanceStationEnd;
-                if(i<this.PATH.size()) {
-                    distanceStationEnd = this.PATH.get(i).getDistance();
-                    waitTimeStationEnd = waitTime.get(i);
-                }
-                distanceBwStation = distanceStationEnd - distanceStationStart;
-
-                if(nodes.get(i).isEmpty()) {
-                    System.out.println("No path found as no available slot for station "+ stationList.get(i));
-                    return;
-                }
-                if(nodes.get(i+1).isEmpty()) {
-                    System.out.println("No path found as no available slot for station "+ stationList.get(i+1));
-                    return;
-                }
-
-                if(!nodes.get(i).get(0).split(":")[0].equalsIgnoreCase(stationList.get(i)) || !nodes.get(i+1).get(0).split(":")[0].equalsIgnoreCase(stationList.get(i+1))){
-                    System.out.println("Invalid path Info.");
-                    return;
-                }
-
-                for(int j=0;j<nodes.get(i).size();j++) {
-                    nodeStartLabel = nodes.get(i).get(j);
-                    pairNodeStartData = getNodeData(nodeStartLabel);
-                    if(pairNodeStartData==null){
-                        System.out.println("Some error occurred in pair update...");
-                        return;
-                    }
-                    nodeStartId = pairNodeStartData.getFirst();
-                    nodeStartTime = pairNodeStartData.getSecond();
-                    for(int k=0;k<nodes.get(i+1).size();k++) {
-                        nodeEndLabel = nodes.get(i+1).get(k);
-                        pairNodeEndData = getNodeData(nodeEndLabel);
-                        if(pairNodeEndData==null){
-                            System.out.println("Some error occurred pair update...");
-                            return;
-                        }
-                        nodeEndId = pairNodeEndData.getFirst();
-                        nodeEndTime = pairNodeEndData.getSecond();
-
-                        if(nodeStartTime==null || nodeEndTime==null){
-                            if(graphKBestPath.addEdge(new Edge<>(nodeStartLabel, nodeEndLabel,0))){
-                                edgeCount++;
-                            }
-                        }
-                        else{
-                            int caseId = checkIfValidCase(distanceBwStation,avgSpeed,waitTimeStationEnd,nodeStartTime,nodeEndTime,maxDelayBwStations);
-                            if(caseId>=0){
-                                if(!checkIfCrossingWithAnotherTrain(nodeStartId,nodeEndId,nodeStartTime,nodeEndTime,caseId)) {
-                                    int edgeCost = getTimeDiff(nodeEndTime, nodeStartTime);
-                                    if(edgeCost >= 0 && graphKBestPath.addEdge(new Edge<>(nodeStartLabel, nodeEndLabel,edgeCost))){
-                                        edgeCount++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            System.out.println("Edge size: " +edgeCount);
-            List<Path<String>> paths;
-
-            paths= new DefaultKShortestPathFinder<String>().findShortestPaths(getNodeLabel("source",sourceTime), getNodeLabel("dest", destTime), graphKBestPath, noOfPaths);
-
-            writeToFilePaths(paths, pathBestRouteFile, waitTime, avgSpeed);
-            milli = new Date().getTime() - milli;
-            System.out.println("Duration: " + milli + "ms");
-        }
-        catch(Exception e){
+        catch (Exception e){
             e.printStackTrace();
         }
-    }
-
-    @SuppressWarnings("unused")
-    public void scheduleNewTrain(String pathRoute, String pathBestRoute, String pathOldTrainSchedule) {
-        Double destDist = analyzeOldTrainScheduleFile(pathRoute, pathOldTrainSchedule);
-        if(destDist==null){
-            System.out.println("Some error occurred in analyzing old data. Please check given input and path.");
-            return;
-        }
-        Double avgSpeed = 80.0;
-        int startHrs = 0;
-        int startMinutes = 0;
-        int endHrs = 23;
-        int endMinutes=59;
-        ArrayList<Double> waitTime = new ArrayList<>();
-        for(int i=0;i<this.PATH.size();i++) {
-            waitTime.add(0.0);
-        }
-//        waitTime.set(5, 2.0);
-//        waitTime.set(12, 4.0);
-//        waitTime.set(22, 4.0);
-
-
-        int maxDelayBwStations = 60;
-        int minDelayBwTrains = 3;
-        LocalTime sourceTime = LocalTime.of(12,12);
-        LocalTime destTime = LocalTime.of(17,15);
-        String pathBestRouteFile;
-        int noOfPaths = 10;
-
-        pathBestRouteFile = pathBestRoute + File.separator + "Type 1 AvgSpeed "+avgSpeed + " Start "+startHrs+"_"+startMinutes +" End " + endHrs +"_"+endMinutes;
-        scheduleKBestPathOptimized(noOfPaths, sourceTime, destTime, maxDelayBwStations, minDelayBwTrains, waitTime,destDist,pathBestRouteFile,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
-
-        pathBestRouteFile = pathBestRoute + File.separator + "Type 2 AvgSpeed "+avgSpeed + " Start "+startHrs+"_"+startMinutes +" End " + endHrs +"_"+endMinutes;
-        scheduleKBestPathOptimized(noOfPaths, sourceTime, null, maxDelayBwStations, minDelayBwTrains, waitTime,destDist,pathBestRouteFile,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
-
-        pathBestRouteFile = pathBestRoute + File.separator + "Type 3 AvgSpeed "+avgSpeed + " Start "+startHrs+"_"+startMinutes +" End " + endHrs +"_"+endMinutes;
-        scheduleKBestPathOptimized(noOfPaths, null, destTime, maxDelayBwStations, minDelayBwTrains, waitTime,destDist,pathBestRouteFile,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
-
-        pathBestRouteFile = pathBestRoute + File.separator + "Type 4 AvgSpeed "+avgSpeed + " Start "+startHrs+"_"+startMinutes +" End " + endHrs +"_"+endMinutes;
-        scheduleKBestPathOptimized(noOfPaths,null, null, maxDelayBwStations, minDelayBwTrains, waitTime,destDist,pathBestRouteFile,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
     }
 }

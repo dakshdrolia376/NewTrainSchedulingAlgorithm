@@ -1,13 +1,18 @@
 import java.time.LocalTime;
 
+import static java.util.Objects.requireNonNull;
+
 public class TrainAtStation {
 
-    private String stationId;
-    private int trainNo;
-    private LocalTime arrival;
-    private LocalTime departure;
+    private final String stationId;
+    private final int trainNo;
+    private final LocalTime arrival;
+    private final LocalTime departure;
 
     TrainAtStation(String stationId, int trainNo, LocalTime arrival, LocalTime departure) {
+        requireNonNull(stationId, "Station id is null.");
+        requireNonNull(arrival, "Arrival is null.");
+        requireNonNull(departure, "Departure is null.");
         this.stationId = stationId;
         this.trainNo =trainNo;
         this.arrival =arrival;

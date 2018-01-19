@@ -103,7 +103,6 @@ class LinePlotTrains extends ApplicationFrame {
 
                 if (file.isFile()) {
                     String filename = file.getName().split("\\.")[0];
-                    String pathTrainFile = pathOldTrains + "/" + filename + ".txt";
                     try {
                         trains.add(Integer.parseInt(filename));
                     } catch (NumberFormatException e) {
@@ -111,7 +110,7 @@ class LinePlotTrains extends ApplicationFrame {
                     }
                     try {
                         schedule.add(0, new ArrayList<>());
-                        fReader = new FileReader(pathTrainFile);
+                        fReader = new FileReader(file);
                         bReader = new BufferedReader(fReader);
                         while ((line = bReader.readLine()) != null) {
                             data = line.split("\\s+");

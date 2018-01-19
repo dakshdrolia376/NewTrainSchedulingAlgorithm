@@ -13,8 +13,7 @@ public class DefaultKShortestPathFinder<V> {
         requireNonNull(target, "The target node is null.");
         requireNonNull(graph, "The graph is null.");
         if (!checkK(k)){
-            System.err.println("Invalid number of path.");
-            return null;
+            throw new IllegalArgumentException("Invalid number of paths required.");
         }
 
         List<Path<V>> paths = new ArrayList<>(k);

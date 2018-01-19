@@ -1,13 +1,15 @@
 import java.time.LocalTime;
 
-public class Node {
-    private LocalTime time;
-    private String stationId;
-    private Double distance;
-    private Double waitTime;
+import static java.util.Objects.requireNonNull;
 
-    Node(LocalTime time, String stationId, Double distance, Double waitTime) {
-        super();
+public class Node {
+    private final LocalTime time;
+    private final String stationId;
+    private final double distance;
+    private final double waitTime;
+
+    Node(LocalTime time, String stationId, double distance, double waitTime) {
+        requireNonNull(stationId, "The station id is null.");
         this.time = time;
         this.stationId = stationId;
         this.distance = distance;
@@ -24,7 +26,6 @@ public class Node {
         }
     }
 
-    @SuppressWarnings("unused")
     public String getStationId() {
         return this.stationId;
     }
@@ -33,12 +34,11 @@ public class Node {
         return this.time;
     }
 
-    public Double getDistance() {
+    public double getDistance() {
         return this.distance;
     }
 
-    @SuppressWarnings("unused")
-    public Double getWaitTime() {
+    public double getWaitTime() {
         return this.waitTime;
     }
 }

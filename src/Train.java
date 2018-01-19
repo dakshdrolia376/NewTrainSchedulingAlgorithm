@@ -2,18 +2,22 @@ import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.util.Objects.requireNonNull;
+
 public class Train {
 
-    private int trainNo;
-    private String name;
-    private Map<String, TrainAtStation> stoppageMap = new HashMap<>();
+    private final int trainNo;
+    private final String name;
+    private final Map<String, TrainAtStation> stoppageMap;
 
     public Train(int trainNo, String name) {
-        super();
+        requireNonNull(name, "The Train name is null.");
+        stoppageMap = new HashMap<>();
         this.trainNo = trainNo;
         this.name = name;
     }
 
+    @SuppressWarnings("unused")
     public int getTrainNo() {
         return this.trainNo;
     }
@@ -23,6 +27,7 @@ public class Train {
     }
 
     public LocalTime getArr(String stId) {
+        requireNonNull(stId,"Station id is null.");
         TrainAtStation trainAtStation = stoppageMap.get(stId);
         if(trainAtStation!=null){
             return trainAtStation.getArr();
@@ -31,6 +36,7 @@ public class Train {
     }
 
     public LocalTime getDept(String stId) {
+        requireNonNull(stId,"Station id is null.");
         TrainAtStation trainAtStation = stoppageMap.get(stId);
         if(trainAtStation!=null){
             return trainAtStation.getDept();
@@ -39,12 +45,12 @@ public class Train {
     }
 
     public boolean addStoppage(Station station, LocalTime arrival, LocalTime departure) {
+        requireNonNull(station, "Station is null.");
+        requireNonNull(arrival, "Arrival is null.");
+        requireNonNull(departure, "Departure is null.");
         TrainAtStation trainAtStation = new TrainAtStation(station.getId(), this.trainNo, arrival, departure);
-        if(!station.addTrain(trainAtStation)){
-            return false;
-        }
         stoppageMap.put(station.getId(), trainAtStation);
-        return true;
+        return station.addTrain(trainAtStation);
     }
 
     @SuppressWarnings("unused")

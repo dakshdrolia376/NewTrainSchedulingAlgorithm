@@ -1,20 +1,25 @@
 import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.Objects.requireNonNull;
 
 public class Station {
 
-    private String name;
-    private String id;
-    private double distance;
-    private ArrayList<TrainAtStation> arrDeptSchedule = new ArrayList<>();
+    private final String name;
+    private final String id;
+    private final double distance;
+    private final List<TrainAtStation> arrDeptSchedule;
 
-    public Station(String id, String name, Double distance) {
-        super();
+    public Station(String id, String name, double distance) {
+        requireNonNull(id, "Station id is null.");
+        requireNonNull(name, "Station name is null.");
+        arrDeptSchedule = new ArrayList<>();
         this.id = id;
         this.name = name;
         this.distance = distance;
     }
 
-    public ArrayList<TrainAtStation> getStationSchedule() {
+    public List<TrainAtStation> getStationSchedule() {
         return this.arrDeptSchedule;
     }
 
@@ -26,13 +31,12 @@ public class Station {
         return this.name;
     }
 
-    public Double getDistance() {
+    public double getDistance() {
         return this.distance;
     }
 
     public boolean addTrain(TrainAtStation TrainAtStation) {
-        this.arrDeptSchedule.add(TrainAtStation);
-        return true;
+        return this.arrDeptSchedule.add(TrainAtStation);
     }
 
     public void sortArr() {
@@ -56,7 +60,7 @@ public class Station {
     @SuppressWarnings("unused")
     public void printInfo() {
         System.out.println("**********************************************************");
-        System.out.println("Station id: " + this.id + " Name: "+ this.name);
+        System.out.println("Station id: " + this.id + " Name: "+ this.name + " Distance: " + this.distance + " No of trains passing" + this.arrDeptSchedule.size());
         System.out.println("Train\tArrival\tDeparture");
         for (TrainAtStation trainAtStation: this.arrDeptSchedule) {
             System.out.println( trainAtStation.getTrainNo() + "\t" + trainAtStation.getArr() + "\t"  + trainAtStation.getDept());

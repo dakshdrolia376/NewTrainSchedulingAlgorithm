@@ -1,1 +1,48 @@
-hi
+*********************************************************
+2018/01/20 03:12:53
+Avg speed: 80.0
+Nodes size: 12
+Edge size: 541778
+Duration: 9828ms
+1
+[source, pnbe:09:10, scy:09:12, pws:09:15, dnr:09:18, neo:09:23, gnhi:09:26, sde:09:30, patl:09:32, bta:09:34, pail:09:39, dest] cost: 29.0
+*********************************************************
+2018/01/20 03:13:03
+Avg speed: 80.0
+Nodes size: 12
+Edge size: 528579
+Duration: 7207ms
+1
+[source:09:39, pail:09:39, vhch:09:40, kwr:09:42, kua:09:45, jmir:09:50, ara:09:54, jgwl:09:57, krs:10:02, kya:10:06, xsan:10:08, dest] cost: 29.0
+*********************************************************
+2018/01/20 03:13:10
+Avg speed: 80.0
+Nodes size: 12
+Edge size: 534445
+Duration: 6032ms
+1
+[source:10:08, xsan:10:08, rnte:10:10, bea:10:13, asjp:10:16, byn:10:18, skri:10:22, rpr:10:26, vkdh:10:30, twg:10:34, vvg:10:38, dest] cost: 30.0
+*********************************************************
+2018/01/20 03:13:16
+Avg speed: 80.0
+Nodes size: 12
+Edge size: 520917
+Duration: 6219ms
+1
+[source:10:38, vvg:10:38, dure:10:41, bue:10:47, ndon:10:56, bxr:11:01, pwxp:11:08, csa:11:10, bqw:11:15, gmr:11:18, kkrh:11:21, dest] cost: 43.0
+*********************************************************
+2018/01/20 03:13:23
+Avg speed: 80.0
+Nodes size: 12
+Edge size: 528869
+Duration: 6570ms
+1
+[source:11:21, kkrh:11:21, bwh:11:24, usk:11:27, dln:11:31, drv:11:37, zna:11:42, bhcl:11:46, dha:11:52, tlam:11:58, sld:12:03, dest] cost: 42.0
+*********************************************************
+2018/01/20 03:13:29
+Avg speed: 80.0
+Nodes size: 8
+Edge size: 301900
+Duration: 4094ms
+1
+[source:12:03, sld:12:03, kca:12:09, eocm:12:11, mgso:12:15, mgmy:12:18, mgs:12:23, dest] cost: 20.0

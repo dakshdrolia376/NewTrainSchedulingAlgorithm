@@ -1,51 +1,57 @@
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static java.util.Objects.requireNonNull;
 
 public class Route {
-    private ArrayList<Station> path;
+    private final Map<String, Station> mapStation;
+    private final List<String> stationOrder;
 
-    public Route(ArrayList<Station> path) {
-        super();
-        this.path = path;
+    public Route(){
+        mapStation = new HashMap<>();
+        stationOrder = new ArrayList<>();
     }
 
-    @SuppressWarnings("unused")
-    public Station getSrc() {
-        return this.path.get(0);
+    public boolean addStation(String id, String name, double distance){
+        requireNonNull(id, "Station id is null.");
+        requireNonNull(name, "Station name is null.");
+        mapStation.put(id, new Station(id, name, distance));
+        return stationOrder.add(id);
     }
 
-    @SuppressWarnings("unused")
-    public Station getDest() {
-        return this.path.get(this.path.size()-1);
+    public List<String> getStationList() {
+        return new ArrayList<>(this.stationOrder);
+    }
+
+    public int getNumberOfStation(){
+        return this.stationOrder.size();
     }
 
     public Station getStation(String id) {
-        for (Station station: this.path) {
-            if(station.getId().equals(id)){
-                return station;
-            }
-        }
-        return null;
+        requireNonNull(id, "Station id is null.");
+        return mapStation.get(id);
     }
 
     @SuppressWarnings("unused")
     public void printInfo() {
-        for (Station station:this.path) {
+        for (Station station:this.mapStation.values()) {
             station.sortArr();
             station.printInfo();
         }
     }
 
-    public ArrayList<String> getStationList() {
-        ArrayList<String> stationList = new ArrayList<>();
-        for (Station station: this.path) {
-            stationList.add(station.getId());
+    List<List<String>> getFreeSlots(int minDelayBwTrains, int startHrs, int startMinutes, int endHrs, int endMinutes) {
+        if(minDelayBwTrains <0){
+            throw new IllegalArgumentException("Min delay between two consecutive train is negative.");
         }
-        return stationList;
-    }
+        if(startHrs <0 || startHrs >=24 || endHrs <0 || endHrs >=24 || startMinutes <0 || startMinutes >=60 || endMinutes <0 || endMinutes >=60){
+            throw new IllegalArgumentException("Invalid start/end timings");
+        }
 
-    ArrayList<ArrayList<String>> getFreeSlots(int minDelayBwTrains, int startHrs, int startMinutes, int endHrs, int endMinutes) {
-        ArrayList<ArrayList<String>> nextDaySlots = new ArrayList<>();
+        List<List<String>> nextDaySlots = new ArrayList<>();
         if(endHrs<startHrs || (endHrs==startHrs && endMinutes < startMinutes)) {
             nextDaySlots = getFreeSlots(minDelayBwTrains, 0,0,endHrs,endMinutes);
             endHrs = 23;
@@ -57,18 +63,20 @@ public class Route {
 
         start = LocalTime.of(startHrs, startMinutes);
         end = LocalTime.of(endHrs, endMinutes);
-        ArrayList<ArrayList<String>> nodes = new ArrayList<>();
+        List<List<String>> nodes = new ArrayList<>(this.stationOrder.size());
 
         LocalTime temp1;
-        String stationId;
-
-        for(Station station: this.path) {
+        for(String stationId: this.stationOrder) {
+            Station station = this.mapStation.get(stationId);
+            if(station==null){
+                throw  new RuntimeException("Unable to load station");
+            }
             slotDept = start;
             stationId = station.getId();
             station.sortDept();
-            ArrayList<TrainAtStation> schedule = station.getStationSchedule();
+            List<TrainAtStation> schedule = station.getStationSchedule();
+            List<String> stationNodes = new ArrayList<>();
 
-            ArrayList<String> stationNodes = new ArrayList<>();
             boolean endNodeRequired = true;
             for(TrainAtStation trainAtStation: schedule) {
                 scheduleSlotDept  = trainAtStation.getDept();
@@ -77,7 +85,7 @@ public class Route {
 
                 temp1 = slotDept;
                 while(temp1.compareTo(scheduleSlotDept1)<=0 && temp1.compareTo(end)<=0) {
-                    stationNodes.add(Scheduler.getNodeLabel(stationId,temp1));
+                    stationNodes.add(KBestSchedule.getNodeLabel(stationId,temp1));
                     temp1 = Scheduler.addMinutes(temp1, 1);
                 }
 
@@ -94,7 +102,7 @@ public class Route {
                 temp1 = slotDept;
                 int comp = temp1.compareTo(end);
                 while(comp<=0) {
-                    stationNodes.add(Scheduler.getNodeLabel(stationId,temp1));
+                    stationNodes.add(KBestSchedule.getNodeLabel(stationId,temp1));
                     if(comp==0) {
                         break;
                     }

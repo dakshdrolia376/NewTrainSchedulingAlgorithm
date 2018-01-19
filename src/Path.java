@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 import static java.lang.String.format;
+import static java.util.Objects.requireNonNull;
 
 public class Path<V> {
 
@@ -11,18 +11,20 @@ public class Path<V> {
     private final double totalCost;
 
     public Path(V source) {
-        Objects.requireNonNull(source, "The input source node is null.");
+        requireNonNull(source, "The input source node is null.");
         node = source;
         totalCost = 0.0;
     }
 
     private Path(V node, double totalCost) {
+        requireNonNull(node, "The input source node is null.");
         this.node = node;
         this.totalCost = totalCost;
     }
 
 
     public Path<V> append(Edge<V> edge) {
+        requireNonNull(edge, "The input edge is null.");
         if (!node.equals(edge.from)) {
             throw new IllegalArgumentException(format("The edge %s doesn't extend the path %s", edge, this.getNodeList()));
         }
