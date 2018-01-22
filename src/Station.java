@@ -57,7 +57,6 @@ public class Station {
         });
     }
 
-    @SuppressWarnings("unused")
     public void printInfo() {
         System.out.println("**********************************************************");
         System.out.println("Station id: " + this.id + " Name: "+ this.name + " Distance: " + this.distance + " No of trains passing" + this.arrDeptSchedule.size());

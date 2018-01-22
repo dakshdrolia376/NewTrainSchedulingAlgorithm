@@ -9,7 +9,7 @@ public class TrainAtStation {
     private final LocalTime arrival;
     private final LocalTime departure;
 
-    TrainAtStation(String stationId, int trainNo, LocalTime arrival, LocalTime departure) {
+    public TrainAtStation(String stationId, int trainNo, LocalTime arrival, LocalTime departure) {
         requireNonNull(stationId, "Station id is null.");
         requireNonNull(arrival, "Arrival is null.");
         requireNonNull(departure, "Departure is null.");

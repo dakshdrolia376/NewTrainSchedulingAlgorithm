@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-@SuppressWarnings("unused")
 public class TrainList {
 
     public void getTrainList(String pathFile) {

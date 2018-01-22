@@ -35,7 +35,6 @@ public class Route {
         return mapStation.get(id);
     }
 
-    @SuppressWarnings("unused")
     public void printInfo() {
         for (Station station:this.mapStation.values()) {
             station.sortArr();
@@ -43,7 +42,7 @@ public class Route {
         }
     }
 
-    List<List<String>> getFreeSlots(int minDelayBwTrains, int startHrs, int startMinutes, int endHrs, int endMinutes) {
+    public List<List<String>> getFreeSlots(int minDelayBwTrains, int startHrs, int startMinutes, int endHrs, int endMinutes) {
         if(minDelayBwTrains <0){
             throw new IllegalArgumentException("Min delay between two consecutive train is negative.");
         }

@@ -38,7 +38,7 @@ class LinePlotTrains extends ApplicationFrame {
 
     private static final long serialVersionUID = 1L;
 
-    LinePlotTrains(final String title, int windowHeight, int windowWidth, int newTrainNo, int heightPlotFile, int widthPlotFile, String pathPlotFile, String pathRoute, String pathOldTrains, String pathNewTrainFile) {
+    public LinePlotTrains(final String title, int windowHeight, int windowWidth, int newTrainNo, int heightPlotFile, int widthPlotFile, String pathPlotFile, String pathRoute, String pathOldTrains, String pathNewTrainFile) {
         super(title);
         ArrayList<Double> stationDistance = new ArrayList<>();
         HashMap<Double, String> tickLabels = new HashMap<>();
@@ -53,11 +53,11 @@ class LinePlotTrains extends ApplicationFrame {
             String line;
             String data[];
             String st_id;
-            Double st_dist;
+            double st_dist;
             while ((line = bReader.readLine()) != null) {
                 data = line.split("\\s+");
                 st_id = data[0].trim().replaceAll(".*-", "");
-                st_dist = roundDecimal(Double.parseDouble(data[1]));
+                st_dist = Scheduler.roundDecimal(Double.parseDouble(data[1]));
                 stationDistance.add(st_dist);
                 tickLabels.put(st_dist, st_id);
             }
@@ -129,7 +129,6 @@ class LinePlotTrains extends ApplicationFrame {
                 }
             }
 
-            System.out.println("hi");
             final XYDataset dataset = createDataset(trains, schedule, stationDistance);
             final JFreeChart chart = createChart(dataset, tickLabels, pathPlotFile);
             final ChartPanel chartPanel = new ChartPanel(chart);
@@ -146,7 +145,7 @@ class LinePlotTrains extends ApplicationFrame {
         }
     }
 
-    private static void saveChartToPDF(JFreeChart chart, String fileName, int width, int height) throws Exception {
+    public void saveChartToPDF(JFreeChart chart, String fileName, int width, int height) throws Exception {
         if (chart == null) {
             System.out.println("Invalid Data to save as pdf.");
             return;
@@ -181,23 +180,11 @@ class LinePlotTrains extends ApplicationFrame {
         }
     }
 
-    private static Double roundDecimal(Double number) {
-        Double temp = number % 1;
-        if (temp < 0.25) {
-            temp = 0.0;
-        } else if (temp < 0.75) {
-            temp = 0.5;
-        } else {
-            temp = 1.0;
-        }
-        return ((long) (number / 1) + temp);
-    }
-
-    private static Double getValueFromTime(int hrs, int minutes) {
+    public double getValueFromTime(int hrs, int minutes) {
         return (double) (hrs * 60 + minutes);
     }
 
-    private static LocalTime getTimeFromValue(Double value) {
+    public LocalTime getTimeFromValue(double value) {
         int hrs = (int) (value / 1) / 60;
         int minutes = (int) (value / 1) % 60;
         try {
@@ -208,7 +195,7 @@ class LinePlotTrains extends ApplicationFrame {
         }
     }
 
-    private XYDataset createDataset(ArrayList<Integer> trains, ArrayList<ArrayList<LocalTime[]>> schedule, ArrayList<Double> stationDistance) {
+    public XYDataset createDataset(ArrayList<Integer> trains, ArrayList<ArrayList<LocalTime[]>> schedule, ArrayList<Double> stationDistance) {
         // create the dataset...
         final XYSeriesCollection dataset = new XYSeriesCollection();
         LocalTime temp=null, temp2, temp3;
@@ -222,15 +209,15 @@ class LinePlotTrains extends ApplicationFrame {
                     break;
                 }
                 if(i > 0 && (temp.compareTo(temp2) > 0)){
-                    Double distanceNextDay = stationDistance.get(i) - stationDistance.get(i-1);
-                    Double timeDiff1 = 24*60 - getValueFromTime(temp.getHour(), temp.getMinute());
-                    Double timeDiff2 = getValueFromTime(temp2.getHour(), temp2.getMinute());
+                    double distanceNextDay = stationDistance.get(i) - stationDistance.get(i-1);
+                    double timeDiff1 = 24*60 - getValueFromTime(temp.getHour(), temp.getMinute());
+                    double timeDiff2 = getValueFromTime(temp2.getHour(), temp2.getMinute());
 
                     distanceNextDay = (distanceNextDay)* timeDiff1 / (timeDiff1 + timeDiff2);
                     distanceNextDay += stationDistance.get(i-1);
                     series1.add(distanceNextDay,getValueFromTime(23,59));
-                    series1.add(distanceNextDay.doubleValue(), null);
-                    series1.add(distanceNextDay.doubleValue(), getValueFromTime(0,0));
+                    series1.add(distanceNextDay, null);
+                    series1.add(distanceNextDay, getValueFromTime(0,0));
                 }
                 series1.add(stationDistance.get(i).doubleValue(), getValueFromTime(temp2.getHour(), temp2.getMinute()));
 
@@ -248,7 +235,7 @@ class LinePlotTrains extends ApplicationFrame {
         return dataset;
     }
 
-    private JFreeChart createChart(final XYDataset dataset, HashMap<Double, String> tickLabels, String fileName) {
+    public JFreeChart createChart(final XYDataset dataset, HashMap<Double, String> tickLabels, String fileName) {
         // create the chart...
         final JFreeChart chart = ChartFactory.createXYLineChart(
                 "Train-tracking " + fileName,      // chart title

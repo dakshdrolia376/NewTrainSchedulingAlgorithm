@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -11,7 +12,7 @@ public class KBestSchedule {
     private Route route;
     private final Map<Integer, Train> trainMap;
 
-    KBestSchedule(){
+    public KBestSchedule(){
         trainMap = new HashMap<>();
     }
 
@@ -23,24 +24,6 @@ public class KBestSchedule {
         else{
             return (id+":"+time.toString()).toLowerCase();
         }
-    }
-
-    private static Pair<String, LocalTime> getNodeData(String label) {
-        requireNonNull(label, "Node label is null.");
-        String[] labelData = label.split(":");
-        Pair<String, LocalTime> pair = new Pair<>();
-        try {
-            if(!pair.updateFirst(labelData[0])){
-                throw new IllegalArgumentException("Illegal label");
-            }
-            if (labelData.length == 3 && !pair.updateSecond(LocalTime.of(Integer.parseInt(labelData[1]), Integer.parseInt(labelData[2])))){
-                throw new IllegalArgumentException("Illegal label");
-            }
-        }
-        catch (Exception e){
-            System.out.println("Invalid time info for node");
-        }
-        return pair;
     }
 
     private static int getTimeDiff(LocalTime localTime1, LocalTime localTime2) {
@@ -223,7 +206,7 @@ public class KBestSchedule {
         return false;
     }
 
-    private List<Path<String>> scheduleKBestPathOptimized(int noOfPaths, LocalTime sourceTime, LocalTime destTime, int maxDelayBwStations, int minDelayBwTrains, ArrayList<Double> stopTime, double avgSpeed, int startHrs, int startMinutes, int endHrs, int endMinutes){
+    public List<Path<String>> scheduleKBestPathOptimized(int noOfPaths, LocalTime sourceTime, LocalTime destTime, int maxDelayBwStations, int minDelayBwTrains, ArrayList<Double> stopTime, double avgSpeed, int startHrs, int startMinutes, int endHrs, int endMinutes){
         try{
             List<String> stationList = getStationList();
             List<List<String>> nodes = getNodesFreeSlot(minDelayBwTrains, sourceTime, destTime, startHrs, startMinutes, endHrs, endMinutes);
@@ -281,12 +264,12 @@ public class KBestSchedule {
 
                 for(int j=0;j<nodes.get(i).size();j++) {
                     nodeStartLabel = nodes.get(i).get(j);
-                    pairNodeStartData = getNodeData(nodeStartLabel);
+                    pairNodeStartData = Scheduler.getNodeData(nodeStartLabel);
                     nodeStartId = pairNodeStartData.getFirst();
                     nodeStartTime = pairNodeStartData.getSecond();
                     for(int k=0;k<nodes.get(i+1).size();k++) {
                         nodeEndLabel = nodes.get(i+1).get(k);
-                        pairNodeEndData = getNodeData(nodeEndLabel);
+                        pairNodeEndData = Scheduler.getNodeData(nodeEndLabel);
                         nodeEndId = pairNodeEndData.getFirst();
                         nodeEndTime = pairNodeEndData.getSecond();
                         if(nodeStartTime==null || nodeEndTime==null){
@@ -321,7 +304,11 @@ public class KBestSchedule {
         return Collections.emptyList();
     }
 
-    public List<Path<String>> getScheduleNewTrain(List<String> stationIdList, List<String> stationNameList, List<Double> stationDistanceList, int noOfPaths, LocalTime sourceTime, LocalTime destTime, int minDelayBwTrains, double avgSpeed , ArrayList<Double> stopTime, String pathOldTrainSchedule) {
+    public List<Path<String>> getScheduleNewTrain(List<String> stationIdList, List<String> stationNameList, List<Double> stationDistanceList, int noOfPaths, LocalTime sourceTime, int minDelayBwTrains, double avgSpeed , ArrayList<Double> stopTime, String pathOldTrainSchedule) {
+        long milli = new Date().getTime();
+        System.out.println("*********************************************************");
+        System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
+        System.out.println("Avg speed: " + avgSpeed);
         if(!addRoute(stationIdList,stationNameList,stationDistanceList) || !addTrainFromFolder(pathOldTrainSchedule)){
             return Collections.emptyList();
         }
@@ -335,6 +322,14 @@ public class KBestSchedule {
             System.out.println("Please give stop time for every station in route. if it does not stop at any particular station, give stop time as 0.");
             return Collections.emptyList();
         }
-        return scheduleKBestPathOptimized(noOfPaths, sourceTime, destTime, maxDelayBwStations, minDelayBwTrains, stopTime,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
+
+        List<Path<String>> paths = scheduleKBestPathOptimized(noOfPaths, sourceTime, null, maxDelayBwStations, minDelayBwTrains, stopTime,avgSpeed,startHrs,startMinutes,endHrs,endMinutes);
+        milli = new Date().getTime() - milli;
+        System.out.println("Duration: " + milli + "ms");
+        if(paths==null || paths.isEmpty()){
+            System.out.println("No path found");
+            return Collections.emptyList();
+        }
+        return paths;
     }
 }

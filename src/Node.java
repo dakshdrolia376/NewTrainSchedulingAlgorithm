@@ -8,7 +8,7 @@ public class Node {
     private final double distance;
     private final double waitTime;
 
-    Node(LocalTime time, String stationId, double distance, double waitTime) {
+    public Node(LocalTime time, String stationId, double distance, double waitTime) {
         requireNonNull(stationId, "The station id is null.");
         this.time = time;
         this.stationId = stationId;
@@ -16,7 +16,6 @@ public class Node {
         this.waitTime = waitTime;
     }
 
-    @SuppressWarnings("unused")
     public void printInfo() {
         if(this.time!=null) {
             System.out.println(this.stationId +"\t" + this.time+ "\t" + this.distance + "\t" + this.waitTime);

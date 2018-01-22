@@ -17,7 +17,6 @@ public class Train {
         this.name = name;
     }
 
-    @SuppressWarnings("unused")
     public int getTrainNo() {
         return this.trainNo;
     }
@@ -53,7 +52,6 @@ public class Train {
         return station.addTrain(trainAtStation);
     }
 
-    @SuppressWarnings("unused")
     public void printInfo() {
         System.out.println("**********************************************************");
         System.out.println("Train No: " + this.trainNo + " name: " + this.name);
@@ -64,4 +62,3 @@ public class Train {
         System.out.println("**********************************************************");
     }
 }
-
