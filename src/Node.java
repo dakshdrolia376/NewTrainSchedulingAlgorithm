@@ -1,27 +1,69 @@
-import java.time.LocalTime;
-
 import static java.util.Objects.requireNonNull;
 
 public class Node {
-    private final LocalTime time;
+    private final TrainTime time;
     private final String stationId;
-    private final double distance;
-    private final double waitTime;
+    private boolean isValid;
 
-    public Node(LocalTime time, String stationId, double distance, double waitTime) {
+    public Node(TrainTime time, String stationId) {
         requireNonNull(stationId, "The station id is null.");
-        this.time = time;
+        if(time!=null) {
+            this.time = new TrainTime(time);
+        }
+        else{
+            this.time = null;
+        }
         this.stationId = stationId;
-        this.distance = distance;
-        this.waitTime = waitTime;
+        this.isValid = true;
     }
 
-    public void printInfo() {
+    public Node(TrainTime time, String stationId, boolean isValid) {
+        requireNonNull(stationId, "The station id is null.");
+        if(time!=null) {
+            this.time = new TrainTime(time);
+        }
+        else{
+            this.time = null;
+        }
+        this.stationId = stationId;
+        this.isValid = isValid;
+    }
+
+    public Node(String label) {
+        requireNonNull(label, "The label is null.");
+        String data[] = label.split(":");
+        this.stationId = data[0];
+        this.isValid = true;
+        TrainTime trainTime = null;
+        if(data.length==4){
+            try{
+                trainTime = new TrainTime(Integer.parseInt(data[1]), Integer.parseInt(data[2]), Integer.parseInt(data[3]));
+            }
+            catch (Exception e){
+                System.out.println("Invalid label: " + label);
+            }
+
+        }
+        this.time = trainTime;
+    }
+
+    public boolean equals(Node node){
+        return this.toString().equalsIgnoreCase(node.toString());
+    }
+
+    public boolean isValid(){
+        return this.isValid;
+    }
+
+    public String toString() {
+        if(!isValid){
+            return "";
+        }
         if(this.time!=null) {
-            System.out.println(this.stationId +"\t" + this.time+ "\t" + this.distance + "\t" + this.waitTime);
+            return this.stationId +":" + this.time.toString();
         }
         else {
-            System.out.println(this.stationId +"\tNA\t" + this.distance + "\t" + this.waitTime);
+            return this.stationId;
         }
     }
 
@@ -29,15 +71,8 @@ public class Node {
         return this.stationId;
     }
 
-    public LocalTime getTime() {
+    public TrainTime getTime() {
         return this.time;
     }
 
-    public double getDistance() {
-        return this.distance;
-    }
-
-    public double getWaitTime() {
-        return this.waitTime;
-    }
 }

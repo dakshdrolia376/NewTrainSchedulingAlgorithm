@@ -13,7 +13,8 @@ public class TrainList {
         StringBuilder output = new StringBuilder("");
         for(int i=0;i<7;i++) {
             output.append(i);
-            String url = "http://api.railwayapi.com/v2/between/source/pnbe/dest/mgs/date/"+(15+i) +"-01-2018/apikey/jg75kd7lc1/";
+            String url = "http://api.railwayapi.com/v2/between/source/pnbe/dest/mgs/date/"
+                    +(15+i) +"-01-2018/apikey/jg75kd7lc1/";
 
             // Connect to the URL using java's native library
             try {
@@ -22,7 +23,8 @@ public class TrainList {
 
                 // Convert to a JSON object to print data
                 JsonParser jsonParser = new JsonParser(); //from gson.jar
-                JsonObject rootObj = jsonParser.parse(new InputStreamReader((InputStream) request.getContent())).getAsJsonObject(); //May be an array, may be an object.
+                JsonObject rootObj = jsonParser.parse(new InputStreamReader((InputStream) request.getContent()))
+                        .getAsJsonObject(); //May be an array, may be an object.
                 int total = rootObj.get("total").getAsInt();
                 JsonArray trainNos = rootObj.get("trains").getAsJsonArray();
                 for (int i1 = 0; i1 < total; i1++) {

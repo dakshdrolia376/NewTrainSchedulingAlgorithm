@@ -10,6 +10,7 @@ import java.util.List;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Map;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -33,17 +34,26 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 
-@SuppressWarnings("unused")
 class LinePlotTrains extends ApplicationFrame {
 
     private static final long serialVersionUID = 1L;
+    private List<Integer> trains;
+    private List<List<LocalTime[]>> schedule;
+    private List<String> stationId;
+    private int sizeSchedule;
+    private List<Double> stationDistance;
+    private Map<Double, String> tickLabels;
 
-    public LinePlotTrains(final String title, int windowHeight, int windowWidth, int newTrainNo, int heightPlotFile, int widthPlotFile, String pathPlotFile, String pathRoute, String pathOldTrains, String pathNewTrainFile) {
+    public LinePlotTrains(final String title, int windowHeight, int windowWidth, int newTrainNo, int heightPlotFile,
+                          int widthPlotFile, String pathPlotFile, String pathRoute, String pathOldTrains,
+                          String pathNewTrainFile, boolean newTrainFolder) {
         super(title);
-        ArrayList<Double> stationDistance = new ArrayList<>();
-        HashMap<Double, String> tickLabels = new HashMap<>();
-        ArrayList<Integer> trains;
-        ArrayList<ArrayList<LocalTime[]>> schedule;
+        stationDistance = new ArrayList<>();
+        schedule = new ArrayList<>();
+        sizeSchedule = 0;
+        stationId = new ArrayList<>();
+        trains = new ArrayList<>();
+        tickLabels = new HashMap<>();
 
         FileReader fReader;
         BufferedReader bReader;
@@ -57,6 +67,7 @@ class LinePlotTrains extends ApplicationFrame {
             while ((line = bReader.readLine()) != null) {
                 data = line.split("\\s+");
                 st_id = data[0].trim().replaceAll(".*-", "");
+                stationId.add(st_id);
                 st_dist = Scheduler.roundDecimal(Double.parseDouble(data[1]));
                 stationDistance.add(st_dist);
                 tickLabels.put(st_dist, st_id);
@@ -71,66 +82,48 @@ class LinePlotTrains extends ApplicationFrame {
                 return;
             }
 
-            schedule = new ArrayList<>();
-            trains = new ArrayList<>();
             if (!pathPlotFile.endsWith(".pdf")) {
                 pathPlotFile += ".pdf";
             }
-            trains.add(newTrainNo);
-
-            schedule.add(0, new ArrayList<>());
-            fReader = new FileReader(pathNewTrainFile);
-            bReader = new BufferedReader(fReader);
-            String data1[];
-            while ((line = bReader.readLine()) != null) {
-                if (line.equals("")) {
-                    continue;
+            if(pathNewTrainFile!=null) {
+                if(!newTrainFolder && !addTrain(newTrainNo, pathNewTrainFile)) {
+                    System.out.println("Error in adding train " + pathNewTrainFile);
                 }
-                data = line.split("\\s+");
-                LocalTime d[] = new LocalTime[2];
-                data1 = data[1].split(":");
-                d[0] = LocalTime.of(Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
-                data1 = data[2].split(":");
-                d[1] = LocalTime.of(Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
-                schedule.get(0).add(d);
-            }
-            fReader.close();
-            bReader.close();
+                else{
+                    File[] listOfFiles1 = new File(pathNewTrainFile).listFiles();
+                    if(listOfFiles1==null) {
+                        System.out.println("No new trains found");
+                        return;
+                    }
 
-            int oldTrainNo = 999;
+                    for (File file: listOfFiles1) {
+                        if (file.isFile()) {
+                            if(!addTrain(newTrainNo++, file.getPath())) {
+                                System.out.println("Error in adding train " + pathNewTrainFile);
+                            }
+                        }
+                    }
+                }
+            }
+            int tempTrainNo;
 
             for (File file : listOfFiles) {
-
                 if (file.isFile()) {
                     String filename = file.getName().split("\\.")[0];
                     try {
-                        trains.add(Integer.parseInt(filename));
-                    } catch (NumberFormatException e) {
-                        trains.add(++oldTrainNo);
+                        tempTrainNo = Integer.parseInt(filename);
                     }
-                    try {
-                        schedule.add(0, new ArrayList<>());
-                        fReader = new FileReader(file);
-                        bReader = new BufferedReader(fReader);
-                        while ((line = bReader.readLine()) != null) {
-                            data = line.split("\\s+");
-                            LocalTime d[] = new LocalTime[2];
-                            data1 = data[1].split(":");
-                            d[0] = LocalTime.of(Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
-                            data1 = data[2].split(":");
-                            d[1] = LocalTime.of(Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
-                            schedule.get(0).add(d);
-                        }
-                        fReader.close();
-                        bReader.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    catch (NumberFormatException e) {
+                        tempTrainNo = ++newTrainNo;
+                    }
+                    if(!addTrain(tempTrainNo, file.getPath())){
+                        System.out.println("Error in adding train " + file.getPath());
                     }
                 }
             }
 
-            final XYDataset dataset = createDataset(trains, schedule, stationDistance);
-            final JFreeChart chart = createChart(dataset, tickLabels, pathPlotFile);
+            final XYDataset dataset = createDataset();
+            final JFreeChart chart = createChart(dataset, pathPlotFile);
             final ChartPanel chartPanel = new ChartPanel(chart);
             chartPanel.setPreferredSize(new java.awt.Dimension(windowWidth, windowHeight));
             setContentPane(chartPanel);
@@ -145,6 +138,43 @@ class LinePlotTrains extends ApplicationFrame {
         }
     }
 
+    private boolean addTrain(int trainNo, String fileName){
+        try {
+            FileReader fReader = new FileReader(fileName);
+            BufferedReader bReader = new BufferedReader(fReader);
+            this.trains.add(trainNo);
+            this.schedule.add(new ArrayList<>(stationId.size()));
+            String line;
+            String data[];
+            String data1[];
+            LocalTime d[];
+            Map<String, LocalTime[]> stationTimingsMap = new HashMap<>();
+            while ((line = bReader.readLine()) != null) {
+                d = new LocalTime[2];
+                data = line.split("\\s+");
+                data1 = data[1].split(":");
+                d[0] = LocalTime.of(Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
+                data1 = data[2].split(":");
+                d[1] = LocalTime.of(Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
+                stationTimingsMap.put(data[0].trim().replaceAll(".*-", ""),d);
+            }
+            d = new LocalTime[2];
+            d[0] = LocalTime.of(23, 59);
+            d[1] = LocalTime.of(23, 59);
+            for(String stId: stationId){
+                schedule.get(sizeSchedule).add(stationTimingsMap.getOrDefault(stId,d));
+            }
+            fReader.close();
+            bReader.close();
+            sizeSchedule++;
+            return true;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public void saveChartToPDF(JFreeChart chart, String fileName, int width, int height) throws Exception {
         if (chart == null) {
             System.out.println("Invalid Data to save as pdf.");
@@ -155,7 +185,8 @@ class LinePlotTrains extends ApplicationFrame {
             out = new BufferedOutputStream(new FileOutputStream(fileName));
 
             //convert chart to PDF with iText:
-            Document document = new Document(new Rectangle(width, height), 50, 50, 50, 50);
+            Document document = new Document(new Rectangle(width, height),
+                    50, 50, 50, 50);
             try {
                 PdfWriter writer = PdfWriter.getInstance(document, out);
                 document.addAuthor("Naman");
@@ -195,7 +226,7 @@ class LinePlotTrains extends ApplicationFrame {
         }
     }
 
-    public XYDataset createDataset(ArrayList<Integer> trains, ArrayList<ArrayList<LocalTime[]>> schedule, ArrayList<Double> stationDistance) {
+    public XYDataset createDataset() {
         // create the dataset...
         final XYSeriesCollection dataset = new XYSeriesCollection();
         LocalTime temp=null, temp2, temp3;
@@ -235,7 +266,7 @@ class LinePlotTrains extends ApplicationFrame {
         return dataset;
     }
 
-    public JFreeChart createChart(final XYDataset dataset, HashMap<Double, String> tickLabels, String fileName) {
+    public JFreeChart createChart(final XYDataset dataset, String fileName) {
         // create the chart...
         final JFreeChart chart = ChartFactory.createXYLineChart(
                 "Train-tracking " + fileName,      // chart title
@@ -263,7 +294,18 @@ class LinePlotTrains extends ApplicationFrame {
                 List<NumberTick> myTicks = new ArrayList<>();
                 for (Object tick : allTicks) {
                     NumberTick numberTick = (NumberTick) tick;
-                    String label = getTimeFromValue(numberTick.getValue()) + "";
+
+                    String label;
+                    double numTickValue = numberTick.getValue();
+                    if(numTickValue>=0 && numTickValue<24*60 ){
+                        label = getTimeFromValue(numberTick.getValue()) + "";
+                    }
+                    else if(numTickValue<0){
+                        label = "Prev day";
+                    }
+                    else{
+                        label = "Next day";
+                    }
                     myTicks.add(new NumberTick(TickType.MINOR, numberTick.getValue(), label,
                             numberTick.getTextAnchor(), numberTick.getRotationAnchor(),
                             (2 * Math.PI * 0) / 360.0f));
@@ -272,7 +314,9 @@ class LinePlotTrains extends ApplicationFrame {
             }
         };
 
-        rangeAxis.setAutoRange(false);
+        rangeAxis.setAutoRange(true);
+        // rangeAxis.setLowerBound(0);
+        // rangeAxis.setUpperBound(1439);
         rangeAxis.setLowerBound(0);
         rangeAxis.setUpperBound(1439);
         rangeAxis.setAutoRangeIncludesZero(false);
@@ -302,18 +346,19 @@ class LinePlotTrains extends ApplicationFrame {
             }
         };
 
-        domainAxis.setAutoRange(false);
-        domainAxis.setLowerBound(-2);
-        domainAxis.setUpperBound(212);
+        domainAxis.setAutoRange(true);
+        // domainAxis.setLowerBound(-2);
+        // domainAxis.setUpperBound(212);
         domainAxis.setAutoRangeIncludesZero(false);
         domainAxis.setAutoRangeStickyZero(false);
         domainAxis.setTickUnit(new NumberTickUnit(0.5));
         plot.setDomainAxis(domainAxis);
 
         plot.setBackgroundPaint(Color.white);
-        plot.setRangeGridlinePaint(Color.lightGray);
-        plot.setDomainGridlinePaint(Color.lightGray);
         plot.setDomainGridlinesVisible(true);
+        plot.setRangeGridlinesVisible(true);
+        plot.setRangeGridlinePaint(Color.LIGHT_GRAY);
+        plot.setDomainGridlinePaint(Color.LIGHT_GRAY);
         return chart;
     }
 }

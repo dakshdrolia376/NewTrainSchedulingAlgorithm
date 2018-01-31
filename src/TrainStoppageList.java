@@ -12,7 +12,8 @@ public class TrainStoppageList {
         try{
             Thread.sleep(4000);
             //without proper User-Agent, we will get 403 error
-            Document doc = Jsoup.connect(url).maxBodySize(0).userAgent("Mozilla/17.0 Chrome/26.0.1410.64 Safari/537.31").timeout(30000).get();
+            Document doc = Jsoup.connect(url).maxBodySize(0)
+                    .userAgent("Mozilla/17.0 Chrome/26.0.1410.64 Safari/537.31").timeout(30000).get();
             System.out.println("fetching done");
             //below will print HTML data, save it to a file.
             new WriteToFile().write(pathFile ,doc.html(),false);
@@ -95,7 +96,8 @@ public class TrainStoppageList {
                     }
                 }
 
-                if(!station_name.equals("")&&!((arrival.equals("")||arrival.equals("start")) && departure.equals(""))&&!km.equals("")) {
+                if(!station_name.equals("") && !((arrival.equals("")||arrival.equals("start")) && departure.equals(""))
+                        &&!km.equals("")) {
                     if(departure.equals("")) {
                         if(!arrival.equals("") && !arrival.equals("start")) {
                             String temp_arrival[] = arrival.split(":");

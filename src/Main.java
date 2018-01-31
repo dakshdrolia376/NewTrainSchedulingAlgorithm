@@ -1,22 +1,181 @@
 import java.io.File;
 import java.io.PrintStream;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Main {
+    public static List<Path> getSmallPart(String pathTemp, List<String> stationIdList, List<String> stationNameList,
+                                    List<Double> stationDistanceList, List<Boolean> stationIsDirectLineList,
+                                    List<Integer> stationNoOFUpPlatformList, List<Integer> stationNoOFDownPlatformList,
+                                    List<Integer> stationNoOFDualPlatformList, List<Double> stopTimeList,
+                                          int noOfPaths,TrainTime sourceTime,int minDelayBwTrains, double avgSpeed,
+                                          String pathOldTrainSchedule, int startDay, int startHrs, int startMinutes,
+                                          int endDay, int endHrs, int endMinutes,int maxDelayBwStations,
+                                          boolean isSingleDay, int trainDay){
+        Scheduler scheduler = new Scheduler();
+        if(!scheduler.addRoute(stationIdList, stationNameList, stationDistanceList, stationIsDirectLineList,
+                stationNoOFUpPlatformList, stationNoOFDownPlatformList, stationNoOFDualPlatformList)){
+            System.out.println("Error in route info");
+            return Collections.emptyList();
+        }
+        return new KBestSchedule().getScheduleNewTrain(pathTemp, scheduler.getStationIdList(),
+                scheduler.getStationNameList(), scheduler.getStationDistanceList(),
+                scheduler.getStationDirectLineList(), scheduler.getStationNoOfUpPlatformLineList(),
+                scheduler.getStationNoOfDownPlatformLineList(), scheduler.getStationNoOfDualPlatformLineList(),
+                noOfPaths, sourceTime, null, minDelayBwTrains, avgSpeed,
+                stopTimeList, pathOldTrainSchedule, trainDay,startDay,startHrs, startMinutes,
+                endDay,endHrs, endMinutes,maxDelayBwStations, isSingleDay, false);
+    }
+
+    public static Collection<Path> getPathsRecur(String pathTemp, int i, int stationGroupSizeForPart, Scheduler scheduler,
+                                            List<Double> stopTime, int noOfPaths, TrainTime sourceTime,
+                                            int minDelayBwTrains, double avgSpeed, String pathOldTrainSchedule,
+                                            int maxDelayBwStations,boolean isSingleDay, int trainDay){
+        if(i>=scheduler.getStationIdList().size()){
+            return Collections.emptyList();
+        }
+        int last;
+        if((i+stationGroupSizeForPart+1)<scheduler.getStationIdList().size()){
+            last = i+stationGroupSizeForPart+1;
+        }
+        else{
+            last = scheduler.getStationIdList().size();
+        }
+        Queue<Path> ans = new PriorityQueue<>(Collections.reverseOrder(Comparator.comparingDouble(Path::pathCost)));
+        int startDay;
+        int endDay;
+        if(isSingleDay){
+            startDay = trainDay;
+            endDay = trainDay;
+        }
+        else{
+            startDay = 0;
+            endDay = 6;
+        }
+
+        // add 0 to wait time of first
+        List<Path> paths = getSmallPart(pathTemp, scheduler.getStationIdList().subList(i,last),
+                scheduler.getStationNameList().subList(i,last),
+                scheduler.getStationDistanceList().subList(i,last),
+                scheduler.getStationDirectLineList().subList(i,last),
+                scheduler.getStationNoOfUpPlatformLineList().subList(i,last),
+                scheduler.getStationNoOfDownPlatformLineList().subList(i,last),
+                scheduler.getStationNoOfDualPlatformLineList().subList(i,last),
+                stopTime.subList(i,last),noOfPaths,sourceTime,
+                minDelayBwTrains,avgSpeed,pathOldTrainSchedule,startDay,0,0,endDay,23,
+                59, maxDelayBwStations, isSingleDay, trainDay);
+
+        for(Path path: paths){
+            System.out.println("i= " + i + " last = " +last + " > " +path.toString());
+            if(last<scheduler.getStationIdList().size()){
+                List<Node> nodes1;
+                List<Double> weights1;
+                TrainTime sourceTime1;
+                try {
+                    sourceTime1 = path.getNodeList().get(path.getNodeList().size() - 2).getTime();
+                }
+                catch (Exception e){
+                    sourceTime1 = null;
+                }
+                int i1 = i+stationGroupSizeForPart;
+                Collection<Path> paths1= getPathsRecur(pathTemp, i1,stationGroupSizeForPart,scheduler,stopTime,noOfPaths,sourceTime1,
+                        minDelayBwTrains,avgSpeed,pathOldTrainSchedule,maxDelayBwStations, isSingleDay, trainDay);
+                for(Path path1: paths1){
+                    Path tempPath=path.removeNode();
+                    if(tempPath==null){
+                        break;
+                    }
+                    nodes1 = path1.getNodeList();
+                    weights1 = path1.getWeightList();
+                    double tempPathCost = tempPath.pathCost();
+                    for(int i2 = 1;i2<nodes1.size();i2++){
+                        tempPath = tempPath.appendNode(nodes1.get(i2), tempPathCost + weights1.get(i2));
+                    }
+                    System.out.println("********after addition " + tempPath.toString());
+                    ans.add(tempPath);
+                    if(ans.size()>=noOfPaths){
+                        ans.remove();
+                    }
+                }
+            }
+            else{
+                ans.add(path);
+                if(ans.size()>=noOfPaths){
+                    ans.remove();
+                }
+            }
+        }
+        return ans;
+    }
+
+    @SuppressWarnings("unused")
+    public static void scheduleByBreaking(String pathTemp, String pathRoute, String pathBestRoute, String pathOldTrainSchedule,
+                                          boolean isSingleDay, int trainDay){
+        Scheduler scheduler = new Scheduler();
+        int startHrs = 0;
+        int startMinutes = 0;
+        int endHrs = 23;
+        int endMinutes=59;
+        int maxDelayBwStations = 60;
+        if(!scheduler.addRouteFromFile(pathRoute)){
+            System.out.println("Unable to load route file");
+            System.exit(0);
+        }
+        ArrayList<Double> stopTime = new ArrayList<>();
+        for(int i=0;i<scheduler.getStationIdList().size();i++) {
+            stopTime.add(0.0);
+        }
+        // stopTime.set(5, 2.0);
+        // stopTime.set(12, 4.0);
+        // stopTime.set(22, 4.0);
+
+        Double avgSpeed = 80.0;
+        int minDelayBwTrains = 3;
+        TrainTime sourceTime = null;
+        String pathBestRouteFile;
+        int noOfPaths = 10;
+        int stationGroupSizeForPart = 20;
+        // for(int i=0;i<stationIdComplete.size();i+=stationGroupSizeForPart){
+        //     pathBestRouteFile = pathBestRoute + File.separator + "AvgSpeed "+avgSpeed +" part " +
+        //             (i/(stationGroupSizeForPart-1) + 1);
+        //
+        //     int count=0;
+        //
+        // }
+
+        Collection<Path> paths = getPathsRecur(pathTemp,0,stationGroupSizeForPart,scheduler,stopTime,noOfPaths,null,
+                minDelayBwTrains,avgSpeed,pathOldTrainSchedule,maxDelayBwStations, isSingleDay, trainDay);
+
+        Queue<Path> pathQueue = new PriorityQueue<>(Collections.reverseOrder(Comparator.comparingDouble(Path::pathCost)));
+        for(Path path: paths) {
+            pathQueue.add(path);
+            System.out.println(path.toString() + " cost: " + path.pathCost());
+            if(pathQueue.size()>noOfPaths){
+                pathQueue.remove();
+                System.out.println("Removed");
+            }
+            // Scheduler.writePathsToFile(path,++count, pathBestRouteFile,stopTime,avgSpeed,stationIdComplete.subList(i,last),
+            //         stationNameComplete.subList(i,last), stationDistanceComplete.subList(i,last) );
+        }
+    }
+
     public static void main(String[] args) {
         String pathTrainList = "data" + File.separator +"train_list.txt";
-        String pathRoute = "data"+File.separator+"route"+File.separator+"route.txt";
+
+        String pathRoute = "data"+File.separator+"route"+File.separator+"routeCreated.txt";
+        String pathOldTrainSchedule = "data"+File.separator+"final" + File.separator + "dayall";
+
         String pathPlotFile = "data"+File.separator+"plot"+File.separator+"plot1.pdf";
         String pathTemp = "data"+File.separator+"temp";
         String pathLog = "data"+File.separator+"logs";
         String pathFinal = "data"+File.separator+"final";
         String pathBestRoute = "data"+File.separator+"bestRoute";
-        String pathOldTrainSchedule = "data"+File.separator+"final" + File.separator + "dayall";
+        int trainDay = 0;
+        boolean isSingleDay = true;
+        boolean usePreviousComputation = true;
 
-        if(!Scheduler.createParentFolder(pathTrainList) || !Scheduler.createParentFolder(pathRoute) || !Scheduler.createParentFolder(pathPlotFile)
-                || !Scheduler.createFolder(pathTemp) || !Scheduler.createFolder(pathLog) || !Scheduler.createFolder(pathFinal)
+        if(!Scheduler.createParentFolder(pathTrainList) || !Scheduler.createParentFolder(pathRoute)
+                || !Scheduler.createParentFolder(pathPlotFile) || !Scheduler.createFolder(pathTemp)
+                || !Scheduler.createFolder(pathLog) || !Scheduler.createFolder(pathFinal)
                 || !Scheduler.createFolder(pathBestRoute) || !Scheduler.createFolder(pathOldTrainSchedule)){
             System.out.println("Unable to create directory");
             System.exit(1);
@@ -24,7 +183,7 @@ public class Main {
 
         if(!Scheduler.isNetAvailable()){
             System.out.println("No internet Connection.. Try again");
-            System.exit(0);
+            // System.exit(0);
         }
 
         try {
@@ -38,63 +197,15 @@ public class Main {
             // Assign o to output stream
             System.setErr(o);
             System.setOut(o1);
-            // Scheduler.test(pathRoute,pathBestRoute,pathOldTrainSchedule);
+            Scheduler.test(pathTemp, pathRoute,pathBestRoute,pathOldTrainSchedule, isSingleDay, trainDay, usePreviousComputation);
+            // Scheduler.getTrainList(pathTrainList);
+            // Scheduler.fetchTrainSchedule(pathTrainList,pathTemp,pathFinal);
 
-            // new TrainList().getTrainList(pathTrainList);
-            // new TrainStoppageList().getTrainStoppageFromFile(pathTrainList,pathTemp,pathFinal);
+            // scheduleByBreaking(pathTemp, pathRoute,pathBestRoute,pathOldTrainSchedule, isSingleDay, trainDay);
 
-            Scheduler scheduler = new Scheduler();
-
-            if(!scheduler.addRouteFromFile(pathRoute)){
-                System.out.println("Unable to load route file");
-                System.exit(0);
-            }
-            ArrayList<String> stationIdComplete= new ArrayList<>(scheduler.getStationIdList());
-            ArrayList<String> stationNameComplete= new ArrayList<>(scheduler.getStationNameList());
-            ArrayList<Double> stationDistanceComplete= new ArrayList<>(scheduler.getStationDistanceList());
-            ArrayList<Double> stopTime = new ArrayList<>();
-            for(int i=0;i<stationIdComplete.size();i++) {
-                stopTime.add(0.0);
-            }
-            // stopTime.set(5, 2.0);
-            // stopTime.set(12, 4.0);
-            // stopTime.set(22, 4.0);
-
-            Double avgSpeed = 80.0;
-            int minDelayBwTrains = 3;
-            LocalTime sourceTime = null;
-            String pathBestRouteFile;
-            int noOfPaths = 10;
-
-            int stationGroupSizeForPart = 51;
-            Scheduler scheduler1;
-            for(int i=0;i<stationIdComplete.size();i+=stationGroupSizeForPart){
-                pathBestRouteFile = pathBestRoute + File.separator + "AvgSpeed "+avgSpeed +" part " + (i/(stationGroupSizeForPart-1) + 1);
-                 scheduler1= new Scheduler();
-                int last;
-                if((i+stationGroupSizeForPart)<stationIdComplete.size()){
-                    last = i+stationGroupSizeForPart;
-                    i--;
-                }
-                else{
-                    last = stationIdComplete.size();
-                }
-                if(!scheduler1.addRoute(new ArrayList<>(stationIdComplete.subList(i,last)),new ArrayList<>(stationNameComplete.subList(i,last)),new ArrayList<>(stationDistanceComplete.subList(i,last)))){
-                    System.out.println("Error in route info");
-                    continue;
-                }
-                List<Path<String>> paths= new KBestSchedule().getScheduleNewTrain(scheduler1.getStationIdList(), scheduler1.getStationNameList(), scheduler1.getStationDistanceList(), noOfPaths, sourceTime, minDelayBwTrains, avgSpeed, new ArrayList<>(stopTime.subList(i,last)), pathOldTrainSchedule);
-                System.out.println(paths.size());
-                for(Path<String> path: paths) {
-                    System.out.println(path.toString() + " cost: " + path.pathCost());
-                }
-                sourceTime = Scheduler.getNodeData(paths.get(0).getNodeList().get(paths.get(0).getNodeList().size()-2)).getSecond();
-                scheduler1.writePathsToFile(paths,pathBestRouteFile,stopTime,avgSpeed);
-            }
-
-            int newTrainNo = 9910;
-            String pathNewTrainFile = pathBestRoute+File.separator+"Type 2 AvgSpeed 80.0 path 1 cost 183.0 .path";
-            Scheduler.showPlot(pathNewTrainFile,newTrainNo,pathPlotFile,pathRoute,pathOldTrainSchedule);
+            // int newTrainNo = 9910;
+            // String pathNewTrainFile = pathBestRoute+File.separator+"Type 2 AvgSpeed 80.0 path 1 cost 24.0 .path";
+            // Scheduler.showPlot(pathBestRoute,newTrainNo,pathPlotFile,pathRoute,pathOldTrainSchedule,true);
         }
         catch (Exception e){
             e.printStackTrace();

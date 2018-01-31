@@ -1,4 +1,3 @@
-import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,14 +8,17 @@ public class Train {
     private final int trainNo;
     private final String name;
     private final Map<String, TrainAtStation> stoppageMap;
+    private final boolean upDirection;
 
     public Train(int trainNo, String name) {
         requireNonNull(name, "The Train name is null.");
-        stoppageMap = new HashMap<>();
+        this.stoppageMap = new HashMap<>();
         this.trainNo = trainNo;
         this.name = name;
+        this.upDirection = true;
     }
 
+    @SuppressWarnings("unused")
     public int getTrainNo() {
         return this.trainNo;
     }
@@ -25,40 +27,58 @@ public class Train {
         return this.name;
     }
 
-    public LocalTime getArr(String stId) {
+    public boolean isUpDirection() {
+        return this.upDirection;
+    }
+
+    public TrainTime getArr(String stId) {
         requireNonNull(stId,"Station id is null.");
-        TrainAtStation trainAtStation = stoppageMap.get(stId);
+        TrainAtStation trainAtStation = this.stoppageMap.get(stId);
         if(trainAtStation!=null){
             return trainAtStation.getArr();
         }
         return null;
     }
 
-    public LocalTime getDept(String stId) {
+    public TrainTime getDept(String stId) {
         requireNonNull(stId,"Station id is null.");
-        TrainAtStation trainAtStation = stoppageMap.get(stId);
+        TrainAtStation trainAtStation = this.stoppageMap.get(stId);
         if(trainAtStation!=null){
             return trainAtStation.getDept();
         }
         return null;
     }
 
-    public boolean addStoppage(Station station, LocalTime arrival, LocalTime departure) {
-        requireNonNull(station, "Station is null.");
+    public boolean addStoppage(Station station, TrainTime arrival, TrainTime departure) {
+        if(station==null){
+            System.err.println("Station is not in route or some error occurred");
+            return true;
+        }
         requireNonNull(arrival, "Arrival is null.");
         requireNonNull(departure, "Departure is null.");
         TrainAtStation trainAtStation = new TrainAtStation(station.getId(), this.trainNo, arrival, departure);
-        stoppageMap.put(station.getId(), trainAtStation);
+        this.stoppageMap.put(station.getId(), trainAtStation);
         return station.addTrain(trainAtStation);
     }
 
-    public void printInfo() {
-        System.out.println("**********************************************************");
-        System.out.println("Train No: " + this.trainNo + " name: " + this.name);
-        System.out.println("Station\tArrival\tDeparture");
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder("");
+        stringBuilder.append("Train No: ");
+        stringBuilder.append(this.trainNo);
+        stringBuilder.append(" name: ");
+        stringBuilder.append(this.name);
+        stringBuilder.append('\n');
+        stringBuilder.append("Station\tArrival\tDeparture");
+        stringBuilder.append('\n');
         for (TrainAtStation trainAtStation: this.stoppageMap.values()) {
-            System.out.println( trainAtStation.getStationId() + "\t" + trainAtStation.getArr() + "\t"  + trainAtStation.getDept());
+            stringBuilder.append( trainAtStation.getStationId());
+            stringBuilder.append('\t');
+            stringBuilder.append(trainAtStation.getArr());
+            stringBuilder.append( '\t');
+            stringBuilder.append( trainAtStation.getDept());
+            stringBuilder.append( '\n');
         }
-        System.out.println("**********************************************************");
+        return stringBuilder.toString();
     }
 }

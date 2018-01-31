@@ -2,6 +2,7 @@
   <dictionary name="naman">
     <words>
       <w>apikey</w>
+      <w>bittu</w>
       <w>conc</w>
       <w>dataset</w>
       <w>dayall</w>
@@ -9,8 +10,10 @@
       <w>dsun</w>
       <w>gson</w>
       <w>indiarailinfo</w>
+      <w>jdbc</w>
       <w>mozilla</w>
       <w>naman</w>
+      <w>trainscheduler</w>
     </words>
   </dictionary>
 </component>

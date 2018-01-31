@@ -1,4 +1,3 @@
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,14 +10,16 @@ public class Route {
     private final List<String> stationOrder;
 
     public Route(){
-        mapStation = new HashMap<>();
-        stationOrder = new ArrayList<>();
+        this.mapStation = new HashMap<>();
+        this.stationOrder = new ArrayList<>();
     }
 
-    public boolean addStation(String id, String name, double distance){
+    public boolean addStation(String id, String name, double distance, boolean isDirectLineAvailable,
+                              int noOfUpPlatform, int noOfDownPlatform, int noOfDualPlatform){
         requireNonNull(id, "Station id is null.");
         requireNonNull(name, "Station name is null.");
-        mapStation.put(id, new Station(id, name, distance));
+        this.mapStation.put(id, new Station(id, name, distance, isDirectLineAvailable, noOfUpPlatform,
+                noOfDownPlatform, noOfDualPlatform));
         return stationOrder.add(id);
     }
 
@@ -35,84 +36,55 @@ public class Route {
         return mapStation.get(id);
     }
 
-    public void printInfo() {
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder("");
         for (Station station:this.mapStation.values()) {
-            station.sortArr();
-            station.printInfo();
+            stringBuilder.append(station.toString());
+            stringBuilder.append('\n');
         }
+        return stringBuilder.toString();
     }
 
-    public List<List<String>> getFreeSlots(int minDelayBwTrains, int startHrs, int startMinutes, int endHrs, int endMinutes) {
+    public List<List<Node>> getFreeSlots(int minDelayBwTrains, int startDay, int startHrs, int startMinutes,
+                                           int endDay, int endHrs, int endMinutes, boolean isSingleDay) {
         if(minDelayBwTrains <0){
             throw new IllegalArgumentException("Min delay between two consecutive train is negative.");
         }
-        if(startHrs <0 || startHrs >=24 || endHrs <0 || endHrs >=24 || startMinutes <0 || startMinutes >=60 || endMinutes <0 || endMinutes >=60){
-            throw new IllegalArgumentException("Invalid start/end timings");
+
+        List<List<Node>> nextWeekSlots = new ArrayList<>();
+        if(endDay<startDay || (startDay==endDay && endHrs<startHrs) ||
+                (startDay==endDay && endHrs==startHrs && endMinutes < startMinutes)) {
+            if(isSingleDay && startDay==endDay) {
+                System.out.println("Single day scheduling");
+                nextWeekSlots = getFreeSlots(minDelayBwTrains, startDay,0,0,
+                    endDay,endHrs,endMinutes,true);
+                endHrs = 23;
+                endMinutes = 59;
+            }
+            else{
+                System.out.println("Complete scheduling");
+                nextWeekSlots = getFreeSlots(minDelayBwTrains, 0,0,0,
+                        endDay,endHrs,endMinutes,isSingleDay);
+                endDay = 6;
+                endHrs = 23;
+                endMinutes = 59;
+            }
         }
 
-        List<List<String>> nextDaySlots = new ArrayList<>();
-        if(endHrs<startHrs || (endHrs==startHrs && endMinutes < startMinutes)) {
-            nextDaySlots = getFreeSlots(minDelayBwTrains, 0,0,endHrs,endMinutes);
-            endHrs = 23;
-            endMinutes = 59;
-        }
+        TrainTime start, end;
+        start = new TrainTime(startDay, startHrs, startMinutes);
+        end = new TrainTime(endDay, endHrs, endMinutes);
+        List<List<Node>> nodes = new ArrayList<>(this.stationOrder.size());
 
-        LocalTime start,end,slotDept;
-        LocalTime scheduleSlotDept,scheduleSlotDept1,scheduleSlotDept2;
-
-        start = LocalTime.of(startHrs, startMinutes);
-        end = LocalTime.of(endHrs, endMinutes);
-        List<List<String>> nodes = new ArrayList<>(this.stationOrder.size());
-
-        LocalTime temp1;
         for(String stationId: this.stationOrder) {
             Station station = this.mapStation.get(stationId);
             if(station==null){
                 throw  new RuntimeException("Unable to load station");
             }
-            slotDept = start;
-            stationId = station.getId();
-            station.sortDept();
-            List<TrainAtStation> schedule = station.getStationSchedule();
-            List<String> stationNodes = new ArrayList<>();
-
-            boolean endNodeRequired = true;
-            for(TrainAtStation trainAtStation: schedule) {
-                scheduleSlotDept  = trainAtStation.getDept();
-                scheduleSlotDept1 = Scheduler.subMinutes(scheduleSlotDept, minDelayBwTrains);
-                scheduleSlotDept2 = Scheduler.addMinutes(scheduleSlotDept, minDelayBwTrains);
-
-                temp1 = slotDept;
-                while(temp1.compareTo(scheduleSlotDept1)<=0 && temp1.compareTo(end)<=0) {
-                    stationNodes.add(KBestSchedule.getNodeLabel(stationId,temp1));
-                    temp1 = Scheduler.addMinutes(temp1, 1);
-                }
-
-                if(scheduleSlotDept1.compareTo(scheduleSlotDept2)>0) {
-                    // for train at minutes before end of day
-                    endNodeRequired = false;
-                    break;
-                }
-                if(slotDept.compareTo(scheduleSlotDept2)<=0 ) {
-                    slotDept = scheduleSlotDept2;
-                }
-            }
-            if(endNodeRequired) {
-                temp1 = slotDept;
-                int comp = temp1.compareTo(end);
-                while(comp<=0) {
-                    stationNodes.add(KBestSchedule.getNodeLabel(stationId,temp1));
-                    if(comp==0) {
-                        break;
-                    }
-                    temp1 = Scheduler.addMinutes(temp1, 1);
-                    comp = temp1.compareTo(end);
-                }
-            }
-            nodes.add(stationNodes);
+            nodes.add(station.getNodesFreeList(start, end, minDelayBwTrains));
         }
-        for(int i=0;i<nextDaySlots.size();i++) {
-            nodes.get(i).addAll(nextDaySlots.get(i));
+        for(int i=0;i<nextWeekSlots.size();i++) {
+            nodes.get(i).addAll(nextWeekSlots.get(i));
         }
         return nodes;
     }

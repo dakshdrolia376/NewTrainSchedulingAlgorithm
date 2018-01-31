@@ -1,15 +1,13 @@
-import java.time.LocalTime;
-
 import static java.util.Objects.requireNonNull;
 
 public class TrainAtStation {
 
     private final String stationId;
     private final int trainNo;
-    private final LocalTime arrival;
-    private final LocalTime departure;
+    private final TrainTime arrival;
+    private final TrainTime departure;
 
-    public TrainAtStation(String stationId, int trainNo, LocalTime arrival, LocalTime departure) {
+    public TrainAtStation(String stationId, int trainNo, TrainTime arrival, TrainTime departure) {
         requireNonNull(stationId, "Station id is null.");
         requireNonNull(arrival, "Arrival is null.");
         requireNonNull(departure, "Departure is null.");
@@ -27,11 +25,11 @@ public class TrainAtStation {
         return this.trainNo;
     }
 
-    public LocalTime getArr() {
+    public TrainTime getArr() {
         return this.arrival;
     }
 
-    public LocalTime getDept() {
+    public TrainTime getDept() {
         return this.departure;
     }
 }
