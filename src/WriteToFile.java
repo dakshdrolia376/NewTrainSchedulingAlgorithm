@@ -10,8 +10,9 @@ public class WriteToFile {
         requireNonNull(content, "The content is null.");
         try {
             File file = new File(pathFile);
+            System.out.println("Writing data to file: " + file.getName());
             if(!file.getParentFile().exists() && !file.getParentFile().mkdirs()){
-                System.out.println("Unable to create file " + pathFile);
+                System.out.println("Unable to create file located at " + pathFile);
                 return;
             }
             FileWriter fWriter = new FileWriter(file, append);

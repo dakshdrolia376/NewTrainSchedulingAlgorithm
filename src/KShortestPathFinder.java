@@ -24,13 +24,15 @@ public class KShortestPathFinder {
 
         while (!HEAP.isEmpty() && countMap.getOrDefault(target.toString(), 0) < k) {
             Path currentPath = HEAP.remove();
-            System.out.println("****" +currentPath.toString());
+            // System.out.println("****" +currentPath.toString());
             Node endNode = currentPath.getEndNode();
             if(!endNode.isValid()){
                 continue;
             }
             countMap.put(endNode.toString(), countMap.getOrDefault(endNode.toString(), 0) + 1);
             if (endNode.equals(target)) {
+                System.out.print(" In path memory size: ");
+                Scheduler.getRuntimeMemory();
                 paths.add(currentPath);
             }
             if (countMap.get(endNode.toString()) <= k) {

@@ -125,7 +125,10 @@ public class Scheduler {
         requireNonNull(noOfUpPlatformList, "Station no of up platform list is null.");
         requireNonNull(noOfDownPlatformList, "Station no of down platform list is null.");
         requireNonNull(noOfDualPlatformList, "Station no of dual platform list is null.");
-        if(stationIdList.size() != stationNameList.size() || stationNameList.size() != stationDistanceList.size()){
+        int sizeStation = stationIdList.size();
+        if(stationNameList.size() != sizeStation || stationDistanceList.size() != sizeStation ||
+                isDirectLineAvailableList.size() != sizeStation || noOfUpPlatformList.size() != sizeStation ||
+                noOfDownPlatformList.size() != sizeStation || noOfDualPlatformList.size() != sizeStation){
             throw new IllegalArgumentException("Invalid arguments for route");
         }
         this.stationId = stationIdList;
@@ -271,7 +274,7 @@ public class Scheduler {
         // paths= new KBestSchedule().getScheduleNewTrain(pathTemp, scheduler.getStationIdList(), scheduler.getStationNameList(),
         //         scheduler.getStationDistanceList(), scheduler.getStationDirectLineList(),
         //         scheduler.getStationNoOfUpPlatformLineList(), scheduler.getStationNoOfDownPlatformLineList(),
-        //         scheduler.getStationNoOfDualPlatformLineList(), noOfPaths, sourceTime, null,
+        //         scheduler.getStationNoOfDualPlatformLineList(), noOfPaths, sourceTime,
         //         minDelayBwTrains, avgSpeed, stopTime, pathOldTrainSchedule, trainDay,startDay,startHrs, startMinutes,
         //         endDay, endHrs, endMinutes, maxDelayBwStations, isSingleDay, usePreviousComputation);
         // System.out.println(paths.size());
@@ -285,7 +288,7 @@ public class Scheduler {
         paths= new KBestSchedule().getScheduleNewTrain(pathTemp, scheduler.getStationIdList(), scheduler.getStationNameList(),
                 scheduler.getStationDistanceList(), scheduler.getStationDirectLineList(),
                 scheduler.getStationNoOfUpPlatformLineList(), scheduler.getStationNoOfDownPlatformLineList(),
-                scheduler.getStationNoOfDualPlatformLineList(), noOfPaths, null,null,
+                scheduler.getStationNoOfDualPlatformLineList(), noOfPaths, null,
                 minDelayBwTrains, avgSpeed, stopTime, pathOldTrainSchedule, trainDay,startDay,startHrs, startMinutes,
                 endDay,endHrs, endMinutes,maxDelayBwStations, isSingleDay, usePreviousComputation);
         System.out.println(paths.size());

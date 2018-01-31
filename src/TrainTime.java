@@ -1,3 +1,5 @@
+import static java.util.Objects.requireNonNull;
+
 public class TrainTime {
     byte day;
     byte hour;
@@ -5,7 +7,7 @@ public class TrainTime {
     private static boolean isSingleDay = false;
 
     public static void updateIsSingleDay(boolean value){
-        System.out.println("Setting is single day");
+        System.out.println("Setting up duration of days...");
         TrainTime.isSingleDay = value;
     }
 
@@ -23,7 +25,13 @@ public class TrainTime {
         if(data.length!=3){
             throw new IllegalArgumentException("Label does not match required pattern");
         }
-        setData(Byte.parseByte(data[0]), Byte.parseByte(data[1]), Byte.parseByte(data[2]));
+        try {
+            setData(Byte.parseByte(data[0]), Byte.parseByte(data[1]), Byte.parseByte(data[2]));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException("Train time label is invalid "+ label);
+        }
     }
 
     private void setData(byte day, byte hour, byte minute){
@@ -42,6 +50,7 @@ public class TrainTime {
     }
 
     public int compareTo(TrainTime trainTime){
+        requireNonNull(trainTime, "TrainTime is null");
         int ans = this.day - trainTime.day;
         ans *=24;
         ans += this.hour - trainTime.hour;
@@ -51,11 +60,12 @@ public class TrainTime {
     }
 
     public boolean equals(TrainTime trainTime){
+        requireNonNull(trainTime, "TrainTime is null");
         return this.day==trainTime.day && this.hour == trainTime.hour && this.minute == trainTime.minute;
     }
 
     public void addDay(int day){
-        if(!isSingleDay) {
+        if(!TrainTime.isSingleDay) {
             day += this.day;
             this.day = (byte) Math.floorMod(day, 7);
         }
@@ -74,7 +84,7 @@ public class TrainTime {
     }
 
     public void subDay(int day){
-        if(!isSingleDay) {
+        if(!TrainTime.isSingleDay) {
             day = Math.floorMod(day, 7);
             this.day -= day;
             this.day = (byte) Math.floorMod(this.day, 7);

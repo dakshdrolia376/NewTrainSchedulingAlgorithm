@@ -21,7 +21,7 @@ public class Main {
                 scheduler.getStationNameList(), scheduler.getStationDistanceList(),
                 scheduler.getStationDirectLineList(), scheduler.getStationNoOfUpPlatformLineList(),
                 scheduler.getStationNoOfDownPlatformLineList(), scheduler.getStationNoOfDualPlatformLineList(),
-                noOfPaths, sourceTime, null, minDelayBwTrains, avgSpeed,
+                noOfPaths, sourceTime, minDelayBwTrains, avgSpeed,
                 stopTimeList, pathOldTrainSchedule, trainDay,startDay,startHrs, startMinutes,
                 endDay,endHrs, endMinutes,maxDelayBwStations, isSingleDay, false);
     }
@@ -80,7 +80,7 @@ public class Main {
                 Collection<Path> paths1= getPathsRecur(pathTemp, i1,stationGroupSizeForPart,scheduler,stopTime,noOfPaths,sourceTime1,
                         minDelayBwTrains,avgSpeed,pathOldTrainSchedule,maxDelayBwStations, isSingleDay, trainDay);
                 for(Path path1: paths1){
-                    Path tempPath=path.removeNode();
+                    Path tempPath=path.removeLastNode();
                     if(tempPath==null){
                         break;
                     }
@@ -88,7 +88,7 @@ public class Main {
                     weights1 = path1.getWeightList();
                     double tempPathCost = tempPath.pathCost();
                     for(int i2 = 1;i2<nodes1.size();i2++){
-                        tempPath = tempPath.appendNode(nodes1.get(i2), tempPathCost + weights1.get(i2));
+                        tempPath = tempPath.append(nodes1.get(i2), tempPathCost + weights1.get(i2));
                     }
                     System.out.println("********after addition " + tempPath.toString());
                     ans.add(tempPath);
@@ -107,14 +107,9 @@ public class Main {
         return ans;
     }
 
-    @SuppressWarnings("unused")
     public static void scheduleByBreaking(String pathTemp, String pathRoute, String pathBestRoute, String pathOldTrainSchedule,
                                           boolean isSingleDay, int trainDay){
         Scheduler scheduler = new Scheduler();
-        int startHrs = 0;
-        int startMinutes = 0;
-        int endHrs = 23;
-        int endMinutes=59;
         int maxDelayBwStations = 60;
         if(!scheduler.addRouteFromFile(pathRoute)){
             System.out.println("Unable to load route file");
@@ -161,7 +156,7 @@ public class Main {
     public static void main(String[] args) {
         String pathTrainList = "data" + File.separator +"train_list.txt";
 
-        String pathRoute = "data"+File.separator+"route"+File.separator+"routeCreated.txt";
+        String pathRoute = "data"+File.separator+"route"+File.separator+"route.txt";
         String pathOldTrainSchedule = "data"+File.separator+"final" + File.separator + "dayall";
 
         String pathPlotFile = "data"+File.separator+"plot"+File.separator+"plot1.pdf";
@@ -171,7 +166,7 @@ public class Main {
         String pathBestRoute = "data"+File.separator+"bestRoute";
         int trainDay = 0;
         boolean isSingleDay = true;
-        boolean usePreviousComputation = true;
+        boolean usePreviousComputation = false;
 
         if(!Scheduler.createParentFolder(pathTrainList) || !Scheduler.createParentFolder(pathRoute)
                 || !Scheduler.createParentFolder(pathPlotFile) || !Scheduler.createFolder(pathTemp)
@@ -203,9 +198,9 @@ public class Main {
 
             // scheduleByBreaking(pathTemp, pathRoute,pathBestRoute,pathOldTrainSchedule, isSingleDay, trainDay);
 
-            // int newTrainNo = 9910;
-            // String pathNewTrainFile = pathBestRoute+File.separator+"Type 2 AvgSpeed 80.0 path 1 cost 24.0 .path";
-            // Scheduler.showPlot(pathBestRoute,newTrainNo,pathPlotFile,pathRoute,pathOldTrainSchedule,true);
+            int newTrainNo = 9910;
+            String pathNewTrainFile = pathBestRoute+File.separator+"Type 2 AvgSpeed 80.0 path 1 cost 24.0 .path";
+            Scheduler.showPlot(pathBestRoute,newTrainNo,pathPlotFile,pathRoute,pathOldTrainSchedule,true);
         }
         catch (Exception e){
             e.printStackTrace();

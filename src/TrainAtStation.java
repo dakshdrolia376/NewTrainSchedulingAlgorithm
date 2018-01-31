@@ -17,6 +17,19 @@ public class TrainAtStation {
         this.departure = departure;
     }
 
+    public TrainAtStation(String key){
+        requireNonNull(key, "Invalid key");
+        if(key.equalsIgnoreCase("DefaultConstructorForNull")){
+            this.stationId =null;
+            this.trainNo = 0;
+            this.arrival =null;
+            this.departure = null;
+        }
+        else{
+            throw new IllegalArgumentException("Invalid key");
+        }
+    }
+
     public String getStationId() {
         return this.stationId;
     }

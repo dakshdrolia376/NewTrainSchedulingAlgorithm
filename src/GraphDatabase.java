@@ -2,11 +2,12 @@ import java.util.*;
 
 import static java.util.Objects.requireNonNull;
 
-public class GraphDatabase {
+public class GraphDatabase extends GraphParent{
     private List<Edge> edgeList;
     private final DatabaseConnector databaseConnector;
 
     public GraphDatabase(boolean usePreviousComputation){
+        super();
         edgeList = new ArrayList<>();
         databaseConnector = new DatabaseConnector();
         if(!usePreviousComputation && !databaseConnector.deleteAllNodes()){
@@ -14,21 +15,37 @@ public class GraphDatabase {
         }
     }
 
+    @Override
     public boolean disconnect(){
         return databaseConnector.closeConnection();
     }
 
-    @SuppressWarnings("unused")
+    @Override
+    public boolean flushData(){
+        if(edgeList.size()==0){
+            return true;
+        }
+        boolean result = addMultipleEdge(edgeList);
+        if(result){
+            edgeList = new ArrayList<>();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public boolean addNode(Node node){
         requireNonNull(node, "The node is null.");
         return databaseConnector.insertIntoNode(node);
     }
 
+    @Override
     public boolean addMultipleNode(List<Node> nodes){
         requireNonNull(nodes, "The node list is null.");
         return databaseConnector.insertIntoNodeBatch(nodes);
     }
 
+    @Override
     public boolean addEdge(Edge edge) {
         requireNonNull(edge, "The edge is null.");
         if(!edge.getFrom().isValid() || !edge.getTo().isValid()){
@@ -50,23 +67,13 @@ public class GraphDatabase {
         return true;
     }
 
-    public boolean flushEdgeList(){
-        if(edgeList.size()==0){
-            return true;
-        }
-        boolean result = addMultipleEdge(edgeList);
-        if(result){
-            edgeList = new ArrayList<>();
-            return true;
-        }
-        return false;
-    }
-
+    @Override
     public boolean addMultipleEdge(List<Edge> edges) {
         requireNonNull(edges, "The edge list is null.");
         return databaseConnector.insertIntoEdgeBatch(edges);
     }
 
+    @Override
     public Edge get(Node from, Node to) {
         double edgeWeight = databaseConnector.getEdgeWeight(from, to);
         if(edgeWeight>=0){
@@ -78,10 +85,12 @@ public class GraphDatabase {
         }
     }
 
-    public List<Edge> get(Node from) {
+    @Override
+    public Collection<Edge> get(Node from) {
         return databaseConnector.getEdges(from);
     }
 
+    @Override
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder("");
         List<Node> nodes = databaseConnector.getNodes();
@@ -89,8 +98,7 @@ public class GraphDatabase {
         for(Node node:nodes){
             stringBuilder.append(node.toString());
             stringBuilder.append(" ->> ");
-            List<Edge> edges = get(node);
-            stringBuilder.append(edges.toString());
+            stringBuilder.append(get(node).toString());
             stringBuilder.append('\n');
         }
         return stringBuilder.toString();

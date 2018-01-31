@@ -7,24 +7,14 @@ public class Node {
 
     public Node(TrainTime time, String stationId) {
         requireNonNull(stationId, "The station id is null.");
-        if(time!=null) {
-            this.time = new TrainTime(time);
-        }
-        else{
-            this.time = null;
-        }
+        this.time = time!=null?(new TrainTime(time)):null;
         this.stationId = stationId;
         this.isValid = true;
     }
 
     public Node(TrainTime time, String stationId, boolean isValid) {
         requireNonNull(stationId, "The station id is null.");
-        if(time!=null) {
-            this.time = new TrainTime(time);
-        }
-        else{
-            this.time = null;
-        }
+        this.time = time!=null?(new TrainTime(time)):null;
         this.stationId = stationId;
         this.isValid = isValid;
     }

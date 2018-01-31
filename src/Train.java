@@ -19,6 +19,15 @@ public class Train {
     }
 
     @SuppressWarnings("unused")
+    public Train(int trainNo, String name, boolean isUpDirection) {
+        requireNonNull(name, "The Train name is null.");
+        this.stoppageMap = new HashMap<>();
+        this.trainNo = trainNo;
+        this.name = name;
+        this.upDirection = isUpDirection;
+    }
+
+    @SuppressWarnings("unused")
     public int getTrainNo() {
         return this.trainNo;
     }
@@ -33,20 +42,12 @@ public class Train {
 
     public TrainTime getArr(String stId) {
         requireNonNull(stId,"Station id is null.");
-        TrainAtStation trainAtStation = this.stoppageMap.get(stId);
-        if(trainAtStation!=null){
-            return trainAtStation.getArr();
-        }
-        return null;
+        return this.stoppageMap.getOrDefault(stId, new TrainAtStation("DefaultConstructorForNull")).getArr();
     }
 
     public TrainTime getDept(String stId) {
         requireNonNull(stId,"Station id is null.");
-        TrainAtStation trainAtStation = this.stoppageMap.get(stId);
-        if(trainAtStation!=null){
-            return trainAtStation.getDept();
-        }
-        return null;
+        return this.stoppageMap.getOrDefault(stId, new TrainAtStation("DefaultConstructorForNull")).getDept();
     }
 
     public boolean addStoppage(Station station, TrainTime arrival, TrainTime departure) {

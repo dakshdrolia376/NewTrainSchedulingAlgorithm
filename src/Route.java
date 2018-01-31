@@ -33,16 +33,7 @@ public class Route {
 
     public Station getStation(String id) {
         requireNonNull(id, "Station id is null.");
-        return mapStation.get(id);
-    }
-
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder("");
-        for (Station station:this.mapStation.values()) {
-            stringBuilder.append(station.toString());
-            stringBuilder.append('\n');
-        }
-        return stringBuilder.toString();
+        return mapStation.getOrDefault(id, null);
     }
 
     public List<List<Node>> getFreeSlots(int minDelayBwTrains, int startDay, int startHrs, int startMinutes,
@@ -64,7 +55,7 @@ public class Route {
             else{
                 System.out.println("Complete scheduling");
                 nextWeekSlots = getFreeSlots(minDelayBwTrains, 0,0,0,
-                        endDay,endHrs,endMinutes,isSingleDay);
+                        endDay,endHrs,endMinutes,false);
                 endDay = 6;
                 endHrs = 23;
                 endMinutes = 59;
@@ -87,5 +78,15 @@ public class Route {
             nodes.get(i).addAll(nextWeekSlots.get(i));
         }
         return nodes;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder("");
+        for (Station station:this.mapStation.values()) {
+            stringBuilder.append(station.toString());
+            stringBuilder.append('\n');
+        }
+        return stringBuilder.toString();
     }
 }
