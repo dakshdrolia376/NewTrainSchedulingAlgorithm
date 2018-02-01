@@ -16,6 +16,9 @@ public class KShortestPathFinder {
             throw new IllegalArgumentException("Invalid number of paths required.");
         }
 
+        int maxLengthPathFound=0;
+        int maxDifferenceAllowed = 6;
+
         List<Path> paths = new ArrayList<>(k);
         Map<String, Integer> countMap = new HashMap<>();
         Queue<Path> HEAP = new PriorityQueue<>(Comparator.comparingDouble(Path::pathCost));
@@ -24,21 +27,33 @@ public class KShortestPathFinder {
 
         while (!HEAP.isEmpty() && countMap.getOrDefault(target.toString(), 0) < k) {
             Path currentPath = HEAP.remove();
-            // System.out.println("****" +currentPath.toString());
+            if(currentPath.getLength()>maxLengthPathFound){
+                maxLengthPathFound = currentPath.getLength();
+                System.out.println("Best Path till now cost : " + currentPath.pathCost() + " >> " + currentPath.toString());
+            }
+            if(currentPath.getLength()+maxDifferenceAllowed <maxLengthPathFound){
+                // System.out.println("Rejected Path cost : " + currentPath.pathCost() + " >> " + currentPath.toString());
+                // System.out.println("Best Path cost : " + p.pathCost() + " >> " + p.toString());
+                continue;
+            }
+
             Node endNode = currentPath.getEndNode();
             if(!endNode.isValid()){
                 continue;
             }
             countMap.put(endNode.toString(), countMap.getOrDefault(endNode.toString(), 0) + 1);
             if (endNode.equals(target)) {
-                System.out.print(" In path memory size: ");
-                Scheduler.getRuntimeMemory();
+                // System.out.print(" In path memory size: ");
+                // Scheduler.getRuntimeMemory();
                 paths.add(currentPath);
+                // System.out.println("Path found :" + currentPath.toString());
             }
-            if (countMap.get(endNode.toString()) <= k) {
-                for (Edge edge : graph.get(endNode)) {
-                    Path path = currentPath.append(edge);
-                    HEAP.add(path);
+            else {
+                if (countMap.get(endNode.toString()) <= k) {
+                    for (Edge edge : graph.get(endNode)) {
+                        Path path = currentPath.append(edge);
+                        HEAP.add(path);
+                    }
                 }
             }
         }

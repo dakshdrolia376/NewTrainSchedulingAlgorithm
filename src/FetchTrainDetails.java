@@ -1,30 +1,148 @@
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import java.io.*;
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
-public class TrainStoppageList {
+import static java.util.Objects.requireNonNull;
 
-    private void getWebsite(String url, String pathFile) {
-        url = url.replaceAll(" ", "%20");
-        System.out.println("***Crawling : " + url);
+public class FetchTrainDetails {
+    private Map<Integer, Integer> myMap;
+    private String pathDatabaseTrain;
+    private boolean newMethod;
+
+    public FetchTrainDetails(String pathDatabaseTrain){
+        requireNonNull(pathDatabaseTrain, "path of database cant be null.");
+        this.pathDatabaseTrain = pathDatabaseTrain;
+        Gson gson = new Gson();
+        try {
+            Type listType = new TypeToken<Map<Integer, Integer>>(){}.getType();
+            File file = new File(this.pathDatabaseTrain + File.separator + "index.db");
+            if(file.exists()) {
+                this.myMap = gson.fromJson(new FileReader(file), listType);
+            }
+            else{
+                this.myMap = new HashMap<>();
+            }
+        }
+        catch (Exception e){
+            this.myMap = new HashMap<>();
+        }
+        this.newMethod=true;
+    }
+
+    public boolean fetchTrainNumber(int trainNo, String pathTrainFile){
+        int indexTrain = myMap.getOrDefault(trainNo, -1);
+        if(indexTrain==-1){
+            System.out.println("Train Not found. Please try using google search.");
+            return false;
+        }
+        String fileTrainIndex = this.pathDatabaseTrain + File.separator +indexTrain+".txt";
         try{
-            Thread.sleep(4000);
-            //without proper User-Agent, we will get 403 error
-            Document doc = Jsoup.connect(url).maxBodySize(0)
-                    .userAgent("Mozilla/17.0 Chrome/26.0.1410.64 Safari/537.31").timeout(30000).get();
-            System.out.println("fetching done");
-            //below will print HTML data, save it to a file.
-            new WriteToFile().write(pathFile ,doc.html(),false);
-            System.out.println("train website saved");
+            FileReader fReader;
+            BufferedReader bReader;
+            FileWriter fWriter;
+            BufferedWriter bWriter;
+            fReader = new FileReader(fileTrainIndex);
+            bReader = new BufferedReader(fReader);
+            fWriter = new FileWriter(pathTrainFile);
+            bWriter = new BufferedWriter(fWriter);
+            String line;
+            while((line = bReader.readLine()) != null){
+                System.out.println(line);
+                bWriter.write(line);
+                bWriter.write('\n');
+            }
+            bReader.close();
+            fReader.close();
+            bWriter.close();
+            fWriter.close();
+            return true;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean fetchAll(){
+        boolean ans = true;
+        for(int i=1;i<10000;i++){
+            ans = fetchTrain(i);
+        }
+        Gson gson = new Gson();
+        try {
+            Type listType = new TypeToken<Map<Integer, Integer>>(){}.getType();
+            FileWriter fileWriter = new FileWriter(this.pathDatabaseTrain + File.separator + "index.db");
+            gson.toJson(myMap,listType,fileWriter);
+            fileWriter.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return ans;
+    }
+
+    public boolean fetchTrain(int trainIndexNo){
+        String url = "https://indiarailinfo.com/train/timetable/all/" + trainIndexNo;
+        String pathTrain = this.pathDatabaseTrain + File.separator + "train_details_" + trainIndexNo+".txt";
+        File file = new File(pathTrain);
+        if(!file.exists()) {
+            if(!new GetWebsite().getWebsite(url, pathTrain)){
+                System.out.println("Invalid Index : " + trainIndexNo);
+                return false;
+            }
+        }
+        String pathTrainScheduleCompete = this.pathDatabaseTrain + File.separator +trainIndexNo+".txt";
+        if(!parseTrainNumber(pathTrain)){
+            System.out.println("Unable to parse train Number " + pathTrain);
+            return false;
+        }
+        if(!parseTrainScheduleWebsite(pathTrain, pathTrainScheduleCompete)){
+            System.out.println("Unable to parse train schedule " + pathTrain);
+            return false;
+        }
+        return true;
+    }
+
+    public boolean parseTrainNumber(String fileName){
+        Pattern pattern = Pattern.compile("<meta property=\"og:url\" content=\".*?\">");
+        Matcher matcher;
+        FileReader fReader;
+        BufferedReader bReader;
+        try {
+            fReader = new FileReader(fileName);
+            bReader = new BufferedReader(fReader);
+            String line;
+            while ((line = bReader.readLine()) != null) {
+                matcher = pattern.matcher(line);
+                if (matcher.find()) {
+                    String temp = matcher.group().split("\\s+")[2];
+                    String temp1[] = temp.split("/");
+                    if (temp1.length >= 7) {
+                        String trainName = temp1[5].toLowerCase();
+                        String temp2[] = trainName.split("-");
+                        String trainNo = temp2[temp2.length-1];
+                        String trainIndex = temp1[6];
+                        this.myMap.put(Integer.parseInt(trainNo), Integer.parseInt(trainIndex));
+                        System.out.print(temp + " ");
+                        System.out.println(trainNo+">" + trainIndex);
+                        return true;
+                    }
+                }
+            }
         }
         catch (Exception e){
             e.printStackTrace();
         }
+        return false;
     }
 
-    private String parseTrainScheduleWebsite(String filename, String pathTemp, String trainNo) {
+    private boolean parseTrainScheduleWebsite(String filename, String pathTrainFile) {
         System.out.println("Parsing " + filename);
 
         BufferedWriter bWriter;
@@ -36,12 +154,10 @@ public class TrainStoppageList {
         Pattern pattern_time = Pattern.compile(">\\d+:\\d+<");
         Pattern pattern_km = Pattern.compile(">\\d+[.]\\d+<");
         Matcher matcher;
-        String pathTrainSchedule = null;
         try {
             fReader = new FileReader(filename);
             bReader = new BufferedReader(fReader);
-            pathTrainSchedule = pathTemp+ File.separator+trainNo+"_schedule_all.txt";
-            fWriter = new FileWriter(pathTrainSchedule);
+            fWriter = new FileWriter(pathTrainFile);
             bWriter = new BufferedWriter(fWriter);
             boolean station_started = false;
             boolean second_line_station = false;
@@ -160,16 +276,17 @@ public class TrainStoppageList {
             }
             bWriter.close();
             fWriter.close();
-            fReader.close();
             bReader.close();
+            fReader.close();
+            return true;
         }
         catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
-        return pathTrainSchedule;
     }
 
-    private String getTrainStoppageAll(String trainNo, String pathTemp){
+    private boolean getTrainStoppageAll(String trainNo, String pathTemp, String pathTrainSchedule){
         FileReader fReader;
         BufferedReader bReader;
         FileReader fReader2;
@@ -187,7 +304,7 @@ public class TrainStoppageList {
         String pathTrainScheduleWebsite = pathTemp + File.separator+ trainNo + "_schedule_website.txt";
         File file = new File(pathTrainGoogleSearchPage);
         if(!file.exists()) {
-            getWebsite(searchUrl, pathTrainGoogleSearchPage);
+            new GetWebsite().getWebsite(searchUrl, pathTrainGoogleSearchPage);
         }
         try {
             fReader = new FileReader(pathTrainGoogleSearchPage);
@@ -200,7 +317,7 @@ public class TrainStoppageList {
                     if (matcher2.find()) {
                         file = new File(pathTrainWebsite);
                         if (!file.exists()) {
-                            getWebsite(matcher2.group(), pathTrainWebsite);
+                            new GetWebsite().getWebsite(matcher2.group(), pathTrainWebsite);
                         }
                         fReader2 = new FileReader(pathTrainWebsite);
                         bReader2 = new BufferedReader(fReader2);
@@ -212,7 +329,7 @@ public class TrainStoppageList {
                                 String link = "https://indiarailinfo.com" + all_station.split("\"")[1];
                                 file = new File(pathTrainScheduleWebsite);
                                 if (!file.exists()) {
-                                    getWebsite(link, pathTrainScheduleWebsite);
+                                    new GetWebsite().getWebsite(link, pathTrainScheduleWebsite);
                                 }
                                 parsable = true;
                                 break;
@@ -226,55 +343,56 @@ public class TrainStoppageList {
             }
             fReader.close();
             bReader.close();
-            if(parsable) {
-                return parseTrainScheduleWebsite(pathTrainScheduleWebsite, pathTemp, trainNo);
+
+            if(parsable && parseTrainScheduleWebsite(pathTrainScheduleWebsite, pathTrainSchedule)) {
+                return true;
             }
         }
         catch (Exception e){
             e.printStackTrace();
         }
-        return null;
+        return false;
     }
 
-    private void getTrainStoppagePNBEtoMGS(String pathFileToParse, String pathParsedFile) {
-        BufferedWriter bWriter;
-        FileWriter fWriter;
-        FileReader fReader;
-        BufferedReader bReader;
-        Pattern patternPNBE = Pattern.compile("patna-junction-pnbe.*");
-        Pattern patternMGS = Pattern.compile("mughal-sarai-junction-mgs.*");
+    // private void getTrainStoppagePNBEtoMGS(String pathFileToParse, String pathParsedFile) {
+    //     BufferedWriter bWriter;
+    //     FileWriter fWriter;
+    //     FileReader fReader;
+    //     BufferedReader bReader;
+    //     Pattern patternPNBE = Pattern.compile("patna-junction-pnbe.*");
+    //     Pattern patternMGS = Pattern.compile("mughal-sarai-junction-mgs.*");
+    //
+    //     Matcher matcher;
+    //     try {
+    //         fReader = new FileReader(pathFileToParse);
+    //         bReader = new BufferedReader(fReader);
+    //         fWriter = new FileWriter(pathParsedFile);
+    //         bWriter = new BufferedWriter(fWriter);
+    //         String line;
+    //         boolean startFound = false;
+    //         while((line = bReader.readLine()) != null) {
+    //             matcher = patternPNBE.matcher(line);
+    //             if(matcher.find()) {
+    //                 startFound = true;
+    //             }
+    //             if(startFound) {
+    //                 bWriter.write(line+"\n");
+    //             }
+    //             matcher = patternMGS.matcher(line);
+    //             if(matcher.find()) {
+    //                 break;
+    //             }
+    //         }
+    //         bWriter.close();
+    //         fWriter.close();
+    //         bReader.close();
+    //         fReader.close();
+    //     }
+    //     catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 
-        Matcher matcher;
-        try {
-            fReader = new FileReader(pathFileToParse);
-            bReader = new BufferedReader(fReader);
-            fWriter = new FileWriter(pathParsedFile);
-            bWriter = new BufferedWriter(fWriter);
-            String line;
-            boolean startFound = false;
-            while((line = bReader.readLine()) != null) {
-                matcher = patternPNBE.matcher(line);
-                if(matcher.find()) {
-                    startFound = true;
-                }
-                if(startFound) {
-                    bWriter.write(line+"\n");
-                }
-                matcher = patternMGS.matcher(line);
-                if(matcher.find()) {
-                    break;
-                }
-            }
-            bWriter.close();
-            fWriter.close();
-            fReader.close();
-            bReader.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
     public void getTrainStoppageFromFile(String filename, String pathTemp, String pathFinal) {
         FileReader fReader;
         BufferedReader bReader;
@@ -286,17 +404,23 @@ public class TrainStoppageList {
             while((line = bReader.readLine())!=null) {
                 String[] data = line.split("\\s+");
                 String day = "day" +data[0];
+                String pathTrainScheduleParent = pathFinal + File.separator + day;
+                if (!Scheduler.createFolder(pathTrainScheduleParent)) {
+                    System.out.println("Unable to create folder");
+                    return;
+                }
                 for(int i=1;i<data.length;i++) {
-                    String pathTrainScheduleAll = getTrainStoppageAll(data[i],pathTemp);
-                    String pathTrainSchedulePNBEtoMGS = pathFinal+File.separator+day+File.separator +data[i]+".txt";
-                    File fileFinal = new File(pathTrainSchedulePNBEtoMGS);
-                    if(!fileFinal.getParentFile().exists()){
-                        if(!(fileFinal.getParentFile()).mkdirs()){
-                            System.out.println("Unable to create folder");
-                            return;
+                    String pathTrainScheduleAll = pathTrainScheduleParent + File.separator + data[i] + ".txt";
+                    if(this.newMethod){
+                        if(!fetchTrainNumber(Integer.parseInt(data[i]),pathTrainScheduleAll)){
+                            System.out.print("Unable to fetch train.");
                         }
                     }
-                    getTrainStoppagePNBEtoMGS(pathTrainScheduleAll, pathTrainSchedulePNBEtoMGS);
+                    else {
+                        if (!getTrainStoppageAll(data[i], pathTemp, pathTrainScheduleAll)) {
+                            System.out.print("Unable to fetch train.");
+                        }
+                    }
                 }
             }
             fReader.close();

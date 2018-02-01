@@ -7,14 +7,14 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class TrainList {
+public class FetchTrainList {
 
     public void getTrainList(String pathFile) {
         StringBuilder output = new StringBuilder("");
         for(int i=0;i<7;i++) {
             output.append(i);
             String url = "http://api.railwayapi.com/v2/between/source/pnbe/dest/mgs/date/"
-                    +(15+i) +"-01-2018/apikey/jg75kd7lc1/";
+                    +(5+i) +"-02-2018/apikey/o2w0ov08yw/";
 
             // Connect to the URL using java's native library
             try {

@@ -1,8 +1,11 @@
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.util.*;
 
 import static java.util.Objects.requireNonNull;
@@ -15,13 +18,13 @@ public class GraphFile extends GraphParent{
     private Map<String, Integer> latestAccessedFileMap;
     private int maxStationsToStore;
 
-    private Map<String, Map<String, Double>> tempMap = new HashMap<>();
+    private Map<String, Map<String, Edge>> tempMap = new HashMap<>();
     private String tempFile = "";
 
     public GraphFile(boolean usePreviousComputation, String pathTemp){
         super();
         requireNonNull(pathTemp, "Path temp cant be null");
-        int K = 2;
+        int K = 8;
         this.maxStationsToStore = K;
         this.latestAccessedQueue = new ArrayList<>(K);
         this.latestAccessedMapList = new ArrayList<>(K);
@@ -30,12 +33,12 @@ public class GraphFile extends GraphParent{
         }
         this.latestAccessedFileMap = new HashMap<>(K);
         this.pathTemp = pathTemp + File.separator + "database";
-        File file = new File(this.pathTemp);
-        if(!file.exists() && !file.mkdirs()){
+        if(!Scheduler.createFolder(pathTemp)){
             throw new RuntimeException("Unable to initialize local storage");
         }
         else{
             if(!usePreviousComputation) {
+                File file = new File(this.pathTemp);
                 File[] listOfFiles = file.listFiles();
                 if (listOfFiles == null) {
                     throw new RuntimeException("Unable to initialize local storage");
@@ -53,35 +56,25 @@ public class GraphFile extends GraphParent{
         Scheduler.getRuntimeMemory();
         System.out.println("Loading station ..." + fileName);
         String pathNodeMap = this.pathTemp + File.separator + fileName;
-        JsonObject a = new JsonObject();
+        Map<String, Map<String, Edge>> tempMapStation = new HashMap<>();
+        Gson gson = new Gson();
         try {
-            JsonParser parser = new JsonParser();
+            Type listType = new TypeToken<Map<String, Map<String, Edge>>>(){}.getType();
             File file = new File(pathNodeMap);
-            if(file.exists()){
-                a = (JsonObject) parser.parse(new FileReader(file));
+            if(file.exists()) {
+                tempMapStation = gson.fromJson(new FileReader(file), listType);
             }
-            Scheduler.getRuntimeMemory();
-            for(String nodeFromId: a.keySet()){
-                // Scheduler.getRuntimeMemory();
-                JsonObject nodeFrom;
-                nodeFrom = a.getAsJsonObject(nodeFromId);
-                Map<String, Edge> tempNodeFromMap = new HashMap<>();
-                for(Map.Entry<String, JsonElement> entry: nodeFrom.entrySet()){
-                    tempNodeFromMap.put(entry.getKey(), new Edge(new Node(nodeFromId),
-                            new Node(entry.getKey()), entry.getValue().getAsDouble()));
-                }
-                this.latestAccessedMapList.get(index).put(nodeFromId, tempNodeFromMap);
-            }
-            Scheduler.getRuntimeMemory();
+            this.latestAccessedMapList.set(index,tempMapStation);
             return true;
         }
         catch (Exception e){
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     private int removeEarliestUsed(){
+        System.out.println("**** " +this.latestAccessedQueue.toString());
         if(this.latestAccessedQueue.size()>=this.maxStationsToStore){
             String filename = this.latestAccessedQueue.remove(0);
             System.out.println("Removing station... " + filename );
@@ -97,13 +90,13 @@ public class GraphFile extends GraphParent{
 
     private int getIndex(String filename){
         if(this.latestAccessedFileMap.containsKey(filename)){
-            for(int i=0;i<this.latestAccessedQueue.size();i++){
-                if(this.latestAccessedQueue.get(i).equalsIgnoreCase(filename)){
-                    this.latestAccessedQueue.remove(i);
-                    this.latestAccessedQueue.add(filename);
-                    break;
-                }
-            }
+            // for(int i=0;i<this.latestAccessedQueue.size();i++){
+            //     if(this.latestAccessedQueue.get(i).equalsIgnoreCase(filename)){
+            //         this.latestAccessedQueue.remove(i);
+            //         this.latestAccessedQueue.add(filename);
+            //         break;
+            //     }
+            // }
             return this.latestAccessedFileMap.get(filename);
         }
         else{
@@ -128,35 +121,28 @@ public class GraphFile extends GraphParent{
     @Override
     public boolean flushData(){
         String pathNodeMap = this.pathTemp + File.separator + this.tempFile;
-        JsonObject a = new JsonObject();
+        Map<String, Map<String, Edge>> tempMapStation = new HashMap<>();
+        Gson gson = new Gson();
         try {
-            JsonParser parser = new JsonParser();
+            Type listType = new TypeToken<Map<String, Map<String, Edge>>>(){}.getType();
             File file = new File(pathNodeMap);
-            if(file.exists()){
-                a = (JsonObject) parser.parse(new FileReader(file));
+            if(file.exists()) {
+                tempMapStation = gson.fromJson(new FileReader(file), listType);
             }
-            for(String keyNodeFrom: this.tempMap.keySet()){
-                JsonObject nodeFrom = new JsonObject();
-                if(a.has(keyNodeFrom)) {
-                    nodeFrom = a.getAsJsonObject(keyNodeFrom);
-                }
-                for(Map<String, Double> mapNodeTo: this.tempMap.values()){
-                    for(String keyNodeTo: mapNodeTo.keySet()) {
-                        nodeFrom.addProperty(keyNodeTo, mapNodeTo.get(keyNodeTo));
-                    }
-                }
-                a.add(keyNodeFrom, nodeFrom);
+            for(String key:this.tempMap.keySet()){
+                tempMapStation.putIfAbsent(key, new HashMap<>());
+                Map<String, Edge> tempNodeMap = tempMapStation.get(key);
+                tempNodeMap.putAll(this.tempMap.get(key));
             }
-
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(pathNodeMap));
-            bufferedWriter.write(a.toString());
-            bufferedWriter.close();
+            FileWriter fileWriter = new FileWriter(pathNodeMap);
+            gson.toJson(tempMapStation,listType,fileWriter);
+            fileWriter.close();
+            return true;
         }
         catch (Exception e){
             e.printStackTrace();
             return false;
         }
-        return true;
     }
 
     @Override
@@ -178,17 +164,15 @@ public class GraphFile extends GraphParent{
             System.out.println("Invalid edge.");
             return false;
         }
+
         String fileName = edge.getFrom().toString().split(":")[0];
         if(tempFile.equalsIgnoreCase("")){
             tempMap = new HashMap<>();
             tempFile = fileName;
         }
         if(!tempFile.equalsIgnoreCase(fileName)){
-            System.out.println("********Max memory used");
-            Scheduler.getRuntimeMemory();
-            System.out.println("**********");
             if(!flushData()){
-                System.out.println("Some error occurred");
+                System.out.println("Some error occurred in storing data to disk.");
                 return false;
             }
             else{
@@ -198,16 +182,20 @@ public class GraphFile extends GraphParent{
         }
 
         try {
-            Map<String , Double> previousData = this.tempMap.getOrDefault(edge.getFrom().toString(), new HashMap<>());
-            previousData.put(edge.getTo().toString(), edge.getWeight());
-            this.tempMap.put(edge.getFrom().toString(), previousData);
+            this.tempMap.putIfAbsent(edge.getFrom().toString(), new HashMap<>());
+            Map<String , Edge> previousData = this.tempMap.get(edge.getFrom().toString());
+            // only single edge between two nodes.
+            if(previousData.containsKey(edge.getTo().toString())) {
+                System.out.println("Duplicate edge " + edge.toString());
+                return false;
+            }
+            previousData.put(edge.getTo().toString(), edge);
+            return true;
         }
         catch (Exception e){
             e.printStackTrace();
             return false;
         }
-
-        return true;
     }
 
     @Override
@@ -215,7 +203,7 @@ public class GraphFile extends GraphParent{
         requireNonNull(edges, "The edge list is null.");
         boolean ans = true;
         for(Edge edge: edges){
-            ans = ans && addEdge(edge);
+            ans = addEdge(edge);
         }
         return ans;
     }

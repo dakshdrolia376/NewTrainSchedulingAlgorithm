@@ -1,143 +1,77 @@
 Setting up duration of days...
 *********************************************************
-2018/01/31 13:41:37
+2018/02/01 19:51:57
 Avg speed: 80.0
-Station size: 51
-Initializing graph
-Start Used memory is bytes: 5972648
-Start Used memory is megabytes: 5
-Start Used memory is bytes: 6256264
-Start Used memory is megabytes: 5
-Start Used memory is bytes: 13995656
+Best Path till now cost : 0.0 >> Path@6c49835d
+**** []
+Start Used memory is bytes: 14220904
 Start Used memory is megabytes: 13
-Start Used memory is bytes: 21797832
-Start Used memory is megabytes: 20
-Start Used memory is bytes: 29430248
-Start Used memory is megabytes: 28
-Start Used memory is bytes: 36832376
-Start Used memory is megabytes: 35
-Start Used memory is bytes: 44403824
-Start Used memory is megabytes: 42
-Start Used memory is bytes: 51894152
-Start Used memory is megabytes: 49
-Start Used memory is bytes: 59546296
-Start Used memory is megabytes: 56
-Start Used memory is bytes: 67200408
+Loading station ...source
+After Load Station 
+Start Used memory is bytes: 9106432
+Start Used memory is megabytes: 8
+Best Path till now cost : 0.0 >> [source, pnbe:0:4:11]
+**** [source]
+Start Used memory is bytes: 10681344
+Start Used memory is megabytes: 10
+Loading station ...pnbe
+After Load Station 
+Start Used memory is bytes: 32809472
+Start Used memory is megabytes: 31
+Best Path till now cost : 2.0 >> [source, pnbe:0:22:15, scy:0:22:17]
+**** [source, pnbe]
+Start Used memory is bytes: 49064448
+Start Used memory is megabytes: 46
+Loading station ...scy
+After Load Station 
+Start Used memory is bytes: 53477376
+Start Used memory is megabytes: 51
+Best Path till now cost : 5.0 >> [source, pnbe:0:2:47, scy:0:2:49, pws:0:2:52]
+**** [source, pnbe, scy]
+Start Used memory is bytes: 68027392
 Start Used memory is megabytes: 64
-Start Used memory is bytes: 74531592
-Start Used memory is megabytes: 71
-Start Used memory is bytes: 82184472
-Start Used memory is megabytes: 78
-Start Used memory is bytes: 89661664
-Start Used memory is megabytes: 85
-Start Used memory is bytes: 97172008
-Start Used memory is megabytes: 92
-Start Used memory is bytes: 104451200
-Start Used memory is megabytes: 99
-Start Used memory is bytes: 111866176
-Start Used memory is megabytes: 106
-Start Used memory is bytes: 119294208
-Start Used memory is megabytes: 113
-Start Used memory is bytes: 126671864
-Start Used memory is megabytes: 120
-Start Used memory is bytes: 134053936
-Start Used memory is megabytes: 127
-Start Used memory is bytes: 141660656
-Start Used memory is megabytes: 135
-Start Used memory is bytes: 149396152
-Start Used memory is megabytes: 142
-Start Used memory is bytes: 157055984
-Start Used memory is megabytes: 149
-Start Used memory is bytes: 164660424
-Start Used memory is megabytes: 157
-Start Used memory is bytes: 172355280
-Start Used memory is megabytes: 164
-Start Used memory is bytes: 179952304
-Start Used memory is megabytes: 171
-Start Used memory is bytes: 187407824
-Start Used memory is megabytes: 178
-Start Used memory is bytes: 194846552
-Start Used memory is megabytes: 185
-Start Used memory is bytes: 202286264
-Start Used memory is megabytes: 192
-Start Used memory is bytes: 209665800
-Start Used memory is megabytes: 199
-Start Used memory is bytes: 217212976
-Start Used memory is megabytes: 207
-Start Used memory is bytes: 224499512
-Start Used memory is megabytes: 214
-Start Used memory is bytes: 231333512
-Start Used memory is megabytes: 220
-Start Used memory is bytes: 238379992
-Start Used memory is megabytes: 227
-Start Used memory is bytes: 245429984
-Start Used memory is megabytes: 234
-Start Used memory is bytes: 252769304
-Start Used memory is megabytes: 241
-Start Used memory is bytes: 259935864
-Start Used memory is megabytes: 247
-Start Used memory is bytes: 267264232
-Start Used memory is megabytes: 254
-Start Used memory is bytes: 274590808
-Start Used memory is megabytes: 261
-Start Used memory is bytes: 282726600
-Start Used memory is megabytes: 269
-Start Used memory is bytes: 290070576
-Start Used memory is megabytes: 276
-Start Used memory is bytes: 297373784
-Start Used memory is megabytes: 283
-Start Used memory is bytes: 304455792
-Start Used memory is megabytes: 290
-Start Used memory is bytes: 311893224
-Start Used memory is megabytes: 297
-Start Used memory is bytes: 319299336
-Start Used memory is megabytes: 304
-Start Used memory is bytes: 326263176
-Start Used memory is megabytes: 311
-Start Used memory is bytes: 333368784
-Start Used memory is megabytes: 317
-Start Used memory is bytes: 340632752
-Start Used memory is megabytes: 324
-Start Used memory is bytes: 347517960
-Start Used memory is megabytes: 331
-Start Used memory is bytes: 355011544
-Start Used memory is megabytes: 338
-Start Used memory is bytes: 362330016
-Start Used memory is megabytes: 345
-Start Used memory is bytes: 369829744
-Start Used memory is megabytes: 352
-Start Used memory is bytes: 376176816
-Start Used memory is megabytes: 358
-Edge size: 2793243
- In path memory size: Start Used memory is bytes: 472906800
-Start Used memory is megabytes: 450
- In path memory size: Start Used memory is bytes: 472910368
-Start Used memory is megabytes: 451
- In path memory size: Start Used memory is bytes: 472910304
-Start Used memory is megabytes: 451
- In path memory size: Start Used memory is bytes: 472910800
-Start Used memory is megabytes: 451
- In path memory size: Start Used memory is bytes: 472910736
-Start Used memory is megabytes: 451
- In path memory size: Start Used memory is bytes: 472910880
-Start Used memory is megabytes: 451
- In path memory size: Start Used memory is bytes: 472911152
-Start Used memory is megabytes: 451
- In path memory size: Start Used memory is bytes: 472911224
-Start Used memory is megabytes: 451
- In path memory size: Start Used memory is bytes: 472911224
-Start Used memory is megabytes: 451
- In path memory size: Start Used memory is bytes: 472911296
-Start Used memory is megabytes: 451
-Duration: 103300ms
-10
-[source, pnbe:0:17:52, scy:0:17:54, pws:0:17:57, dnr:0:18:0, neo:0:18:5, gnhi:0:18:8, sde:0:18:12, patl:0:18:14, bta:0:18:16, pail:0:18:21, vhch:0:18:22, kwr:0:18:24, kua:0:18:27, jmir:0:18:32, ara:0:18:36, jgwl:0:18:39, krs:0:18:44, kya:0:18:48, xsan:0:18:50, rnte:0:18:52, bea:0:18:55, asjp:0:18:58, byn:0:19:0, skri:0:19:4, rpr:0:19:8, vkdh:0:19:12, twg:0:19:16, vvg:0:19:20, dure:0:19:23, bue:0:19:29, ndon:0:19:34, bxr:0:19:37, pwxp:0:19:44, csa:0:19:46, bqw:0:19:51, gmr:0:19:54, kkrh:0:19:57, bwh:0:20:0, usk:0:20:3, dln:0:20:7, drv:0:20:13, zna:0:20:18, bhcl:0:20:22, dha:0:20:28, tlam:0:20:34, sld:0:20:39, kca:0:20:45, eocm:0:20:47, mgso:0:20:51, mgmy:0:20:53, mgs:0:20:55, dest] cost: 183.0
-[source, pnbe:0:1:25, scy:0:1:27, pws:0:1:30, dnr:0:1:33, neo:0:1:38, gnhi:0:1:41, sde:0:1:45, patl:0:1:47, bta:0:1:49, pail:0:1:54, vhch:0:1:55, kwr:0:1:57, kua:0:2:0, jmir:0:2:5, ara:0:2:9, jgwl:0:2:12, krs:0:2:17, kya:0:2:21, xsan:0:2:23, rnte:0:2:25, bea:0:2:28, asjp:0:2:31, byn:0:2:33, skri:0:2:37, rpr:0:2:41, vkdh:0:2:45, twg:0:2:49, vvg:0:2:53, dure:0:2:56, bue:0:3:2, ndon:0:3:7, bxr:0:3:10, pwxp:0:3:17, csa:0:3:19, bqw:0:3:24, gmr:0:3:27, kkrh:0:3:30, bwh:0:3:33, usk:0:3:36, dln:0:3:40, drv:0:3:46, zna:0:3:51, bhcl:0:3:55, dha:0:4:1, tlam:0:4:7, sld:0:4:12, kca:0:4:18, eocm:0:4:20, mgso:0:4:24, mgmy:0:4:26, mgs:0:4:28, dest] cost: 183.0
-[source, pnbe:0:17:53, scy:0:17:55, pws:0:17:58, dnr:0:18:1, neo:0:18:6, gnhi:0:18:9, sde:0:18:13, patl:0:18:15, bta:0:18:17, pail:0:18:22, vhch:0:18:23, kwr:0:18:25, kua:0:18:28, jmir:0:18:33, ara:0:18:37, jgwl:0:18:40, krs:0:18:45, kya:0:18:49, xsan:0:18:51, rnte:0:18:53, bea:0:18:56, asjp:0:18:59, byn:0:19:1, skri:0:19:5, rpr:0:19:9, vkdh:0:19:13, twg:0:19:17, vvg:0:19:21, dure:0:19:24, bue:0:19:30, ndon:0:19:35, bxr:0:19:38, pwxp:0:19:45, csa:0:19:47, bqw:0:19:52, gmr:0:19:55, kkrh:0:19:58, bwh:0:20:1, usk:0:20:4, dln:0:20:8, drv:0:20:14, zna:0:20:19, bhcl:0:20:23, dha:0:20:29, tlam:0:20:35, sld:0:20:40, kca:0:20:46, eocm:0:20:48, mgso:0:20:52, mgmy:0:20:54, mgs:0:20:56, dest] cost: 183.0
-[source, pnbe:0:1:38, scy:0:1:40, pws:0:1:43, dnr:0:1:46, neo:0:1:51, gnhi:0:1:54, sde:0:1:58, patl:0:2:0, bta:0:2:2, pail:0:2:7, vhch:0:2:8, kwr:0:2:10, kua:0:2:13, jmir:0:2:18, ara:0:2:22, jgwl:0:2:25, krs:0:2:30, kya:0:2:34, xsan:0:2:36, rnte:0:2:38, bea:0:2:41, asjp:0:2:44, byn:0:2:46, skri:0:2:50, rpr:0:2:54, vkdh:0:2:58, twg:0:3:2, vvg:0:3:6, dure:0:3:9, bue:0:3:15, ndon:0:3:20, bxr:0:3:23, pwxp:0:3:30, csa:0:3:32, bqw:0:3:37, gmr:0:3:40, kkrh:0:3:43, bwh:0:3:46, usk:0:3:49, dln:0:3:53, drv:0:3:59, zna:0:4:4, bhcl:0:4:8, dha:0:4:14, tlam:0:4:20, sld:0:4:25, kca:0:4:31, eocm:0:4:33, mgso:0:4:37, mgmy:0:4:39, mgs:0:4:41, dest] cost: 183.0
-[source, pnbe:0:1:27, scy:0:1:29, pws:0:1:32, dnr:0:1:35, neo:0:1:40, gnhi:0:1:43, sde:0:1:47, patl:0:1:49, bta:0:1:51, pail:0:1:56, vhch:0:1:57, kwr:0:1:59, kua:0:2:2, jmir:0:2:7, ara:0:2:11, jgwl:0:2:14, krs:0:2:19, kya:0:2:23, xsan:0:2:25, rnte:0:2:27, bea:0:2:30, asjp:0:2:33, byn:0:2:35, skri:0:2:39, rpr:0:2:43, vkdh:0:2:47, twg:0:2:51, vvg:0:2:55, dure:0:2:58, bue:0:3:4, ndon:0:3:9, bxr:0:3:12, pwxp:0:3:19, csa:0:3:21, bqw:0:3:26, gmr:0:3:29, kkrh:0:3:32, bwh:0:3:35, usk:0:3:38, dln:0:3:42, drv:0:3:48, zna:0:3:53, bhcl:0:3:57, dha:0:4:3, tlam:0:4:9, sld:0:4:14, kca:0:4:20, eocm:0:4:22, mgso:0:4:26, mgmy:0:4:28, mgs:0:4:30, dest] cost: 183.0
-[source, pnbe:0:16:55, scy:0:16:57, pws:0:17:0, dnr:0:17:3, neo:0:17:8, gnhi:0:17:11, sde:0:17:15, patl:0:17:17, bta:0:17:19, pail:0:17:24, vhch:0:17:25, kwr:0:17:27, kua:0:17:30, jmir:0:17:35, ara:0:17:39, jgwl:0:17:42, krs:0:17:47, kya:0:17:51, xsan:0:17:53, rnte:0:17:55, bea:0:17:58, asjp:0:18:1, byn:0:18:3, skri:0:18:7, rpr:0:18:11, vkdh:0:18:15, twg:0:18:19, vvg:0:18:23, dure:0:18:26, bue:0:18:32, ndon:0:18:37, bxr:0:18:40, pwxp:0:18:47, csa:0:18:49, bqw:0:18:54, gmr:0:18:57, kkrh:0:19:0, bwh:0:19:3, usk:0:19:6, dln:0:19:10, drv:0:19:16, zna:0:19:21, bhcl:0:19:25, dha:0:19:31, tlam:0:19:37, sld:0:19:42, kca:0:19:48, eocm:0:19:50, mgso:0:19:54, mgmy:0:19:56, mgs:0:19:58, dest] cost: 183.0
-[source, pnbe:0:17:56, scy:0:17:58, pws:0:18:1, dnr:0:18:4, neo:0:18:9, gnhi:0:18:12, sde:0:18:16, patl:0:18:18, bta:0:18:20, pail:0:18:25, vhch:0:18:26, kwr:0:18:28, kua:0:18:31, jmir:0:18:36, ara:0:18:40, jgwl:0:18:43, krs:0:18:48, kya:0:18:52, xsan:0:18:54, rnte:0:18:56, bea:0:18:59, asjp:0:19:2, byn:0:19:4, skri:0:19:8, rpr:0:19:12, vkdh:0:19:16, twg:0:19:20, vvg:0:19:24, dure:0:19:27, bue:0:19:33, ndon:0:19:38, bxr:0:19:41, pwxp:0:19:48, csa:0:19:50, bqw:0:19:55, gmr:0:19:58, kkrh:0:20:1, bwh:0:20:4, usk:0:20:7, dln:0:20:11, drv:0:20:17, zna:0:20:22, bhcl:0:20:26, dha:0:20:32, tlam:0:20:38, sld:0:20:43, kca:0:20:49, eocm:0:20:51, mgso:0:20:55, mgmy:0:20:57, mgs:0:20:59, dest] cost: 183.0
-[source, pnbe:0:16:52, scy:0:16:54, pws:0:16:57, dnr:0:17:0, neo:0:17:5, gnhi:0:17:8, sde:0:17:12, patl:0:17:14, bta:0:17:16, pail:0:17:21, vhch:0:17:22, kwr:0:17:24, kua:0:17:27, jmir:0:17:32, ara:0:17:36, jgwl:0:17:39, krs:0:17:44, kya:0:17:48, xsan:0:17:50, rnte:0:17:52, bea:0:17:55, asjp:0:17:58, byn:0:18:0, skri:0:18:4, rpr:0:18:8, vkdh:0:18:12, twg:0:18:16, vvg:0:18:20, dure:0:18:23, bue:0:18:29, ndon:0:18:34, bxr:0:18:37, pwxp:0:18:44, csa:0:18:46, bqw:0:18:51, gmr:0:18:54, kkrh:0:18:57, bwh:0:19:0, usk:0:19:3, dln:0:19:7, drv:0:19:13, zna:0:19:18, bhcl:0:19:22, dha:0:19:28, tlam:0:19:34, sld:0:19:39, kca:0:19:45, eocm:0:19:47, mgso:0:19:51, mgmy:0:19:53, mgs:0:19:55, dest] cost: 183.0
-[source, pnbe:0:17:47, scy:0:17:49, pws:0:17:52, dnr:0:17:55, neo:0:18:0, gnhi:0:18:3, sde:0:18:7, patl:0:18:9, bta:0:18:11, pail:0:18:16, vhch:0:18:17, kwr:0:18:19, kua:0:18:22, jmir:0:18:27, ara:0:18:31, jgwl:0:18:34, krs:0:18:39, kya:0:18:43, xsan:0:18:45, rnte:0:18:47, bea:0:18:50, asjp:0:18:53, byn:0:18:55, skri:0:18:59, rpr:0:19:3, vkdh:0:19:7, twg:0:19:11, vvg:0:19:15, dure:0:19:18, bue:0:19:24, ndon:0:19:29, bxr:0:19:32, pwxp:0:19:39, csa:0:19:41, bqw:0:19:46, gmr:0:19:49, kkrh:0:19:52, bwh:0:19:55, usk:0:19:58, dln:0:20:2, drv:0:20:8, zna:0:20:13, bhcl:0:20:17, dha:0:20:23, tlam:0:20:29, sld:0:20:34, kca:0:20:40, eocm:0:20:42, mgso:0:20:46, mgmy:0:20:48, mgs:0:20:50, dest] cost: 183.0
-[source, pnbe:0:17:54, scy:0:17:56, pws:0:17:59, dnr:0:18:2, neo:0:18:7, gnhi:0:18:10, sde:0:18:14, patl:0:18:16, bta:0:18:18, pail:0:18:23, vhch:0:18:24, kwr:0:18:26, kua:0:18:29, jmir:0:18:34, ara:0:18:38, jgwl:0:18:41, krs:0:18:46, kya:0:18:50, xsan:0:18:52, rnte:0:18:54, bea:0:18:57, asjp:0:19:0, byn:0:19:2, skri:0:19:6, rpr:0:19:10, vkdh:0:19:14, twg:0:19:18, vvg:0:19:22, dure:0:19:25, bue:0:19:31, ndon:0:19:36, bxr:0:19:39, pwxp:0:19:46, csa:0:19:48, bqw:0:19:53, gmr:0:19:56, kkrh:0:19:59, bwh:0:20:2, usk:0:20:5, dln:0:20:9, drv:0:20:15, zna:0:20:20, bhcl:0:20:24, dha:0:20:30, tlam:0:20:36, sld:0:20:41, kca:0:20:47, eocm:0:20:49, mgso:0:20:53, mgmy:0:20:55, mgs:0:20:57, dest] cost: 183.0
+Loading station ...pws
+After Load Station 
+Start Used memory is bytes: 93654528
+Start Used memory is megabytes: 89
+Best Path till now cost : 8.0 >> [source, pnbe:0:2:47, scy:0:2:49, pws:0:2:52, dnr:0:2:55]
+**** [source, pnbe, scy, pws]
+Start Used memory is bytes: 136841216
+Start Used memory is megabytes: 130
+Loading station ...dnr
+After Load Station 
+Start Used memory is bytes: 173931008
+Start Used memory is megabytes: 165
+Best Path till now cost : 13.0 >> [source, pnbe:0:2:47, scy:0:2:49, pws:0:2:52, dnr:0:2:55, neo:0:3:0]
+**** [source, pnbe, scy, pws, dnr]
+Start Used memory is bytes: 276292096
+Start Used memory is megabytes: 263
+Loading station ...neo
+After Load Station 
+Start Used memory is bytes: 292548096
+Start Used memory is megabytes: 278
+Best Path till now cost : 16.0 >> [source, pnbe:0:2:47, scy:0:2:49, pws:0:2:52, dnr:0:2:55, neo:0:3:0, gnhi:0:3:3]
+**** [source, pnbe, scy, pws, dnr, neo]
+Start Used memory is bytes: 434634752
+Start Used memory is megabytes: 414
+Loading station ...gnhi
+After Load Station 
+Start Used memory is bytes: 427819008
+Start Used memory is megabytes: 408
+Best Path till now cost : 20.0 >> [source, pnbe:0:2:47, scy:0:2:49, pws:0:2:52, dnr:0:2:55, neo:0:3:0, gnhi:0:3:3, sde:0:3:7]
+**** [source, pnbe, scy, pws, dnr, neo, gnhi]
+Start Used memory is bytes: 509035008
+Start Used memory is megabytes: 485
+Loading station ...sde
+After Load Station 
+Start Used memory is bytes: 545785856
+Start Used memory is megabytes: 520
+Best Path till now cost : 22.0 >> [source, pnbe:0:16:2, scy:0:16:4, pws:0:16:7, dnr:0:16:10, neo:0:16:15, gnhi:0:16:18, sde:0:16:22, patl:0:16:24]
+**** [source, pnbe, scy, pws, dnr, neo, gnhi, sde]
+Removing station... source
+Start Used memory is bytes: 565182464
+Start Used memory is megabytes: 539
+Loading station ...patl
+After Load Station 
+Start Used memory is bytes: 585641392
+Start Used memory is megabytes: 558

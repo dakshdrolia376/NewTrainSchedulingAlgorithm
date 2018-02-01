@@ -127,6 +127,14 @@ public class Station {
         stringBuilder.append(this.distance);
         stringBuilder.append(" No of trains passing: ");
         stringBuilder.append(this.arrDeptSchedule.size());
+        stringBuilder.append(" DirectLine: ");
+        stringBuilder.append(this.isDirectLineAvailable);
+        stringBuilder.append(" Up No: ");
+        stringBuilder.append(this.noOfUpPlatform);
+        stringBuilder.append(" Down No: ");
+        stringBuilder.append(this.noOfDownPlatform);
+        stringBuilder.append(" Dual No: ");
+        stringBuilder.append(this.noOfDownPlatform);
         stringBuilder.append('\n');
         stringBuilder.append("Train\tArrival\tDeparture");
         stringBuilder.append('\n');

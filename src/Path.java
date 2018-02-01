@@ -25,7 +25,6 @@ public class Path {
         this.length = length;
     }
 
-    @SuppressWarnings("unused")
     public int getLength(){
         return this.length;
     }
@@ -44,7 +43,6 @@ public class Path {
         return new NonEmptyPath(this, node, weight);
     }
 
-    @SuppressWarnings("unused")
     public Path removeLastNode() {
         return null;
     }
@@ -59,7 +57,6 @@ public class Path {
         return nodeList;
     }
 
-    @SuppressWarnings("unused")
     public List<Double> getWeightList() {
         List<Double> nodeList = new ArrayList<>(1);
         nodeList.add(this.totalCost);

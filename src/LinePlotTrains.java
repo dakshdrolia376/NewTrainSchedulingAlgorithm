@@ -3,7 +3,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,23 +37,25 @@ class LinePlotTrains extends ApplicationFrame {
 
     private static final long serialVersionUID = 1L;
     private List<Integer> trains;
-    private List<List<LocalTime[]>> schedule;
+    private List<List<TrainTime[]>> schedule;
     private List<String> stationId;
     private int sizeSchedule;
     private List<Double> stationDistance;
     private Map<Double, String> tickLabels;
+    private boolean isSingleDay;
 
     public LinePlotTrains(final String title, int windowHeight, int windowWidth, int newTrainNo, int heightPlotFile,
                           int widthPlotFile, String pathPlotFile, String pathRoute, String pathOldTrains,
-                          String pathNewTrainFile, boolean newTrainFolder) {
+                          String pathNewTrainFile, boolean newTrainFolder, boolean isSingleDay, int trainDay) {
         super(title);
-        stationDistance = new ArrayList<>();
-        schedule = new ArrayList<>();
-        sizeSchedule = 0;
-        stationId = new ArrayList<>();
-        trains = new ArrayList<>();
-        tickLabels = new HashMap<>();
-
+        this.stationDistance = new ArrayList<>();
+        this.schedule = new ArrayList<>();
+        this.sizeSchedule = 0;
+        this.stationId = new ArrayList<>();
+        this.trains = new ArrayList<>();
+        this.tickLabels = new HashMap<>();
+        this.isSingleDay = isSingleDay;
+        TrainTime.updateIsSingleDay(isSingleDay);
         FileReader fReader;
         BufferedReader bReader;
         try {
@@ -66,60 +67,41 @@ class LinePlotTrains extends ApplicationFrame {
             double st_dist;
             while ((line = bReader.readLine()) != null) {
                 data = line.split("\\s+");
-                st_id = data[0].trim().replaceAll(".*-", "");
-                stationId.add(st_id);
-                st_dist = Scheduler.roundDecimal(Double.parseDouble(data[1]));
-                stationDistance.add(st_dist);
-                tickLabels.put(st_dist, st_id);
+                st_id = data[0].trim().replaceAll(".*-", "").toLowerCase();
+                this.stationId.add(st_id);
+                st_dist = Math.round(Double.parseDouble(data[1]));
+                this.stationDistance.add(st_dist);
+                this.tickLabels.put(st_dist, st_id);
             }
-            fReader.close();
             bReader.close();
-
-            File folder = new File(pathOldTrains);
-            File[] listOfFiles = folder.listFiles();
-            if (listOfFiles == null) {
-                System.out.println("Unable to read route");
-                return;
-            }
+            fReader.close();
 
             if (!pathPlotFile.endsWith(".pdf")) {
                 pathPlotFile += ".pdf";
             }
+
             if(pathNewTrainFile!=null) {
-                if(!newTrainFolder && !addTrain(newTrainNo, pathNewTrainFile)) {
+                if(!newTrainFolder && !addTrainFromFile(newTrainNo++, pathNewTrainFile,trainDay, isSingleDay)) {
                     System.out.println("Error in adding train " + pathNewTrainFile);
                 }
                 else{
-                    File[] listOfFiles1 = new File(pathNewTrainFile).listFiles();
-                    if(listOfFiles1==null) {
-                        System.out.println("No new trains found");
-                        return;
+                    File[] listOfFiles = new File(pathNewTrainFile).listFiles();
+                    if(listOfFiles==null) {
+                        throw new RuntimeException("Unable to read new train schedule");
                     }
 
-                    for (File file: listOfFiles1) {
+                    for (File file: listOfFiles) {
                         if (file.isFile()) {
-                            if(!addTrain(newTrainNo++, file.getPath())) {
-                                System.out.println("Error in adding train " + pathNewTrainFile);
+                            if(!addTrainFromFile(newTrainNo++, file.getPath(),trainDay, isSingleDay)) {
+                                System.out.println("Error in adding train " + file.getPath());
                             }
                         }
                     }
                 }
             }
-            int tempTrainNo;
 
-            for (File file : listOfFiles) {
-                if (file.isFile()) {
-                    String filename = file.getName().split("\\.")[0];
-                    try {
-                        tempTrainNo = Integer.parseInt(filename);
-                    }
-                    catch (NumberFormatException e) {
-                        tempTrainNo = ++newTrainNo;
-                    }
-                    if(!addTrain(tempTrainNo, file.getPath())){
-                        System.out.println("Error in adding train " + file.getPath());
-                    }
-                }
+            if(!addTrainFromFolder(pathOldTrains, trainDay, this.isSingleDay, newTrainNo)){
+                throw new RuntimeException("Unable to read old train schedule");
             }
 
             final XYDataset dataset = createDataset();
@@ -138,35 +120,90 @@ class LinePlotTrains extends ApplicationFrame {
         }
     }
 
-    private boolean addTrain(int trainNo, String fileName){
+    private boolean addTrainFromFolder(String pathOldTrainScheduleFolder, int trainDay, boolean isSingleDay,
+                                       int tempTrainNo){
+        if(!isSingleDay && (trainDay>=7 || trainDay<0)){
+            return addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
+                    "day0", 0, false, (tempTrainNo+1000)) &&
+                    addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
+                            "day1", 1, false, (tempTrainNo+2000)) &&
+                    addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
+                            "day2", 2, false, (tempTrainNo+3000)) &&
+                    addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
+                            "day3", 3, false, (tempTrainNo+4000)) &&
+                    addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
+                            "day4", 4, false, (tempTrainNo+5000)) &&
+                    addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
+                            "day5", 5, false, (tempTrainNo+6000)) &&
+                    addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
+                            "day6", 6, false, (tempTrainNo+7000));
+        }
+
+        File[] listOfFiles = new File(pathOldTrainScheduleFolder).listFiles();
+        int newTrainNo = 1;
+        if(listOfFiles==null) {
+            System.out.println("No old trains found");
+            return true;
+        }
+
+        for (File file: listOfFiles) {
+            if (file.isFile()) {
+                int trainNo;
+                try {
+                    trainNo = Integer.parseInt(file.getName().split("\\.")[0]);
+                }
+                catch (NumberFormatException e) {
+                    trainNo = newTrainNo++;
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                    continue;
+                }
+                if(!addTrainFromFile(trainNo,file.getPath(), trainDay, isSingleDay)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean addTrainFromFile(int trainNo, String filePath, int trainDay, boolean isSingleDay){
         try {
-            FileReader fReader = new FileReader(fileName);
+            FileReader fReader = new FileReader(filePath);
             BufferedReader bReader = new BufferedReader(fReader);
             this.trains.add(trainNo);
-            this.schedule.add(new ArrayList<>(stationId.size()));
+            this.schedule.add(new ArrayList<>(this.stationId.size()));
             String line;
+            TrainTime arrival, departure=null;
             String data[];
             String data1[];
-            LocalTime d[];
-            Map<String, LocalTime[]> stationTimingsMap = new HashMap<>();
+            TrainTime d[];
+            Map<String, TrainTime[]> stationTimingsMap = new HashMap<>();
             while ((line = bReader.readLine()) != null) {
-                d = new LocalTime[2];
+                d = new TrainTime[2];
                 data = line.split("\\s+");
                 data1 = data[1].split(":");
-                d[0] = LocalTime.of(Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
+                arrival = new TrainTime(trainDay, Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
+                if(departure!=null && arrival.compareTo(departure)<0 && !isSingleDay){
+                    trainDay++;
+                    arrival.addDay(1);
+                }
                 data1 = data[2].split(":");
-                d[1] = LocalTime.of(Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
-                stationTimingsMap.put(data[0].trim().replaceAll(".*-", ""),d);
+                departure = new TrainTime(trainDay, Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
+                if(departure.compareTo(arrival)<0 && !isSingleDay){
+                    trainDay++;
+                    departure.addDay(1);
+                }
+                d[0] = arrival;
+                d[1] = departure;
+                stationTimingsMap.put(data[0].trim().replaceAll(".*-", "").toLowerCase(),d);
             }
-            d = new LocalTime[2];
-            d[0] = LocalTime.of(23, 59);
-            d[1] = LocalTime.of(23, 59);
-            for(String stId: stationId){
-                schedule.get(sizeSchedule).add(stationTimingsMap.getOrDefault(stId,d));
+            for(String stId: this.stationId){
+                this.schedule.get(this.sizeSchedule).add(stationTimingsMap.getOrDefault(stId,null));
             }
-            fReader.close();
             bReader.close();
-            sizeSchedule++;
+            fReader.close();
+            this.sizeSchedule++;
             return true;
         }
         catch (Exception e) {
@@ -211,54 +248,53 @@ class LinePlotTrains extends ApplicationFrame {
         }
     }
 
-    public double getValueFromTime(int hrs, int minutes) {
-        return (double) (hrs * 60 + minutes);
-    }
-
-    public LocalTime getTimeFromValue(double value) {
-        int hrs = (int) (value / 1) / 60;
-        int minutes = (int) (value / 1) % 60;
-        try {
-            return LocalTime.of(hrs, minutes);
-        }
-        catch (Exception e) {
-            return LocalTime.of(0, 0);
-        }
-    }
-
     public XYDataset createDataset() {
         // create the dataset...
         final XYSeriesCollection dataset = new XYSeriesCollection();
-        LocalTime temp=null, temp2, temp3;
-        for (int j = 0; j < trains.size(); j++) {
-            XYSeries series1 = new XYSeries(trains.get(j));
-            for (int i = 0; i < schedule.get(j).size(); i++) {
-                temp2 = schedule.get(j).get(i)[0];
-                temp3 = schedule.get(j).get(i)[1];
-                if(temp2== null || temp3== null){
-                    System.out.println("Invalid schedule for train " + trains.get(j) + " .Skipping it");
-                    break;
+        TrainTime temp, temp2, temp3;
+        TrainTime d[];
+        for (int j = 0; j < this.trains.size(); j++) {
+            XYSeries series1 = new XYSeries(this.trains.get(j));
+            temp=null;
+            for (int i = 0; i < this.schedule.get(j).size(); i++) {
+                d = this.schedule.get(j).get(i);
+                if(d==null){
+                    //train's route not passes by this station..
+                    series1.add(this.stationDistance.get(i).doubleValue(), null);
+                    temp = null;
+                    continue;
                 }
-                if(i > 0 && (temp.compareTo(temp2) > 0)){
-                    double distanceNextDay = stationDistance.get(i) - stationDistance.get(i-1);
-                    double timeDiff1 = 24*60 - getValueFromTime(temp.getHour(), temp.getMinute());
-                    double timeDiff2 = getValueFromTime(temp2.getHour(), temp2.getMinute());
+                temp2 = this.schedule.get(j).get(i)[0];
+                temp3 = this.schedule.get(j).get(i)[1];
 
-                    distanceNextDay = (distanceNextDay)* timeDiff1 / (timeDiff1 + timeDiff2);
-                    distanceNextDay += stationDistance.get(i-1);
-                    series1.add(distanceNextDay,getValueFromTime(23,59));
-                    series1.add(distanceNextDay, null);
-                    series1.add(distanceNextDay, getValueFromTime(0,0));
+                if (temp2 == null) {
+                    series1.add(this.stationDistance.get(i).doubleValue(), null);
+                    System.out.println("Invalid schedule for train " + this.trains.get(j) + " at station " + this.stationId.get(i));
                 }
-                series1.add(stationDistance.get(i).doubleValue(), getValueFromTime(temp2.getHour(), temp2.getMinute()));
+                else {
 
-                if(temp3.compareTo(temp2) < 0){
-                    series1.add(stationDistance.get(i).doubleValue(),getValueFromTime(23,59));
-                    series1.add(stationDistance.get(i).doubleValue(), null);
-                    series1.add(stationDistance.get(i).doubleValue(), getValueFromTime(0,0));
-                    series1.add(stationDistance.get(i).doubleValue(), getValueFromTime(temp3.getHour(), temp3.getMinute()));
+                    if (temp != null && (temp.compareTo(temp2) > 0)) {
+                        double distanceNextDay = this.stationDistance.get(i) - this.stationDistance.get(i - 1);
+                        double timeDiff1 = this.isSingleDay ? 1440 : 10080 - temp.getValue();
+                        double timeDiff2 = temp2.getValue();
+
+                        distanceNextDay = (distanceNextDay) * timeDiff1 / (timeDiff1 + timeDiff2);
+                        distanceNextDay += this.stationDistance.get(i - 1);
+                        series1.add(distanceNextDay, new TrainTime(6, 23, 59).getValue());
+                        series1.add(distanceNextDay, null);
+                        series1.add(distanceNextDay, new TrainTime(0, 0, 0).getValue());
+                    }
+                    series1.add(this.stationDistance.get(i).doubleValue(), temp2.getValue());
                 }
-                series1.add(stationDistance.get(i).doubleValue(), getValueFromTime(temp3.getHour(), temp3.getMinute()));
+
+                if(temp3 != null) {
+                    if (temp2!=null && temp3.compareTo(temp2) < 0) {
+                        series1.add(this.stationDistance.get(i).doubleValue(), new TrainTime(6, 23, 59).getValue());
+                        series1.add(this.stationDistance.get(i).doubleValue(), null);
+                        series1.add(this.stationDistance.get(i).doubleValue(), new TrainTime(0, 0, 0).getValue());
+                    }
+                    series1.add(this.stationDistance.get(i).doubleValue(), temp3.getValue());
+                }
                 temp = temp3;
             }
             dataset.addSeries(series1);
@@ -292,19 +328,22 @@ class LinePlotTrains extends ApplicationFrame {
             public List<NumberTick> refreshTicks(Graphics2D g2, AxisState state, Rectangle2D dataArea, RectangleEdge edge) {
                 List allTicks = super.refreshTicks(g2, state, dataArea, edge);
                 List<NumberTick> myTicks = new ArrayList<>();
+                TrainTime trainTime;
                 for (Object tick : allTicks) {
                     NumberTick numberTick = (NumberTick) tick;
 
                     String label;
                     double numTickValue = numberTick.getValue();
                     if(numTickValue>=0 && numTickValue<24*60 ){
-                        label = getTimeFromValue(numberTick.getValue()) + "";
+                        trainTime = new TrainTime(0,0,0);
+                        trainTime.addMinutes((int)Math.ceil(numberTick.getValue()));
+                        label = trainTime.getFullString();
                     }
                     else if(numTickValue<0){
-                        label = "Prev day";
+                        label = isSingleDay?"Prev day":"Prev week";
                     }
                     else{
-                        label = "Next day";
+                        label = isSingleDay?"Next day":"Next week";
                     }
                     myTicks.add(new NumberTick(TickType.MINOR, numberTick.getValue(), label,
                             numberTick.getTextAnchor(), numberTick.getRotationAnchor(),

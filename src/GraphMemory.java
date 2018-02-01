@@ -42,6 +42,7 @@ public class GraphMemory extends GraphParent{
 
         // only single edge between two nodes.
         if(fromMap.containsKey(edge.getTo().toString())) {
+            System.out.println("Duplicate edge " + edge.toString());
             return false;
         }
         fromMap.put(edge.getTo().toString(), edge);
@@ -53,7 +54,7 @@ public class GraphMemory extends GraphParent{
         requireNonNull(edges, "The edge list is null.");
         boolean ans = true;
         for(Edge edge: edges){
-            ans = ans && addEdge(edge);
+            ans = addEdge(edge);
         }
         return ans;
     }

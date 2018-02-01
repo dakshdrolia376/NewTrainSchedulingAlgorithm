@@ -4,7 +4,7 @@ public class GraphKBestPath {
 
     @SuppressWarnings("unused")
     public GraphKBestPath(boolean usePreviousComputation, String pathTemp){
-        graphParent = new GraphMemory();
+        graphParent = new GraphFile(usePreviousComputation, pathTemp);
     }
 
     public boolean disconnect(){

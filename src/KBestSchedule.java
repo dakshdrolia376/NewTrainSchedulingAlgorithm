@@ -72,11 +72,12 @@ public class KBestSchedule {
             String line;
             TrainTime arrival, departure=null;
             String stationId;
+            String data[];
+            String data1[];
             while((line = bReader.readLine()) != null) {
-                String data[] = line.split("\\s+");
-                String stationCode[] = data[0].split("-");
-                stationId = stationCode[stationCode.length-1];
-                String data1[] =data[1].split(":");
+                data = line.split("\\s+");
+                stationId = data[0].trim().replaceAll(".*-", "");
+                data1 =data[1].split(":");
                 arrival = new TrainTime(trainDay,Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
                 if(departure!=null && arrival.compareTo(departure)<0 && !isSingleDay){
                     trainDay++;
@@ -103,7 +104,7 @@ public class KBestSchedule {
     }
 
     private boolean addTrainFromFolder(String pathOldTrainScheduleFolder, int trainDay, boolean isSingleDay){
-        if(!isSingleDay && trainDay==7){
+        if(!isSingleDay && (trainDay>=7 || trainDay<0)){
             return addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
                     "day0", 0, false) &&
                     addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
@@ -179,7 +180,7 @@ public class KBestSchedule {
             return -7;
         }
 
-        int delay = Scheduler.ceilOfDecimal((((distanceBwStation)/avgSpeed )*60));
+        int delay = (int) Math.ceil((((distanceBwStation)/avgSpeed )*60));
         int timeNodeStart = nodeStart.getTime().getValue();
         int timeNodeEnd = nodeEnd.getTime().getValue();
         int timeEarliestToReach = timeNodeStart + delay;
@@ -322,16 +323,18 @@ public class KBestSchedule {
                 continue;
             }
             int countLoopMax = maxDelayBwStations;
-            if(countLoopMax>this.nodes.get(i+1).size() || nodeStart.getStationId().equalsIgnoreCase("source")){
+            if(countLoopMax>this.nodes.get(i+1).size() || nodeStart.getStationId().toLowerCase().contains("source")){
                 countLoopMax = this.nodes.get(i+1).size();
             }
 
-            for(int countLoop= 0;countLoop<=countLoopMax; countLoop++) {
+            for(int countLoop= 0;countLoop<countLoopMax; countLoop++) {
                 int k = Math.floorMod(j+countLoop,this.nodes.get(i+1).size());
                 nodeEnd = this.nodes.get(i+1).get(k);
+
                 if(!nodeEnd.isValid()){
                     continue;
                 }
+
                 if(nodeStart.getTime()==null || nodeEnd.getTime()==null){
                     if(this.graphKBestPath.addEdge(new Edge(nodeStart, nodeEnd,0))){
                         this.edgeCount++;
@@ -344,39 +347,37 @@ public class KBestSchedule {
                 else if(nodeStart.getStationId().equalsIgnoreCase("source")){
                     boolean validEdge = true;
                     int codeValidEdge;
-                    TrainTime tempTrainTime;
-                    tempTrainTime = isSingleDay?new TrainTime(nodeStart.getTime().day,23,54):
+                    TrainTime tempTrainTime = isSingleDay?new TrainTime(nodeStart.getTime().day,23,55):
                             new TrainTime(6,23,54);
 
                     do{
                         codeValidEdge = isValidEdge(distanceBwStation, avgSpeed, waitTimeStationEnd, nodeStart, nodeEnd,
                                 maxDelayBwStations, isSingleDay);
-                        if(codeValidEdge==-1){
+                        if(codeValidEdge>0){
+                            break;
+                        }
+                        else if(codeValidEdge==-1){
                             return false;
                         }
-                        else if(codeValidEdge==-5){
+                        else if(codeValidEdge==-5 || codeValidEdge==-6 || codeValidEdge==-7){
                             validEdge = false;
                             break;
                         }
-                        if(addedFirstEdge){
+                        else if(addedFirstEdge){
                             validEdge = false;
                             break;
                         }
-                        if(nodeStart.getTime().compareTo(nodeEnd.getTime())>0){
+                        else if(nodeStart.getTime().compareTo(nodeEnd.getTime())>0){
                             validEdge = false;
                             break;
                         }
-                        nodeStart.getTime().addMinutes(5);
-
-                        if(nodeStart.getTime().compareTo(tempTrainTime)>=0){
+                        else if(nodeStart.getTime().compareTo(tempTrainTime)>=0){
                             System.out.println("No place on source station platform");
                             return false;
                         }
-                    } while(codeValidEdge<0);
+                        nodeStart.getTime().addMinutes(1);
 
-                    if(codeValidEdge==-5){
-                        break;
-                    }
+                    } while(codeValidEdge<0);
 
                     if(validEdge) {
                         addedFirstEdge = true;
@@ -441,6 +442,7 @@ public class KBestSchedule {
                     System.out.println("Invalid nodes in graph... exiting");
                     return Collections.emptyList();
                 }
+
                 this.edgeCount = 0;
                 System.out.println("Station size: " + (this.nodes.size() - 2));
                 System.out.println("Initializing graph");
@@ -450,7 +452,7 @@ public class KBestSchedule {
                 double distanceBwStation;
 
                 for (int i = 0; i < this.stationList.size() - 1; i++) {
-                    Scheduler.getRuntimeMemory();
+                    // Scheduler.getRuntimeMemory();
                     distanceStationStart = distanceStationEnd;
                     if (i < this.stationList.size() - 2) {
                         distanceStationEnd = this.route.getStation(this.stationList.get(i + 1)).getDistance();
@@ -479,6 +481,7 @@ public class KBestSchedule {
             if(!this.graphKBestPath.disconnect()){
                 System.out.println("Some error occurred with graph.");
             }
+            // System.out.println(this.graphKBestPath.toString());
             this.graphKBestPath = null;
             if(paths==null || paths.isEmpty()){
                 TrainTime tempTrainTime;
@@ -488,6 +491,8 @@ public class KBestSchedule {
                     System.out.println(" No path found in this iteration");
                     return Collections.emptyList();
                 }
+                System.out.println(" No path found in this iteration " + sourceTime.toString());
+
                 if(sourceTime.compareTo(tempTrainTime)>=0){
                     System.out.println(sourceTime + " No path found in this iteration");
                     return Collections.emptyList();

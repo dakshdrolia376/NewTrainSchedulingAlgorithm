@@ -116,7 +116,7 @@ public class TrainTime {
     }
 
     public int getValue(){
-        return (this.day*24 + this.hour)*60 + this.minute;
+        return ((isSingleDay?0:this.day)*24 + this.hour)*60 + this.minute;
     }
 
     @Override
@@ -125,6 +125,10 @@ public class TrainTime {
     }
 
     public String getTimeString(){
-        return this.hour + ":" + this.minute;
+        return String.format("%02d",this.hour) + ":" + String.format("%02d",this.minute);
+    }
+
+    public String getFullString(){
+        return String.format("%01d",this.day) + ":" + String.format("%02d",this.hour) + ":" + String.format("%02d",this.minute);
     }
 }
