@@ -3,7 +3,9 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -109,5 +111,59 @@ public class FetchStationDetails {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public void putAllStationsInDatabase(){
+
+        List<String> stationNames = new ArrayList<>();
+        List<String> stationIds = new ArrayList<>();
+
+        FileReader fReader;
+        BufferedReader bReader;
+        String line;
+        String stationName;
+        String stationId;
+        Pattern pattern = Pattern.compile("<meta property=\"og:url\" content=\".*?\">");
+        Matcher matcher;
+
+        for(int i=1;i<15000;i++){
+            System.out.println(i);
+            stationName ="";
+            stationId = "";
+            try {
+                String pathStation = this.pathDatabaseStation + File.separator + "station_details_" + i+".txt";
+                if(!new File(pathStation).exists()){
+                    continue;
+                }
+                fReader = new FileReader(pathStation);
+                bReader = new BufferedReader(fReader);
+                while ((line = bReader.readLine()) != null) {
+                    matcher = pattern.matcher(line);
+                    if (matcher.find()) {
+                        String temp = matcher.group().split("\\s+")[2];
+                        String temp1[] = temp.split("/");
+                        if (temp1.length >= 5) {
+                            stationName = temp1[4].toLowerCase();
+                            stationId = stationName.trim().replaceAll(".*-", "").toLowerCase();
+                        }
+                        break;
+                    }
+                }
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            if(!stationName.equals("") && !stationId.equals("")){
+                stationNames.add(stationName);
+                stationIds.add(stationId);
+            }
+        }
+
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        boolean ans = databaseConnector.insertIntoStationBatch(stationIds, stationNames);
+        if(!ans){
+            System.out.println("Unable to put trains into database");
+        }
+        databaseConnector.closeConnection();
     }
 }

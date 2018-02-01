@@ -279,17 +279,27 @@ public class Scheduler {
     }
 
     @SuppressWarnings("unused")
-    public static void fetchStationInfo(String pathTemp){
-        if(!new FetchStationDetails(pathTemp).fetchAll()){
+    public static void fetchStationInfo(String pathStationDatabase){
+        if(!new FetchStationDetails(pathStationDatabase).fetchAll()){
             System.out.println("unable to fetch Station Info..");
         }
     }
 
     @SuppressWarnings("unused")
-    public static void fetchTrainInfo(String pathTemp){
-        if(!new FetchTrainDetails(pathTemp).fetchAll()){
+    public static void fetchTrainInfo(String pathTrainDatabase){
+        if(!new FetchTrainDetails(pathTrainDatabase).fetchAll()){
             System.out.println("unable to fetch Train Info..");
         }
+    }
+
+    @SuppressWarnings("unused")
+    public static void putTrainIntoDatabase(String pathTrainDatabase){
+        new FetchTrainDetails(pathTrainDatabase).putAllTrainsInDatabase();
+    }
+
+    @SuppressWarnings("unused")
+    public static void putStationIntoDatabase(String pathStationDatabase){
+        new FetchStationDetails(pathStationDatabase).putAllStationsInDatabase();
     }
 
     @SuppressWarnings("unused")

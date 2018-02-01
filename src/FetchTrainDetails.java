@@ -2,7 +2,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.*;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -430,4 +432,135 @@ public class FetchTrainDetails {
             e.printStackTrace();
         }
     }
+
+
+    public void putAllTrainsInDatabase(){
+
+        List<Integer> trainNos = new ArrayList<>();
+        List<String> trainNames = new ArrayList<>();
+        List<String> travelDays = new ArrayList<>();
+
+        FileReader fReader;
+        BufferedReader bReader;
+        String line;
+        String trainName;
+        StringBuilder travelDay;
+        Pattern pattern = Pattern.compile("<meta property=\"og:url\" content=\".*?\">");
+        Matcher matcher;
+        int trainNo;
+
+        for(int i=1;i<10000;i++){
+            System.out.println(i);
+            trainName = "";
+            trainNo = -1;
+            travelDay = new StringBuilder("");
+            try {
+                String pathTrain = this.pathDatabaseTrain + File.separator + "train_details_"+i + ".txt";
+                if(!new File(pathTrain).exists()){
+                    continue;
+                }
+                fReader = new FileReader(pathTrain);
+                bReader = new BufferedReader(fReader);
+                while ((line = bReader.readLine()) != null) {
+                    matcher = pattern.matcher(line);
+                    if (matcher.find()) {
+                        String temp = matcher.group().split("\\s+")[2];
+                        String temp1[] = temp.split("/");
+                        if (temp1.length >= 7) {
+                            trainName = temp1[5].toLowerCase();
+                            trainNo = Integer.parseInt(trainName.trim().replaceAll(".*-", ""));
+                        }
+                    }
+                    else if(line.contains("class=\"deparrgrid\">")){
+                        bReader.readLine();
+                        bReader.readLine();
+                        for(int j=0;j<7;j++){
+                            line = bReader.readLine();
+                            line = line.replaceFirst(".*?>", "");
+                            line = line.replaceFirst("<.*","");
+                            if(line.length()==1){
+                                travelDay.append(1);
+                            }
+                            else{
+                                travelDay.append(0);
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+            catch (NumberFormatException e){
+                System.err.println("Number Format Exception : " + i);
+                continue;
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            if(trainNo!=-1 && !trainName.equals("") && !travelDay.toString().equals("")){
+                trainNos.add(trainNo);
+                trainNames.add(trainName);
+                travelDays.add(travelDay.toString());
+            }
+        }
+        Gson gson = new Gson();
+        try {
+            Type listType = new TypeToken<List<Integer>>(){}.getType();
+            FileWriter fileWriter = new FileWriter(this.pathDatabaseTrain + File.separator + "indexTrainNos.db");
+            gson.toJson(trainNos,listType,fileWriter);
+            fileWriter.close();
+            listType = new TypeToken<List<String>>(){}.getType();
+            fileWriter = new FileWriter(this.pathDatabaseTrain + File.separator + "indexTrainNames.db");
+            gson.toJson(trainNames,listType,fileWriter);
+            fileWriter.close();
+            listType = new TypeToken<List<String>>(){}.getType();
+            fileWriter = new FileWriter(this.pathDatabaseTrain + File.separator + "indexTrainTravelDays.db");
+            gson.toJson(travelDays,listType,fileWriter);
+            fileWriter.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        boolean ans = databaseConnector.insertIntoTrainBatch(trainNos, trainNames, travelDays);
+        if(!ans){
+            System.out.println("Unable to put trains into database");
+        }
+        databaseConnector.closeConnection();
+    }
+
+    // private boolean addTrainFromFile(int trainNo, String trainName, String pathTrainSchedule, int trainDay,
+    //                                  boolean isSingleDay){
+    //     try {
+    //         if(!addTrain(trainNo, trainName)){
+    //             return false;
+    //         }
+    //         while((line = bReader.readLine()) != null) {
+    //             data = line.split("\\s+");
+    //             stationId = data[0].trim().replaceAll(".*-", "");
+    //             data1 =data[1].split(":");
+    //             arrival = new TrainTime(trainDay,Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
+    //             if(departure!=null && arrival.compareTo(departure)<0 && !isSingleDay){
+    //                 trainDay++;
+    //                 arrival.addDay(1);
+    //             }
+    //             data1 =data[2].split(":");
+    //             departure = new TrainTime(trainDay,Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
+    //             if(departure.compareTo(arrival)<0 && !isSingleDay){
+    //                 trainDay++;
+    //                 departure.addDay(1);
+    //             }
+    //             if(!addStoppageTrain(trainNo,stationId,arrival,departure)){
+    //                 return false;
+    //             }
+    //         }
+    //         fReader.close();
+    //         bReader.close();
+    //     }
+    //     catch (Exception e) {
+    //         e.printStackTrace();
+    //         return false;
+    //     }
+    //     return true;
+    // }
 }

@@ -31,6 +31,7 @@ public class KShortestPathFinder {
                 maxLengthPathFound = currentPath.getLength();
                 System.out.println("Best Path till now cost : " + currentPath.pathCost() + " >> " + currentPath.toString());
             }
+
             if(currentPath.getLength()+maxDifferenceAllowed <maxLengthPathFound){
                 // System.out.println("Rejected Path cost : " + currentPath.pathCost() + " >> " + currentPath.toString());
                 // System.out.println("Best Path cost : " + p.pathCost() + " >> " + p.toString());

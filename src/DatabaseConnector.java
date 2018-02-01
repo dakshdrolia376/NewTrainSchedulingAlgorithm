@@ -126,6 +126,83 @@ public class DatabaseConnector {
         }
     }
 
+    public boolean insertIntoTrainBatch(List<Integer> trainNos, List<String> trainNames, List<String> travelDays){
+
+        try {
+            if (!getConnection()) {
+                return false;
+            }
+            // System.out.println(nodeIds.toString());
+            // the mysql insert statement
+            String query = "insert into train (trainName, trainNo, travelMon, travelTue, travelWed, travelThu, " +
+                    "travelFri, travelSat, travelSun) values (?,?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE count=count+1";
+            // create the mysql insert prepared statement
+            con.setAutoCommit(false);
+            PreparedStatement preparedStmt = con.prepareStatement(query);
+            final int batchSize = 1000;
+            int count = 0;
+
+            for(int i=0;i<trainNos.size();i++){
+                preparedStmt.setString(1,trainNames.get(i));
+                preparedStmt.setInt(2,trainNos.get(i));
+                preparedStmt.setString(3,travelDays.get(i).charAt(0)=='1'?"Y":"N");
+                preparedStmt.setString(4,travelDays.get(i).charAt(1)=='1'?"Y":"N");
+                preparedStmt.setString(5,travelDays.get(i).charAt(2)=='1'?"Y":"N");
+                preparedStmt.setString(6,travelDays.get(i).charAt(3)=='1'?"Y":"N");
+                preparedStmt.setString(7,travelDays.get(i).charAt(4)=='1'?"Y":"N");
+                preparedStmt.setString(8,travelDays.get(i).charAt(5)=='1'?"Y":"N");
+                preparedStmt.setString(9,travelDays.get(i).charAt(6)=='1'?"Y":"N");
+                preparedStmt.addBatch();
+                if (++count % batchSize == 0) {
+                    preparedStmt.executeBatch();
+                    count=0;
+                }
+            }
+            preparedStmt.executeBatch();
+            con.commit();
+            return true;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean insertIntoStationBatch(List<String> stationIds, List<String> stationNames){
+
+        try {
+            if (!getConnection()) {
+                return false;
+            }
+            // System.out.println(nodeIds.toString());
+            // the mysql insert statement
+            String query = "insert into station (stationName, stationId) values (?,?) " +
+                    "ON DUPLICATE KEY UPDATE count=count+1;";
+            // create the mysql insert prepared statement
+            con.setAutoCommit(false);
+            PreparedStatement preparedStmt = con.prepareStatement(query);
+            final int batchSize = 1000;
+            int count = 0;
+
+            for(int i=0;i<stationIds.size();i++){
+                preparedStmt.setString(1,stationNames.get(i));
+                preparedStmt.setString(2,stationIds.get(i));
+                preparedStmt.addBatch();
+                if (++count % batchSize == 0) {
+                    preparedStmt.executeBatch();
+                    count=0;
+                }
+            }
+            preparedStmt.executeBatch();
+            con.commit();
+            return true;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     @SuppressWarnings("unused")
     public boolean insertIntoEdge(Edge edge){
         if(!getConnection()){

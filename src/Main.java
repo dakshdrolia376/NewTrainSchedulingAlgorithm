@@ -46,7 +46,7 @@ public class Main {
             // Assign o to output stream
             System.setErr(o);
             System.setOut(o1);
-            Scheduler.test(pathTemp, pathRoute,pathBestRoute,pathOldTrainSchedule, isSingleDay, trainDay, usePreviousComputation);
+            // Scheduler.test(pathTemp, pathRoute,pathBestRoute,pathOldTrainSchedule, isSingleDay, trainDay, usePreviousComputation);
 
             // Scheduler.fetchTrainInfo(pathTrainDatabase);
             // Scheduler.fetchStationInfo(pathStationDatabase);
@@ -61,6 +61,9 @@ public class Main {
             // String pathNewTrainFile = pathBestRoute+File.separator+"Type 2 AvgSpeed 80.0 path 1 cost 24.0 .path";
             // Scheduler.showPlot(pathBestRoute,newTrainNo,pathPlotFile,pathRoute,pathOldTrainSchedule,
             //         true, isSingleDay, trainDay);
+
+            Scheduler.putStationIntoDatabase(pathStationDatabase);
+            Scheduler.putTrainIntoDatabase(pathTrainDatabase);
         }
         catch (Exception e){
             e.printStackTrace();
