@@ -14,7 +14,6 @@ public class Main {
         String pathLog = "data"+File.separator+"logs";
         String pathFinal = "data"+File.separator+"final";
         String pathBestRoute = "data"+File.separator+"bestRoute";
-        String pathStationInfo = "data"+File.separator+"station";
         String pathStationDatabase = pathTemp+File.separator+"databaseStation";
         String pathTrainDatabase = pathTemp+File.separator+"databaseTrain";
         int trainDay = 0;
@@ -26,8 +25,7 @@ public class Main {
                 || !Scheduler.createParentFolder(pathPlotFile) || !Scheduler.createFolder(pathTemp)
                 || !Scheduler.createFolder(pathLog) || !Scheduler.createFolder(pathFinal)
                 || !Scheduler.createFolder(pathBestRoute) || !Scheduler.createFolder(pathOldTrainSchedule)
-                || !Scheduler.createFolder(pathStationInfo)|| !Scheduler.createFolder(pathStationDatabase)
-                || !Scheduler.createFolder(pathTrainDatabase)){
+                || !Scheduler.createFolder(pathStationDatabase) || !Scheduler.createFolder(pathTrainDatabase)){
             System.out.println("Unable to create directory");
             System.exit(1);
         }
