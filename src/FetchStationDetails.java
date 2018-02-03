@@ -23,7 +23,7 @@ public class FetchStationDetails {
         Gson gson = new Gson();
         try {
             Type listType = new TypeToken<Map<String, Integer>>(){}.getType();
-            File file = new File(this.pathDatabaseStation + File.separator + "index.db");
+            File file = new File(this.pathDatabaseStation + File.separator + "indexStation.db");
             if(file.exists()) {
                 this.myMap = gson.fromJson(new FileReader(file), listType);
             }
@@ -48,7 +48,7 @@ public class FetchStationDetails {
         Gson gson = new Gson();
         try {
             Type listType = new TypeToken<Map<String, Integer>>(){}.getType();
-            FileWriter fileWriter = new FileWriter(this.pathDatabaseStation + File.separator + "index.db");
+            FileWriter fileWriter = new FileWriter(this.pathDatabaseStation + File.separator + "indexStation.db");
             gson.toJson(myMap,listType,fileWriter);
             fileWriter.close();
         }
@@ -60,7 +60,7 @@ public class FetchStationDetails {
     }
 
     public boolean fetchStation(int stationIndexNo){
-        String url = "https://indiarailinfo.com/departures/" + stationIndexNo;
+        String url = "https://indiarailinfo.com/station/map/" + stationIndexNo;
         String pathStation = this.pathDatabaseStation + File.separator + "station_details_" + stationIndexNo+".txt";
         File file = new File(pathStation);
         if(!file.exists()) {
@@ -117,6 +117,7 @@ public class FetchStationDetails {
 
         List<String> stationNames = new ArrayList<>();
         List<String> stationIds = new ArrayList<>();
+        List<Integer> stationIndexes = new ArrayList<>();
 
         FileReader fReader;
         BufferedReader bReader;
@@ -126,7 +127,7 @@ public class FetchStationDetails {
         Pattern pattern = Pattern.compile("<meta property=\"og:url\" content=\".*?\">");
         Matcher matcher;
 
-        for(int i=1;i<15000;i++){
+        for(int i=1;i<20000;i++){
             System.out.println(i);
             stationName ="";
             stationId = "";
@@ -149,6 +150,8 @@ public class FetchStationDetails {
                         break;
                     }
                 }
+                bReader.close();
+                fReader.close();
             }
             catch (Exception e){
                 e.printStackTrace();
@@ -156,11 +159,31 @@ public class FetchStationDetails {
             if(!stationName.equals("") && !stationId.equals("")){
                 stationNames.add(stationName);
                 stationIds.add(stationId);
+                stationIndexes.add(i);
             }
         }
 
+        Gson gson = new Gson();
+        try {
+            Type listType = new TypeToken<List<Integer>>(){}.getType();
+            FileWriter fileWriter = new FileWriter(this.pathDatabaseStation + File.separator + "indexStationNos.db");
+            gson.toJson(stationIndexes,listType,fileWriter);
+            fileWriter.close();
+            listType = new TypeToken<List<String>>(){}.getType();
+            fileWriter = new FileWriter(this.pathDatabaseStation + File.separator + "indexStationIds.db");
+            gson.toJson(stationIds,listType,fileWriter);
+            fileWriter.close();
+            listType = new TypeToken<List<String>>(){}.getType();
+            fileWriter = new FileWriter(this.pathDatabaseStation + File.separator + "indexStationNames.db");
+            gson.toJson(stationNames,listType,fileWriter);
+            fileWriter.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
         DatabaseConnector databaseConnector = new DatabaseConnector();
-        boolean ans = databaseConnector.insertIntoStationBatch(stationIds, stationNames);
+        boolean ans = databaseConnector.insertIntoStationBatch(stationIndexes, stationIds, stationNames);
         if(!ans){
             System.out.println("Unable to put trains into database");
         }

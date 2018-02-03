@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         String pathTrainList = "data" + File.separator +"trainList.txt";
 
-        String pathRoute = "data"+File.separator+"route"+File.separator+"route.txt";
+        String pathRoute = "data"+File.separator+"route"+File.separator+"routePnbeNdls.txt";
         String pathOldTrainSchedule = "data"+File.separator+"final" + File.separator + "dayall";
 
         String pathPlotFile = "data"+File.separator+"plot"+File.separator+"plot1.pdf";
@@ -50,9 +50,7 @@ public class Main {
 
             // Scheduler.fetchTrainInfo(pathTrainDatabase);
             // Scheduler.fetchStationInfo(pathStationDatabase);
-            // Scheduler.updateRouteFile(pathRoute, pathStationDatabase);
             // Scheduler.getTrainList(pathTrainList);
-            // Scheduler.fetchTrainSchedule(pathTrainList,pathTemp, pathFinal, pathTrainDatabase);
 
             // new ScheduleByDivision().scheduleByBreaking(pathTemp, pathRoute, pathBestRoute, pathOldTrainSchedule,
             //         isSingleDay, trainDay, ratio);
@@ -62,8 +60,13 @@ public class Main {
             // Scheduler.showPlot(pathBestRoute,newTrainNo,pathPlotFile,pathRoute,pathOldTrainSchedule,
             //         true, isSingleDay, trainDay);
 
-            Scheduler.putStationIntoDatabase(pathStationDatabase);
-            Scheduler.putTrainIntoDatabase(pathTrainDatabase);
+            // Scheduler.putStationIntoDatabase(pathStationDatabase);
+            // Scheduler.putTrainIntoDatabase(pathTrainDatabase);
+            // Scheduler.putStoppagesIntoDatabase(pathTrainDatabase);
+
+            Scheduler.updateRouteFile(pathRoute, pathStationDatabase);
+            Scheduler.createTrainList(pathRoute, pathTrainList, pathTrainDatabase);
+            Scheduler.fetchTrainSchedule(pathTrainList,pathTemp, pathFinal, pathTrainDatabase);
         }
         catch (Exception e){
             e.printStackTrace();

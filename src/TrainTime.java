@@ -26,7 +26,15 @@ public class TrainTime {
             throw new IllegalArgumentException("Label does not match required pattern");
         }
         try {
-            setData(Byte.parseByte(data[0]), Byte.parseByte(data[1]), Byte.parseByte(data[2]));
+            byte minute = Byte.parseByte(data[2]);
+            if(minute==60){
+                minute = 0;
+                setData(Byte.parseByte(data[0]),Byte.parseByte(data[1]), minute);
+                addHours(1);
+            }
+            else{
+                setData(Byte.parseByte(data[0]),Byte.parseByte(data[1]), minute);
+            }
         }
         catch (Exception e){
             e.printStackTrace();

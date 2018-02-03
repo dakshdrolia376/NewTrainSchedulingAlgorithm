@@ -5,7 +5,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Objects.requireNonNull;
 
@@ -295,6 +297,105 @@ public class Scheduler {
     @SuppressWarnings("unused")
     public static void putTrainIntoDatabase(String pathTrainDatabase){
         new FetchTrainDetails(pathTrainDatabase).putAllTrainsInDatabase();
+    }
+
+    @SuppressWarnings("unused")
+    public static void putStoppagesIntoDatabase(String pathTrainDatabase){
+        new FetchTrainDetails(pathTrainDatabase).putAllStoppagesInDatabase();
+    }
+
+    @SuppressWarnings("unused")
+    public static void createTrainList(String pathRoute, String pathTrainList, String pathTrainDatabase){
+        FileReader fReader;
+        BufferedReader bReader;
+        String line;
+        String[] data;
+        String stationId;
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        List<String> stationIds = new ArrayList<>();
+        Map<String, Integer> stationMap =new HashMap<>();
+        int count=0;
+        try {
+            fReader = new FileReader(pathRoute);
+            bReader = new BufferedReader(fReader);
+            while((line = bReader.readLine()) != null) {
+                data = line.split("\\s+");
+                stationId = data[0].trim().replaceAll(".*-", "");
+                stationIds.add(stationId);
+                stationMap.put(stationId, stationIds.size());
+            }
+            bReader.close();
+            fReader.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        List<Integer> trainNos = databaseConnector.getTrainNosForStation(stationIds);
+        System.out.println(trainNos.toString());
+        String pathFile;
+        FetchTrainDetails fetchTrainDetails = new FetchTrainDetails(pathTrainDatabase);
+        List<Integer> sameDirectionTrain = new ArrayList<>();
+        //checking the direction of trains as the list contains both up and down direction;
+        int indexStation1;
+        int tempIndex;
+
+        for(int trainNo: trainNos){
+            indexStation1=-1;
+            int trainIndex = fetchTrainDetails.getTrainIndexNo(trainNo);
+            if(trainIndex==-1){
+                System.out.println("Some error occurred in getting train " + trainNo);
+                continue;
+            }
+            pathFile = pathTrainDatabase + File.separator + trainIndex + ".txt";
+            try {
+                fReader = new FileReader(pathFile);
+                bReader = new BufferedReader(fReader);
+                while((line = bReader.readLine()) != null) {
+                    data = line.split("\\s+");
+                    stationId = data[0].trim().replaceAll(".*-", "");
+                    tempIndex = stationMap.getOrDefault(stationId, -1);
+                    if(tempIndex==-1){
+                        continue;
+                    }
+                    if(indexStation1==-1){
+                        indexStation1 = tempIndex;
+                        continue;
+                    }
+                    if(indexStation1<tempIndex){
+                        sameDirectionTrain.add(trainNo);
+                        break;
+                    }
+                    else{
+                        System.out.println(" Different direction train :" + trainNo);
+                        break;
+                    }
+                }
+                bReader.close();
+                fReader.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        List<List<Integer>> trains = new ArrayList<>();
+
+        for(int i=0;i<7;i++){
+            trains.add(databaseConnector.getTrainNosForDay(i));
+            trains.get(i).retainAll(sameDirectionTrain);
+        }
+
+        StringBuilder stringBuilder = new StringBuilder("");
+        for(int i=0;i<7;i++){
+            stringBuilder.append(i);
+            for(int trainNo: trains.get(i)){
+                stringBuilder.append('\t');
+                stringBuilder.append(trainNo);
+            }
+            stringBuilder.append('\n');
+        }
+        new WriteToFile().write(pathTrainList, stringBuilder.toString(), false);
     }
 
     @SuppressWarnings("unused")
