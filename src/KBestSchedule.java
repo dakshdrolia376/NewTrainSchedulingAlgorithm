@@ -159,10 +159,10 @@ public class KBestSchedule {
         return true;
     }
 
-    private void getNodesFreeSlot(int minDelayBwTrains, TrainTime sourceTime, TrainTime destTime, int startDay,
+    private void getNodesFreeSlot(TrainTime sourceTime, TrainTime destTime, int startDay,
                                   int startHrs, int startMinutes, int endDay, int endHrs, int endMinutes,
                                   boolean isSingleDay){
-        this.nodes = this.route.getFreeSlots(minDelayBwTrains, startDay, startHrs,startMinutes,
+        this.nodes = this.route.getFreeSlots(startDay, startHrs,startMinutes,
                 endDay, endHrs,endMinutes, isSingleDay);
         List<Node> nodeSrcList = new ArrayList<>();
         nodeSrcList.add(new Node(sourceTime, "source"));
@@ -216,7 +216,7 @@ public class KBestSchedule {
 
                     if(oldTrainArrStationEnd==null || oldTrainDeptStationEnd==null){
                         //different route train and next station is different
-                        System.out.println("Train goes to different route after station" + nodeStart.toString());
+                        // System.out.println("Train goes to different route after station" + nodeStart.toString());
                         continue;
                     }
 
@@ -237,7 +237,7 @@ public class KBestSchedule {
 
                     if(oldTrainDeptStationStart==null){
                         //different route train but next station is same
-                        System.out.println("Train comes from different route before station" + nodeEnd.toString());
+                        // System.out.println("Train comes from different route before station" + nodeEnd.toString());
                         continue;
                     }
 
@@ -272,7 +272,7 @@ public class KBestSchedule {
                     TrainTime oldTrainDeptStationEnd = train.getDept(nodeEnd.getStationId());
                     if(oldTrainArrStationEnd==null || oldTrainDeptStationEnd==null){
                         ////different route train
-                        System.out.println("Train goes to different route after station" + nodeStart.toString());
+                        // System.out.println("Train goes to different route after station" + nodeStart.toString());
                         continue;
                     }
                     int timeOldTrainStationEndArr = oldTrainArrStationEnd.getValue();
@@ -302,9 +302,6 @@ public class KBestSchedule {
 
             if(minNumberOfPlatformRequired<=(isUpDirection?this.route.getStation(nodeEnd.getStationId()).getNoOfUpPlatform():
                     this.route.getStation(nodeEnd.getStationId()).getNoOfDownPlatform())) {
-                if(!nodeEnd.isValid() || !nodeStart.isValid()){
-                    System.out.println("Invalid node Edge added... " + nodeStart.toString() + " " + nodeEnd.toString());
-                }
                 return 2;
             }
             else{
@@ -349,11 +346,11 @@ public class KBestSchedule {
             return false;
         }
 
+        System.out.println("Adding edge bw stations " + this.stationList.get(i) +"->" + this.stationList.get(i+1) );
+
         for(int j=0;j<this.nodes.get(i).size();j++) {
             nodeStart = this.nodes.get(i).get(j);
-            // if(!nodeStart.isValid()){
-            //     continue;
-            // }
+
             int countLoopMax = maxDelayBwStations;
             if(countLoopMax>this.nodes.get(i+1).size() || nodeStart.getStationId().toLowerCase().contains("source")){
                 countLoopMax = this.nodes.get(i+1).size();
@@ -362,11 +359,6 @@ public class KBestSchedule {
             for(int countLoop= 0;countLoop<countLoopMax; countLoop++) {
                 int k = Math.floorMod(j+countLoop,this.nodes.get(i+1).size());
                 nodeEnd = this.nodes.get(i+1).get(k);
-
-                // if(!nodeEnd.isValid()){
-                //     continue;
-                // }
-
                 if(nodeStart.getTime()==null || nodeEnd.getTime()==null){
                     if(this.graphKBestPath.addEdge(new Edge(nodeStart, nodeEnd,0))){
                         this.edgeCount++;
@@ -474,7 +466,7 @@ public class KBestSchedule {
             this.graphKBestPath = new GraphKBestPath(usePreviousComputation, pathTemp);
             if(!usePreviousComputation) {
                 getStationList();
-                getNodesFreeSlot(minDelayBwTrains, sourceTime, destTime, startDay, startHrs, startMinutes,
+                getNodesFreeSlot(sourceTime, destTime, startDay, startHrs, startMinutes,
                         endDay, endHrs, endMinutes, isSingleDay);
                 if (this.nodes == null || this.stationList == null || this.nodes.isEmpty() || this.stationList.isEmpty()) {
                     System.out.println("Error in loading data");
@@ -572,8 +564,8 @@ public class KBestSchedule {
                 || !addTrainFromFolder(pathOldTrainSchedule, trainDay, isSingleDay)){
             return Collections.emptyList();
         }
-        // System.out.println(this.route.toString());
-        // System.out.println(this.trainMap.values().toString());
+        System.out.println(this.route.toString());
+        System.out.println(this.trainMap.values().toString());
         if(stopTime.size() != this.route.getNumberOfStation()){
             System.out.println("Please give stop time for every station in route. if it does not stop at " +
                     "any particular station, give stop time as 0.");

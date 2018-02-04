@@ -26,15 +26,7 @@ public class TrainTime {
             throw new IllegalArgumentException("Label does not match required pattern");
         }
         try {
-            byte minute = Byte.parseByte(data[2]);
-            if(minute==60){
-                minute = 0;
-                setData(Byte.parseByte(data[0]),Byte.parseByte(data[1]), minute);
-                addHours(1);
-            }
-            else{
-                setData(Byte.parseByte(data[0]),Byte.parseByte(data[1]), minute);
-            }
+            setData(Byte.parseByte(data[0]),Byte.parseByte(data[1]), Byte.parseByte(data[2]));
         }
         catch (Exception e){
             e.printStackTrace();
@@ -49,12 +41,18 @@ public class TrainTime {
         if(hour <0 || hour>=24){
             throw new IllegalArgumentException("Hour info is invalid");
         }
-        if(minute<0 || minute>=60){
+        if(minute<0 || minute>60){
             throw new IllegalArgumentException("Minute info is invalid");
         }
         this.day = day;
         this.hour = hour;
-        this.minute = minute;
+        if(minute==60){
+            this.minute = 0;
+            addHours(1);
+        }
+        else{
+            this.minute = minute;
+        }
     }
 
     public int compareTo(TrainTime trainTime){

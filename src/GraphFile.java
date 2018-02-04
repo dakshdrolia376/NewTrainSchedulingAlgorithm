@@ -92,13 +92,6 @@ public class GraphFile extends GraphParent{
 
     private int getIndex(String filename){
         if(this.latestAccessedFileMap.containsKey(filename)){
-            // for(int i=0;i<this.latestAccessedQueue.size();i++){
-            //     if(this.latestAccessedQueue.get(i).equalsIgnoreCase(filename)){
-            //         this.latestAccessedQueue.remove(i);
-            //         this.latestAccessedQueue.add(filename);
-            //         break;
-            //     }
-            // }
             return this.latestAccessedFileMap.get(filename);
         }
         else{
@@ -162,11 +155,6 @@ public class GraphFile extends GraphParent{
     @Override
     public boolean addEdge(Edge edge) {
         requireNonNull(edge, "The edge is null.");
-        // if(!edge.getFrom().isValid() || !edge.getTo().isValid()){
-        //     System.out.println("Invalid edge.");
-        //     return false;
-        // }
-
         String fileName = edge.getFrom().toString().split(":")[0];
         if(tempFile.equalsIgnoreCase("")){
             tempMap = new HashMap<>();

@@ -64,55 +64,23 @@ public class Station {
         });
     }
 
-    public void sortDept() {
-        this.arrDeptSchedule.sort(( o1, o2) ->{
-                if(o1.getDept().equals(o2.getDept())) {
-                    return o1.getArr().compareTo(o2.getArr());
-                }
-                return o1.getDept().compareTo(o2.getDept());
-        });
-    }
+    // public void sortDept() {
+    //     this.arrDeptSchedule.sort(( o1, o2) ->{
+    //             if(o1.getDept().equals(o2.getDept())) {
+    //                 return o1.getArr().compareTo(o2.getArr());
+    //             }
+    //             return o1.getDept().compareTo(o2.getDept());
+    //     });
+    // }
 
-    public List<Node> getNodesFreeList(TrainTime startTime, TrainTime endTime, int minDelayBwTrains){
+    public List<Node> getNodesFreeList(TrainTime startTime, TrainTime endTime){
         List<Node> stationNodes = new ArrayList<>();
         TrainTime slotDept = new TrainTime(startTime);
-        boolean endNodeRequired = true;
-        this.sortDept();
-        TrainTime scheduleSlotDept1,scheduleSlotDept2;
-        for(TrainAtStation trainAtStation: this.arrDeptSchedule) {
-            scheduleSlotDept1 = new TrainTime(trainAtStation.getDept());
-            scheduleSlotDept1.subMinutes(minDelayBwTrains);
-            scheduleSlotDept2 = new TrainTime(trainAtStation.getDept());
-            scheduleSlotDept2.addMinutes(minDelayBwTrains);
-            while(slotDept.compareTo(scheduleSlotDept1)<=0 && slotDept.compareTo(endTime)<=0) {
-                stationNodes.add(new Node(slotDept, this.id));
-                slotDept.addMinutes(1);
-            }
-            while(slotDept.compareTo(scheduleSlotDept2)<0 && slotDept.compareTo(endTime)<=0) {
-                System.out.println(slotDept+ " " + this.id);
-                stationNodes.add(new Node(slotDept, this.id, false));
-                slotDept.addMinutes(1);
-            }
-            if(scheduleSlotDept1.compareTo(scheduleSlotDept2)>0) {
-                // for train at minutes before end of week
-                endNodeRequired = false;
-                break;
-            }
-            if(slotDept.compareTo(scheduleSlotDept2)<=0 ) {
-                slotDept = scheduleSlotDept2;
-            }
+        while(slotDept.compareTo(endTime)<0) {
+            stationNodes.add(new Node(slotDept, this.id));
+            slotDept.addMinutes(1);
         }
-        if(endNodeRequired) {
-            int comp = slotDept.compareTo(endTime);
-            while(comp<=0) {
-                stationNodes.add(new Node(slotDept, this.id));
-                if(comp==0) {
-                    break;
-                }
-                slotDept.addMinutes(1);
-                comp = slotDept.compareTo(endTime);
-            }
-        }
+        stationNodes.add(new Node(slotDept, this.id));
         return stationNodes;
     }
 

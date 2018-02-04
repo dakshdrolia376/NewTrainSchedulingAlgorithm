@@ -6,8 +6,8 @@ public class Main {
     public static void main(String[] args) {
         String pathTrainList = "data" + File.separator +"trainList.txt";
 
-        String pathRoute = "data"+File.separator+"route"+File.separator+"routeCreated.txt";
-        String pathOldTrainSchedule = "data"+File.separator+"final" + File.separator + "dayall";
+        String pathRoute = "data"+File.separator+"route"+File.separator+"routePnbeNdls.txt";
+        String pathOldTrainSchedule = "data"+File.separator+"final" + File.separator + "day0";
 
         String pathPlotFile = "data"+File.separator+"plot"+File.separator+"plot1.pdf";
         String pathTemp = "data"+File.separator+"temp";

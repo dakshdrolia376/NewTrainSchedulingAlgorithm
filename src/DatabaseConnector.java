@@ -66,10 +66,6 @@ public class DatabaseConnector {
     }
 
     public boolean insertIntoNode(Node nodeId){
-        if(!nodeId.isValid()){
-            System.out.println("Node is invalid");
-            return false;
-        }
         if(!getConnection()){
             return false;
         }
@@ -106,9 +102,6 @@ public class DatabaseConnector {
             int count = 0;
 
             for (Node nodeId : nodeIds) {
-                if (!nodeId.isValid()) {
-                    continue;
-                }
                 preparedStmt.setString(1, nodeId.toString());
                 preparedStmt.addBatch();
                 if (++count % batchSize == 0) {
@@ -365,10 +358,6 @@ public class DatabaseConnector {
             return Collections.emptyList();
         }
         try {
-            if(!nodeIdFrom.isValid()){
-                System.out.println("Invalid node");
-                return Collections.emptyList();
-            }
             // the mysql insert statement
             String query = "select nf.Name as NodeFrom, nt.Name as NodeTo, e.weight as Weight " +
                     "from edges e inner join nodes nf on nf.ID = e.FromNode " +
@@ -484,9 +473,6 @@ public class DatabaseConnector {
             return -1;
         }
         try {
-            if(!nodeIdFrom.isValid() || !nodeIdTo.isValid()){
-                return Double.MAX_VALUE;
-            }
             // the mysql insert statement
             String query = "select * from edges where FromNode = (select ID from nodes where Name = ?) " +
                     "and ToNode = (select ID from nodes where Name = ?);";

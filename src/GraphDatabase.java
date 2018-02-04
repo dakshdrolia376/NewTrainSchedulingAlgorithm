@@ -48,11 +48,6 @@ public class GraphDatabase extends GraphParent{
     @Override
     public boolean addEdge(Edge edge) {
         requireNonNull(edge, "The edge is null.");
-        if(!edge.getFrom().isValid() || !edge.getTo().isValid()){
-            System.out.println("Invalid edge.");
-            return false;
-        }
-
         edgeList.add(edge);
         if(edgeList.size()>=10000){
             // System.out.println(edgeList.toString());
