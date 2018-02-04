@@ -89,6 +89,7 @@ public class Station {
                 slotDept.addMinutes(1);
             }
             while(slotDept.compareTo(scheduleSlotDept2)<0 && slotDept.compareTo(endTime)<=0) {
+                System.out.println(slotDept+ " " + this.id);
                 stationNodes.add(new Node(slotDept, this.id, false));
                 slotDept.addMinutes(1);
             }

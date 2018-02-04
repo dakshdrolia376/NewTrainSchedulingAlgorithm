@@ -80,35 +80,27 @@ public class Scheduler {
             String line;
             while((line = bReader.readLine()) != null) {
                 String data[] = line.split("\\s+");
-                if(data.length==6){
+                if(data.length<2){
+                    System.out.println("Skipping station as incomplete data :" + line);
                     newRouteData.append(line);
                     newRouteData.append('\n');
                     continue;
                 }
                 String station_code[] = data[0].split("-");
                 String id = station_code[station_code.length-1];
-                int numOfPlatform = fetchStationDetails.fetchStationId(id);
+                int numOfPlatform = fetchStationDetails.getNumberOfPlatform(id);
                 int numOfUpPlatform;
                 int numOfDownPlatform;
                 if(numOfPlatform==-1){
                     System.out.println("Unable to find the number of platforms for the station " + id +
                             ". Using default values.");
                     numOfUpPlatform = 1;
-                    numOfDownPlatform =1;
                     numOfPlatform =2;
                 }
-                else if(numOfPlatform<2){
-                    numOfUpPlatform = 0;
-                    numOfDownPlatform =0;
-                }
-                else if(numOfPlatform<4){
-                    numOfUpPlatform = 1;
-                    numOfDownPlatform =1;
-                }
                 else{
-                    numOfUpPlatform = 2;
-                    numOfDownPlatform =2;
+                    numOfUpPlatform = numOfPlatform/2;
                 }
+                numOfDownPlatform =numOfUpPlatform;
                 newRouteData.append(line);
                 newRouteData.append(' ');
                 newRouteData.append(1);
@@ -120,8 +112,8 @@ public class Scheduler {
                 newRouteData.append((numOfPlatform - numOfUpPlatform -numOfDownPlatform));
                 newRouteData.append('\n');
             }
-            fReader.close();
             bReader.close();
+            fReader.close();
             new WriteToFile().write(pathRouteFile, newRouteData.toString(),false);
         }
         catch (Exception e) {
@@ -158,8 +150,8 @@ public class Scheduler {
                 //     break;
                 // }
             }
-            fReader.close();
             bReader.close();
+            fReader.close();
         }
         catch (Exception e) {
             e.printStackTrace();

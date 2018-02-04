@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         String pathTrainList = "data" + File.separator +"trainList.txt";
 
-        String pathRoute = "data"+File.separator+"route"+File.separator+"routePnbeNdls.txt";
+        String pathRoute = "data"+File.separator+"route"+File.separator+"routeCreated.txt";
         String pathOldTrainSchedule = "data"+File.separator+"final" + File.separator + "dayall";
 
         String pathPlotFile = "data"+File.separator+"plot"+File.separator+"plot1.pdf";
@@ -18,7 +18,7 @@ public class Main {
         String pathTrainDatabase = pathTemp+File.separator+"databaseTrain";
         int trainDay = 0;
         boolean isSingleDay = true;
-        boolean usePreviousComputation = true;
+        boolean usePreviousComputation = false;
         double ratio = 1.6;
 
         if(!Scheduler.createParentFolder(pathTrainList) || !Scheduler.createParentFolder(pathRoute)
@@ -46,10 +46,10 @@ public class Main {
             // Assign o to output stream
             System.setErr(o);
             System.setOut(o1);
-            // Scheduler.test(pathTemp, pathRoute,pathBestRoute,pathOldTrainSchedule, isSingleDay, trainDay, usePreviousComputation);
+            Scheduler.test(pathTemp, pathRoute,pathBestRoute,pathOldTrainSchedule, isSingleDay, trainDay, usePreviousComputation);
 
-            // Scheduler.fetchTrainInfo(pathTrainDatabase);
             // Scheduler.fetchStationInfo(pathStationDatabase);
+            // Scheduler.fetchTrainInfo(pathTrainDatabase);
             // Scheduler.getTrainList(pathTrainList);
 
             // new ScheduleByDivision().scheduleByBreaking(pathTemp, pathRoute, pathBestRoute, pathOldTrainSchedule,
@@ -59,14 +59,14 @@ public class Main {
             // String pathNewTrainFile = pathBestRoute+File.separator+"Type 2 AvgSpeed 80.0 path 1 cost 24.0 .path";
             // Scheduler.showPlot(pathBestRoute,newTrainNo,pathPlotFile,pathRoute,pathOldTrainSchedule,
             //         true, isSingleDay, trainDay);
-
+            //
             // Scheduler.putStationIntoDatabase(pathStationDatabase);
             // Scheduler.putTrainIntoDatabase(pathTrainDatabase);
             // Scheduler.putStoppagesIntoDatabase(pathTrainDatabase);
 
-            Scheduler.updateRouteFile(pathRoute, pathStationDatabase);
-            Scheduler.createTrainList(pathRoute, pathTrainList, pathTrainDatabase);
-            Scheduler.fetchTrainSchedule(pathTrainList,pathTemp, pathFinal, pathTrainDatabase);
+            // Scheduler.updateRouteFile(pathRoute, pathStationDatabase);
+            // Scheduler.createTrainList(pathRoute, pathTrainList, pathTrainDatabase);
+            // Scheduler.fetchTrainSchedule(pathTrainList,pathTemp, pathFinal, pathTrainDatabase);
         }
         catch (Exception e){
             e.printStackTrace();

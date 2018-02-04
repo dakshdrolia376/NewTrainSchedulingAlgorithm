@@ -11,7 +11,7 @@ import java.util.*;
 import static java.util.Objects.requireNonNull;
 
 public class GraphFile extends GraphParent{
-    private final String pathTemp;
+    private final String pathDatabase;
 
     private List<String> latestAccessedQueue;
     private List<Map<String, Map<String, Edge>>> latestAccessedMapList;
@@ -21,9 +21,9 @@ public class GraphFile extends GraphParent{
     private Map<String, Map<String, Edge>> tempMap = new HashMap<>();
     private String tempFile = "";
 
-    public GraphFile(boolean usePreviousComputation, String pathTemp){
+    public GraphFile(boolean usePreviousComputation, String pathDatabase){
         super();
-        requireNonNull(pathTemp, "Path temp cant be null");
+        requireNonNull(pathDatabase, "Path temp cant be null");
         int K = 8;
         this.maxStationsToStore = K;
         this.latestAccessedQueue = new ArrayList<>(K);
@@ -32,13 +32,13 @@ public class GraphFile extends GraphParent{
             latestAccessedMapList.add(new HashMap<>());
         }
         this.latestAccessedFileMap = new HashMap<>(K);
-        this.pathTemp = pathTemp + File.separator + "database";
-        if(!Scheduler.createFolder(pathTemp)){
+        this.pathDatabase = pathDatabase + File.separator + "database";
+        if(!Scheduler.createFolder(pathDatabase)){
             throw new RuntimeException("Unable to initialize local storage");
         }
         else{
             if(!usePreviousComputation) {
-                File file = new File(this.pathTemp);
+                File file = new File(this.pathDatabase);
                 File[] listOfFiles = file.listFiles();
                 if (listOfFiles == null) {
                     throw new RuntimeException("Unable to initialize local storage");
@@ -55,14 +55,16 @@ public class GraphFile extends GraphParent{
     private boolean loadStation(String fileName, int index){
         Scheduler.getRuntimeMemory();
         System.out.println("Loading station ..." + fileName);
-        String pathNodeMap = this.pathTemp + File.separator + fileName;
+        String pathNodeMap = this.pathDatabase + File.separator + fileName;
         Map<String, Map<String, Edge>> tempMapStation = new HashMap<>();
         Gson gson = new Gson();
         try {
             Type listType = new TypeToken<Map<String, Map<String, Edge>>>(){}.getType();
             File file = new File(pathNodeMap);
             if(file.exists()) {
-                tempMapStation = gson.fromJson(new FileReader(file), listType);
+                FileReader fileReader = new FileReader(file);
+                tempMapStation = gson.fromJson(fileReader, listType);
+                fileReader.close();
             }
             this.latestAccessedMapList.set(index,tempMapStation);
             return true;
@@ -120,7 +122,7 @@ public class GraphFile extends GraphParent{
 
     @Override
     public boolean flushData(){
-        String pathNodeMap = this.pathTemp + File.separator + this.tempFile;
+        String pathNodeMap = this.pathDatabase + File.separator + this.tempFile;
         Map<String, Map<String, Edge>> tempMapStation = new HashMap<>();
         Gson gson = new Gson();
         try {
@@ -160,10 +162,10 @@ public class GraphFile extends GraphParent{
     @Override
     public boolean addEdge(Edge edge) {
         requireNonNull(edge, "The edge is null.");
-        if(!edge.getFrom().isValid() || !edge.getTo().isValid()){
-            System.out.println("Invalid edge.");
-            return false;
-        }
+        // if(!edge.getFrom().isValid() || !edge.getTo().isValid()){
+        //     System.out.println("Invalid edge.");
+        //     return false;
+        // }
 
         String fileName = edge.getFrom().toString().split(":")[0];
         if(tempFile.equalsIgnoreCase("")){
@@ -241,7 +243,7 @@ public class GraphFile extends GraphParent{
     @Override
     public String toString(){
         try {
-            File[] fileList = new File(this.pathTemp).listFiles();
+            File[] fileList = new File(this.pathDatabase).listFiles();
             StringBuilder stringBuilder = new StringBuilder("");
             if(fileList==null){
                 System.out.println("Some error occurred");
@@ -251,6 +253,7 @@ public class GraphFile extends GraphParent{
                 if(!file.isFile()){
                     continue;
                 }
+                System.out.println("Path "+ file.getPath());
                 JsonObject a;
                 try {
                     JsonParser parser = new JsonParser();
@@ -258,7 +261,7 @@ public class GraphFile extends GraphParent{
                     for(Map.Entry<String , JsonElement> entry: a.entrySet()){
                         stringBuilder.append(entry.getKey());
                         stringBuilder.append(" ->> ");
-                        stringBuilder.append(entry.getValue().getAsString());
+                        stringBuilder.append(entry.getValue());
                         stringBuilder.append('\n');
                     }
                 }

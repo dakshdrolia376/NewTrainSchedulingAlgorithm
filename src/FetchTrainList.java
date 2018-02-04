@@ -31,12 +31,14 @@ public class FetchTrainList {
                     output.append('\t');
                     output.append(trainNos.get(i1).getAsJsonObject().get("number").getAsString());
                 }
+                request.disconnect();
             }
             catch (Exception e){
                 e.printStackTrace();
             }
             output.append('\n');
         }
+        System.out.println(output.toString());
         new WriteToFile().write(pathFile, output.toString(), false);
     }
 }

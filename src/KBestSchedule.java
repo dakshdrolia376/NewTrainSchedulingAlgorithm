@@ -48,10 +48,16 @@ public class KBestSchedule {
         return true;
     }
 
-    private boolean addTrain(int trainNo, String trainName){
+    private int addTrain(int trainNo, String trainName){
         requireNonNull(trainName, "Train name is null.");
-        this.trainMap.put(trainNo, new Train(trainNo, trainName));
-        return true;
+        int temp = trainNo;
+        while(this.trainMap.containsKey(trainNo)){
+            System.out.println("Train already present. Key :" + trainNo);
+            trainNo += 100000;
+            System.out.println("Train already present. Updating key: " +trainNo);
+        }
+        this.trainMap.put(trainNo, new Train(temp, trainName));
+        return trainNo;
     }
 
     private boolean addStoppageTrain(int trainNo, String stationId, TrainTime arrival, TrainTime departure){
@@ -64,7 +70,8 @@ public class KBestSchedule {
     private boolean addTrainFromFile(int trainNo, String trainName, String pathTrainSchedule, int trainDay,
                                      boolean isSingleDay){
         try {
-            if(!addTrain(trainNo, trainName)){
+            trainNo = addTrain(trainNo, trainName);
+            if(trainNo<0){
                 return false;
             }
             FileReader fReader = new FileReader(pathTrainSchedule);
@@ -90,11 +97,13 @@ public class KBestSchedule {
                     departure.addDay(1);
                 }
                 if(!addStoppageTrain(trainNo,stationId,arrival,departure)){
+                    bReader.close();
+                    fReader.close();
                     return false;
                 }
             }
-            fReader.close();
             bReader.close();
+            fReader.close();
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -170,12 +179,13 @@ public class KBestSchedule {
     }
 
     private int isValidEdge(double distanceBwStation, double avgSpeed, double waitTimeStationEnd,
-                                Node nodeStart, Node nodeEnd, int maxDelayBwStations, boolean isSingleDay){
+                            Node nodeStart, Node nodeEnd, int maxDelayBwStations, boolean isSingleDay,
+                            int minDelayBwTrains){
         requireNonNull(nodeStart, "start node is null");
         requireNonNull(nodeEnd, "end node is null");
-        if(!nodeStart.isValid() || !nodeEnd.isValid()){
-            return -6;
-        }
+        // if(!nodeStart.isValid() || !nodeEnd.isValid()){
+        //     return -6;
+        // }
         if(nodeStart.getTime()==null || nodeEnd.getTime()==null){
             return -7;
         }
@@ -206,6 +216,7 @@ public class KBestSchedule {
 
                     if(oldTrainArrStationEnd==null || oldTrainDeptStationEnd==null){
                         //different route train and next station is different
+                        System.out.println("Train goes to different route after station" + nodeStart.toString());
                         continue;
                     }
 
@@ -226,10 +237,23 @@ public class KBestSchedule {
 
                     if(oldTrainDeptStationStart==null){
                         //different route train but next station is same
+                        System.out.println("Train comes from different route before station" + nodeEnd.toString());
                         continue;
                     }
 
                     int timeOldTrainStationStartDept = oldTrainDeptStationStart.getValue();
+
+                    if(timeNodeStart<(timeOldTrainStationStartDept + minDelayBwTrains) &&
+                            timeNodeStart>(timeOldTrainStationStartDept-minDelayBwTrains)){
+                        // System.out.println("Min delay constraint" + oldTrainDeptStationStart);
+                        return -8;
+                    }
+
+                    if(timeNodeEnd<(timeOldTrainStationEndArr+minDelayBwTrains) &&
+                            timeNodeEnd>(timeOldTrainStationEndArr-minDelayBwTrains)){
+                        // System.out.println("Min delay constraint" + oldTrainArrStationEnd);
+                        return -9;
+                    }
 
                     if(timeOldTrainStationEndArr<timeOldTrainStationStartDept){
                         timeOldTrainStationEndArr += isSingleDay?1440:10080;
@@ -248,17 +272,22 @@ public class KBestSchedule {
                     TrainTime oldTrainDeptStationEnd = train.getDept(nodeEnd.getStationId());
                     if(oldTrainArrStationEnd==null || oldTrainDeptStationEnd==null){
                         ////different route train
+                        System.out.println("Train goes to different route after station" + nodeStart.toString());
                         continue;
+                    }
+                    int timeOldTrainStationEndArr = oldTrainArrStationEnd.getValue();
+                    int timeOldTrainStationEndDept = oldTrainDeptStationEnd.getValue();
+                    if(timeOldTrainStationEndDept<timeOldTrainStationEndArr){
+                        timeOldTrainStationEndDept += isSingleDay?1440:10080;
+                    }
+                    if(timeNodeEnd<(timeOldTrainStationEndArr+minDelayBwTrains) &&
+                            timeNodeEnd>(timeOldTrainStationEndArr-minDelayBwTrains)){
+                        // System.out.println("Min delay constraint" + oldTrainArrStationEnd);
+                        return -9;
                     }
 
                     if(!(isDirectLineAvailable && oldTrainArrStationEnd.equals(oldTrainDeptStationEnd))){
                         //need to check availability of platform
-                        int timeOldTrainStationEndArr = oldTrainArrStationEnd.getValue();
-                        int timeOldTrainStationEndDept = oldTrainDeptStationEnd.getValue();
-
-                        if(timeOldTrainStationEndDept<timeOldTrainStationEndArr){
-                            timeOldTrainStationEndDept += isSingleDay?1440:10080;
-                        }
 
                         if((timeOldTrainStationEndDept>=timeEarliestToReach && timeOldTrainStationEndDept<=timeNodeEnd) ||
                                 (timeNodeEnd <= timeOldTrainStationEndDept && timeNodeEnd >=timeOldTrainStationEndArr)){
@@ -273,6 +302,9 @@ public class KBestSchedule {
 
             if(minNumberOfPlatformRequired<=(isUpDirection?this.route.getStation(nodeEnd.getStationId()).getNoOfUpPlatform():
                     this.route.getStation(nodeEnd.getStationId()).getNoOfDownPlatform())) {
+                if(!nodeEnd.isValid() || !nodeStart.isValid()){
+                    System.out.println("Invalid node Edge added... " + nodeStart.toString() + " " + nodeEnd.toString());
+                }
                 return 2;
             }
             else{
@@ -289,7 +321,7 @@ public class KBestSchedule {
 
     private boolean addEdgeBwStations(int i,int maxDelayBwStations,
                                       double distanceBwStation, double avgSpeed, double waitTimeStationEnd,
-                                      boolean isSingleDay){
+                                      boolean isSingleDay, int minDelayBwTrains){
         boolean addedFirstEdge = false;
         Node nodeStart;
         Node nodeEnd;
@@ -319,9 +351,9 @@ public class KBestSchedule {
 
         for(int j=0;j<this.nodes.get(i).size();j++) {
             nodeStart = this.nodes.get(i).get(j);
-            if(!nodeStart.isValid()){
-                continue;
-            }
+            // if(!nodeStart.isValid()){
+            //     continue;
+            // }
             int countLoopMax = maxDelayBwStations;
             if(countLoopMax>this.nodes.get(i+1).size() || nodeStart.getStationId().toLowerCase().contains("source")){
                 countLoopMax = this.nodes.get(i+1).size();
@@ -331,9 +363,9 @@ public class KBestSchedule {
                 int k = Math.floorMod(j+countLoop,this.nodes.get(i+1).size());
                 nodeEnd = this.nodes.get(i+1).get(k);
 
-                if(!nodeEnd.isValid()){
-                    continue;
-                }
+                // if(!nodeEnd.isValid()){
+                //     continue;
+                // }
 
                 if(nodeStart.getTime()==null || nodeEnd.getTime()==null){
                     if(this.graphKBestPath.addEdge(new Edge(nodeStart, nodeEnd,0))){
@@ -352,14 +384,14 @@ public class KBestSchedule {
 
                     do{
                         codeValidEdge = isValidEdge(distanceBwStation, avgSpeed, waitTimeStationEnd, nodeStart, nodeEnd,
-                                maxDelayBwStations, isSingleDay);
+                                maxDelayBwStations, isSingleDay, minDelayBwTrains);
                         if(codeValidEdge>0){
                             break;
                         }
                         else if(codeValidEdge==-1){
                             return false;
                         }
-                        else if(codeValidEdge==-5 || codeValidEdge==-6 || codeValidEdge==-7){
+                        else if(codeValidEdge==-5 || codeValidEdge==-6 || codeValidEdge==-7|| codeValidEdge==-9){
                             validEdge = false;
                             break;
                         }
@@ -396,12 +428,22 @@ public class KBestSchedule {
                 }
                 else{
                     int codeValidEdge = isValidEdge(distanceBwStation, avgSpeed, waitTimeStationEnd, nodeStart,
-                            nodeEnd, maxDelayBwStations, isSingleDay);
+                            nodeEnd, maxDelayBwStations, isSingleDay, minDelayBwTrains);
                     if(codeValidEdge==-1){
                         return false;
                     }
                     else if(codeValidEdge==-5){
                         break;
+                    }
+                    else if(codeValidEdge==-9){
+                        // System.out.println("Min delay constraint at dest not valid in adding edge bw " +
+                        //         nodeStart.toString() + " and " + nodeEnd.toString());
+                        continue;
+                    }
+                    else if(codeValidEdge==-8){
+                        // System.out.println("Min delay constraint at source not valid in adding edge bw " +
+                        //         nodeStart.toString() + " and " + nodeEnd.toString());
+                        continue;
                     }
                     if(codeValidEdge>0){
                         int edgeCost = nodeEnd.getTime().compareTo(nodeStart.getTime());
@@ -460,7 +502,7 @@ public class KBestSchedule {
                     }
                     distanceBwStation = (i==0)?0:(distanceStationEnd - distanceStationStart);
                     if (!addEdgeBwStations(i, maxDelayBwStations, distanceBwStation, avgSpeed, waitTimeStationEnd,
-                            isSingleDay)) {
+                            isSingleDay, minDelayBwTrains)) {
                         System.out.println("Some error occurred in adding edges.");
                         return Collections.emptyList();
                     }

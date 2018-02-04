@@ -33,10 +33,10 @@ public class GraphMemory extends GraphParent{
     @Override
     public boolean addEdge(Edge edge) {
         requireNonNull(edge, "The edge is null.");
-        if(!edge.getFrom().isValid() || !edge.getTo().isValid()){
-            System.out.println("Invalid edge.");
-            return false;
-        }
+        // if(!edge.getFrom().isValid() || !edge.getTo().isValid()){
+        //     System.out.println("Invalid edge.");
+        //     return false;
+        // }
         vertexEdgeMap.putIfAbsent(edge.getFrom().toString(), new HashMap<>());
         Map<String, Edge> fromMap = vertexEdgeMap.get(edge.getFrom().toString());
 

@@ -126,17 +126,17 @@ public class DatabaseConnector {
         }
     }
 
-    public boolean insertIntoTrainBatch(List<Integer> trainIndexes, List<Integer> trainNos, List<String> trainNames, List<String> travelDays){
+    public boolean insertIntoTrainBatch(List<Integer> trainIndexes, List<Integer> trainNos, List<String> trainNames,
+                                        List<String> travelDays){
 
         try {
             if (!getConnection()) {
                 return false;
             }
-            String query = "insert into train (trainName, trainNo, trainIndex, travelMon, travelTue, travelWed, " +
+            String query = "insert into train (Name, Num, trainIndex, travelMon, travelTue, travelWed, " +
                     "travelThu, travelFri, travelSat, travelSun) values (?,?,?,?,?,?,?,?,?,?) " +
                     "ON DUPLICATE KEY UPDATE count=count+1, " +
-                    "duplicateNames = CONCAT(duplicateNames,\",\",?)," +
-                    "duplicateIndexes = CONCAT(duplicateIndexes,\",\",?);";
+                    "DuplicateIndexes = CONCAT(DuplicateIndexes,\",\",?);";
             // create the mysql insert prepared statement
             con.setAutoCommit(false);
             PreparedStatement preparedStmt = con.prepareStatement(query);
@@ -154,8 +154,7 @@ public class DatabaseConnector {
                 preparedStmt.setString(8,travelDays.get(i).charAt(4)=='1'?"Y":"N");
                 preparedStmt.setString(9,travelDays.get(i).charAt(5)=='1'?"Y":"N");
                 preparedStmt.setString(10,travelDays.get(i).charAt(6)=='1'?"Y":"N");
-                preparedStmt.setString(11,trainNames.get(i));
-                preparedStmt.setString(12,trainIndexes.get(i).toString());
+                preparedStmt.setString(11,trainIndexes.get(i).toString());
                 preparedStmt.addBatch();
                 if (++count % batchSize == 0) {
                     preparedStmt.executeBatch();
@@ -172,16 +171,22 @@ public class DatabaseConnector {
         }
     }
 
-    public boolean insertIntoStationBatch(List<Integer> stationIndexes, List<String> stationIds, List<String> stationNames){
+    public boolean insertIntoStationBatch(List<Integer> stationIndexes, List<String> stationIds,
+                                          List<String> stationNames, List<String> stationTypes,
+                                          List<String> stationTracks, List<Integer> originatingTrains,
+                                          List<Integer> terminatingTrains,List<Integer> haltingTrains,
+                                          List<Integer> platforms,List<String> elevations,
+                                          List<String> railwayZones,List<String> addresses){
 
         try {
             if (!getConnection()) {
                 return false;
             }
-            String query = "insert into station (stationName, stationId, stationIndex) values (?,?,?) " +
+            String query = "insert into station (Name, ID, StationIndex, StationType, Track,  OriginatingTrains, " +
+                    "TerminatingTrains, HaltingTrains, Platforms, Elevation, RailwayZone, Address) " +
+                    "values (?,?,?,?,?,?,?,?,?,?,?,?) " +
                     "ON DUPLICATE KEY UPDATE count=count+1, " +
-                    "duplicateNames = CONCAT(duplicateNames,\",\",?)," +
-                    "duplicateIndexes = CONCAT(duplicateIndexes,\",\",?);";
+                    "DuplicateIndexes = CONCAT(DuplicateIndexes,\",\",?);";
 
             // create the mysql insert prepared statement
             con.setAutoCommit(false);
@@ -193,8 +198,16 @@ public class DatabaseConnector {
                 preparedStmt.setString(1,stationNames.get(i));
                 preparedStmt.setString(2,stationIds.get(i));
                 preparedStmt.setString(3,stationIndexes.get(i).toString());
-                preparedStmt.setString(4,stationNames.get(i));
-                preparedStmt.setString(5,stationIndexes.get(i).toString());
+                preparedStmt.setString(4,stationTypes.get(i));
+                preparedStmt.setString(5,stationTracks.get(i));
+                preparedStmt.setInt(6,originatingTrains.get(i));
+                preparedStmt.setInt(7,terminatingTrains.get(i));
+                preparedStmt.setInt(8,haltingTrains.get(i));
+                preparedStmt.setInt(9,platforms.get(i));
+                preparedStmt.setString(10,elevations.get(i));
+                preparedStmt.setString(11,railwayZones.get(i));
+                preparedStmt.setString(12,addresses.get(i));
+                preparedStmt.setString(13,stationIndexes.get(i).toString());
                 preparedStmt.addBatch();
                 if (++count % batchSize == 0) {
                     preparedStmt.executeBatch();
@@ -219,7 +232,7 @@ public class DatabaseConnector {
             if (!getConnection()) {
                 return false;
             }
-            String query = "insert into stoppage (stationId, trainNo, arrival, departure, distance) values (?,?,?,?,?)"+
+            String query = "insert into stoppage (stationId, trainNum, arrival, departure, distance) values (?,?,?,?,?)"+
                     " ON DUPLICATE KEY UPDATE count=count+1, " +
                     "duplicateStoppages = CONCAT(duplicateStoppages,\",\",?);";
 
@@ -390,7 +403,7 @@ public class DatabaseConnector {
             }
             // the mysql insert statement
             StringBuilder query = new StringBuilder("");
-            query.append("select distinct trainNo from stoppage where stationId in (");
+            query.append("select distinct trainNum from stoppage where stationId in (");
             for(String stationId:stationIds){
                 query.append("'");
                 query.append(stationId);
@@ -406,7 +419,7 @@ public class DatabaseConnector {
             ResultSet rs=preparedStmt.executeQuery();
             List<Integer> trainNos = new ArrayList<>();
             while (rs.next()){
-                trainNos.add(rs.getInt("trainNo"));
+                trainNos.add(rs.getInt("trainNum"));
             }
             return trainNos;
         }
@@ -422,7 +435,7 @@ public class DatabaseConnector {
         }
         try {
             // the mysql insert statement
-            String query = "select distinct trainNo from train where ";
+            String query = "select distinct Num from train where ";
             // create the mysql insert prepared statement
             switch (day){
                 case 0:
@@ -456,7 +469,7 @@ public class DatabaseConnector {
             ResultSet rs=preparedStmt.executeQuery();
             List<Integer> trainNos = new ArrayList<>();
             while (rs.next()){
-                trainNos.add(rs.getInt("trainNo"));
+                trainNos.add(rs.getInt("Num"));
             }
             return trainNos;
         }

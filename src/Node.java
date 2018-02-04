@@ -46,9 +46,9 @@ public class Node {
     }
 
     public String toString() {
-        if(!isValid){
-            return "";
-        }
+        // if(!isValid){
+        //     return "";
+        // }
         if(this.time!=null) {
             return this.stationId +":" + this.time.toString();
         }

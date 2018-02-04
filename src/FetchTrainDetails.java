@@ -24,7 +24,9 @@ public class FetchTrainDetails {
             Type listType = new TypeToken<Map<Integer, Integer>>(){}.getType();
             File file = new File(this.pathDatabaseTrain + File.separator + "indexTrains.db");
             if(file.exists()) {
-                this.myMap = gson.fromJson(new FileReader(file), listType);
+                FileReader fileReader = new FileReader(file);
+                this.myMap = gson.fromJson(fileReader, listType);
+                fileReader.close();
             }
             else{
                 this.myMap = new HashMap<>();
@@ -75,7 +77,7 @@ public class FetchTrainDetails {
 
     public boolean fetchAll(){
         boolean ans = true;
-        for(int i=1;i<10000;i++){
+        for(int i=1;i<15000;i++){
             ans = fetchTrain(i);
         }
         Gson gson = new Gson();
@@ -102,12 +104,12 @@ public class FetchTrainDetails {
                 return false;
             }
         }
-        String pathTrainScheduleCompete = this.pathDatabaseTrain + File.separator +trainIndexNo+".txt";
         if(!parseTrainNumber(pathTrain)){
             System.out.println("Unable to parse train Number " + pathTrain);
             return false;
         }
-        if(!parseTrainScheduleWebsite(pathTrain, pathTrainScheduleCompete)){
+        String pathTrainScheduleComplete = this.pathDatabaseTrain + File.separator +trainIndexNo+".txt";
+        if(!parseTrainScheduleWebsite(pathTrain, pathTrainScheduleComplete)){
             System.out.println("Unable to parse train schedule " + pathTrain);
             return false;
         }
@@ -130,16 +132,31 @@ public class FetchTrainDetails {
                     String temp1[] = temp.split("/");
                     if (temp1.length >= 7) {
                         String trainName = temp1[5].toLowerCase();
-                        String temp2[] = trainName.split("-");
-                        String trainNo = temp2[temp2.length-1];
+                        String trainNo = trainName.trim().replaceAll(".*-", "");
                         String trainIndex = temp1[6];
+                        if(trainIndex.endsWith(">")){
+                            trainIndex = trainIndex.replace(">", "");
+                        }
+                        if(trainIndex.endsWith("\"")){
+                            trainIndex = trainIndex.replace("\"", "");
+                        }
                         this.myMap.put(Integer.parseInt(trainNo), Integer.parseInt(trainIndex));
                         // System.out.print(temp + " ");
                         // System.out.println(trainNo+">" + trainIndex);
+                        bReader.close();
+                        fReader.close();
                         return true;
+                    }
+                    else{
+                        System.out.println("Unable to find train No: " + fileName);
+                        bReader.close();
+                        fReader.close();
+                        return false;
                     }
                 }
             }
+            bReader.close();
+            fReader.close();
         }
         catch (Exception e){
             e.printStackTrace();
@@ -373,6 +390,8 @@ public class FetchTrainDetails {
                 String pathTrainScheduleParent = pathFinal + File.separator + day;
                 if (!Scheduler.createFolder(pathTrainScheduleParent)) {
                     System.out.println("Unable to create folder");
+                    bReader.close();
+                    fReader.close();
                     return;
                 }
                 for(int i=1;i<data.length;i++) {
@@ -414,7 +433,7 @@ public class FetchTrainDetails {
         Matcher matcher;
         int trainNo;
 
-        for(int i=1;i<20000;i++){
+        for(int i=1;i<15000;i++){
             System.out.println(i);
             trainName = "";
             trainNo = -1;
@@ -422,6 +441,7 @@ public class FetchTrainDetails {
             try {
                 String pathTrain = this.pathDatabaseTrain + File.separator + "train_details_"+i + ".txt";
                 if(!new File(pathTrain).exists()){
+                    System.out.println("file not found " + pathTrain);
                     continue;
                 }
                 fReader = new FileReader(pathTrain);
@@ -518,10 +538,10 @@ public class FetchTrainDetails {
         double distance;
         DatabaseConnector databaseConnector = new DatabaseConnector();
 
-        for(int i=1;i<20000;i++){
+        for(int i=1;i<15000;i++){
             int trainNo = myMapReverse.getOrDefault(i,-1);
             if(trainNo==-1){
-                System.out.println("No train for this : " + i);
+                System.out.println("No train for this index : " + i);
                 continue;
             }
             System.out.println("index :" + i + " trainNo : " + trainNo);

@@ -6,14 +6,20 @@ public class GetWebsite {
         url = url.replaceAll(" ", "%20");
         System.out.println("***Crawling : " + url);
         try{
-            Thread.sleep(4000);
+            Thread.sleep(50);
             //without proper User-Agent, we will get 403 error
-            Document doc = Jsoup.connect(url).maxBodySize(0)
-                    .userAgent("Mozilla/17.0 Chrome/26.0.1410.64 Safari/537.31").timeout(30000).get();
-            System.out.println("fetching done");
+            Document doc = Jsoup.connect(url)
+                    .maxBodySize(0)
+                    .userAgent("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) " +
+                            "Chrome/41.0.2228.0 Safari/537.36")
+                    .timeout(30000)
+                    .ignoreContentType(true)
+                    .followRedirects(true)
+                    .ignoreHttpErrors(true)
+                    .get();
             //below will print HTML data, save it to a file.
             new WriteToFile().write(pathFile ,doc.html(),false);
-            System.out.println("train website saved");
+            System.out.println("Website fetched.");
             return true;
         }
         catch (Exception e){
