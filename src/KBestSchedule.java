@@ -178,9 +178,8 @@ public class KBestSchedule {
         this.stationList.add("dest");
     }
 
-    private int isValidEdge(double distanceBwStation, double avgSpeed, double waitTimeStationEnd,
-                            Node nodeStart, Node nodeEnd, int maxDelayBwStations, boolean isSingleDay,
-                            int minDelayBwTrains){
+    private int isValidEdge(int delayBwStation, int waitTimeStationEnd, Node nodeStart, Node nodeEnd,
+                            int maxDelayBwStations, boolean isSingleDay, int minDelayBwTrains){
         requireNonNull(nodeStart, "start node is null");
         requireNonNull(nodeEnd, "end node is null");
         // if(!nodeStart.isValid() || !nodeEnd.isValid()){
@@ -190,11 +189,10 @@ public class KBestSchedule {
             return -7;
         }
 
-        int delay = (int) Math.ceil((((distanceBwStation)/avgSpeed )*60));
         int timeNodeStart = nodeStart.getTime().getValue();
         int timeNodeEnd = nodeEnd.getTime().getValue();
-        int timeEarliestToReach = timeNodeStart + delay;
-        int timeEarliestToDepart = timeEarliestToReach + (int)(waitTimeStationEnd/1);
+        int timeEarliestToReach = timeNodeStart + delayBwStation;
+        int timeEarliestToDepart = timeEarliestToReach + waitTimeStationEnd;
         int timeMaxToDepart = timeEarliestToDepart + maxDelayBwStations;
 
         if(timeNodeEnd<timeNodeStart){
@@ -249,8 +247,8 @@ public class KBestSchedule {
                         return -8;
                     }
 
-                    if(timeNodeEnd<(timeOldTrainStationEndArr+minDelayBwTrains) &&
-                            timeNodeEnd>(timeOldTrainStationEndArr-minDelayBwTrains)){
+                    if(timeEarliestToReach<(timeOldTrainStationEndArr+minDelayBwTrains) &&
+                            timeEarliestToReach>(timeOldTrainStationEndArr-minDelayBwTrains)){
                         // System.out.println("Min delay constraint" + oldTrainArrStationEnd);
                         return -9;
                     }
@@ -280,8 +278,8 @@ public class KBestSchedule {
                     if(timeOldTrainStationEndDept<timeOldTrainStationEndArr){
                         timeOldTrainStationEndDept += isSingleDay?1440:10080;
                     }
-                    if(timeNodeEnd<(timeOldTrainStationEndArr+minDelayBwTrains) &&
-                            timeNodeEnd>(timeOldTrainStationEndArr-minDelayBwTrains)){
+                    if(timeEarliestToReach<(timeOldTrainStationEndArr+minDelayBwTrains) &&
+                            timeEarliestToReach>(timeOldTrainStationEndArr-minDelayBwTrains)){
                         // System.out.println("Min delay constraint" + oldTrainArrStationEnd);
                         return -9;
                     }
@@ -309,6 +307,8 @@ public class KBestSchedule {
             }
         }
         else if(timeEarliestToDepart>timeNodeEnd){
+            // System.out.println("Rejected as earliest to depart is more than node time :" + nodeStart.toString() +
+            //         " -> " + nodeEnd.toString());
             return -4;
         }
         else{
@@ -316,8 +316,7 @@ public class KBestSchedule {
         }
     }
 
-    private boolean addEdgeBwStations(int i,int maxDelayBwStations,
-                                      double distanceBwStation, double avgSpeed, double waitTimeStationEnd,
+    private boolean addEdgeBwStations(int i,int maxDelayBwStations, int delayBwStation, int waitTimeStationEnd,
                                       boolean isSingleDay, int minDelayBwTrains){
         boolean addedFirstEdge = false;
         Node nodeStart;
@@ -375,7 +374,7 @@ public class KBestSchedule {
                             new TrainTime(6,23,54);
 
                     do{
-                        codeValidEdge = isValidEdge(distanceBwStation, avgSpeed, waitTimeStationEnd, nodeStart, nodeEnd,
+                        codeValidEdge = isValidEdge(delayBwStation, waitTimeStationEnd, nodeStart, nodeEnd,
                                 maxDelayBwStations, isSingleDay, minDelayBwTrains);
                         if(codeValidEdge>0){
                             break;
@@ -383,7 +382,8 @@ public class KBestSchedule {
                         else if(codeValidEdge==-1){
                             return false;
                         }
-                        else if(codeValidEdge==-5 || codeValidEdge==-6 || codeValidEdge==-7|| codeValidEdge==-9){
+                        else if(codeValidEdge==-4 ||codeValidEdge==-5 || codeValidEdge==-6 ||
+                                codeValidEdge==-7 || codeValidEdge==-9){
                             validEdge = false;
                             break;
                         }
@@ -419,7 +419,7 @@ public class KBestSchedule {
                     }
                 }
                 else{
-                    int codeValidEdge = isValidEdge(distanceBwStation, avgSpeed, waitTimeStationEnd, nodeStart,
+                    int codeValidEdge = isValidEdge(delayBwStation, waitTimeStationEnd, nodeStart,
                             nodeEnd, maxDelayBwStations, isSingleDay, minDelayBwTrains);
                     if(codeValidEdge==-1){
                         return false;
@@ -436,6 +436,9 @@ public class KBestSchedule {
                         // System.out.println("Min delay constraint at source not valid in adding edge bw " +
                         //         nodeStart.toString() + " and " + nodeEnd.toString());
                         continue;
+                    }
+                    if(codeValidEdge==-4){
+                        // System.out.println("Done rejecting");
                     }
                     if(codeValidEdge>0){
                         int edgeCost = nodeEnd.getTime().compareTo(nodeStart.getTime());
@@ -458,7 +461,7 @@ public class KBestSchedule {
 
     public List<Path>
     scheduleKBestPathOptimized(String pathTemp, int noOfPaths, TrainTime sourceTime, TrainTime destTime,
-                               int maxDelayBwStations, int minDelayBwTrains, List<Double> stopTime,
+                               int maxDelayBwStations, int minDelayBwTrains, List<Integer> stopTime,
                                double avgSpeed, int startDay, int startHrs, int startMinutes, int endDay,
                                int endHrs, int endMinutes, boolean isSingleDay,
                                boolean usePreviousComputation){
@@ -482,8 +485,11 @@ public class KBestSchedule {
                 System.out.println("Initializing graph");
                 double distanceStationStart;
                 double distanceStationEnd = 0.0;
-                double waitTimeStationEnd = 0.0;
+                int waitTimeStationEnd;
                 double distanceBwStation;
+                int delayBwStation;
+                double delaySecondsAdded=0;
+                double delayBwStationActual;
 
                 for (int i = 0; i < this.stationList.size() - 1; i++) {
                     // Scheduler.getRuntimeMemory();
@@ -492,8 +498,22 @@ public class KBestSchedule {
                         distanceStationEnd = this.route.getStation(this.stationList.get(i + 1)).getDistance();
                         waitTimeStationEnd = stopTime.get(i);
                     }
+                    else{
+                        waitTimeStationEnd = 0;
+                    }
                     distanceBwStation = (i==0)?0:(distanceStationEnd - distanceStationStart);
-                    if (!addEdgeBwStations(i, maxDelayBwStations, distanceBwStation, avgSpeed, waitTimeStationEnd,
+                    delayBwStationActual =((distanceBwStation)/avgSpeed )*60;
+                    delayBwStation = (int) Math.ceil(delayBwStationActual - delaySecondsAdded);
+                    if(waitTimeStationEnd==0) {
+                        delaySecondsAdded = delayBwStation - (delayBwStationActual - delaySecondsAdded);
+                    }
+                    else{
+                        delaySecondsAdded = 0;
+                    }
+                    System.out.println("distance Bw station : " + distanceBwStation + " delayBwStation Actual : " +
+                            delayBwStationActual + " delayBwStation : " + delayBwStation +
+                            " delaySecondsAdded : " + delaySecondsAdded);
+                    if (!addEdgeBwStations(i, maxDelayBwStations, delayBwStation, waitTimeStationEnd,
                             isSingleDay, minDelayBwTrains)) {
                         System.out.println("Some error occurred in adding edges.");
                         return Collections.emptyList();
@@ -511,10 +531,12 @@ public class KBestSchedule {
             KShortestPathFinder kShortestPathFinder = new KShortestPathFinder();
             paths = kShortestPathFinder.findShortestPaths(new Node(sourceTime, "source"),
                     new Node(destTime, "dest"), this.graphKBestPath, noOfPaths);
+            System.out.println("Before disconnect :" +paths.toString());
 
             if(!this.graphKBestPath.disconnect()){
                 System.out.println("Some error occurred with graph.");
             }
+            System.out.println("After disconnect :" +paths.toString());
             // System.out.println(this.graphKBestPath.toString());
             this.graphKBestPath = null;
             if(paths==null || paths.isEmpty()){
@@ -550,7 +572,7 @@ public class KBestSchedule {
                                           List<Integer> noOfUpPlatformList, List<Integer> noOfDownPlatformList,
                                           List<Integer> noOfDualPlatformList,
                                           int noOfPaths, TrainTime sourceTime,
-                                          int minDelayBwTrains, double avgSpeed , List<Double> stopTime,
+                                          int minDelayBwTrains, double avgSpeed , List<Integer> stopTime,
                                           String pathOldTrainSchedule, int trainDay, int startDay, int startHrs,
                                           int startMinutes, int endDay, int endHrs, int endMinutes,
                                           int maxDelayBwStations, boolean isSingleDay, boolean usePreviousComputation) {
@@ -564,8 +586,8 @@ public class KBestSchedule {
                 || !addTrainFromFolder(pathOldTrainSchedule, trainDay, isSingleDay)){
             return Collections.emptyList();
         }
-        System.out.println(this.route.toString());
-        System.out.println(this.trainMap.values().toString());
+        // System.out.println(this.route.toString());
+        // System.out.println(this.trainMap.values().toString());
         if(stopTime.size() != this.route.getNumberOfStation()){
             System.out.println("Please give stop time for every station in route. if it does not stop at " +
                     "any particular station, give stop time as 0.");
@@ -578,6 +600,7 @@ public class KBestSchedule {
                 endDay, endHrs,endMinutes, isSingleDay, usePreviousComputation);
         milli = new Date().getTime() - milli;
         System.out.println("Duration: " + milli + "ms");
+        System.out.println("After main done :" +paths.toString());
         return paths;
     }
 }

@@ -57,9 +57,9 @@ public class Main {
 
             // int newTrainNo = 9910;
             // String pathNewTrainFile = pathBestRoute+File.separator+"Type 2 AvgSpeed 80.0 path 1 cost 24.0 .path";
-            // Scheduler.showPlot(pathBestRoute,newTrainNo,pathPlotFile,pathRoute,pathOldTrainSchedule,
+            // Scheduler.showPlot(null,newTrainNo,pathPlotFile,pathRoute,pathOldTrainSchedule,
             //         true, isSingleDay, trainDay);
-            //
+
             // Scheduler.putStationIntoDatabase(pathStationDatabase);
             // Scheduler.putTrainIntoDatabase(pathTrainDatabase);
             // Scheduler.putStoppagesIntoDatabase(pathTrainDatabase);

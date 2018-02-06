@@ -155,6 +155,7 @@ public class GraphFile extends GraphParent{
     @Override
     public boolean addEdge(Edge edge) {
         requireNonNull(edge, "The edge is null.");
+        // System.out.println("Adding edge :" + edge.toString());
         String fileName = edge.getFrom().toString().split(":")[0];
         if(tempFile.equalsIgnoreCase("")){
             tempMap = new HashMap<>();

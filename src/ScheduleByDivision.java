@@ -10,7 +10,7 @@ public class ScheduleByDivision {
     private List<Integer> stationNoOFUpPlatformList;
     private List<Integer> stationNoOFDownPlatformList;
     private List<Integer> stationNoOFDualPlatformList;
-    private List<Double> stopTimeList;
+    private List<Integer> stopTimeList;
     private Collection<Path> bestAns;
 
     public List<Path> getSmallPart(String pathTemp, int firstIndex, int lastIndex, int noOfPaths, TrainTime sourceTime,
@@ -137,9 +137,9 @@ public class ScheduleByDivision {
             System.out.println("Unable to load route file");
             return;
         }
-        ArrayList<Double> stopTime = new ArrayList<>();
+        ArrayList<Integer> stopTime = new ArrayList<>();
         for(int i=0;i<scheduler.getStationIdList().size();i++) {
-            stopTime.add(0.0);
+            stopTime.add(0);
         }
         // stopTime.set(5, 2.0);
         // stopTime.set(12, 4.0);
@@ -171,8 +171,8 @@ public class ScheduleByDivision {
         int count=0;
         for(Path path: this.bestAns) {
             System.out.println("Path Found : " + path.toString() + " cost: " + path.pathCost());
-            Scheduler.writePathsToFile(path,++count, pathBestRouteFile, avgSpeed, scheduler.getStationNameList(),
-                    scheduler.getStationDistanceList());
+            Scheduler.writePathsToFile(path,++count, pathBestRouteFile, stopTime, avgSpeed,
+                    scheduler.getStationNameList(), scheduler.getStationDistanceList());
         }
     }
 }
