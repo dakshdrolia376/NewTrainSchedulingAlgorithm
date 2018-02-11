@@ -41,8 +41,8 @@ public class FetchStationDetails {
     public int getNumberOfPlatform(String stationId){
         int indexStation = this.myMap.getOrDefault(stationId.toLowerCase(), -1);
         if(indexStation==-1){
-            System.out.println("Train Not found. Please try using google search. trainNo: " + stationId);
-            return -1;
+            System.out.println("Station Not found. Please try using google search. Station : " + stationId);
+            return 2;
         }
         int numOfPlatform = -1;
         String fileTrainIndex = this.pathDatabaseStation + File.separator +indexStation+".txt";
@@ -65,10 +65,59 @@ public class FetchStationDetails {
             e.printStackTrace();
         }
         if(numOfPlatform<=0){
-            return -1;
+            System.out.println("Unable to find Num of platforms in station : " + stationId);
+            return 4;
         }
         else{
             return numOfPlatform;
+        }
+    }
+    public int getNumberOfTracks(String stationId){
+        int indexStation = this.myMap.getOrDefault(stationId.toLowerCase(), -1);
+        if(indexStation==-1){
+            System.out.println("Station Not found. Please try using google search. Station : " + stationId);
+            return 1;
+        }
+        int numOfTrack = -1;
+        String fileTrainIndex = this.pathDatabaseStation + File.separator +indexStation+".txt";
+        try{
+            FileReader fReader;
+            BufferedReader bReader;
+            fReader = new FileReader(fileTrainIndex);
+            bReader = new BufferedReader(fReader);
+            String line;
+            while((line = bReader.readLine()) != null){
+                if(line.contains("Track")){
+                    String trackType = line.split(" ")[1];
+                    if(trackType.equalsIgnoreCase("double")){
+                        numOfTrack = 2;
+                    }
+                    else if(trackType.equalsIgnoreCase("quadruple")){
+                        numOfTrack = 4;
+                    }
+                    else if(trackType.equalsIgnoreCase("triple")){
+                        numOfTrack = 3;
+                    }
+                    else if(trackType.equalsIgnoreCase("single")){
+                        numOfTrack = 1;
+                    }
+                    else{
+                        System.out.println("Unknown track Type : " + trackType);
+                    }
+                    break;
+                }
+            }
+            bReader.close();
+            fReader.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(numOfTrack<=0){
+            return 1;
+        }
+        else{
+            return numOfTrack;
         }
     }
 

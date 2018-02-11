@@ -10,12 +10,14 @@ public class Path {
     private final Node node;
     private final double totalCost;
     private final int length;
+    private TrainTime sourceTime;
 
     public Path(Node source) {
         requireNonNull(source, "The input source node is null.");
         this.node = source;
         this.totalCost = 0.0;
         this.length = 1;
+        this.sourceTime = source.getTime();
     }
 
     private Path(Node node, double totalCost, int length) {
@@ -23,6 +25,7 @@ public class Path {
         this.node = node;
         this.totalCost = totalCost;
         this.length = length;
+        this.sourceTime = node.getTime();
     }
 
     public int getLength(){
@@ -36,6 +39,13 @@ public class Path {
                     edge, this.getNodeList()));
         }
         return new NonEmptyPath(this, edge);
+    }
+
+    public TrainTime getSourceTime(){
+        if(this.sourceTime!=null){
+            return new TrainTime(this.sourceTime);
+        }
+        return null;
     }
 
     public Path append(Node node, double weight) {
@@ -72,11 +82,17 @@ public class Path {
         NonEmptyPath(Path path, Edge edge) {
             super(edge.getTo(), path.totalCost + edge.getWeight(), path.length+1);
             this.predecessor = path;
+            if(super.sourceTime==null) {
+                super.sourceTime = edge.getFrom().getTime();
+            }
         }
 
         NonEmptyPath(Path path, Node node, double weight) {
             super(node, weight, path.length+1);
             this.predecessor = path;
+            if(super.sourceTime==null) {
+                super.sourceTime = node.getTime();
+            }
         }
 
         @Override
@@ -89,6 +105,14 @@ public class Path {
             }
             result.addFirst(path.node);
             return result;
+        }
+
+        @Override
+        public TrainTime getSourceTime(){
+            if(super.sourceTime!=null){
+                return new TrainTime(super.sourceTime);
+            }
+            return null;
         }
 
         @Override

@@ -14,9 +14,12 @@ public class Scheduler {
     private List<String> stationName;
     private List<Double> stationDistance;
     private List<Boolean> stationDirectLine;
-    private List<Integer> stationNoOfUpPlatform;
-    private List<Integer> stationNoOfDownPlatform;
-    private List<Integer> stationNoOfDualPlatform;
+    private List<Integer> stationNoOfUpPlatformList;
+    private List<Integer> stationNoOfDownPlatformList;
+    private List<Integer> stationNoOfDualPlatformList;
+    private List<Integer> stationNoOfUpTrackList;
+    private List<Integer> stationNoOfDownTrackList;
+    private List<Integer> stationNoOfDualTrackList;
 
     public List<String> getStationIdList(){
         return this.stationId;
@@ -34,16 +37,28 @@ public class Scheduler {
         return this.stationDirectLine;
     }
 
-    public List<Integer> getStationNoOfUpPlatformLineList(){
-        return this.stationNoOfUpPlatform;
+    public List<Integer> getStationNoOfUpPlatformList(){
+        return this.stationNoOfUpPlatformList;
     }
 
-    public List<Integer> getStationNoOfDownPlatformLineList(){
-        return this.stationNoOfDownPlatform;
+    public List<Integer> getStationNoOfDownPlatformList(){
+        return this.stationNoOfDownPlatformList;
     }
 
-    public List<Integer> getStationNoOfDualPlatformLineList(){
-        return this.stationNoOfDualPlatform;
+    public List<Integer> getStationNoOfDualPlatformList(){
+        return this.stationNoOfDualPlatformList;
+    }
+
+    public List<Integer> getStationNoOfUpTrackList(){
+        return this.stationNoOfUpTrackList;
+    }
+
+    public List<Integer> getStationNoOfDownTrackList(){
+        return this.stationNoOfDownTrackList;
+    }
+
+    public List<Integer> getStationNoOfDualTrackList(){
+        return this.stationNoOfDualTrackList;
     }
 
     public static boolean isNetAvailable() {
@@ -80,8 +95,8 @@ public class Scheduler {
                 String data[] = line.split("\\s+");
                 if(data.length<2){
                     System.out.println("Skipping station as incomplete data :" + line);
-                    newRouteData.append(line);
-                    newRouteData.append('\n');
+                    // newRouteData.append(line);
+                    // newRouteData.append('\n');
                     continue;
                 }
                 String id = data[0].trim().replaceAll(".*-", "").toLowerCase();
@@ -91,18 +106,9 @@ public class Scheduler {
                     continue;
                 }
                 int numOfPlatform = fetchStationDetails.getNumberOfPlatform(id);
-                int numOfUpPlatform;
-                int numOfDownPlatform;
-                if(numOfPlatform==-1){
-                    System.out.println("Unable to find the number of platforms for the station " + id +
-                            ". Using default values.");
-                    numOfUpPlatform = 3;
-                    numOfPlatform =6;
-                }
-                else{
-                    numOfUpPlatform = numOfPlatform/2;
-                }
-                numOfDownPlatform =numOfUpPlatform;
+                int numOfUpPlatform = numOfPlatform/2;
+                int numOfTrack = fetchStationDetails.getNumberOfTracks(id);
+                int numOfUpTrack = numOfTrack/2;
                 newRouteData.append(data[0]);
                 newRouteData.append(' ');
                 newRouteData.append(data[1]);
@@ -111,9 +117,15 @@ public class Scheduler {
                 newRouteData.append(' ');
                 newRouteData.append(numOfUpPlatform);
                 newRouteData.append(' ');
-                newRouteData.append(numOfDownPlatform);
+                newRouteData.append(numOfUpPlatform);
                 newRouteData.append(' ');
-                newRouteData.append((numOfPlatform - numOfUpPlatform -numOfDownPlatform));
+                newRouteData.append((numOfPlatform - (2*numOfUpPlatform)));
+                newRouteData.append(' ');
+                newRouteData.append(numOfUpTrack);
+                newRouteData.append(' ');
+                newRouteData.append(numOfUpTrack);
+                newRouteData.append(' ');
+                newRouteData.append((numOfTrack - (2*numOfUpTrack)));
                 newRouteData.append('\n');
             }
             bReader.close();
@@ -131,9 +143,12 @@ public class Scheduler {
         stationName = new ArrayList<>();
         stationDistance = new ArrayList<>();
         stationDirectLine = new ArrayList<>();
-        stationNoOfUpPlatform = new ArrayList<>();
-        stationNoOfDownPlatform = new ArrayList<>();
-        stationNoOfDualPlatform = new ArrayList<>();
+        stationNoOfUpPlatformList = new ArrayList<>();
+        stationNoOfDownPlatformList = new ArrayList<>();
+        stationNoOfDualPlatformList = new ArrayList<>();
+        stationNoOfUpTrackList = new ArrayList<>();
+        stationNoOfDownTrackList = new ArrayList<>();
+        stationNoOfDualTrackList = new ArrayList<>();
 
         try {
             FileReader fReader = new FileReader(pathRouteFile);
@@ -141,15 +156,22 @@ public class Scheduler {
             String line;
             while((line = bReader.readLine()) != null) {
                 String data[] = line.split("\\s+");
+                if(data.length<9){
+                    System.out.println("Invalid station info. : " + line);
+                    continue;
+                }
                 String station_code[] = data[0].split("-");
                 String id = station_code[station_code.length-1];
                 stationId.add(id);
                 stationName.add(data[0]);
                 stationDistance.add(Double.parseDouble(data[1]));
                 stationDirectLine.add(Integer.parseInt(data[2])==1);
-                stationNoOfUpPlatform.add(Integer.parseInt(data[3]));
-                stationNoOfDownPlatform.add(Integer.parseInt(data[4]));
-                stationNoOfDualPlatform.add(Integer.parseInt(data[5]));
+                stationNoOfUpPlatformList.add(Integer.parseInt(data[3]));
+                stationNoOfDownPlatformList.add(Integer.parseInt(data[4]));
+                stationNoOfDualPlatformList.add(Integer.parseInt(data[5]));
+                stationNoOfUpTrackList.add(Integer.parseInt(data[6]));
+                stationNoOfDownTrackList.add(Integer.parseInt(data[7]));
+                stationNoOfDualTrackList.add(Integer.parseInt(data[8]));
                 // if(id.equalsIgnoreCase("pws")){
                 //     break;
                 // }
@@ -167,7 +189,8 @@ public class Scheduler {
     public boolean addRoute(List<String> stationIdList, List<String> stationNameList, List<Double> stationDistanceList,
                             List<Boolean> isDirectLineAvailableList,
                             List<Integer> noOfUpPlatformList, List<Integer> noOfDownPlatformList,
-                            List<Integer> noOfDualPlatformList){
+                            List<Integer> noOfDualPlatformList, List<Integer> noOfUpTrackList,
+                            List<Integer> noOfDownTrackList, List<Integer> noOfDualTrackList){
         requireNonNull(stationIdList, "Station id list is null.");
         requireNonNull(stationNameList, "Station name list is null.");
         requireNonNull(stationDistanceList, "Station distance list is null.");
@@ -178,16 +201,21 @@ public class Scheduler {
         int sizeStation = stationIdList.size();
         if(stationNameList.size() != sizeStation || stationDistanceList.size() != sizeStation ||
                 isDirectLineAvailableList.size() != sizeStation || noOfUpPlatformList.size() != sizeStation ||
-                noOfDownPlatformList.size() != sizeStation || noOfDualPlatformList.size() != sizeStation){
+                noOfDownPlatformList.size() != sizeStation || noOfDualPlatformList.size() != sizeStation ||
+                noOfUpTrackList.size() != sizeStation || noOfDownTrackList.size() != sizeStation ||
+                noOfDualTrackList.size() != sizeStation){
             throw new IllegalArgumentException("Invalid arguments for route");
         }
         this.stationId = stationIdList;
         this.stationName = stationNameList;
         this.stationDistance = stationDistanceList;
         this.stationDirectLine = isDirectLineAvailableList;
-        this.stationNoOfUpPlatform= noOfUpPlatformList;
-        this.stationNoOfDownPlatform = noOfDownPlatformList;
-        this.stationNoOfDualPlatform = noOfDualPlatformList;
+        this.stationNoOfUpPlatformList= noOfUpPlatformList;
+        this.stationNoOfDownPlatformList = noOfDownPlatformList;
+        this.stationNoOfDualPlatformList = noOfDualPlatformList;
+        this.stationNoOfUpTrackList = noOfUpTrackList;
+        this.stationNoOfDownTrackList = noOfDownTrackList;
+        this.stationNoOfDualTrackList = noOfDualTrackList;
         return true;
     }
 
@@ -281,7 +309,7 @@ public class Scheduler {
     public static void getRuntimeMemory(){
         Runtime runtime = Runtime.getRuntime();
         // Run the garbage collector
-        runtime.gc();
+        // runtime.gc();
         // Calculate the used memory
         long memory = runtime.totalMemory() - runtime.freeMemory();
         System.out.println("Start Used memory is bytes: " + memory);
@@ -289,9 +317,8 @@ public class Scheduler {
     }
 
     @SuppressWarnings("unused")
-    public static void getTrainList(String pathTrainList){
-        new FetchTrainList().getTrainList(pathTrainList);
-
+    public static void getTrainList(String pathRoute, String pathUpTrainList, String pathDownTrainList){
+        new FetchTrainList().getTrainList(pathRoute, pathUpTrainList, pathDownTrainList);
     }
 
     @SuppressWarnings("unused")
@@ -319,7 +346,8 @@ public class Scheduler {
     }
 
     @SuppressWarnings("unused")
-    public static void createTrainList(String pathRoute, String pathTrainList, String pathTrainDatabase){
+    public static void createTrainList(String pathRoute, String pathUpTrainList, String pathDownTrainList,
+                                       String pathTrainDatabase){
         FileReader fReader;
         BufferedReader bReader;
         String line;
@@ -346,10 +374,10 @@ public class Scheduler {
         }
 
         List<Integer> trainNos = databaseConnector.getTrainNosForStation(stationIds);
-        System.out.println(trainNos.toString());
         String pathFile;
         FetchTrainDetails fetchTrainDetails = new FetchTrainDetails(pathTrainDatabase);
-        List<Integer> sameDirectionTrain = new ArrayList<>();
+        List<Integer> upDirectionTrain = new ArrayList<>();
+        List<Integer> downDirectionTrain = new ArrayList<>();
         //checking the direction of trains as the list contains both up and down direction;
         int indexStation1;
         int tempIndex;
@@ -362,6 +390,7 @@ public class Scheduler {
                 continue;
             }
             pathFile = pathTrainDatabase + File.separator + trainIndex + ".txt";
+            int direction = 0;
             try {
                 fReader = new FileReader(pathFile);
                 bReader = new BufferedReader(fReader);
@@ -376,14 +405,52 @@ public class Scheduler {
                         indexStation1 = tempIndex;
                         continue;
                     }
-                    if(indexStation1<tempIndex){
-                        sameDirectionTrain.add(trainNo);
-                        break;
+
+                    if(direction==0) {
+                        if (indexStation1 < tempIndex) {
+                            direction = 1;
+                        }
+                        else if (indexStation1 > tempIndex){
+                            direction = 2;
+                        }
+                        else{
+                            break;
+                        }
+                    }
+                    else if(direction==1){
+                        if(indexStation1 >=tempIndex){
+                            direction =-1;
+                            break;
+                        }
+                        else{
+                            indexStation1 = tempIndex;
+                        }
+                    }
+                    else if(direction==2){
+                        if(indexStation1 <=tempIndex){
+                            direction =-2;
+                            break;
+                        }
+                        else{
+                            indexStation1 = tempIndex;
+                        }
                     }
                     else{
-                        System.out.println(" Different direction train :" + trainNo);
-                        break;
+                        System.out.println("Some error occurred.");
                     }
+                }
+                if(direction==0){
+                    System.out.println(trainNo+" stops only at one station in route. Skipping it.");
+                    // upDirectionTrain.add(trainNo);
+                }
+                else if (direction==1) {
+                    upDirectionTrain.add(trainNo);
+                }
+                else if (direction==2){
+                    downDirectionTrain.add(trainNo);
+                }
+                else{
+                    System.out.println("Rejecting train " + trainNo + " Direction : " + direction);
                 }
                 bReader.close();
                 fReader.close();
@@ -393,23 +460,36 @@ public class Scheduler {
             }
         }
 
-        List<List<Integer>> trains = new ArrayList<>();
+        List<List<Integer>> upTrains = new ArrayList<>();
+        List<List<Integer>> downTrains = new ArrayList<>();
 
         for(int i=0;i<7;i++){
-            trains.add(databaseConnector.getTrainNosForDay(i));
-            trains.get(i).retainAll(sameDirectionTrain);
+            upTrains.add(databaseConnector.getTrainNosForDay(i));
+            downTrains.add(new ArrayList<>(upTrains.get(i)));
+            upTrains.get(i).retainAll(upDirectionTrain);
+            downTrains.get(i).retainAll(downDirectionTrain);
         }
 
         StringBuilder stringBuilder = new StringBuilder("");
         for(int i=0;i<7;i++){
             stringBuilder.append(i);
-            for(int trainNo: trains.get(i)){
+            for(int trainNo: upTrains.get(i)){
                 stringBuilder.append('\t');
                 stringBuilder.append(trainNo);
             }
             stringBuilder.append('\n');
         }
-        new WriteToFile().write(pathTrainList, stringBuilder.toString(), false);
+        new WriteToFile().write(pathUpTrainList, stringBuilder.toString(), false);
+        stringBuilder = new StringBuilder("");
+        for(int i=0;i<7;i++){
+            stringBuilder.append(i);
+            for(int trainNo: downTrains.get(i)){
+                stringBuilder.append('\t');
+                stringBuilder.append(trainNo);
+            }
+            stringBuilder.append('\n');
+        }
+        new WriteToFile().write(pathDownTrainList, stringBuilder.toString(), false);
     }
 
     @SuppressWarnings("unused")
@@ -418,13 +498,14 @@ public class Scheduler {
     }
 
     @SuppressWarnings("unused")
-    public static void fetchTrainSchedule(String pathTrainList, String pathTemp, String pathFinal, String pathTrainDatabase){
-        new FetchTrainDetails(pathTrainDatabase).getTrainStoppageFromFile(pathTrainList,pathTemp,pathFinal);
+    public static void fetchTrainSchedule(String pathTrainList, String pathTemp, String pathTrainBase, String pathTrainDatabase){
+        new FetchTrainDetails(pathTrainDatabase).getTrainStoppageFromFile(pathTrainList,pathTemp,pathTrainBase);
     }
 
     @SuppressWarnings("unused")
-    public static void test(String pathTemp, String pathRoute, String pathBestRoute, String pathOldTrainSchedule,
-                            boolean isSingleDay, int trainDay, boolean usePreviousComputation){
+    public static void test(String pathTemp, String pathRoute, String pathBestRoute, String pathOldUpTrainSchedule,
+                            String pathOldDownTrainSchedule, boolean isSingleDay, int trainDay,
+                            boolean usePreviousComputation, double ratio){
         Scheduler scheduler = new Scheduler();
         if(!scheduler.addRouteFromFile(pathRoute)){
             System.out.println("Unable to load route file");
@@ -440,11 +521,10 @@ public class Scheduler {
 
         Double avgSpeed = 80.0;
         int minDelayBwTrains = 3;
-        TrainTime sourceTime = new TrainTime(0,17,12);
         String pathBestRouteFile;
         int noOfPaths = 20;
         List<Path> paths;
-
+        TrainTime sourceTime;
 
         int startDay;
         int endDay;
@@ -456,35 +536,41 @@ public class Scheduler {
         if(isSingleDay){
             startDay = trainDay;
             endDay = trainDay;
+            sourceTime  = new TrainTime(trainDay,12,12);
         }
         else{
             startDay = 0;
             endDay = 6;
+            sourceTime = new TrainTime(3,12,12);
         }
         int count;
 
         // pathBestRouteFile = pathBestRoute + File.separator + "Type 1 AvgSpeed "+avgSpeed;
         // paths= new KBestSchedule().getScheduleNewTrain(pathTemp, scheduler.getStationIdList(), scheduler.getStationNameList(),
         //         scheduler.getStationDistanceList(), scheduler.getStationDirectLineList(),
-        //         scheduler.getStationNoOfUpPlatformLineList(), scheduler.getStationNoOfDownPlatformLineList(),
-        //         scheduler.getStationNoOfDualPlatformLineList(), noOfPaths, sourceTime,
-        //         minDelayBwTrains, avgSpeed, stopTime, pathOldTrainSchedule, trainDay,startDay,startHrs, startMinutes,
-        //         endDay, endHrs, endMinutes, maxDelayBwStations, isSingleDay, usePreviousComputation);
+        //         scheduler.getStationNoOfUpPlatformList(), scheduler.getStationNoOfDownPlatformList(),
+        //         scheduler.getStationNoOfDualPlatformList(), scheduler.getStationNoOfUpTrackList(),
+        //         scheduler.getStationNoOfDownTrackList(), scheduler.getStationNoOfDualTrackList(), noOfPaths, sourceTime,
+        //         minDelayBwTrains, avgSpeed, stopTime, pathOldUpTrainSchedule,pathOldDownTrainSchedule, trainDay,
+        //         startDay,startHrs, startMinutes, endDay, endHrs, endMinutes, maxDelayBwStations, isSingleDay,
+        //         usePreviousComputation, ratio);
         // System.out.println(paths.size());
         // count=0;
         // for(Path path: paths) {
         //     System.out.println(path.toString() + " cost: " + path.pathCost());
-        //     writePathsToFile(path,++count,pathBestRouteFile,avgSpeed, scheduler.getStationNameList(),
+        //     writePathsToFile(path,++count,pathBestRouteFile,stopTime,avgSpeed, scheduler.getStationNameList(),
         //             scheduler.getStationDistanceList());
         // }
 
         pathBestRouteFile = pathBestRoute + File.separator + "Type 2 AvgSpeed "+avgSpeed;
         paths= new KBestSchedule().getScheduleNewTrain(pathTemp, scheduler.getStationIdList(), scheduler.getStationNameList(),
                 scheduler.getStationDistanceList(), scheduler.getStationDirectLineList(),
-                scheduler.getStationNoOfUpPlatformLineList(), scheduler.getStationNoOfDownPlatformLineList(),
-                scheduler.getStationNoOfDualPlatformLineList(), noOfPaths, null,
-                minDelayBwTrains, avgSpeed, stopTime, pathOldTrainSchedule, trainDay,startDay,startHrs, startMinutes,
-                endDay,endHrs, endMinutes,maxDelayBwStations, isSingleDay, usePreviousComputation);
+                scheduler.getStationNoOfUpPlatformList(), scheduler.getStationNoOfDownPlatformList(),
+                scheduler.getStationNoOfDualPlatformList(), scheduler.getStationNoOfUpTrackList(),
+                scheduler.getStationNoOfDownTrackList(), scheduler.getStationNoOfDualTrackList(), noOfPaths, null,
+                minDelayBwTrains, avgSpeed, stopTime, pathOldUpTrainSchedule, pathOldDownTrainSchedule, trainDay,
+                startDay,startHrs, startMinutes, endDay,endHrs, endMinutes,maxDelayBwStations, isSingleDay,
+                usePreviousComputation, ratio);
         System.out.println(paths.size());
         System.out.println("In test :" +paths.toString());
         count=0;

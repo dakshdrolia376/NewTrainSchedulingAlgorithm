@@ -8,15 +8,15 @@ public class KShortestPathFinder {
         return (k>=1);
     }
 
-    public List<Path> findShortestPaths(Node source, Node target, GraphKBestPath graph, int k) {
+    public List<Path> findShortestPaths(Node source, Node target, GraphKBestPath graph, int k, List<Double> maxCostList) {
         requireNonNull(source, "The source node is null.");
         requireNonNull(target, "The target node is null.");
         requireNonNull(graph, "The graph is null.");
         if (!checkK(k)){
             throw new IllegalArgumentException("Invalid number of paths required.");
         }
+        System.out.println("Finding shortest path bw : " + source.toString() + " >> " + target.toString());
 
-        int maxDifferenceAllowed = 6;
         Path bestPath = new Path(source);
 
         List<Path> paths = new ArrayList<>(k);
@@ -33,19 +33,38 @@ public class KShortestPathFinder {
                 Scheduler.getRuntimeMemory();
             }
 
-            if((currentPath.getLength() + maxDifferenceAllowed) < bestPath.getLength()){
-                // System.out.println("Rejected Path cost : " + currentPath.pathCost() + " >> " + currentPath.toString());
-                // System.out.println("Best Path cost : " + p.pathCost() + " >> " + p.toString());
+            if(currentPath.pathCost() > maxCostList.get(currentPath.getLength()-1)){
+                // System.out.println("Max cost : " + maxCostList.get(currentPath.getLength()-1) + " Rejected Path cost : "
+                //         + currentPath.pathCost() + " >> " + currentPath.toString());
                 continue;
             }
+
+            // if((currentPath.getLength() + maxDifferenceAllowed) < bestPath.getLength()){
+            //     // System.out.println("Rejected Path cost : " + currentPath.pathCost() + " >> " + currentPath.toString());
+            //     // System.out.println("Best Path cost : " + p.pathCost() + " >> " + p.toString());
+            //     continue;
+            // }
 
             Node endNode = currentPath.getEndNode();
             countMap.put(endNode.toString(), countMap.getOrDefault(endNode.toString(), 0) + 1);
             if (endNode.equals(target)) {
                 // System.out.print(" In path memory size: ");
                 // Scheduler.getRuntimeMemory();
-                paths.add(currentPath);
-                System.out.println("Path found :" + currentPath.toString());
+                TrainTime sourceTimeTemp = currentPath.getSourceTime();
+                boolean diversePath = true;
+                for(Path pathAlreadyFound: paths){
+                    if(Math.abs((pathAlreadyFound.getSourceTime().compareTo(sourceTimeTemp)))<15){
+                        diversePath = false;
+                        break;
+                    }
+                }
+                if(diversePath) {
+                    paths.add(currentPath);
+                    System.out.println("Accepted Path found :" + currentPath.toString());
+                }
+                else {
+                    System.out.println("Rejected Path found :" + currentPath.toString());
+                }
             }
             else {
                 if (countMap.get(endNode.toString()) <= k) {

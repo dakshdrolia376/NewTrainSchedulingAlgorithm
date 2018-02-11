@@ -1,0 +1,7 @@
+old-delhi-junction-dli	08:20	08:40	0.0
+delhi-shahdara-junction-dsa	08:55	08:56	6.5
+delhi-shahdara-outer-cabin-xx-dsao	08:58	08:58	7.6
+vivek-vihar-vvb	09:00	09:01	9.2
+shahdara-a-panel-dsap	09:03	09:03	10.7
+sahibabad-junction-sbb	09:06	09:07	13.6
+ghaziabad-junction-gzb	09:30	09:50	20.4

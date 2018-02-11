@@ -11,10 +11,13 @@ public class Station {
     private final int noOfUpPlatform;
     private final int noOfDownPlatform;
     private final int noOfDualPlatform;
+    private final int noOfUpTrack;
+    private final int noOfDownTrack;
+    private final int noOfDualTrack;
     private final List<TrainAtStation> arrDeptSchedule;
 
     public Station(String id, String name, double distance, boolean isDirectLineAvailable, int noOfUpPlatform,
-                   int noOfDownPlatform, int noOfDualPlatform) {
+                   int noOfDownPlatform, int noOfDualPlatform, int noOfUpTrack, int noOfDownTrack, int noOfDualTrack) {
         requireNonNull(id, "Station id is null.");
         requireNonNull(name, "Station name is null.");
         this.arrDeptSchedule = new ArrayList<>();
@@ -25,6 +28,9 @@ public class Station {
         this.noOfUpPlatform = noOfUpPlatform;
         this.noOfDownPlatform = noOfDownPlatform;
         this.noOfDualPlatform = noOfDualPlatform;
+        this.noOfUpTrack = noOfUpTrack;
+        this.noOfDownTrack = noOfDownTrack;
+        this.noOfDualTrack =noOfDualTrack;
     }
 
     public String getId() {
@@ -44,11 +50,27 @@ public class Station {
     }
 
     public int getNoOfUpPlatform() {
-        return this.noOfUpPlatform + this.noOfDualPlatform;
+        return this.noOfUpPlatform;
     }
 
     public int getNoOfDownPlatform() {
-        return this.noOfDownPlatform + this.noOfDualPlatform;
+        return this.noOfDownPlatform;
+    }
+
+    public int getNoOfDualPlatform() {
+        return this.noOfDualPlatform;
+    }
+
+    public int getNoOfUpTrack() {
+        return this.noOfUpTrack;
+    }
+
+    public int getNoOfDownTrack() {
+        return this.noOfDownTrack;
+    }
+
+    public int getNoOfDualTrack() {
+        return this.noOfDualTrack;
     }
 
     public boolean addTrain(TrainAtStation TrainAtStation) {
@@ -73,7 +95,20 @@ public class Station {
     //     });
     // }
 
-    public List<Node> getNodesFreeList(TrainTime startTime, TrainTime endTime){
+    public List<Node> getNodesFreeList(TrainTime startTime, TrainTime endTime, boolean isSingleDay){
+        List<Node> nextWeekNodes  = new ArrayList<>();
+        if(endTime.compareTo(startTime)<0) {
+            if(isSingleDay && startTime.day==endTime.day) {
+                System.out.println("Single day scheduling");
+                nextWeekNodes = getNodesFreeList(new TrainTime(startTime.day,0,0),endTime, isSingleDay);
+                endTime = new TrainTime(endTime.day, 23, 59);
+            }
+            else{
+                System.out.println("Complete scheduling");
+                nextWeekNodes = getNodesFreeList(new TrainTime(0,0,0),endTime, isSingleDay);
+                endTime = new TrainTime(6, 23, 59);
+            }
+        }
         List<Node> stationNodes = new ArrayList<>();
         TrainTime slotDept = new TrainTime(startTime);
         while(slotDept.compareTo(endTime)<0) {
@@ -81,6 +116,7 @@ public class Station {
             slotDept.addMinutes(1);
         }
         stationNodes.add(new Node(slotDept, this.id));
+        stationNodes.addAll(nextWeekNodes);
         return stationNodes;
     }
 
@@ -96,14 +132,22 @@ public class Station {
         stringBuilder.append(this.distance);
         stringBuilder.append(" No of trains passing: ");
         stringBuilder.append(this.arrDeptSchedule.size());
-        stringBuilder.append(" DirectLine: ");
+        stringBuilder.append('\n');
+        stringBuilder.append("DirectLine: ");
         stringBuilder.append(this.isDirectLineAvailable);
-        stringBuilder.append(" Up No: ");
+        stringBuilder.append(" Platform Up No: ");
         stringBuilder.append(this.noOfUpPlatform);
-        stringBuilder.append(" Down No: ");
+        stringBuilder.append(" Platform Down No: ");
         stringBuilder.append(this.noOfDownPlatform);
-        stringBuilder.append(" Dual No: ");
+        stringBuilder.append(" Platform Dual No: ");
         stringBuilder.append(this.noOfDownPlatform);
+        stringBuilder.append('\n');
+        stringBuilder.append("Track Up No: ");
+        stringBuilder.append(this.noOfUpTrack);
+        stringBuilder.append(" Track Down No: ");
+        stringBuilder.append(this.noOfDownTrack);
+        stringBuilder.append(" Track Dual No: ");
+        stringBuilder.append(this.noOfDualTrack);
         stringBuilder.append('\n');
         stringBuilder.append("Train\tArrival\tDeparture");
         stringBuilder.append('\n');

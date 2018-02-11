@@ -17,7 +17,8 @@ public class DatabaseConnector {
             if(con==null) {
                 Class.forName("com.mysql.jdbc.Driver");
                 con = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:7888/trainscheduler", "root", "bittu420");
+                        "jdbc:mysql://localhost:7888/trainscheduler?autoReconnect=true&useSSL=false",
+                        "root", "bittu420");
             }
             return true;
         }

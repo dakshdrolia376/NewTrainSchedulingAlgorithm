@@ -4,28 +4,35 @@ import java.io.PrintStream;
 public class Main {
 
     public static void main(String[] args) {
-        String pathTrainList = "data" + File.separator +"trainList.txt";
+        String pathUpTrainList = "data" + File.separator +"upTrainList.txt";
+        String pathDownTrainList = "data" + File.separator +"downTrainList.txt";
 
-        String pathRoute = "data"+File.separator+"route"+File.separator+"routePnbeNdls.txt";
-        String pathOldTrainSchedule = "data"+File.separator+"final" + File.separator + "day0";
+        String pathRoute = "data"+File.separator+"route"+File.separator+"route.txt";
 
         String pathPlotFile = "data"+File.separator+"plot"+File.separator+"plot1.pdf";
         String pathTemp = "data"+File.separator+"temp";
         String pathLog = "data"+File.separator+"logs";
-        String pathFinal = "data"+File.separator+"final";
+        String pathUpTrainBase = "data"+File.separator+"final" + File.separator+"upTrains";
+        String pathDownTrainBase = "data"+File.separator+"final" +File.separator+"downTrains";
+
+        String pathOldUpTrainSchedule = pathUpTrainBase+ File.separator+"day0";
+        String pathOldDownTrainSchedule = pathDownTrainBase+"";
+
         String pathBestRoute = "data"+File.separator+"bestRoute";
         String pathStationDatabase = pathTemp+File.separator+"databaseStation";
         String pathTrainDatabase = pathTemp+File.separator+"databaseTrain";
         int trainDay = 0;
         boolean isSingleDay = true;
         boolean usePreviousComputation = false;
-        double ratio = 1.6;
+        double ratio = 1.3;
 
-        if(!Scheduler.createParentFolder(pathTrainList) || !Scheduler.createParentFolder(pathRoute)
+        if(!Scheduler.createParentFolder(pathUpTrainList) || !Scheduler.createParentFolder(pathRoute)
                 || !Scheduler.createParentFolder(pathPlotFile) || !Scheduler.createFolder(pathTemp)
-                || !Scheduler.createFolder(pathLog) || !Scheduler.createFolder(pathFinal)
-                || !Scheduler.createFolder(pathBestRoute) || !Scheduler.createFolder(pathOldTrainSchedule)
-                || !Scheduler.createFolder(pathStationDatabase) || !Scheduler.createFolder(pathTrainDatabase)){
+                || !Scheduler.createFolder(pathLog) || !Scheduler.createFolder(pathUpTrainBase)
+                || !Scheduler.createFolder(pathDownTrainBase) || !Scheduler.createFolder(pathBestRoute)
+                || !Scheduler.createFolder(pathOldUpTrainSchedule) || !Scheduler.createFolder(pathOldDownTrainSchedule)
+                || !Scheduler.createFolder(pathStationDatabase) || !Scheduler.createFolder(pathTrainDatabase)
+                || !Scheduler.createParentFolder(pathDownTrainList)){
             System.out.println("Unable to create directory");
             System.exit(1);
         }
@@ -46,27 +53,29 @@ public class Main {
             // Assign o to output stream
             System.setErr(o);
             System.setOut(o1);
-            Scheduler.test(pathTemp, pathRoute,pathBestRoute,pathOldTrainSchedule, isSingleDay, trainDay, usePreviousComputation);
+            Scheduler.test(pathTemp, pathRoute,pathBestRoute,pathOldUpTrainSchedule,pathOldDownTrainSchedule,
+                    isSingleDay, trainDay, usePreviousComputation, ratio);
 
             // Scheduler.fetchStationInfo(pathStationDatabase);
             // Scheduler.fetchTrainInfo(pathTrainDatabase);
-            // Scheduler.getTrainList(pathTrainList);
-
-            // new ScheduleByDivision().scheduleByBreaking(pathTemp, pathRoute, pathBestRoute, pathOldTrainSchedule,
-            //         isSingleDay, trainDay, ratio);
-
-            // int newTrainNo = 9910;
-            // String pathNewTrainFile = pathBestRoute+File.separator+"Type 2 AvgSpeed 80.0 path 1 cost 24.0 .path";
-            // Scheduler.showPlot(null,newTrainNo,pathPlotFile,pathRoute,pathOldTrainSchedule,
-            //         true, isSingleDay, trainDay);
-
+            // Scheduler.getTrainList(pathRoute, pathUpTrainList, pathDownTrainList);
             // Scheduler.putStationIntoDatabase(pathStationDatabase);
             // Scheduler.putTrainIntoDatabase(pathTrainDatabase);
             // Scheduler.putStoppagesIntoDatabase(pathTrainDatabase);
 
+            // new ScheduleByDivision().scheduleByBreaking(pathTemp, pathRoute, pathBestRoute, pathOldUpTrainSchedule,
+            //         pathOldDownTrainSchedule,isSingleDay, trainDay, ratio);
+
+            // int newTrainNo = 9910;
+            // String pathNewTrainFile = pathBestRoute+File.separator+"Type 2 AvgSpeed 80.0 path 1 cost 24.0 .path";
+            // Scheduler.showPlot(null,newTrainNo,pathPlotFile,pathRoute,pathOldUpTrainSchedule,
+            //         true, isSingleDay, trainDay);
+
+
             // Scheduler.updateRouteFile(pathRoute, pathStationDatabase);
-            // Scheduler.createTrainList(pathRoute, pathTrainList, pathTrainDatabase);
-            // Scheduler.fetchTrainSchedule(pathTrainList,pathTemp, pathFinal, pathTrainDatabase);
+            // Scheduler.createTrainList(pathRoute, pathUpTrainList,pathDownTrainList, pathTrainDatabase);
+            // Scheduler.fetchTrainSchedule(pathUpTrainList,pathTemp, pathUpTrainBase, pathTrainDatabase);
+            // Scheduler.fetchTrainSchedule(pathDownTrainList,pathTemp, pathDownTrainBase, pathTrainDatabase);
         }
         catch (Exception e){
             e.printStackTrace();

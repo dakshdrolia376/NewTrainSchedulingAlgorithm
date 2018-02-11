@@ -1,3 +1,5 @@
+import java.awt.*;
+import java.awt.geom.Area;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,8 +8,6 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
 
@@ -24,6 +24,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.text.TextUtilities;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RectangleEdge;
 import com.itextpdf.text.Document;
@@ -36,7 +37,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 class LinePlotTrains extends ApplicationFrame {
 
     private static final long serialVersionUID = 1L;
-    private List<Integer> trains;
+    private List<String> trains;
     private List<List<TrainTime[]>> schedule;
     private List<String> stationId;
     private int sizeSchedule;
@@ -100,7 +101,7 @@ class LinePlotTrains extends ApplicationFrame {
                 }
             }
 
-            if(!addTrainFromFolder(pathOldTrains, trainDay, this.isSingleDay, newTrainNo)){
+            if(!addTrainFromFolder(pathOldTrains, trainDay, this.isSingleDay)){
                 throw new RuntimeException("Unable to read old train schedule");
             }
 
@@ -120,27 +121,25 @@ class LinePlotTrains extends ApplicationFrame {
         }
     }
 
-    private boolean addTrainFromFolder(String pathOldTrainScheduleFolder, int trainDay, boolean isSingleDay,
-                                       int tempTrainNo){
+    private boolean addTrainFromFolder(String pathOldTrainScheduleFolder, int trainDay, boolean isSingleDay){
         if(!isSingleDay && (trainDay>=7 || trainDay<0)){
             return addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
-                    "day0", 0, false, (tempTrainNo+1000)) &&
+                    "day0", 0, false) &&
                     addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
-                            "day1", 1, false, (tempTrainNo+2000)) &&
+                            "day1", 1, false) &&
                     addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
-                            "day2", 2, false, (tempTrainNo+3000)) &&
+                            "day2", 2, false) &&
                     addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
-                            "day3", 3, false, (tempTrainNo+4000)) &&
+                            "day3", 3, false) &&
                     addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
-                            "day4", 4, false, (tempTrainNo+5000)) &&
+                            "day4", 4, false) &&
                     addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
-                            "day5", 5, false, (tempTrainNo+6000)) &&
+                            "day5", 5, false) &&
                     addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
-                            "day6", 6, false, (tempTrainNo+7000));
+                            "day6", 6, false);
         }
 
         File[] listOfFiles = new File(pathOldTrainScheduleFolder).listFiles();
-        int newTrainNo = 1;
         if(listOfFiles==null) {
             System.out.println("No old trains found");
             return true;
@@ -152,10 +151,9 @@ class LinePlotTrains extends ApplicationFrame {
                 try {
                     trainNo = Integer.parseInt(file.getName().split("\\.")[0]);
                 }
-                catch (NumberFormatException e) {
-                    trainNo = newTrainNo++;
-                }
                 catch (Exception e) {
+                    System.out.println("File name should be train Number.");
+                    System.out.println("Skipping file : " + file.getPath());
                     e.printStackTrace();
                     continue;
                 }
@@ -168,10 +166,11 @@ class LinePlotTrains extends ApplicationFrame {
     }
 
     private boolean addTrainFromFile(int trainNo, String filePath, int trainDay, boolean isSingleDay){
+        int stoppageDay = trainDay;
         try {
             FileReader fReader = new FileReader(filePath);
             BufferedReader bReader = new BufferedReader(fReader);
-            this.trains.add(trainNo);
+            this.trains.add(trainDay+":"+trainNo);
             this.schedule.add(new ArrayList<>(this.stationId.size()));
             String line;
             TrainTime arrival, departure=null;
@@ -183,16 +182,16 @@ class LinePlotTrains extends ApplicationFrame {
                 d = new TrainTime[2];
                 data = line.split("\\s+");
                 data1 = data[1].split(":");
-                arrival = new TrainTime(trainDay, Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
+                arrival = new TrainTime(stoppageDay, Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
                 if(departure!=null && arrival.compareTo(departure)<0 && !isSingleDay){
-                    trainDay++;
                     arrival.addDay(1);
+                    stoppageDay = arrival.day;
                 }
                 data1 = data[2].split(":");
-                departure = new TrainTime(trainDay, Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
+                departure = new TrainTime(stoppageDay, Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
                 if(departure.compareTo(arrival)<0 && !isSingleDay){
-                    trainDay++;
                     departure.addDay(1);
+                    stoppageDay = departure.day;
                 }
                 d[0] = arrival;
                 d[1] = departure;
@@ -269,7 +268,8 @@ class LinePlotTrains extends ApplicationFrame {
 
                 if (temp2 == null) {
                     series1.add(this.stationDistance.get(i).doubleValue(), null);
-                    System.out.println("Invalid schedule for train " + this.trains.get(j) + " at station " + this.stationId.get(i));
+                    System.out.println("Invalid schedule for train " + this.trains.get(j) +
+                            " at station " + this.stationId.get(i));
                 }
                 else {
 
@@ -289,9 +289,11 @@ class LinePlotTrains extends ApplicationFrame {
 
                 if(temp3 != null) {
                     if (temp2!=null && temp3.compareTo(temp2) < 0) {
-                        series1.add(this.stationDistance.get(i).doubleValue(), new TrainTime(6, 23, 59).getValue());
+                        series1.add(this.stationDistance.get(i).doubleValue(),
+                                new TrainTime(6, 23, 59).getValue());
                         series1.add(this.stationDistance.get(i).doubleValue(), null);
-                        series1.add(this.stationDistance.get(i).doubleValue(), new TrainTime(0, 0, 0).getValue());
+                        series1.add(this.stationDistance.get(i).doubleValue(),
+                                new TrainTime(0, 0, 0).getValue());
                     }
                     series1.add(this.stationDistance.get(i).doubleValue(), temp3.getValue());
                 }
@@ -310,7 +312,7 @@ class LinePlotTrains extends ApplicationFrame {
                 "Time",                      // y axis label
                 dataset,                  // data
                 PlotOrientation.VERTICAL,
-                true,                     // include legend
+                false,                     // include legend
                 true,                     // tooltips
                 false                     // urls
         );
@@ -322,19 +324,20 @@ class LinePlotTrains extends ApplicationFrame {
         // customise the range axis...
         NumberAxis rangeAxis = new NumberAxis(plot.getRangeAxis().getLabel()) {
             private static final long serialVersionUID = 1L;
-
+            Area tickLabelArea = new Area();
             @SuppressWarnings("rawtypes")
             @Override
             public List<NumberTick> refreshTicks(Graphics2D g2, AxisState state, Rectangle2D dataArea, RectangleEdge edge) {
                 List allTicks = super.refreshTicks(g2, state, dataArea, edge);
                 List<NumberTick> myTicks = new ArrayList<>();
                 TrainTime trainTime;
+                tickLabelArea = new Area();
                 for (Object tick : allTicks) {
                     NumberTick numberTick = (NumberTick) tick;
 
                     String label;
                     double numTickValue = numberTick.getValue();
-                    if(numTickValue>=0 && numTickValue<24*60 ){
+                    if(numTickValue>=0 && numTickValue<(isSingleDay?1440:10080)){
                         trainTime = new TrainTime(0,0,0);
                         trainTime.addMinutes((int)Math.ceil(numberTick.getValue()));
                         label = trainTime.getFullString();
@@ -345,11 +348,29 @@ class LinePlotTrains extends ApplicationFrame {
                     else{
                         label = isSingleDay?"Next day":"Next week";
                     }
-                    myTicks.add(new NumberTick(TickType.MINOR, numberTick.getValue(), label,
+
+                    NumberTick numberTickTemp = new NumberTick(TickType.MINOR, numberTick.getValue(), label,
                             numberTick.getTextAnchor(), numberTick.getRotationAnchor(),
-                            (2 * Math.PI * 0) / 360.0f));
+                            (2 * Math.PI * 0) / 360.0f);
+
+                    Rectangle2D labelBounds = getTickBounds(numberTickTemp, g2);
+                    double java2dValue = valueToJava2D(numberTick.getValue(), g2.getClipBounds(), edge);
+                    labelBounds.setRect(labelBounds.getX(), java2dValue, labelBounds.getWidth(), labelBounds.getHeight());
+                    if (!tickLabelIsOverlapping(tickLabelArea, labelBounds)) {
+                        myTicks.add(numberTickTemp);
+                        tickLabelArea.add(new Area(labelBounds));
+                    }
                 }
                 return myTicks;
+            }
+
+            private boolean tickLabelIsOverlapping(Area area, Rectangle2D rectangle) {
+                return area.intersects(rectangle);
+            }
+
+            private Rectangle2D getTickBounds(NumberTick numberTick, Graphics2D g2) {
+                FontMetrics fm = g2.getFontMetrics(getTickLabelFont());
+                return TextUtilities.getTextBounds(numberTick.getText(), g2, fm);
             }
         };
 
@@ -357,31 +378,51 @@ class LinePlotTrains extends ApplicationFrame {
         // rangeAxis.setLowerBound(0);
         // rangeAxis.setUpperBound(1439);
         rangeAxis.setLowerBound(0);
-        rangeAxis.setUpperBound(1439);
+        rangeAxis.setUpperBound(this.isSingleDay?1439:10079);
+
         rangeAxis.setAutoRangeIncludesZero(false);
         rangeAxis.setAutoRangeStickyZero(false);
-        rangeAxis.setTickUnit(new NumberTickUnit(30));
+        // rangeAxis.setTickUnit(new NumberTickUnit(10));
         plot.setRangeAxis(rangeAxis);
 
         NumberAxis domainAxis = new NumberAxis(plot.getDomainAxis().getLabel()) {
             private static final long serialVersionUID = 1L;
 
+            Area tickLabelArea = new Area();
             @SuppressWarnings("rawtypes")
             @Override
             public List<NumberTick> refreshTicks(Graphics2D g2, AxisState state, Rectangle2D dataArea, RectangleEdge edge) {
                 List allTicks = super.refreshTicks(g2, state, dataArea, edge);
                 List<NumberTick> myTicks = new ArrayList<>();
+                tickLabelArea = new Area();
                 for (Object tick : allTicks) {
                     NumberTick numberTick = (NumberTick) tick;
                     String label = "";
                     if (tickLabels.containsKey(numberTick.getValue())) {
                         label = tickLabels.get(numberTick.getValue());
                     }
-                    myTicks.add(new NumberTick(TickType.MINOR, numberTick.getValue(), label,
+                    NumberTick numberTickTemp = new NumberTick(TickType.MINOR, numberTick.getValue(), label,
                             numberTick.getTextAnchor(), numberTick.getRotationAnchor(),
-                            (2 * Math.PI * 270) / 360.0f));
+                            (2 * Math.PI * 270) / 360.0f);
+
+                    Rectangle2D labelBounds = getTickBounds(numberTickTemp, g2);
+                    double java2dValue = valueToJava2D(numberTick.getValue(), g2.getClipBounds(), edge);
+                    labelBounds.setRect(labelBounds.getX(), java2dValue, labelBounds.getWidth(), labelBounds.getHeight());
+                    if (!tickLabelIsOverlapping(tickLabelArea, labelBounds)) {
+                        myTicks.add(numberTickTemp);
+                        tickLabelArea.add(new Area(labelBounds));
+                    }
                 }
                 return myTicks;
+            }
+
+            private boolean tickLabelIsOverlapping(Area area, Rectangle2D rectangle) {
+                return area.intersects(rectangle);
+            }
+
+            private Rectangle2D getTickBounds(NumberTick numberTick, Graphics2D g2) {
+                FontMetrics fm = g2.getFontMetrics(getTickLabelFont());
+                return TextUtilities.getTextBounds(numberTick.getText(), g2, fm);
             }
         };
 
@@ -390,7 +431,7 @@ class LinePlotTrains extends ApplicationFrame {
         // domainAxis.setUpperBound(212);
         domainAxis.setAutoRangeIncludesZero(false);
         domainAxis.setAutoRangeStickyZero(false);
-        domainAxis.setTickUnit(new NumberTickUnit(0.5));
+        // domainAxis.setTickUnit(new NumberTickUnit(0.5));
         plot.setDomainAxis(domainAxis);
 
         plot.setBackgroundPaint(Color.white);

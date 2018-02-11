@@ -2,10 +2,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.*;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -166,6 +163,7 @@ public class FetchTrainDetails {
 
     private boolean parseTrainScheduleWebsite(String filename, String pathTrainFile) {
         System.out.println("Parsing " + filename);
+        Set<String> stationIds = new HashSet<>();
 
         BufferedWriter bWriter;
         FileWriter fWriter;
@@ -285,8 +283,14 @@ public class FetchTrainDetails {
                         }
 
                     }
+                    if(stationIds.add(station_name.trim().replaceAll(".*-", "").toLowerCase())){
+                        bWriter.write(station_name + "\t" +arrival + "\t" + departure + "\t" + km + "\n");
+                    }
+                    else{
+                        System.out.println("Duplicate station id found. Skipping : "+ station_name);
+                    }
                     //System.out.println(station_name + "\t" +arrival + "\t" + departure + "\t" + km + "\n");
-                    bWriter.write(station_name + "\t" +arrival + "\t" + departure + "\t" + km + "\n");
+
                     station_name = "";
                     arrival = "";
                     departure = "";
@@ -376,7 +380,7 @@ public class FetchTrainDetails {
         return false;
     }
 
-    public void getTrainStoppageFromFile(String filename, String pathTemp, String pathFinal) {
+    public void getTrainStoppageFromFile(String filename, String pathTemp, String pathTrainBase) {
         FileReader fReader;
         BufferedReader bReader;
         try {
@@ -387,7 +391,7 @@ public class FetchTrainDetails {
             while((line = bReader.readLine())!=null) {
                 String[] data = line.split("\\s+");
                 String day = "day" +data[0];
-                String pathTrainScheduleParent = pathFinal + File.separator + day;
+                String pathTrainScheduleParent = pathTrainBase + File.separator + day;
                 if (!Scheduler.createFolder(pathTrainScheduleParent)) {
                     System.out.println("Unable to create folder");
                     bReader.close();

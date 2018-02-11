@@ -1,0 +1,7 @@
+ghaziabad-junction-gzb	15:50	16:10	0.0
+mahrauli-mfh	16:23	16:25	7.3
+adhyatmik-nagar-aknr	16:31	16:32	10.8
+dasna-ds	16:40	16:41	13.3
+pilkhua-pkw	16:56	16:57	25.6
+kastla-kasmabad-halt-kkmb	17:03	17:04	30.0
+hapur-junction-hpu	17:45	18:05	36.8
