@@ -8,14 +8,11 @@ sadisopur-sde 25.1 1 1 1 0 1 1 0
 patel-halt-patl 27.2 1 1 1 0 1 1 0
 bihta-bta 29.6 1 1 1 0 1 1 0
 pali-a-pail 35.6 1 1 1 0 1 1 0
-chakki-block-cabin-vhch 36.5 1 0 0 1 1 1 0
 koelwar-kwr 38.1 1 1 1 0 1 1 0
 kulharia-kua 41.7 1 1 1 1 1 1 0
-jamira-halt-jmir 47.1 1 0 0 1 1 1 0
 ara-junction-ara 51.6 1 1 1 1 1 1 0
 jagjivan-jgwl 54.9 1 1 1 0 1 1 0
 karisath-krs 61.5 1 1 1 0 1 1 0
-kauriya-kya 65.7 1 0 0 1 0 0 1
 sarvodaya-halt-xsan 67.6 1 1 1 0 1 1 0
 ramanand-tewary-rnte 69.1 1 1 1 0 1 1 0
 bihiya-bea 73.0 1 1 1 1 1 1 0
@@ -24,8 +21,6 @@ banahi-byn 78.9 1 1 1 0 1 1 0
 sikaria-halt-skri 83.1 1 1 1 0 1 1 0
 raghunathpur-rpr 87.5 1 2 2 0 1 1 0
 veer-kunwar-singh-dharauli-halt-vkdh 92.0 1 1 1 0 1 1 0
-twining-ganj-twg 96.2 1 0 0 1 0 0 1
-v-v-giri-halt-vvg 100.3 1 0 0 1 1 1 0
 dumraon-dure 103.7 1 1 1 0 1 1 0
 baruna-bue 110.8 1 1 1 0 1 1 0
 nadaon-halt-ndon 117.2 1 1 1 0 1 1 0
@@ -45,12 +40,7 @@ dheena-dha 182.2 1 1 1 1 1 1 0
 tulsi-ashram-tlam 189.4 1 1 1 0 1 1 0
 sakaldiha-sld 195.7 1 1 1 0 1 1 0
 kuchman-kca 203.4 1 1 1 1 1 1 0
-eocm-cabin-eocm 205.4 1 0 0 1 1 1 0
-mughal-sarai-outer-cabin-mgso 209.5 1 0 0 1 1 1 0
-mughal-sarai-marshalling-yard-mgmy 211.2 1 0 0 1 1 1 0
 mughal-sarai-junction-mgs 213.7 1 4 4 0 1 1 0
-new-west-cabin-newc 214.9 1 0 0 1 1 1 0
-avoiding-cabin-avcd 218.4 1 0 0 1 1 1 0
 jeonathpur-jep 221.6 1 1 1 0 1 1 0
 ahraura-road-arw 227.4 1 2 2 0 1 1 0
 kailahat-kyt 236.0 1 2 2 0 1 1 0
@@ -60,7 +50,6 @@ pahara-pre 261.1 1 1 1 1 1 1 0
 jhingura-jhg 268.6 1 1 1 0 1 1 0
 mirzapur-mzp 276.9 1 1 1 1 1 1 0
 vindhyachal-bdl 284.2 1 1 1 1 1 1 0
-birohe-beo 289.0 1 0 0 1 1 1 0
 gaipura-gae 296.5 1 2 2 0 1 1 0
 jigna-jia 303.4 1 0 0 1 1 1 0
 manda-road-mnf 311.7 1 1 1 1 1 1 0
@@ -88,10 +77,8 @@ khaga-kga 448.4 1 1 1 1 1 1 0
 sath-naraini-snie 455.8 1 1 1 0 1 1 0
 rasulabad-rub 462.9 1 1 1 0 1 1 0
 faizullapur-fyz 472.0 1 1 1 0 1 1 0
-ramva-rama 477.2 1 0 0 1 1 1 0
 fatehpur-ftp 483.1 1 1 1 1 1 1 0
 kurasti-kalan-kks 490.1 1 1 1 0 1 1 0
-malwan-mwh 499.2 1 0 0 1 0 0 1
 kanspur-gugauli-ksq 506.4 1 1 1 0 1 1 0
 bindki-road-bko 514.3 1 1 1 1 1 1 0
 aung-aung 520.3 1 1 1 0 1 1 0
@@ -102,8 +89,6 @@ rooma-rxm 544.7 1 1 1 0 1 1 0
 chakeri-chk 549.3 1 1 1 0 1 1 0
 chandari-cnbi 556.2 1 1 1 0 1 1 0
 kanpur-central-cnb 560.7 1 5 5 0 1 1 0
-kanpur-goods-marshalling-yard-gmc 561.9 1 0 0 1 1 1 0
-juhi-outer-cabin-cnjo 562.8 1 0 0 1 2 2 0
 govindpuri-junction-goy 564.6 1 1 1 0 2 2 0
 panki-pnk 572.1 1 1 1 1 1 1 1
 bhaupur-bpu 583.3 1 1 1 1 1 1 1
@@ -120,7 +105,6 @@ pata-pata 652.2 1 1 1 1 1 1 0
 achalda-uld 660.7 1 1 1 1 1 1 0
 ghasara-halt-ghsr 666.1 1 1 1 0 1 1 0
 samhon-shw 669.8 1 1 1 0 1 1 0
-bharthana-bnt 680.2 1 0 0 1 0 0 1
 ekdil-ekl 690.1 1 1 1 0 1 1 0
 etawah-junction-etw 700.1 1 2 2 1 1 1 0
 sarai-bhopat-sb 708.3 1 1 1 0 1 1 0
@@ -133,8 +117,6 @@ makkhanpur-mnr 765.1 1 1 1 0 1 1 0
 firozabad-fzd 775.3 1 2 2 0 1 1 0
 hirangaon-hng 783.1 1 1 1 0 1 1 0
 tundla-junction-tdl 791.9 1 2 2 1 1 1 0
-shivarampur-wsc 796.6 1 0 0 1 1 1 0
-mitawali-south-cabin-yy-mti 797.1 1 0 0 1 1 1 0
 barhan-junction-brn 806.6 1 1 1 0 1 1 0
 chamrola-cmr 813.4 1 1 1 0 1 1 0
 jalesar-road-jls 819.8 1 1 1 0 1 1 0
@@ -145,14 +127,12 @@ mandrak-mxk 856.1 1 1 1 0 1 1 0
 daud-khan-daq 863.0 1 1 1 0 1 1 0
 aligarh-junction-aljn 870.2 1 3 3 1 1 1 1
 mahrawal-mwue 876.4 1 1 1 0 1 1 1
-kulwa-kla 882.0 1 0 0 1 1 1 0
 somna-som 892.2 1 2 2 0 1 1 1
 danwar-dar 902.4 1 1 1 0 1 1 1
 kamalpur-kamp 907.4 1 1 1 1 1 1 1
 khurja-junction-krj 913.4 1 2 2 1 1 1 1
 sikandarpur-skq 919.1 1 1 1 1 1 1 1
 gangraul-halt-gnrl 924.0 1 1 1 0 1 1 1
-chola-chl 928.1 1 0 0 1 0 0 1
 wair-wair 933.2 1 1 1 0 1 1 1
 dankaur-dkde 942.5 1 1 1 1 1 1 1
 ajaibpur-ajr 950.3 1 1 1 0 1 1 1
@@ -162,7 +142,6 @@ maripat-miu 966.2 1 1 1 0 1 1 1
 chipyana-buzurg-cyz 971.7 1 0 0 1 1 1 1
 ghaziabad-junction-gzb 976.1 1 3 3 0 1 1 1
 sahibabad-junction-sbb 982.9 1 2 2 1 1 1 0
-shahdara-b-panel-dsbp 986.0 1 0 0 1 1 1 0
 chander-nagar-cnj 986.8 1 1 1 0 1 1 0
 anand-vihar-anvr 988.6 1 1 1 0 1 1 0
 mandawali-chander-vihar-mwc 992.2 1 1 1 0 1 1 0

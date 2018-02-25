@@ -35,28 +35,7 @@ public class Route {
     }
 
     public List<List<Node>> getFreeSlots(TrainTime start, TrainTime end, boolean isSingleDay) {
-        // List<List<Node>> nextWeekSlots = new ArrayList<>();
-        // if(endDay<startDay || (startDay==endDay && endHrs<startHrs) ||
-        //         (startDay==endDay && endHrs==startHrs && endMinutes < startMinutes)) {
-        //     if(isSingleDay && startDay==endDay) {
-        //         System.out.println("Single day scheduling");
-        //         nextWeekSlots = getFreeSlots(startDay,0,0,
-        //             endDay,endHrs,endMinutes,true);
-        //         endHrs = 23;
-        //         endMinutes = 59;
-        //     }
-        //     else{
-        //         System.out.println("Complete scheduling");
-        //         nextWeekSlots = getFreeSlots(0,0,0,
-        //                 endDay,endHrs,endMinutes,false);
-        //         endDay = 6;
-        //         endHrs = 23;
-        //         endMinutes = 59;
-        //     }
-        // }
-
         List<List<Node>> nodes = new ArrayList<>(this.stationOrder.size());
-
         for(String stationId: this.stationOrder) {
             Station station = this.mapStation.get(stationId);
             if(station==null){
@@ -64,9 +43,6 @@ public class Route {
             }
             nodes.add(station.getNodesFreeList(start, end, isSingleDay));
         }
-        // for(int i=0;i<nextWeekSlots.size();i++) {
-        //     nodes.get(i).addAll(nextWeekSlots.get(i));
-        // }
         return nodes;
     }
 

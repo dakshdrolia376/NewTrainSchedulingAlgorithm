@@ -7,22 +7,12 @@ public class Train {
     private final int trainNo;
     private final String name;
     private final Map<String, TrainAtStation> stoppageMap;
-    private final boolean upDirection;
 
     public Train(int trainNo, String name) {
         requireNonNull(name, "The Train name is null.");
         this.stoppageMap = new HashMap<>();
         this.trainNo = trainNo;
         this.name = name;
-        this.upDirection = true;
-    }
-
-    public Train(int trainNo, String name, boolean isUpDirection) {
-        requireNonNull(name, "The Train name is null.");
-        this.stoppageMap = new HashMap<>();
-        this.trainNo = trainNo;
-        this.name = name;
-        this.upDirection = isUpDirection;
     }
 
     @SuppressWarnings("unused")
@@ -32,10 +22,6 @@ public class Train {
 
     public String getName() {
         return this.name;
-    }
-
-    public boolean isUpDirection() {
-        return this.upDirection;
     }
 
     public TrainTime getArr(String stId) {
@@ -50,8 +36,8 @@ public class Train {
 
     public boolean addStoppage(Station station, TrainTime arrival, TrainTime departure) {
         if(station==null){
-            // System.err.println("Station is not in route or some error occurred");
-            return true;
+            System.err.println("Station is not in route or some error occurred in adding stoppage for train : "+ this.trainNo);
+            return false;
         }
         requireNonNull(arrival, "Arrival is null.");
         requireNonNull(departure, "Departure is null.");

@@ -41,8 +41,7 @@ public class FetchStationDetails {
     public int getNumberOfPlatform(String stationId){
         int indexStation = this.myMap.getOrDefault(stationId.toLowerCase(), -1);
         if(indexStation==-1){
-            System.out.println("Station Not found. Please try using google search. Station : " + stationId);
-            return 2;
+            return -1;
         }
         int numOfPlatform = -1;
         String fileTrainIndex = this.pathDatabaseStation + File.separator +indexStation+".txt";
@@ -65,8 +64,7 @@ public class FetchStationDetails {
             e.printStackTrace();
         }
         if(numOfPlatform<=0){
-            System.out.println("Unable to find Num of platforms in station : " + stationId);
-            return 4;
+            return -1;
         }
         else{
             return numOfPlatform;
@@ -174,10 +172,10 @@ public class FetchStationDetails {
             String line;
             while ((line = bReader.readLine()) != null) {
                 matcher = pattern.matcher(line);
-                if (matcher.find()) {
+                if(matcher.find()) {
                     String temp = matcher.group().split("\\s+")[2];
                     String temp1[] = temp.split("/");
-                    if (temp1.length >= 7) {
+                    if(temp1.length >= 7) {
                         String stationName = temp1[5].toLowerCase();
                         String stationId = stationName.trim().replaceAll(".*-", "").toLowerCase();
                         String stationIndex = temp1[6];
@@ -231,13 +229,13 @@ public class FetchStationDetails {
                 if(matcher1.find()){
                     String temp = matcher1.group().split("\\s+")[2];
                     String temp1[] = temp.split("/");
-                    if (temp1.length >= 7) {
+                    if(temp1.length >= 7) {
                         String stationName = temp1[5].toLowerCase();
                         bWriter.write("Station Name: " +stationName);
                         bWriter.write('\n');
                     }
                 }
-                else if (matcher.find()) {
+                else if(matcher.find()) {
                     String temp[] = matcher.group().split("\\.");
                     for(int i=1;i<temp.length-3;i++) {
                         bWriter.write(temp[i].trim());

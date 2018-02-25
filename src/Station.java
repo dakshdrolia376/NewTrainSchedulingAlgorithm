@@ -86,15 +86,6 @@ public class Station {
         });
     }
 
-    // public void sortDept() {
-    //     this.arrDeptSchedule.sort(( o1, o2) ->{
-    //             if(o1.getDept().equals(o2.getDept())) {
-    //                 return o1.getArr().compareTo(o2.getArr());
-    //             }
-    //             return o1.getDept().compareTo(o2.getDept());
-    //     });
-    // }
-
     public List<Node> getNodesFreeList(TrainTime startTime, TrainTime endTime, boolean isSingleDay){
         List<Node> nextWeekNodes  = new ArrayList<>();
         if(endTime.compareTo(startTime)<0) {

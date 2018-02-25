@@ -1,0 +1,856 @@
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:08:37
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[0.0, 0.0, 3.9000000000000004, 7.800000000000001, 13.0, 20.8, 24.7, 24.7]
+Station size: 6
+Initializing graph
+Adding edge bw stations source->pnbe 2018/02/18 22:08:38
+Start Used memory is megabytes: 287
+Adding edge bw stations pnbe->scy 2018/02/18 22:08:38
+Start Used memory is megabytes: 290
+Adding edge bw stations scy->pws 2018/02/18 22:08:42
+Start Used memory is megabytes: 449
+Adding edge bw stations pws->dnr 2018/02/18 22:08:45
+Start Used memory is megabytes: 488
+Adding edge bw stations dnr->neo 2018/02/18 22:08:47
+Start Used memory is megabytes: 366
+Adding edge bw stations neo->gnhi 2018/02/18 22:08:50
+Start Used memory is megabytes: 539
+Adding edge bw stations gnhi->dest 2018/02/18 22:08:53
+Start Used memory is megabytes: 512
+Edge size: 328183
+Finding shortest path bw : source:0:12:12 >> dest
+Best Path till now cost : 0.0 >> [source:0:12:12, pnbe:0:12:17]
+Start Used memory is megabytes: 512
+Best Path till now cost : 3.0 >> [source:0:12:12, pnbe:0:12:13, scy:0:12:16]
+Start Used memory is megabytes: 513
+Best Path till now cost : 6.0 >> [source:0:12:12, pnbe:0:12:14, scy:0:12:17, pws:0:12:20]
+Start Used memory is megabytes: 513
+Best Path till now cost : 10.0 >> [source:0:12:12, pnbe:0:12:54, scy:0:12:57, pws:0:13:0, dnr:0:13:4]
+Start Used memory is megabytes: 514
+Best Path till now cost : 16.0 >> [source:0:12:12, pnbe:0:12:56, scy:0:12:59, pws:0:13:2, dnr:0:13:6, neo:0:13:12]
+Start Used memory is megabytes: 516
+Best Path till now cost : 19.0 >> [source:0:12:12, pnbe:0:13:6, scy:0:13:9, pws:0:13:12, dnr:0:13:16, neo:0:13:22, gnhi:0:13:25]
+Start Used memory is megabytes: 518
+Best Path till now cost : 19.0 >> [source:0:12:12, pnbe:0:13:6, scy:0:13:9, pws:0:13:12, dnr:0:13:16, neo:0:13:22, gnhi:0:13:25, dest]
+Start Used memory is megabytes: 520
+Accepted Path found :[source:0:12:12, pnbe:0:13:6, scy:0:13:9, pws:0:13:12, dnr:0:13:16, neo:0:13:22, gnhi:0:13:25, dest] cost: 19.0
+Accepted Path found :[source:0:12:12, pnbe:0:12:37, scy:0:12:40, pws:0:12:43, dnr:0:12:47, neo:0:12:53, gnhi:0:12:56, dest] cost: 19.0
+Accepted Path found :[source:0:12:12, pnbe:0:12:38, scy:0:12:41, pws:0:12:44, dnr:0:12:48, neo:0:12:54, gnhi:0:12:57, dest] cost: 19.0
+Accepted Path found :[source:0:12:12, pnbe:0:13:0, scy:0:13:3, pws:0:13:6, dnr:0:13:10, neo:0:13:16, gnhi:0:13:19, dest] cost: 19.0
+Accepted Path found :[source:0:12:12, pnbe:0:12:59, scy:0:13:2, pws:0:13:5, dnr:0:13:9, neo:0:13:15, gnhi:0:13:18, dest] cost: 19.0
+Accepted Path found :[source:0:12:12, pnbe:0:12:53, scy:0:12:56, pws:0:12:59, dnr:0:13:3, neo:0:13:9, gnhi:0:13:12, dest] cost: 19.0
+Accepted Path found :[source:0:12:12, pnbe:0:12:56, scy:0:12:59, pws:0:13:2, dnr:0:13:6, neo:0:13:12, gnhi:0:13:15, dest] cost: 19.0
+Accepted Path found :[source:0:12:12, pnbe:0:13:1, scy:0:13:4, pws:0:13:7, dnr:0:13:11, neo:0:13:17, gnhi:0:13:20, dest] cost: 19.0
+Accepted Path found :[source:0:12:12, pnbe:0:12:40, scy:0:12:43, pws:0:12:46, dnr:0:12:50, neo:0:12:56, gnhi:0:12:59, dest] cost: 19.0
+Accepted Path found :[source:0:12:12, pnbe:0:13:2, scy:0:13:5, pws:0:13:8, dnr:0:13:12, neo:0:13:18, gnhi:0:13:21, dest] cost: 19.0
+Accepted Path found :[source:0:12:12, pnbe:0:12:39, scy:0:12:42, pws:0:12:45, dnr:0:12:49, neo:0:12:55, gnhi:0:12:58, dest] cost: 19.0
+Accepted Path found :[source:0:12:12, pnbe:0:13:3, scy:0:13:6, pws:0:13:9, dnr:0:13:13, neo:0:13:19, gnhi:0:13:22, dest] cost: 19.0
+Accepted Path found :[source:0:12:12, pnbe:0:12:33, scy:0:12:36, pws:0:12:39, dnr:0:12:43, neo:0:12:49, gnhi:0:12:52, dest] cost: 19.0
+Accepted Path found :[source:0:12:12, pnbe:0:12:34, scy:0:12:37, pws:0:12:40, dnr:0:12:44, neo:0:12:50, gnhi:0:12:53, dest] cost: 19.0
+Accepted Path found :[source:0:12:12, pnbe:0:12:54, scy:0:12:57, pws:0:13:0, dnr:0:13:4, neo:0:13:10, gnhi:0:13:13, dest] cost: 19.0
+Accepted Path found :[source:0:12:12, pnbe:0:12:57, scy:0:13:0, pws:0:13:3, dnr:0:13:7, neo:0:13:13, gnhi:0:13:16, dest] cost: 19.0
+Accepted Path found :[source:0:12:12, pnbe:0:13:4, scy:0:13:7, pws:0:13:10, dnr:0:13:14, neo:0:13:20, gnhi:0:13:23, dest] cost: 19.0
+Accepted Path found :[source:0:12:12, pnbe:0:12:35, scy:0:12:38, pws:0:12:41, dnr:0:12:45, neo:0:12:51, gnhi:0:12:54, dest] cost: 19.0
+Accepted Path found :[source:0:12:12, pnbe:0:12:36, scy:0:12:39, pws:0:12:42, dnr:0:12:46, neo:0:12:52, gnhi:0:12:55, dest] cost: 19.0
+Accepted Path found :[source:0:12:12, pnbe:0:12:55, scy:0:12:58, pws:0:13:1, dnr:0:13:5, neo:0:13:11, gnhi:0:13:14, dest] cost: 19.0
+Heap Empty [[source:0:12:12, pnbe:0:13:6, scy:0:13:9, pws:0:13:12, dnr:0:13:16, neo:0:13:22, gnhi:0:13:25, dest], [source:0:12:12, pnbe:0:12:37, scy:0:12:40, pws:0:12:43, dnr:0:12:47, neo:0:12:53, gnhi:0:12:56, dest], [source:0:12:12, pnbe:0:12:38, scy:0:12:41, pws:0:12:44, dnr:0:12:48, neo:0:12:54, gnhi:0:12:57, dest], [source:0:12:12, pnbe:0:13:0, scy:0:13:3, pws:0:13:6, dnr:0:13:10, neo:0:13:16, gnhi:0:13:19, dest], [source:0:12:12, pnbe:0:12:59, scy:0:13:2, pws:0:13:5, dnr:0:13:9, neo:0:13:15, gnhi:0:13:18, dest], [source:0:12:12, pnbe:0:12:53, scy:0:12:56, pws:0:12:59, dnr:0:13:3, neo:0:13:9, gnhi:0:13:12, dest], [source:0:12:12, pnbe:0:12:56, scy:0:12:59, pws:0:13:2, dnr:0:13:6, neo:0:13:12, gnhi:0:13:15, dest], [source:0:12:12, pnbe:0:13:1, scy:0:13:4, pws:0:13:7, dnr:0:13:11, neo:0:13:17, gnhi:0:13:20, dest], [source:0:12:12, pnbe:0:12:40, scy:0:12:43, pws:0:12:46, dnr:0:12:50, neo:0:12:56, gnhi:0:12:59, dest], [source:0:12:12, pnbe:0:13:2, scy:0:13:5, pws:0:13:8, dnr:0:13:12, neo:0:13:18, gnhi:0:13:21, dest], [source:0:12:12, pnbe:0:12:39, scy:0:12:42, pws:0:12:45, dnr:0:12:49, neo:0:12:55, gnhi:0:12:58, dest], [source:0:12:12, pnbe:0:13:3, scy:0:13:6, pws:0:13:9, dnr:0:13:13, neo:0:13:19, gnhi:0:13:22, dest], [source:0:12:12, pnbe:0:12:33, scy:0:12:36, pws:0:12:39, dnr:0:12:43, neo:0:12:49, gnhi:0:12:52, dest], [source:0:12:12, pnbe:0:12:34, scy:0:12:37, pws:0:12:40, dnr:0:12:44, neo:0:12:50, gnhi:0:12:53, dest], [source:0:12:12, pnbe:0:12:54, scy:0:12:57, pws:0:13:0, dnr:0:13:4, neo:0:13:10, gnhi:0:13:13, dest], [source:0:12:12, pnbe:0:12:57, scy:0:13:0, pws:0:13:3, dnr:0:13:7, neo:0:13:13, gnhi:0:13:16, dest], [source:0:12:12, pnbe:0:13:4, scy:0:13:7, pws:0:13:10, dnr:0:13:14, neo:0:13:20, gnhi:0:13:23, dest], [source:0:12:12, pnbe:0:12:35, scy:0:12:38, pws:0:12:41, dnr:0:12:45, neo:0:12:51, gnhi:0:12:54, dest], [source:0:12:12, pnbe:0:12:36, scy:0:12:39, pws:0:12:42, dnr:0:12:46, neo:0:12:52, gnhi:0:12:55, dest], [source:0:12:12, pnbe:0:12:55, scy:0:12:58, pws:0:13:1, dnr:0:13:5, neo:0:13:11, gnhi:0:13:14, dest]]
+Rejected paths:0
+Duration: 15694 ms
+20	19.0	19.0	19.0	19.0	19.0	19.0	19.0	19.0	19.0	19.0	19.0	19.0	19.0	19.0	19.0	19.0	19.0	19.0	19.0	19.0
+---------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:08:53
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[60.0, 60.0, 66.5, 69.1, 71.7, 71.7]
+Station size: 4
+Initializing graph
+Adding edge bw stations source->gnhi 2018/02/18 22:08:53
+Start Used memory is megabytes: 268
+Adding edge bw stations gnhi->sde 2018/02/18 22:08:53
+Start Used memory is megabytes: 271
+Adding edge bw stations sde->patl 2018/02/18 22:08:57
+Start Used memory is megabytes: 564
+Adding edge bw stations patl->bta 2018/02/18 22:09:00
+Start Used memory is megabytes: 557
+Adding edge bw stations bta->dest 2018/02/18 22:09:03
+Start Used memory is megabytes: 318
+Edge size: 209821
+Finding shortest path bw : source:0:13:25 >> dest
+Best Path till now cost : 0.0 >> [source:0:13:25, gnhi:0:13:25]
+Start Used memory is megabytes: 319
+Best Path till now cost : 5.0 >> [source:0:13:25, gnhi:0:13:25, sde:0:13:30]
+Start Used memory is megabytes: 319
+Best Path till now cost : 7.0 >> [source:0:13:25, gnhi:0:13:25, sde:0:13:30, patl:0:13:32]
+Start Used memory is megabytes: 319
+Best Path till now cost : 9.0 >> [source:0:13:25, gnhi:0:13:25, sde:0:13:30, patl:0:13:32, bta:0:13:34]
+Start Used memory is megabytes: 319
+Best Path till now cost : 9.0 >> [source:0:13:25, gnhi:0:13:25, sde:0:13:30, patl:0:13:32, bta:0:13:34, dest]
+Start Used memory is megabytes: 319
+Accepted Path found :[source:0:13:25, gnhi:0:13:25, sde:0:13:30, patl:0:13:32, bta:0:13:34, dest] cost: 9.0
+Heap Empty [[source:0:13:25, gnhi:0:13:25, sde:0:13:30, patl:0:13:32, bta:0:13:34, dest]]
+Rejected paths:0
+Duration: 9990 ms
+1	9.0
+---------------------------------------------------------------------------------------------------------
+Accepted Path Found : [source:0:12:12, pnbe:0:13:6, scy:0:13:9, pws:0:13:12, dnr:0:13:16, neo:0:13:22, gnhi:0:13:25, sde:0:13:30, patl:0:13:32, bta:0:13:34, dest] cost: 28.0
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:09:03
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[60.0, 60.0, 66.5, 69.1, 71.7, 71.7]
+Station size: 4
+Initializing graph
+Adding edge bw stations source->gnhi 2018/02/18 22:09:03
+Start Used memory is megabytes: 558
+Adding edge bw stations gnhi->sde 2018/02/18 22:09:03
+Start Used memory is megabytes: 561
+Adding edge bw stations sde->patl 2018/02/18 22:09:06
+Start Used memory is megabytes: 531
+Adding edge bw stations patl->bta 2018/02/18 22:09:09
+Start Used memory is megabytes: 616
+Adding edge bw stations bta->dest 2018/02/18 22:09:12
+Start Used memory is megabytes: 374
+Edge size: 209821
+Finding shortest path bw : source:0:12:56 >> dest
+Best Path till now cost : 0.0 >> [source:0:12:56, gnhi:0:12:56]
+Start Used memory is megabytes: 374
+Best Path till now cost : 5.0 >> [source:0:12:56, gnhi:0:12:56, sde:0:13:1]
+Start Used memory is megabytes: 374
+Best Path till now cost : 7.0 >> [source:0:12:56, gnhi:0:12:56, sde:0:13:1, patl:0:13:3]
+Start Used memory is megabytes: 374
+Best Path till now cost : 9.0 >> [source:0:12:56, gnhi:0:12:56, sde:0:13:1, patl:0:13:3, bta:0:13:5]
+Start Used memory is megabytes: 375
+Best Path till now cost : 9.0 >> [source:0:12:56, gnhi:0:12:56, sde:0:13:1, patl:0:13:3, bta:0:13:5, dest]
+Start Used memory is megabytes: 375
+Accepted Path found :[source:0:12:56, gnhi:0:12:56, sde:0:13:1, patl:0:13:3, bta:0:13:5, dest] cost: 9.0
+Heap Empty [[source:0:12:56, gnhi:0:12:56, sde:0:13:1, patl:0:13:3, bta:0:13:5, dest]]
+Rejected paths:0
+Duration: 8908 ms
+1	9.0
+---------------------------------------------------------------------------------------------------------
+Accepted Path Found : [source:0:12:12, pnbe:0:12:37, scy:0:12:40, pws:0:12:43, dnr:0:12:47, neo:0:12:53, gnhi:0:12:56, sde:0:13:1, patl:0:13:3, bta:0:13:5, dest] cost: 28.0
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:09:12
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[60.0, 60.0, 66.5, 69.1, 71.7, 71.7]
+Station size: 4
+Initializing graph
+Adding edge bw stations source->gnhi 2018/02/18 22:09:12
+Start Used memory is megabytes: 614
+Adding edge bw stations gnhi->sde 2018/02/18 22:09:12
+Start Used memory is megabytes: 616
+Adding edge bw stations sde->patl 2018/02/18 22:09:15
+Start Used memory is megabytes: 617
+Adding edge bw stations patl->bta 2018/02/18 22:09:18
+Start Used memory is megabytes: 235
+Adding edge bw stations bta->dest 2018/02/18 22:09:21
+Start Used memory is megabytes: 810
+Edge size: 209821
+Finding shortest path bw : source:0:12:57 >> dest
+Best Path till now cost : 0.0 >> [source:0:12:57, gnhi:0:12:57]
+Start Used memory is megabytes: 810
+Best Path till now cost : 5.0 >> [source:0:12:57, gnhi:0:12:57, sde:0:13:2]
+Start Used memory is megabytes: 811
+Best Path till now cost : 7.0 >> [source:0:12:57, gnhi:0:12:57, sde:0:13:2, patl:0:13:4]
+Start Used memory is megabytes: 811
+Best Path till now cost : 9.0 >> [source:0:12:57, gnhi:0:12:57, sde:0:13:2, patl:0:13:4, bta:0:13:6]
+Start Used memory is megabytes: 811
+Best Path till now cost : 9.0 >> [source:0:12:57, gnhi:0:12:57, sde:0:13:2, patl:0:13:4, bta:0:13:6, dest]
+Start Used memory is megabytes: 811
+Accepted Path found :[source:0:12:57, gnhi:0:12:57, sde:0:13:2, patl:0:13:4, bta:0:13:6, dest] cost: 9.0
+Heap Empty [[source:0:12:57, gnhi:0:12:57, sde:0:13:2, patl:0:13:4, bta:0:13:6, dest]]
+Rejected paths:0
+Duration: 8767 ms
+1	9.0
+---------------------------------------------------------------------------------------------------------
+Accepted Path Found : [source:0:12:12, pnbe:0:12:38, scy:0:12:41, pws:0:12:44, dnr:0:12:48, neo:0:12:54, gnhi:0:12:57, sde:0:13:2, patl:0:13:4, bta:0:13:6, dest] cost: 28.0
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:09:21
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[60.0, 60.0, 66.5, 69.1, 71.7, 71.7]
+Station size: 4
+Initializing graph
+Adding edge bw stations source->gnhi 2018/02/18 22:09:21
+Start Used memory is megabytes: 425
+Adding edge bw stations gnhi->sde 2018/02/18 22:09:21
+Start Used memory is megabytes: 427
+Adding edge bw stations sde->patl 2018/02/18 22:09:24
+Start Used memory is megabytes: 555
+Adding edge bw stations patl->bta 2018/02/18 22:09:26
+Start Used memory is megabytes: 868
+Adding edge bw stations bta->dest 2018/02/18 22:09:29
+Start Used memory is megabytes: 350
+Edge size: 209821
+Finding shortest path bw : source:0:13:19 >> dest
+Best Path till now cost : 0.0 >> [source:0:13:19, gnhi:0:13:19]
+Start Used memory is megabytes: 350
+Best Path till now cost : 5.0 >> [source:0:13:19, gnhi:0:13:19, sde:0:13:24]
+Start Used memory is megabytes: 350
+Best Path till now cost : 7.0 >> [source:0:13:19, gnhi:0:13:19, sde:0:13:24, patl:0:13:26]
+Start Used memory is megabytes: 350
+Best Path till now cost : 9.0 >> [source:0:13:19, gnhi:0:13:19, sde:0:13:24, patl:0:13:26, bta:0:13:28]
+Start Used memory is megabytes: 350
+Best Path till now cost : 9.0 >> [source:0:13:19, gnhi:0:13:19, sde:0:13:24, patl:0:13:26, bta:0:13:28, dest]
+Start Used memory is megabytes: 350
+Accepted Path found :[source:0:13:19, gnhi:0:13:19, sde:0:13:24, patl:0:13:26, bta:0:13:28, dest] cost: 9.0
+Heap Empty [[source:0:13:19, gnhi:0:13:19, sde:0:13:24, patl:0:13:26, bta:0:13:28, dest]]
+Rejected paths:0
+Duration: 8771 ms
+1	9.0
+---------------------------------------------------------------------------------------------------------
+Accepted Path Found : [source:0:12:12, pnbe:0:13:0, scy:0:13:3, pws:0:13:6, dnr:0:13:10, neo:0:13:16, gnhi:0:13:19, sde:0:13:24, patl:0:13:26, bta:0:13:28, dest] cost: 28.0
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:09:29
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[60.0, 60.0, 66.5, 69.1, 71.7, 71.7]
+Station size: 4
+Initializing graph
+Adding edge bw stations source->gnhi 2018/02/18 22:09:30
+Start Used memory is megabytes: 589
+Adding edge bw stations gnhi->sde 2018/02/18 22:09:30
+Start Used memory is megabytes: 592
+Adding edge bw stations sde->patl 2018/02/18 22:09:32
+Start Used memory is megabytes: 330
+Adding edge bw stations patl->bta 2018/02/18 22:09:35
+Start Used memory is megabytes: 963
+Adding edge bw stations bta->dest 2018/02/18 22:09:39
+Start Used memory is megabytes: 783
+Edge size: 209821
+Finding shortest path bw : source:0:13:18 >> dest
+Best Path till now cost : 0.0 >> [source:0:13:18, gnhi:0:13:18]
+Start Used memory is megabytes: 784
+Best Path till now cost : 5.0 >> [source:0:13:18, gnhi:0:13:18, sde:0:13:23]
+Start Used memory is megabytes: 784
+Best Path till now cost : 7.0 >> [source:0:13:18, gnhi:0:13:18, sde:0:13:23, patl:0:13:25]
+Start Used memory is megabytes: 784
+Best Path till now cost : 9.0 >> [source:0:13:18, gnhi:0:13:18, sde:0:13:23, patl:0:13:25, bta:0:13:27]
+Start Used memory is megabytes: 784
+Best Path till now cost : 9.0 >> [source:0:13:18, gnhi:0:13:18, sde:0:13:23, patl:0:13:25, bta:0:13:27, dest]
+Start Used memory is megabytes: 784
+Accepted Path found :[source:0:13:18, gnhi:0:13:18, sde:0:13:23, patl:0:13:25, bta:0:13:27, dest] cost: 9.0
+Heap Empty [[source:0:13:18, gnhi:0:13:18, sde:0:13:23, patl:0:13:25, bta:0:13:27, dest]]
+Rejected paths:0
+Duration: 9236 ms
+1	9.0
+---------------------------------------------------------------------------------------------------------
+Accepted Path Found : [source:0:12:12, pnbe:0:12:59, scy:0:13:2, pws:0:13:5, dnr:0:13:9, neo:0:13:15, gnhi:0:13:18, sde:0:13:23, patl:0:13:25, bta:0:13:27, dest] cost: 28.0
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:09:39
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[60.0, 60.0, 66.5, 69.1, 71.7, 71.7]
+Station size: 4
+Initializing graph
+Adding edge bw stations source->gnhi 2018/02/18 22:09:39
+Start Used memory is megabytes: 311
+Adding edge bw stations gnhi->sde 2018/02/18 22:09:39
+Start Used memory is megabytes: 314
+Adding edge bw stations sde->patl 2018/02/18 22:09:42
+Start Used memory is megabytes: 531
+Adding edge bw stations patl->bta 2018/02/18 22:09:45
+Start Used memory is megabytes: 318
+Adding edge bw stations bta->dest 2018/02/18 22:09:48
+Start Used memory is megabytes: 773
+Edge size: 209821
+Finding shortest path bw : source:0:13:12 >> dest
+Best Path till now cost : 0.0 >> [source:0:13:12, gnhi:0:13:12]
+Start Used memory is megabytes: 773
+Best Path till now cost : 5.0 >> [source:0:13:12, gnhi:0:13:12, sde:0:13:17]
+Start Used memory is megabytes: 773
+Best Path till now cost : 7.0 >> [source:0:13:12, gnhi:0:13:12, sde:0:13:17, patl:0:13:19]
+Start Used memory is megabytes: 773
+Best Path till now cost : 9.0 >> [source:0:13:12, gnhi:0:13:12, sde:0:13:17, patl:0:13:19, bta:0:13:21]
+Start Used memory is megabytes: 774
+Best Path till now cost : 9.0 >> [source:0:13:12, gnhi:0:13:12, sde:0:13:17, patl:0:13:19, bta:0:13:21, dest]
+Start Used memory is megabytes: 774
+Accepted Path found :[source:0:13:12, gnhi:0:13:12, sde:0:13:17, patl:0:13:19, bta:0:13:21, dest] cost: 9.0
+Heap Empty [[source:0:13:12, gnhi:0:13:12, sde:0:13:17, patl:0:13:19, bta:0:13:21, dest]]
+Rejected paths:0
+Duration: 9485 ms
+1	9.0
+---------------------------------------------------------------------------------------------------------
+Accepted Path Found : [source:0:12:12, pnbe:0:12:53, scy:0:12:56, pws:0:12:59, dnr:0:13:3, neo:0:13:9, gnhi:0:13:12, sde:0:13:17, patl:0:13:19, bta:0:13:21, dest] cost: 28.0
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:09:48
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[60.0, 60.0, 66.5, 69.1, 71.7, 71.7]
+Station size: 4
+Initializing graph
+Adding edge bw stations source->gnhi 2018/02/18 22:09:48
+Start Used memory is megabytes: 1013
+Adding edge bw stations gnhi->sde 2018/02/18 22:09:48
+Start Used memory is megabytes: 1016
+Adding edge bw stations sde->patl 2018/02/18 22:09:51
+Start Used memory is megabytes: 413
+Adding edge bw stations patl->bta 2018/02/18 22:09:54
+Start Used memory is megabytes: 803
+Adding edge bw stations bta->dest 2018/02/18 22:09:57
+Start Used memory is megabytes: 386
+Edge size: 209821
+Finding shortest path bw : source:0:13:15 >> dest
+Best Path till now cost : 0.0 >> [source:0:13:15, gnhi:0:13:15]
+Start Used memory is megabytes: 387
+Best Path till now cost : 5.0 >> [source:0:13:15, gnhi:0:13:15, sde:0:13:20]
+Start Used memory is megabytes: 387
+Best Path till now cost : 7.0 >> [source:0:13:15, gnhi:0:13:15, sde:0:13:20, patl:0:13:22]
+Start Used memory is megabytes: 387
+Best Path till now cost : 9.0 >> [source:0:13:15, gnhi:0:13:15, sde:0:13:20, patl:0:13:22, bta:0:13:24]
+Start Used memory is megabytes: 387
+Best Path till now cost : 9.0 >> [source:0:13:15, gnhi:0:13:15, sde:0:13:20, patl:0:13:22, bta:0:13:24, dest]
+Start Used memory is megabytes: 387
+Accepted Path found :[source:0:13:15, gnhi:0:13:15, sde:0:13:20, patl:0:13:22, bta:0:13:24, dest] cost: 9.0
+Heap Empty [[source:0:13:15, gnhi:0:13:15, sde:0:13:20, patl:0:13:22, bta:0:13:24, dest]]
+Rejected paths:0
+Duration: 9209 ms
+1	9.0
+---------------------------------------------------------------------------------------------------------
+Accepted Path Found : [source:0:12:12, pnbe:0:12:56, scy:0:12:59, pws:0:13:2, dnr:0:13:6, neo:0:13:12, gnhi:0:13:15, sde:0:13:20, patl:0:13:22, bta:0:13:24, dest] cost: 28.0
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:09:57
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[60.0, 60.0, 66.5, 69.1, 71.7, 71.7]
+Station size: 4
+Initializing graph
+Adding edge bw stations source->gnhi 2018/02/18 22:09:58
+Start Used memory is megabytes: 626
+Adding edge bw stations gnhi->sde 2018/02/18 22:09:58
+Start Used memory is megabytes: 629
+Adding edge bw stations sde->patl 2018/02/18 22:10:00
+Start Used memory is megabytes: 664
+Adding edge bw stations patl->bta 2018/02/18 22:10:03
+Start Used memory is megabytes: 963
+Adding edge bw stations bta->dest 2018/02/18 22:10:06
+Start Used memory is megabytes: 426
+Edge size: 209821
+Finding shortest path bw : source:0:13:20 >> dest
+Best Path till now cost : 0.0 >> [source:0:13:20, gnhi:0:13:20]
+Start Used memory is megabytes: 426
+Best Path till now cost : 5.0 >> [source:0:13:20, gnhi:0:13:20, sde:0:13:25]
+Start Used memory is megabytes: 426
+Best Path till now cost : 7.0 >> [source:0:13:20, gnhi:0:13:20, sde:0:13:25, patl:0:13:27]
+Start Used memory is megabytes: 426
+Best Path till now cost : 9.0 >> [source:0:13:20, gnhi:0:13:20, sde:0:13:25, patl:0:13:27, bta:0:13:29]
+Start Used memory is megabytes: 426
+Best Path till now cost : 9.0 >> [source:0:13:20, gnhi:0:13:20, sde:0:13:25, patl:0:13:27, bta:0:13:29, dest]
+Start Used memory is megabytes: 426
+Accepted Path found :[source:0:13:20, gnhi:0:13:20, sde:0:13:25, patl:0:13:27, bta:0:13:29, dest] cost: 9.0
+Heap Empty [[source:0:13:20, gnhi:0:13:20, sde:0:13:25, patl:0:13:27, bta:0:13:29, dest]]
+Rejected paths:0
+Duration: 8809 ms
+1	9.0
+---------------------------------------------------------------------------------------------------------
+Accepted Path Found : [source:0:12:12, pnbe:0:13:1, scy:0:13:4, pws:0:13:7, dnr:0:13:11, neo:0:13:17, gnhi:0:13:20, sde:0:13:25, patl:0:13:27, bta:0:13:29, dest] cost: 28.0
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:10:06
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[60.0, 60.0, 66.5, 69.1, 71.7, 71.7]
+Station size: 4
+Initializing graph
+Adding edge bw stations source->gnhi 2018/02/18 22:10:06
+Start Used memory is megabytes: 665
+Adding edge bw stations gnhi->sde 2018/02/18 22:10:06
+Start Used memory is megabytes: 668
+Adding edge bw stations sde->patl 2018/02/18 22:10:09
+Start Used memory is megabytes: 547
+Adding edge bw stations patl->bta 2018/02/18 22:10:12
+Start Used memory is megabytes: 663
+Adding edge bw stations bta->dest 2018/02/18 22:10:15
+Start Used memory is megabytes: 716
+Edge size: 209821
+Finding shortest path bw : source:0:12:59 >> dest
+Best Path till now cost : 0.0 >> [source:0:12:59, gnhi:0:12:59]
+Start Used memory is megabytes: 717
+Best Path till now cost : 5.0 >> [source:0:12:59, gnhi:0:12:59, sde:0:13:4]
+Start Used memory is megabytes: 717
+Best Path till now cost : 7.0 >> [source:0:12:59, gnhi:0:12:59, sde:0:13:4, patl:0:13:6]
+Start Used memory is megabytes: 717
+Best Path till now cost : 9.0 >> [source:0:12:59, gnhi:0:12:59, sde:0:13:4, patl:0:13:6, bta:0:13:8]
+Start Used memory is megabytes: 717
+Best Path till now cost : 9.0 >> [source:0:12:59, gnhi:0:12:59, sde:0:13:4, patl:0:13:6, bta:0:13:8, dest]
+Start Used memory is megabytes: 717
+Accepted Path found :[source:0:12:59, gnhi:0:12:59, sde:0:13:4, patl:0:13:6, bta:0:13:8, dest] cost: 9.0
+Heap Empty [[source:0:12:59, gnhi:0:12:59, sde:0:13:4, patl:0:13:6, bta:0:13:8, dest]]
+Rejected paths:0
+Duration: 8634 ms
+1	9.0
+---------------------------------------------------------------------------------------------------------
+Accepted Path Found : [source:0:12:12, pnbe:0:12:40, scy:0:12:43, pws:0:12:46, dnr:0:12:50, neo:0:12:56, gnhi:0:12:59, sde:0:13:4, patl:0:13:6, bta:0:13:8, dest] cost: 28.0
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:10:15
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[60.0, 60.0, 66.5, 69.1, 71.7, 71.7]
+Station size: 4
+Initializing graph
+Adding edge bw stations source->gnhi 2018/02/18 22:10:15
+Start Used memory is megabytes: 956
+Adding edge bw stations gnhi->sde 2018/02/18 22:10:15
+Start Used memory is megabytes: 959
+Adding edge bw stations sde->patl 2018/02/18 22:10:18
+Start Used memory is megabytes: 675
+Adding edge bw stations patl->bta 2018/02/18 22:10:21
+Start Used memory is megabytes: 634
+Adding edge bw stations bta->dest 2018/02/18 22:10:24
+Start Used memory is megabytes: 579
+Edge size: 209821
+Finding shortest path bw : source:0:13:21 >> dest
+Best Path till now cost : 0.0 >> [source:0:13:21, gnhi:0:13:21]
+Start Used memory is megabytes: 580
+Best Path till now cost : 5.0 >> [source:0:13:21, gnhi:0:13:21, sde:0:13:26]
+Start Used memory is megabytes: 580
+Best Path till now cost : 7.0 >> [source:0:13:21, gnhi:0:13:21, sde:0:13:26, patl:0:13:28]
+Start Used memory is megabytes: 580
+Best Path till now cost : 9.0 >> [source:0:13:21, gnhi:0:13:21, sde:0:13:26, patl:0:13:28, bta:0:13:30]
+Start Used memory is megabytes: 580
+Best Path till now cost : 9.0 >> [source:0:13:21, gnhi:0:13:21, sde:0:13:26, patl:0:13:28, bta:0:13:30, dest]
+Start Used memory is megabytes: 580
+Accepted Path found :[source:0:13:21, gnhi:0:13:21, sde:0:13:26, patl:0:13:28, bta:0:13:30, dest] cost: 9.0
+Heap Empty [[source:0:13:21, gnhi:0:13:21, sde:0:13:26, patl:0:13:28, bta:0:13:30, dest]]
+Rejected paths:0
+Duration: 8760 ms
+1	9.0
+---------------------------------------------------------------------------------------------------------
+Accepted Path Found : [source:0:12:12, pnbe:0:13:2, scy:0:13:5, pws:0:13:8, dnr:0:13:12, neo:0:13:18, gnhi:0:13:21, sde:0:13:26, patl:0:13:28, bta:0:13:30, dest] cost: 28.0
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:10:24
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[60.0, 60.0, 66.5, 69.1, 71.7, 71.7]
+Station size: 4
+Initializing graph
+Adding edge bw stations source->gnhi 2018/02/18 22:10:24
+Start Used memory is megabytes: 819
+Adding edge bw stations gnhi->sde 2018/02/18 22:10:24
+Start Used memory is megabytes: 822
+Adding edge bw stations sde->patl 2018/02/18 22:10:27
+Start Used memory is megabytes: 530
+Adding edge bw stations patl->bta 2018/02/18 22:10:29
+Start Used memory is megabytes: 559
+Adding edge bw stations bta->dest 2018/02/18 22:10:32
+Start Used memory is megabytes: 585
+Edge size: 209821
+Finding shortest path bw : source:0:12:58 >> dest
+Best Path till now cost : 0.0 >> [source:0:12:58, gnhi:0:12:58]
+Start Used memory is megabytes: 585
+Best Path till now cost : 5.0 >> [source:0:12:58, gnhi:0:12:58, sde:0:13:3]
+Start Used memory is megabytes: 585
+Best Path till now cost : 7.0 >> [source:0:12:58, gnhi:0:12:58, sde:0:13:3, patl:0:13:5]
+Start Used memory is megabytes: 585
+Best Path till now cost : 9.0 >> [source:0:12:58, gnhi:0:12:58, sde:0:13:3, patl:0:13:5, bta:0:13:7]
+Start Used memory is megabytes: 585
+Best Path till now cost : 9.0 >> [source:0:12:58, gnhi:0:12:58, sde:0:13:3, patl:0:13:5, bta:0:13:7, dest]
+Start Used memory is megabytes: 585
+Accepted Path found :[source:0:12:58, gnhi:0:12:58, sde:0:13:3, patl:0:13:5, bta:0:13:7, dest] cost: 9.0
+Heap Empty [[source:0:12:58, gnhi:0:12:58, sde:0:13:3, patl:0:13:5, bta:0:13:7, dest]]
+Rejected paths:0
+Duration: 8724 ms
+1	9.0
+---------------------------------------------------------------------------------------------------------
+Accepted Path Found : [source:0:12:12, pnbe:0:12:39, scy:0:12:42, pws:0:12:45, dnr:0:12:49, neo:0:12:55, gnhi:0:12:58, sde:0:13:3, patl:0:13:5, bta:0:13:7, dest] cost: 28.0
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:10:32
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[60.0, 60.0, 66.5, 69.1, 71.7, 71.7]
+Station size: 4
+Initializing graph
+Adding edge bw stations source->gnhi 2018/02/18 22:10:32
+Start Used memory is megabytes: 824
+Adding edge bw stations gnhi->sde 2018/02/18 22:10:32
+Start Used memory is megabytes: 827
+Adding edge bw stations sde->patl 2018/02/18 22:10:35
+Start Used memory is megabytes: 585
+Adding edge bw stations patl->bta 2018/02/18 22:10:38
+Start Used memory is megabytes: 642
+Adding edge bw stations bta->dest 2018/02/18 22:10:41
+Start Used memory is megabytes: 718
+Edge size: 209821
+Finding shortest path bw : source:0:13:22 >> dest
+Best Path till now cost : 0.0 >> [source:0:13:22, gnhi:0:13:22]
+Start Used memory is megabytes: 719
+Best Path till now cost : 5.0 >> [source:0:13:22, gnhi:0:13:22, sde:0:13:27]
+Start Used memory is megabytes: 719
+Best Path till now cost : 7.0 >> [source:0:13:22, gnhi:0:13:22, sde:0:13:27, patl:0:13:29]
+Start Used memory is megabytes: 719
+Best Path till now cost : 9.0 >> [source:0:13:22, gnhi:0:13:22, sde:0:13:27, patl:0:13:29, bta:0:13:31]
+Start Used memory is megabytes: 719
+Best Path till now cost : 9.0 >> [source:0:13:22, gnhi:0:13:22, sde:0:13:27, patl:0:13:29, bta:0:13:31, dest]
+Start Used memory is megabytes: 719
+Accepted Path found :[source:0:13:22, gnhi:0:13:22, sde:0:13:27, patl:0:13:29, bta:0:13:31, dest] cost: 9.0
+Heap Empty [[source:0:13:22, gnhi:0:13:22, sde:0:13:27, patl:0:13:29, bta:0:13:31, dest]]
+Rejected paths:0
+Duration: 8613 ms
+1	9.0
+---------------------------------------------------------------------------------------------------------
+Accepted Path Found : [source:0:12:12, pnbe:0:13:3, scy:0:13:6, pws:0:13:9, dnr:0:13:13, neo:0:13:19, gnhi:0:13:22, sde:0:13:27, patl:0:13:29, bta:0:13:31, dest] cost: 28.0
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:10:41
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[60.0, 60.0, 66.5, 69.1, 71.7, 71.7]
+Station size: 4
+Initializing graph
+Adding edge bw stations source->gnhi 2018/02/18 22:10:41
+Start Used memory is megabytes: 958
+Adding edge bw stations gnhi->sde 2018/02/18 22:10:41
+Start Used memory is megabytes: 961
+Adding edge bw stations sde->patl 2018/02/18 22:10:44
+Start Used memory is megabytes: 776
+Adding edge bw stations patl->bta 2018/02/18 22:10:47
+Start Used memory is megabytes: 920
+Adding edge bw stations bta->dest 2018/02/18 22:10:50
+Start Used memory is megabytes: 1088
+Edge size: 209821
+Finding shortest path bw : source:0:12:52 >> dest
+Best Path till now cost : 0.0 >> [source:0:12:52, gnhi:0:12:52]
+Start Used memory is megabytes: 1089
+Best Path till now cost : 5.0 >> [source:0:12:52, gnhi:0:12:52, sde:0:12:57]
+Start Used memory is megabytes: 1089
+Best Path till now cost : 7.0 >> [source:0:12:52, gnhi:0:12:52, sde:0:12:57, patl:0:12:59]
+Start Used memory is megabytes: 1089
+Best Path till now cost : 9.0 >> [source:0:12:52, gnhi:0:12:52, sde:0:12:57, patl:0:12:59, bta:0:13:1]
+Start Used memory is megabytes: 1089
+Best Path till now cost : 9.0 >> [source:0:12:52, gnhi:0:12:52, sde:0:12:57, patl:0:12:59, bta:0:13:1, dest]
+Start Used memory is megabytes: 1089
+Accepted Path found :[source:0:12:52, gnhi:0:12:52, sde:0:12:57, patl:0:12:59, bta:0:13:1, dest] cost: 9.0
+Heap Empty [[source:0:12:52, gnhi:0:12:52, sde:0:12:57, patl:0:12:59, bta:0:13:1, dest]]
+Rejected paths:0
+Duration: 8708 ms
+1	9.0
+---------------------------------------------------------------------------------------------------------
+Accepted Path Found : [source:0:12:12, pnbe:0:12:33, scy:0:12:36, pws:0:12:39, dnr:0:12:43, neo:0:12:49, gnhi:0:12:52, sde:0:12:57, patl:0:12:59, bta:0:13:1, dest] cost: 28.0
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:10:50
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[60.0, 60.0, 66.5, 69.1, 71.7, 71.7]
+Station size: 4
+Initializing graph
+Adding edge bw stations source->gnhi 2018/02/18 22:10:50
+Start Used memory is megabytes: 569
+Adding edge bw stations gnhi->sde 2018/02/18 22:10:50
+Start Used memory is megabytes: 571
+Adding edge bw stations sde->patl 2018/02/18 22:10:53
+Start Used memory is megabytes: 1236
+Adding edge bw stations patl->bta 2018/02/18 22:10:55
+Start Used memory is megabytes: 715
+Adding edge bw stations bta->dest 2018/02/18 22:10:58
+Start Used memory is megabytes: 978
+Edge size: 209821
+Finding shortest path bw : source:0:12:53 >> dest
+Best Path till now cost : 0.0 >> [source:0:12:53, gnhi:0:12:53]
+Start Used memory is megabytes: 978
+Best Path till now cost : 5.0 >> [source:0:12:53, gnhi:0:12:53, sde:0:12:58]
+Start Used memory is megabytes: 978
+Best Path till now cost : 7.0 >> [source:0:12:53, gnhi:0:12:53, sde:0:12:58, patl:0:13:0]
+Start Used memory is megabytes: 978
+Best Path till now cost : 9.0 >> [source:0:12:53, gnhi:0:12:53, sde:0:12:58, patl:0:13:0, bta:0:13:2]
+Start Used memory is megabytes: 978
+Best Path till now cost : 9.0 >> [source:0:12:53, gnhi:0:12:53, sde:0:12:58, patl:0:13:0, bta:0:13:2, dest]
+Start Used memory is megabytes: 978
+Accepted Path found :[source:0:12:53, gnhi:0:12:53, sde:0:12:58, patl:0:13:0, bta:0:13:2, dest] cost: 9.0
+Heap Empty [[source:0:12:53, gnhi:0:12:53, sde:0:12:58, patl:0:13:0, bta:0:13:2, dest]]
+Rejected paths:0
+Duration: 8683 ms
+1	9.0
+---------------------------------------------------------------------------------------------------------
+Accepted Path Found : [source:0:12:12, pnbe:0:12:34, scy:0:12:37, pws:0:12:40, dnr:0:12:44, neo:0:12:50, gnhi:0:12:53, sde:0:12:58, patl:0:13:0, bta:0:13:2, dest] cost: 28.0
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:10:58
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[60.0, 60.0, 66.5, 69.1, 71.7, 71.7]
+Station size: 4
+Initializing graph
+Adding edge bw stations source->gnhi 2018/02/18 22:10:59
+Start Used memory is megabytes: 1217
+Adding edge bw stations gnhi->sde 2018/02/18 22:10:59
+Start Used memory is megabytes: 1220
+Adding edge bw stations sde->patl 2018/02/18 22:11:01
+Start Used memory is megabytes: 1230
+Adding edge bw stations patl->bta 2018/02/18 22:11:04
+Start Used memory is megabytes: 820
+Adding edge bw stations bta->dest 2018/02/18 22:11:07
+Start Used memory is megabytes: 1194
+Edge size: 209821
+Finding shortest path bw : source:0:13:13 >> dest
+Best Path till now cost : 0.0 >> [source:0:13:13, gnhi:0:13:13]
+Start Used memory is megabytes: 1195
+Best Path till now cost : 5.0 >> [source:0:13:13, gnhi:0:13:13, sde:0:13:18]
+Start Used memory is megabytes: 1195
+Best Path till now cost : 7.0 >> [source:0:13:13, gnhi:0:13:13, sde:0:13:18, patl:0:13:20]
+Start Used memory is megabytes: 1195
+Best Path till now cost : 9.0 >> [source:0:13:13, gnhi:0:13:13, sde:0:13:18, patl:0:13:20, bta:0:13:22]
+Start Used memory is megabytes: 1195
+Best Path till now cost : 9.0 >> [source:0:13:13, gnhi:0:13:13, sde:0:13:18, patl:0:13:20, bta:0:13:22, dest]
+Start Used memory is megabytes: 1195
+Accepted Path found :[source:0:13:13, gnhi:0:13:13, sde:0:13:18, patl:0:13:20, bta:0:13:22, dest] cost: 9.0
+Heap Empty [[source:0:13:13, gnhi:0:13:13, sde:0:13:18, patl:0:13:20, bta:0:13:22, dest]]
+Rejected paths:0
+Duration: 8513 ms
+1	9.0
+---------------------------------------------------------------------------------------------------------
+Accepted Path Found : [source:0:12:12, pnbe:0:12:54, scy:0:12:57, pws:0:13:0, dnr:0:13:4, neo:0:13:10, gnhi:0:13:13, sde:0:13:18, patl:0:13:20, bta:0:13:22, dest] cost: 28.0
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:11:07
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[60.0, 60.0, 66.5, 69.1, 71.7, 71.7]
+Station size: 4
+Initializing graph
+Adding edge bw stations source->gnhi 2018/02/18 22:11:07
+Start Used memory is megabytes: 707
+Adding edge bw stations gnhi->sde 2018/02/18 22:11:07
+Start Used memory is megabytes: 710
+Adding edge bw stations sde->patl 2018/02/18 22:11:10
+Start Used memory is megabytes: 843
+Adding edge bw stations patl->bta 2018/02/18 22:11:13
+Start Used memory is megabytes: 1303
+Adding edge bw stations bta->dest 2018/02/18 22:11:16
+Start Used memory is megabytes: 1098
+Edge size: 209821
+Finding shortest path bw : source:0:13:16 >> dest
+Best Path till now cost : 0.0 >> [source:0:13:16, gnhi:0:13:16]
+Start Used memory is megabytes: 1098
+Best Path till now cost : 5.0 >> [source:0:13:16, gnhi:0:13:16, sde:0:13:21]
+Start Used memory is megabytes: 1098
+Best Path till now cost : 7.0 >> [source:0:13:16, gnhi:0:13:16, sde:0:13:21, patl:0:13:23]
+Start Used memory is megabytes: 1098
+Best Path till now cost : 9.0 >> [source:0:13:16, gnhi:0:13:16, sde:0:13:21, patl:0:13:23, bta:0:13:25]
+Start Used memory is megabytes: 1098
+Best Path till now cost : 9.0 >> [source:0:13:16, gnhi:0:13:16, sde:0:13:21, patl:0:13:23, bta:0:13:25, dest]
+Start Used memory is megabytes: 1098
+Accepted Path found :[source:0:13:16, gnhi:0:13:16, sde:0:13:21, patl:0:13:23, bta:0:13:25, dest] cost: 9.0
+Heap Empty [[source:0:13:16, gnhi:0:13:16, sde:0:13:21, patl:0:13:23, bta:0:13:25, dest]]
+Rejected paths:0
+Duration: 8930 ms
+1	9.0
+---------------------------------------------------------------------------------------------------------
+Accepted Path Found : [source:0:12:12, pnbe:0:12:57, scy:0:13:0, pws:0:13:3, dnr:0:13:7, neo:0:13:13, gnhi:0:13:16, sde:0:13:21, patl:0:13:23, bta:0:13:25, dest] cost: 28.0
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:11:16
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[60.0, 60.0, 66.5, 69.1, 71.7, 71.7]
+Station size: 4
+Initializing graph
+Adding edge bw stations source->gnhi 2018/02/18 22:11:16
+Start Used memory is megabytes: 630
+Adding edge bw stations gnhi->sde 2018/02/18 22:11:16
+Start Used memory is megabytes: 633
+Adding edge bw stations sde->patl 2018/02/18 22:11:19
+Start Used memory is megabytes: 914
+Adding edge bw stations patl->bta 2018/02/18 22:11:22
+Start Used memory is megabytes: 846
+Adding edge bw stations bta->dest 2018/02/18 22:11:24
+Start Used memory is megabytes: 826
+Edge size: 209821
+Finding shortest path bw : source:0:13:23 >> dest
+Best Path till now cost : 0.0 >> [source:0:13:23, gnhi:0:13:23]
+Start Used memory is megabytes: 827
+Best Path till now cost : 5.0 >> [source:0:13:23, gnhi:0:13:23, sde:0:13:28]
+Start Used memory is megabytes: 827
+Best Path till now cost : 7.0 >> [source:0:13:23, gnhi:0:13:23, sde:0:13:28, patl:0:13:30]
+Start Used memory is megabytes: 827
+Best Path till now cost : 9.0 >> [source:0:13:23, gnhi:0:13:23, sde:0:13:28, patl:0:13:30, bta:0:13:32]
+Start Used memory is megabytes: 827
+Best Path till now cost : 9.0 >> [source:0:13:23, gnhi:0:13:23, sde:0:13:28, patl:0:13:30, bta:0:13:32, dest]
+Start Used memory is megabytes: 827
+Accepted Path found :[source:0:13:23, gnhi:0:13:23, sde:0:13:28, patl:0:13:30, bta:0:13:32, dest] cost: 9.0
+Heap Empty [[source:0:13:23, gnhi:0:13:23, sde:0:13:28, patl:0:13:30, bta:0:13:32, dest]]
+Rejected paths:0
+Duration: 8685 ms
+1	9.0
+---------------------------------------------------------------------------------------------------------
+Accepted Path Found : [source:0:12:12, pnbe:0:13:4, scy:0:13:7, pws:0:13:10, dnr:0:13:14, neo:0:13:20, gnhi:0:13:23, sde:0:13:28, patl:0:13:30, bta:0:13:32, dest] cost: 28.0
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:11:24
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[60.0, 60.0, 66.5, 69.1, 71.7, 71.7]
+Station size: 4
+Initializing graph
+Adding edge bw stations source->gnhi 2018/02/18 22:11:25
+Start Used memory is megabytes: 1066
+Adding edge bw stations gnhi->sde 2018/02/18 22:11:25
+Start Used memory is megabytes: 1069
+Adding edge bw stations sde->patl 2018/02/18 22:11:27
+Start Used memory is megabytes: 821
+Adding edge bw stations patl->bta 2018/02/18 22:11:30
+Start Used memory is megabytes: 923
+Adding edge bw stations bta->dest 2018/02/18 22:11:33
+Start Used memory is megabytes: 1081
+Edge size: 209821
+Finding shortest path bw : source:0:12:54 >> dest
+Best Path till now cost : 0.0 >> [source:0:12:54, gnhi:0:12:54]
+Start Used memory is megabytes: 1082
+Best Path till now cost : 5.0 >> [source:0:12:54, gnhi:0:12:54, sde:0:12:59]
+Start Used memory is megabytes: 1082
+Best Path till now cost : 7.0 >> [source:0:12:54, gnhi:0:12:54, sde:0:12:59, patl:0:13:1]
+Start Used memory is megabytes: 1082
+Best Path till now cost : 9.0 >> [source:0:12:54, gnhi:0:12:54, sde:0:12:59, patl:0:13:1, bta:0:13:3]
+Start Used memory is megabytes: 1082
+Best Path till now cost : 9.0 >> [source:0:12:54, gnhi:0:12:54, sde:0:12:59, patl:0:13:1, bta:0:13:3, dest]
+Start Used memory is megabytes: 1082
+Accepted Path found :[source:0:12:54, gnhi:0:12:54, sde:0:12:59, patl:0:13:1, bta:0:13:3, dest] cost: 9.0
+Heap Empty [[source:0:12:54, gnhi:0:12:54, sde:0:12:59, patl:0:13:1, bta:0:13:3, dest]]
+Rejected paths:0
+Duration: 8989 ms
+1	9.0
+---------------------------------------------------------------------------------------------------------
+Accepted Path Found : [source:0:12:12, pnbe:0:12:35, scy:0:12:38, pws:0:12:41, dnr:0:12:45, neo:0:12:51, gnhi:0:12:54, sde:0:12:59, patl:0:13:1, bta:0:13:3, dest] cost: 28.0
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:11:33
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[60.0, 60.0, 66.5, 69.1, 71.7, 71.7]
+Station size: 4
+Initializing graph
+Adding edge bw stations source->gnhi 2018/02/18 22:11:34
+Start Used memory is megabytes: 1321
+Adding edge bw stations gnhi->sde 2018/02/18 22:11:34
+Start Used memory is megabytes: 662
+Adding edge bw stations sde->patl 2018/02/18 22:11:37
+Start Used memory is megabytes: 1266
+Adding edge bw stations patl->bta 2018/02/18 22:11:39
+Start Used memory is megabytes: 935
+Adding edge bw stations bta->dest 2018/02/18 22:11:42
+Start Used memory is megabytes: 1312
+Edge size: 209821
+Finding shortest path bw : source:0:12:55 >> dest
+Best Path till now cost : 0.0 >> [source:0:12:55, gnhi:0:12:55]
+Start Used memory is megabytes: 1313
+Best Path till now cost : 5.0 >> [source:0:12:55, gnhi:0:12:55, sde:0:13:0]
+Start Used memory is megabytes: 1313
+Best Path till now cost : 7.0 >> [source:0:12:55, gnhi:0:12:55, sde:0:13:0, patl:0:13:2]
+Start Used memory is megabytes: 1313
+Best Path till now cost : 9.0 >> [source:0:12:55, gnhi:0:12:55, sde:0:13:0, patl:0:13:2, bta:0:13:4]
+Start Used memory is megabytes: 1313
+Best Path till now cost : 9.0 >> [source:0:12:55, gnhi:0:12:55, sde:0:13:0, patl:0:13:2, bta:0:13:4, dest]
+Start Used memory is megabytes: 1313
+Accepted Path found :[source:0:12:55, gnhi:0:12:55, sde:0:13:0, patl:0:13:2, bta:0:13:4, dest] cost: 9.0
+Heap Empty [[source:0:12:55, gnhi:0:12:55, sde:0:13:0, patl:0:13:2, bta:0:13:4, dest]]
+Rejected paths:0
+Duration: 9022 ms
+1	9.0
+---------------------------------------------------------------------------------------------------------
+Accepted Path Found : [source:0:12:12, pnbe:0:12:36, scy:0:12:39, pws:0:12:42, dnr:0:12:46, neo:0:12:52, gnhi:0:12:55, sde:0:13:0, patl:0:13:2, bta:0:13:4, dest] cost: 28.0
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:11:42
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[60.0, 60.0, 66.5, 69.1, 71.7, 71.7]
+Station size: 4
+Initializing graph
+Adding edge bw stations source->gnhi 2018/02/18 22:11:43
+Start Used memory is megabytes: 307
+Adding edge bw stations gnhi->sde 2018/02/18 22:11:43
+Start Used memory is megabytes: 310
+Adding edge bw stations sde->patl 2018/02/18 22:11:46
+Start Used memory is megabytes: 433
+Adding edge bw stations patl->bta 2018/02/18 22:11:49
+Start Used memory is megabytes: 650
+Adding edge bw stations bta->dest 2018/02/18 22:11:52
+Start Used memory is megabytes: 903
+Edge size: 209821
+Finding shortest path bw : source:0:13:14 >> dest
+Best Path till now cost : 0.0 >> [source:0:13:14, gnhi:0:13:14]
+Start Used memory is megabytes: 903
+Best Path till now cost : 5.0 >> [source:0:13:14, gnhi:0:13:14, sde:0:13:19]
+Start Used memory is megabytes: 903
+Best Path till now cost : 7.0 >> [source:0:13:14, gnhi:0:13:14, sde:0:13:19, patl:0:13:21]
+Start Used memory is megabytes: 903
+Best Path till now cost : 9.0 >> [source:0:13:14, gnhi:0:13:14, sde:0:13:19, patl:0:13:21, bta:0:13:23]
+Start Used memory is megabytes: 903
+Best Path till now cost : 9.0 >> [source:0:13:14, gnhi:0:13:14, sde:0:13:19, patl:0:13:21, bta:0:13:23, dest]
+Start Used memory is megabytes: 903
+Accepted Path found :[source:0:13:14, gnhi:0:13:14, sde:0:13:19, patl:0:13:21, bta:0:13:23, dest] cost: 9.0
+Heap Empty [[source:0:13:14, gnhi:0:13:14, sde:0:13:19, patl:0:13:21, bta:0:13:23, dest]]
+Rejected paths:0
+Duration: 9640 ms
+1	9.0
+---------------------------------------------------------------------------------------------------------
+Accepted Path Found : [source:0:12:12, pnbe:0:12:55, scy:0:12:58, pws:0:13:1, dnr:0:13:5, neo:0:13:11, gnhi:0:13:14, sde:0:13:19, patl:0:13:21, bta:0:13:23, dest] cost: 28.0
+
+Path Found : [source:0:12:12, pnbe:0:13:6, scy:0:13:9, pws:0:13:12, dnr:0:13:16, neo:0:13:22, gnhi:0:13:25, sde:0:13:30, patl:0:13:32, bta:0:13:34, dest] cost: 28.0
+Path Found : [source:0:12:12, pnbe:0:12:55, scy:0:12:58, pws:0:13:1, dnr:0:13:5, neo:0:13:11, gnhi:0:13:14, sde:0:13:19, patl:0:13:21, bta:0:13:23, dest] cost: 28.0
+Path Found : [source:0:12:12, pnbe:0:12:36, scy:0:12:39, pws:0:12:42, dnr:0:12:46, neo:0:12:52, gnhi:0:12:55, sde:0:13:0, patl:0:13:2, bta:0:13:4, dest] cost: 28.0
+Path Found : [source:0:12:12, pnbe:0:12:35, scy:0:12:38, pws:0:12:41, dnr:0:12:45, neo:0:12:51, gnhi:0:12:54, sde:0:12:59, patl:0:13:1, bta:0:13:3, dest] cost: 28.0
+Path Found : [source:0:12:12, pnbe:0:13:4, scy:0:13:7, pws:0:13:10, dnr:0:13:14, neo:0:13:20, gnhi:0:13:23, sde:0:13:28, patl:0:13:30, bta:0:13:32, dest] cost: 28.0
+Path Found : [source:0:12:12, pnbe:0:12:57, scy:0:13:0, pws:0:13:3, dnr:0:13:7, neo:0:13:13, gnhi:0:13:16, sde:0:13:21, patl:0:13:23, bta:0:13:25, dest] cost: 28.0
+Path Found : [source:0:12:12, pnbe:0:12:54, scy:0:12:57, pws:0:13:0, dnr:0:13:4, neo:0:13:10, gnhi:0:13:13, sde:0:13:18, patl:0:13:20, bta:0:13:22, dest] cost: 28.0
+Path Found : [source:0:12:12, pnbe:0:12:34, scy:0:12:37, pws:0:12:40, dnr:0:12:44, neo:0:12:50, gnhi:0:12:53, sde:0:12:58, patl:0:13:0, bta:0:13:2, dest] cost: 28.0
+Path Found : [source:0:12:12, pnbe:0:12:33, scy:0:12:36, pws:0:12:39, dnr:0:12:43, neo:0:12:49, gnhi:0:12:52, sde:0:12:57, patl:0:12:59, bta:0:13:1, dest] cost: 28.0
+Path Found : [source:0:12:12, pnbe:0:13:3, scy:0:13:6, pws:0:13:9, dnr:0:13:13, neo:0:13:19, gnhi:0:13:22, sde:0:13:27, patl:0:13:29, bta:0:13:31, dest] cost: 28.0

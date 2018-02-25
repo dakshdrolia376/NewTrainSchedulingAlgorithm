@@ -1,7 +1,0 @@
-mughal-sarai-junction-mgs	08:35	08:55	0.0
-new-west-cabin-newc	08:59	08:59	1.2
-block-hut-b-bhbv	09:04	09:04	3.1
-vyasnagar-vyn	09:16	09:17	7.3
-baba-bhagwan-ram-halt-bbrm	09:25	09:25	10.4
-kashi-kei	09:31	09:32	12.7
-varanasi-junction-bsb	09:45	10:05	18.1

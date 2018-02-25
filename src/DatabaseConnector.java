@@ -41,10 +41,10 @@ public class DatabaseConnector {
     }
 
     public boolean deleteAllNodes(){
-        if(!getConnection()){
-            return false;
-        }
         try {
+            if(!getConnection()){
+                return false;
+            }
             // the mysql insert statement
             System.out.println("Initializing database");
             con.setAutoCommit(false);
@@ -67,10 +67,10 @@ public class DatabaseConnector {
     }
 
     public boolean insertIntoNode(Node nodeId){
-        if(!getConnection()){
-            return false;
-        }
         try {
+            if(!getConnection()){
+                return false;
+            }
             // the mysql insert statement
             con.setAutoCommit(false);
             String query = "insert into nodes (Name) values (?);";
@@ -122,7 +122,6 @@ public class DatabaseConnector {
 
     public boolean insertIntoTrainBatch(List<Integer> trainIndexes, List<Integer> trainNos, List<String> trainNames,
                                         List<String> travelDays){
-
         try {
             if (!getConnection()) {
                 return false;
@@ -171,7 +170,6 @@ public class DatabaseConnector {
                                           List<Integer> terminatingTrains,List<Integer> haltingTrains,
                                           List<Integer> platforms,List<String> elevations,
                                           List<String> railwayZones,List<String> addresses){
-
         try {
             if (!getConnection()) {
                 return false;
@@ -220,9 +218,7 @@ public class DatabaseConnector {
 
     public boolean insertIntoStoppageBatch(List<Integer> trainNos, List<String> stationIds, List<TrainTime> arrivals,
                                            List<TrainTime> departures, List<Double> distances){
-
         try {
-
             if (!getConnection()) {
                 return false;
             }
@@ -262,10 +258,10 @@ public class DatabaseConnector {
 
     @SuppressWarnings("unused")
     public boolean insertIntoEdge(Edge edge){
-        if(!getConnection()){
-            return false;
-        }
         try {
+            if(!getConnection()){
+                return false;
+            }
             if(edge.getWeight()<0){
                 System.out.println("Edge weight cant be negative");
                 return false;
@@ -293,10 +289,10 @@ public class DatabaseConnector {
     }
 
     public boolean insertIntoEdgeBatch(List<Edge> edges){
-        if(!getConnection()){
-            return false;
-        }
         try {
+            if(!getConnection()){
+                return false;
+            }
             // the mysql insert statement
             String query = "insert into edges (FromNode, Weight, ToNode) values ((select ID from nodes where Name = ?)" +
                     ",?,(select ID from nodes where Name = ?));";
@@ -311,7 +307,6 @@ public class DatabaseConnector {
                     // System.out.println("Edge weight cant be negative");
                     continue;
                 }
-
                 preparedStmt.setString(1, edge.getFrom().toString());
                 preparedStmt.setDouble(2, edge.getWeight());
                 preparedStmt.setString(3, edge.getTo().toString());
@@ -332,10 +327,10 @@ public class DatabaseConnector {
     }
 
     public List<Node> getNodes(){
-        if(!getConnection()){
-            return Collections.emptyList();
-        }
         try {
+            if(!getConnection()){
+                return Collections.emptyList();
+            }
             // the mysql insert statement
             String query = "select * from nodes;";
             // create the mysql insert prepared statement
@@ -355,10 +350,10 @@ public class DatabaseConnector {
     }
 
     public List<Edge> getEdges(Node nodeIdFrom){
-        if(!getConnection()){
-            return Collections.emptyList();
-        }
         try {
+            if(!getConnection()){
+                return Collections.emptyList();
+            }
             // the mysql insert statement
             String query = "select nf.Name as NodeFrom, nt.Name as NodeTo, e.weight as Weight " +
                     "from edges e inner join nodes nf on nf.ID = e.FromNode " +
@@ -382,10 +377,10 @@ public class DatabaseConnector {
     }
 
     public List<Integer> getTrainNosForStation(List<String> stationIds){
-        if(!getConnection()){
-            return Collections.emptyList();
-        }
         try {
+            if(!getConnection()){
+                return Collections.emptyList();
+            }
             requireNonNull(stationIds, "stationId cant be null.");
             if(stationIds.size()<=0){
                 System.out.println("empty station ids list");
@@ -420,10 +415,10 @@ public class DatabaseConnector {
     }
 
     public List<Integer> getTrainNosForDay(int day){
-        if(!getConnection()){
-            return Collections.emptyList();
-        }
         try {
+            if(!getConnection()){
+                return Collections.emptyList();
+            }
             // the mysql insert statement
             String query = "select distinct Num from train where ";
             // create the mysql insert prepared statement
@@ -470,10 +465,10 @@ public class DatabaseConnector {
     }
 
     public double getEdgeWeight(Node nodeIdFrom, Node nodeIdTo){
-        if(!getConnection()){
-            return -1;
-        }
         try {
+            if(!getConnection()){
+                return -1;
+            }
             // the mysql insert statement
             String query = "select * from edges where FromNode = (select ID from nodes where Name = ?) " +
                     "and ToNode = (select ID from nodes where Name = ?);";

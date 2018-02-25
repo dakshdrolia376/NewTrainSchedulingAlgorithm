@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.PrintStream;
 import java.util.*;
 
 public class ScheduleByDivision {
@@ -14,42 +15,30 @@ public class ScheduleByDivision {
     private List<Integer> stationNoOfDownTrackList;
     private List<Integer> stationNoOfDualTrackList;
     private List<Integer> stopTimeList;
-    private Collection<Path> bestAns;
+    private Queue<Path> bestAns;
 
     public List<Path> getSmallPart(String pathTemp, int firstIndex, int lastIndex, int noOfPaths, TrainTime sourceTime,
                                    int minDelayBwTrains, double avgSpeed, String pathOldUpTrainSchedule,
-                                   String pathOldDownTrainSchedule, int startDay,
+                                   String pathOldDownTrainSchedule, String pathOldSSTrainSchedule, int startDay,
                                    int startHrs, int startMinutes, int endDay, int endHrs, int endMinutes,
-                                   int maxDelayBwStations, boolean isSingleDay, int trainDay, double ratio){
-        Scheduler scheduler = new Scheduler();
-        if(!scheduler.addRoute(this.stationIdList.subList(firstIndex,lastIndex),
-                this.stationNameList.subList(firstIndex,lastIndex), this.stationDistanceList.subList(firstIndex,lastIndex),
-                this.stationIsDirectLineList.subList(firstIndex,lastIndex),
-                this.stationNoOFUpPlatformList.subList(firstIndex,lastIndex),
-                this.stationNoOFDownPlatformList.subList(firstIndex,lastIndex),
-                this.stationNoOFDualPlatformList.subList(firstIndex,lastIndex),
-                this.stationNoOfUpTrackList.subList(firstIndex,lastIndex),
-                this.stationNoOfDownTrackList.subList(firstIndex,lastIndex),
-                this.stationNoOfDualTrackList.subList(firstIndex,lastIndex))){
-            System.out.println("Error in route info");
-            return Collections.emptyList();
-        }
+                                   int maxDelayBwStations, boolean isSingleDay, int trainDay, double ratio,
+                                   boolean aroundSourceTime){
 
-        return new KBestSchedule().getScheduleNewTrain(pathTemp, scheduler.getStationIdList(),
-                scheduler.getStationNameList(), scheduler.getStationDistanceList(),
-                scheduler.getStationDirectLineList(), scheduler.getStationNoOfUpPlatformList(),
-                scheduler.getStationNoOfDownPlatformList(), scheduler.getStationNoOfDualPlatformList(),
-                scheduler.getStationNoOfUpTrackList(), scheduler.getStationNoOfDownTrackList(),
-                scheduler.getStationNoOfDualTrackList(), noOfPaths, sourceTime, minDelayBwTrains, avgSpeed,
+        return new KBestSchedule().getScheduleNewTrain(pathTemp, this.stationIdList.subList(firstIndex,lastIndex),
+                this.stationNameList.subList(firstIndex,lastIndex), this.stationDistanceList.subList(firstIndex,lastIndex),
+                this.stationIsDirectLineList.subList(firstIndex,lastIndex), this.stationNoOFUpPlatformList.subList(firstIndex,lastIndex),
+                this.stationNoOFDownPlatformList.subList(firstIndex,lastIndex), this.stationNoOFDualPlatformList.subList(firstIndex,lastIndex),
+                this.stationNoOfUpTrackList.subList(firstIndex,lastIndex), this.stationNoOfDownTrackList.subList(firstIndex,lastIndex),
+                this.stationNoOfDualTrackList.subList(firstIndex,lastIndex), noOfPaths, sourceTime, minDelayBwTrains, avgSpeed,
                 this.stopTimeList.subList(firstIndex,lastIndex), pathOldUpTrainSchedule,pathOldDownTrainSchedule,
-                trainDay,startDay,startHrs, startMinutes, endDay,endHrs, endMinutes,maxDelayBwStations,
-                isSingleDay, false, ratio);
+                pathOldSSTrainSchedule, trainDay,startDay,startHrs, startMinutes, endDay,endHrs, endMinutes,maxDelayBwStations,
+                isSingleDay, false, ratio, aroundSourceTime);
     }
 
     public void getPathsRecur(String pathTemp, int i, int stationGroupSizeForPart, int noOfPaths, TrainTime sourceTime,
                               int minDelayBwTrains, double avgSpeed, String pathOldUpTrainSchedule,
-                              String pathOldDownTrainSchedule, int maxDelayBwStations, boolean isSingleDay,
-                              int trainDay, double ratio, Path pathPrevious){
+                              String pathOldDownTrainSchedule, String pathOldSSTrainSchedule, int maxDelayBwStations,
+                              boolean isSingleDay, int trainDay, double ratio, Path pathPrevious){
         if(i!=0 && pathPrevious==null){
             System.out.println("Previous path cant be null");
             return;
@@ -77,16 +66,13 @@ public class ScheduleByDivision {
         }
 
         // add 0 to wait time of first
-        List<Path> paths = getSmallPart(pathTemp, i, last, noOfPaths*10, sourceTime, minDelayBwTrains,
-                avgSpeed, pathOldUpTrainSchedule,pathOldDownTrainSchedule,startDay,0,0,endDay,
-                23, 59, maxDelayBwStations, isSingleDay, trainDay, ratio);
+        noOfPaths = (i==0)?noOfPaths*2:1;
+        List<Path> paths = getSmallPart(pathTemp, i, last, noOfPaths, sourceTime, minDelayBwTrains,
+                avgSpeed, pathOldUpTrainSchedule,pathOldDownTrainSchedule, pathOldSSTrainSchedule, startDay,0,0,
+                endDay, 23, 59, maxDelayBwStations, isSingleDay, trainDay, ratio, (i==0));
 
         for(Path path: paths){
             // System.out.println(" i = " + i + " last = " + last );
-            if(this.bestAns.size()>=noOfPaths){
-                System.out.println("Done returning");
-                return;
-            }
             List<Node> nodes1;
             List<Double> weights1;
             TrainTime sourceTime1;
@@ -100,38 +86,44 @@ public class ScheduleByDivision {
 
             nodes1 = path.getNodeList();
             weights1 = path.getWeightList();
-            if(pathPrevious==null){
-                pathPrevious = path;
+            Path tempPath;
+            if(i==0){
+                tempPath = path;
             }
-            Path tempPath=pathPrevious;
-            try {
-                double tempPathCost;
-                tempPath = tempPath.removeLastNode();
-                tempPathCost = tempPath.pathCost();
-                tempPath = tempPath.removeLastNode();
-                for (int i2 = 1; i2 < nodes1.size(); i2++) {
-                    tempPath = tempPath.append(nodes1.get(i2), tempPathCost + weights1.get(i2));
+            else {
+                tempPath = pathPrevious;
+                try {
+                    tempPath = tempPath.removeLastNode();
+                    double tempPathCost = tempPath.pathCost();
+                    tempPath = tempPath.removeLastNode();
+                    for (int i2 = 1; i2 < nodes1.size(); i2++) {
+                        tempPath = tempPath.append(nodes1.get(i2), tempPathCost + weights1.get(i2));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    continue;
                 }
-            }
-            catch (Exception e){
-                e.printStackTrace();
-                continue;
             }
             if(last<this.stationIdList.size()){
                 getPathsRecur(pathTemp, i1, stationGroupSizeForPart,noOfPaths, sourceTime1, minDelayBwTrains,
-                        avgSpeed,pathOldUpTrainSchedule, pathOldDownTrainSchedule,maxDelayBwStations, isSingleDay,
-                        trainDay, ratio, tempPath);
+                        avgSpeed,pathOldUpTrainSchedule, pathOldDownTrainSchedule, pathOldSSTrainSchedule, maxDelayBwStations,
+                        isSingleDay, trainDay, ratio, tempPath);
             }
             else{
                 this.bestAns.add(tempPath);
-                System.out.println("Path Found : " + tempPath.toString() + " cost: " + tempPath.pathCost());
+                System.out.println("Accepted Path Found : " + tempPath.toString() + " cost: " + tempPath.pathCost());
+                break;
             }
         }
     }
 
     public void scheduleByBreaking(String pathTemp, String pathRoute, String pathBestRoute,
-                                   String pathOldUpTrainSchedule, String pathOldDownTrainSchedule,
-                                   boolean isSingleDay, int trainDay, double ratio){
+                                   String pathOldUpTrainSchedule, String pathOldDownTrainSchedule,String pathOldSSTrainSchedule,
+                                   boolean isSingleDay, int trainDay, double ratio, String pathLog, double avgSpeed,
+                                   TrainTime sourceTime){
+        if(sourceTime!=null){
+            sourceTime = new TrainTime(sourceTime);
+        }
         if(ratio<1){
             System.out.println("Ratio must be greater than 1.0");
             return;
@@ -162,23 +154,48 @@ public class ScheduleByDivision {
         this.stationNoOfDualTrackList = scheduler.getStationNoOfDualTrackList();
         this.stopTimeList = stopTime;
 
-        Double avgSpeed = 80.0;
         int minDelayBwTrains = 3;
-        int noOfPaths = 2;
-        int stationGroupSizeForPart = 10;
+        int noOfPaths = 10;
+        int stationGroupSizeForPart = (stopTime.size()/2)+1;
+        if(stationGroupSizeForPart>12){
+            stationGroupSizeForPart=12;
+        }
+        double sumStopTimes =0;
+        for(int i=0;i<stationDistanceList.size();i++){
+            sumStopTimes +=stopTime.get(i);
+        }
+        double maxCostPathAllowed = (Math.ceil(((this.stationDistanceList.get(this.stationDistanceList.size()-1))/avgSpeed)*60) + sumStopTimes)*ratio;
 
-        String pathBestRouteFile = pathBestRoute + File.separator + "Type Break AvgSpeed "+avgSpeed;
-        this.bestAns = new PriorityQueue<>(Collections.reverseOrder(Comparator.comparingDouble(Path::pathCost)));
+        String pathBestRouteFile = pathBestRoute + File.separator +"Type Break Day "+trainDay+" AvgSpeed "+avgSpeed +
+                " maxRatio "+ratio +((sourceTime==null)?" unconditional ":" conditional ");
+        this.bestAns = new PriorityQueue<>(Comparator.comparingDouble(Path::pathCost));
 
-        getPathsRecur(pathTemp,0,stationGroupSizeForPart, noOfPaths,null, minDelayBwTrains,avgSpeed,
-                pathOldUpTrainSchedule,pathOldDownTrainSchedule, maxDelayBwStations, isSingleDay, trainDay, ratio,
-                null);
+        try {
+            PrintStream o1 = new PrintStream(new File(pathLog + File.separator + "Output Type Break Day "+trainDay+" AvgSpeed "+avgSpeed +
+                    " maxRatio "+ratio +((sourceTime==null)?" unconditional.log":" conditional.log")));
+            PrintStream console = System.out;
+            System.setOut(o1);
 
-        int count=0;
-        for(Path path: this.bestAns) {
-            System.out.println("Path Found : " + path.toString() + " cost: " + path.pathCost());
-            Scheduler.writePathsToFile(path,++count, pathBestRouteFile, stopTime, avgSpeed,
-                    scheduler.getStationNameList(), scheduler.getStationDistanceList());
+            getPathsRecur(pathTemp,0,stationGroupSizeForPart, noOfPaths,sourceTime, minDelayBwTrains,avgSpeed,
+                    pathOldUpTrainSchedule,pathOldDownTrainSchedule, pathOldSSTrainSchedule, maxDelayBwStations, isSingleDay, trainDay, ratio,
+                    null);
+
+            int count=0;
+            System.out.println();
+
+            while(!this.bestAns.isEmpty() && count<noOfPaths){
+                Path path = this.bestAns.remove();
+                if(path.pathCost()>maxCostPathAllowed){
+                    break;
+                }
+                System.out.println("Path Found : " + path.toString() + " cost: " + path.pathCost());
+                scheduler.writePathsToFile(path,++count, pathBestRouteFile, stopTime, avgSpeed,
+                        scheduler.getStationNameList(), scheduler.getStationDistanceList());
+            }
+            System.setOut(console);
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

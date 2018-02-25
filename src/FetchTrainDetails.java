@@ -35,8 +35,12 @@ public class FetchTrainDetails {
         this.newMethod=true;
     }
 
-    public int getTrainIndexNo(int trainNo){
-        return this.myMap.getOrDefault(trainNo, -1);
+    public String getTrainIndexNo(int trainNo){
+        int trainIndex = this.myMap.getOrDefault(trainNo, -1);
+        if(trainIndex<=0){
+            return "";
+        }
+        return this.pathDatabaseTrain + File.separator + trainIndex + ".txt";
     }
 
     public boolean fetchTrainNumber(int trainNo, String pathTrainFile){

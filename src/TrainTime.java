@@ -7,7 +7,7 @@ public class TrainTime {
     private static boolean isSingleDay = false;
 
     public static void updateIsSingleDay(boolean value){
-        System.out.println("Setting up duration of days...");
+        // System.out.println("Setting up duration of days...");
         TrainTime.isSingleDay = value;
     }
 

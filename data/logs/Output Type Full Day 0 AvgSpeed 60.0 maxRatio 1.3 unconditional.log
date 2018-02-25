@@ -1,0 +1,78 @@
+---------------------------------------------------------------------------------------------------------
+2018/02/18 22:11:52
+Avg speed: 60.0
+Mode: Single Day
+Train Day: 0
+Max ratio: 1.3
+***********************************************************************************
+[0.0, 0.0, 3.9000000000000004, 7.800000000000001, 13.0, 20.8, 24.7, 29.900000000000002, 32.5, 35.1, 35.1]
+Station size: 9
+Initializing graph
+Adding edge bw stations source->pnbe 2018/02/18 22:11:52
+Start Used memory is megabytes: 273
+Adding edge bw stations pnbe->scy 2018/02/18 22:11:52
+Start Used memory is megabytes: 273
+Adding edge bw stations scy->pws 2018/02/18 22:11:56
+Start Used memory is megabytes: 441
+Adding edge bw stations pws->dnr 2018/02/18 22:11:59
+Start Used memory is megabytes: 603
+Adding edge bw stations dnr->neo 2018/02/18 22:12:02
+Start Used memory is megabytes: 669
+Adding edge bw stations neo->gnhi 2018/02/18 22:12:05
+Start Used memory is megabytes: 538
+Adding edge bw stations gnhi->sde 2018/02/18 22:12:08
+Start Used memory is megabytes: 699
+Adding edge bw stations sde->patl 2018/02/18 22:12:11
+Start Used memory is megabytes: 768
+Adding edge bw stations patl->bta 2018/02/18 22:12:14
+Start Used memory is megabytes: 168
+Adding edge bw stations bta->dest 2018/02/18 22:12:17
+Start Used memory is megabytes: 431
+Edge size: 540147
+Finding shortest path bw : source >> dest
+Best Path till now cost : 0.0 >> [source, pnbe:0:4:11]
+Start Used memory is megabytes: 431
+Best Path till now cost : 3.0 >> [source, pnbe:0:14:42, scy:0:14:45]
+Start Used memory is megabytes: 445
+Best Path till now cost : 6.0 >> [source, pnbe:0:6:11, scy:0:6:14, pws:0:6:17]
+Start Used memory is megabytes: 458
+Best Path till now cost : 10.0 >> [source, pnbe:0:18:7, scy:0:18:10, pws:0:18:13, dnr:0:18:17]
+Start Used memory is megabytes: 478
+Best Path till now cost : 16.0 >> [source, pnbe:0:5:24, scy:0:5:27, pws:0:5:30, dnr:0:5:34, neo:0:5:40]
+Start Used memory is megabytes: 532
+Best Path till now cost : 19.0 >> [source, pnbe:0:5:24, scy:0:5:27, pws:0:5:30, dnr:0:5:34, neo:0:5:40, gnhi:0:5:43]
+Start Used memory is megabytes: 221
+Best Path till now cost : 23.0 >> [source, pnbe:0:5:24, scy:0:5:27, pws:0:5:30, dnr:0:5:34, neo:0:5:40, gnhi:0:5:43, sde:0:5:47]
+Start Used memory is megabytes: 263
+Best Path till now cost : 25.0 >> [source, pnbe:0:5:24, scy:0:5:27, pws:0:5:30, dnr:0:5:34, neo:0:5:40, gnhi:0:5:43, sde:0:5:47, patl:0:5:49]
+Start Used memory is megabytes: 285
+Best Path till now cost : 27.0 >> [source, pnbe:0:5:24, scy:0:5:27, pws:0:5:30, dnr:0:5:34, neo:0:5:40, gnhi:0:5:43, sde:0:5:47, patl:0:5:49, bta:0:5:51]
+Start Used memory is megabytes: 332
+Best Path till now cost : 27.0 >> [source, pnbe:0:21:13, scy:0:21:16, pws:0:21:19, dnr:0:21:23, neo:0:21:29, gnhi:0:21:32, sde:0:21:36, patl:0:21:38, bta:0:21:40, dest]
+Start Used memory is megabytes: 332
+Accepted Path found :[source, pnbe:0:21:13, scy:0:21:16, pws:0:21:19, dnr:0:21:23, neo:0:21:29, gnhi:0:21:32, sde:0:21:36, patl:0:21:38, bta:0:21:40, dest] cost: 27.0
+Accepted Path found :[source, pnbe:0:15:14, scy:0:15:17, pws:0:15:20, dnr:0:15:24, neo:0:15:30, gnhi:0:15:33, sde:0:15:37, patl:0:15:39, bta:0:15:41, dest] cost: 27.0
+Accepted Path found :[source, pnbe:0:6:24, scy:0:6:27, pws:0:6:30, dnr:0:6:34, neo:0:6:40, gnhi:0:6:43, sde:0:6:47, patl:0:6:49, bta:0:6:51, dest] cost: 27.0
+Accepted Path found :[source, pnbe:0:22:49, scy:0:22:52, pws:0:22:55, dnr:0:22:59, neo:0:23:5, gnhi:0:23:8, sde:0:23:12, patl:0:23:14, bta:0:23:16, dest] cost: 27.0
+Accepted Path found :[source, pnbe:0:9:54, scy:0:9:57, pws:0:10:0, dnr:0:10:4, neo:0:10:10, gnhi:0:10:13, sde:0:10:17, patl:0:10:19, bta:0:10:21, dest] cost: 27.0
+Accepted Path found :[source, pnbe:0:1:0, scy:0:1:3, pws:0:1:6, dnr:0:1:10, neo:0:1:16, gnhi:0:1:19, sde:0:1:23, patl:0:1:25, bta:0:1:27, dest] cost: 27.0
+Accepted Path found :[source, pnbe:0:8:5, scy:0:8:8, pws:0:8:11, dnr:0:8:15, neo:0:8:21, gnhi:0:8:24, sde:0:8:28, patl:0:8:30, bta:0:8:32, dest] cost: 27.0
+Accepted Path found :[source, pnbe:0:7:37, scy:0:7:40, pws:0:7:43, dnr:0:7:47, neo:0:7:53, gnhi:0:7:56, sde:0:8:0, patl:0:8:2, bta:0:8:4, dest] cost: 27.0
+Accepted Path found :[source, pnbe:0:5:46, scy:0:5:49, pws:0:5:52, dnr:0:5:56, neo:0:6:2, gnhi:0:6:5, sde:0:6:9, patl:0:6:11, bta:0:6:13, dest] cost: 27.0
+Accepted Path found :[source, pnbe:0:20:42, scy:0:20:45, pws:0:20:48, dnr:0:20:52, neo:0:20:58, gnhi:0:21:1, sde:0:21:5, patl:0:21:7, bta:0:21:9, dest] cost: 27.0
+Heap Empty [[source, pnbe:0:21:13, scy:0:21:16, pws:0:21:19, dnr:0:21:23, neo:0:21:29, gnhi:0:21:32, sde:0:21:36, patl:0:21:38, bta:0:21:40, dest], [source, pnbe:0:15:14, scy:0:15:17, pws:0:15:20, dnr:0:15:24, neo:0:15:30, gnhi:0:15:33, sde:0:15:37, patl:0:15:39, bta:0:15:41, dest], [source, pnbe:0:6:24, scy:0:6:27, pws:0:6:30, dnr:0:6:34, neo:0:6:40, gnhi:0:6:43, sde:0:6:47, patl:0:6:49, bta:0:6:51, dest], [source, pnbe:0:22:49, scy:0:22:52, pws:0:22:55, dnr:0:22:59, neo:0:23:5, gnhi:0:23:8, sde:0:23:12, patl:0:23:14, bta:0:23:16, dest], [source, pnbe:0:9:54, scy:0:9:57, pws:0:10:0, dnr:0:10:4, neo:0:10:10, gnhi:0:10:13, sde:0:10:17, patl:0:10:19, bta:0:10:21, dest], [source, pnbe:0:1:0, scy:0:1:3, pws:0:1:6, dnr:0:1:10, neo:0:1:16, gnhi:0:1:19, sde:0:1:23, patl:0:1:25, bta:0:1:27, dest], [source, pnbe:0:8:5, scy:0:8:8, pws:0:8:11, dnr:0:8:15, neo:0:8:21, gnhi:0:8:24, sde:0:8:28, patl:0:8:30, bta:0:8:32, dest], [source, pnbe:0:7:37, scy:0:7:40, pws:0:7:43, dnr:0:7:47, neo:0:7:53, gnhi:0:7:56, sde:0:8:0, patl:0:8:2, bta:0:8:4, dest], [source, pnbe:0:5:46, scy:0:5:49, pws:0:5:52, dnr:0:5:56, neo:0:6:2, gnhi:0:6:5, sde:0:6:9, patl:0:6:11, bta:0:6:13, dest], [source, pnbe:0:20:42, scy:0:20:45, pws:0:20:48, dnr:0:20:52, neo:0:20:58, gnhi:0:21:1, sde:0:21:5, patl:0:21:7, bta:0:21:9, dest]]
+Rejected paths:4
+Duration: 26912 ms
+10	27.0	27.0	27.0	27.0	27.0	27.0	27.0	27.0	27.0	27.0
+---------------------------------------------------------------------------------------------------------
+10
+[source, pnbe:0:21:13, scy:0:21:16, pws:0:21:19, dnr:0:21:23, neo:0:21:29, gnhi:0:21:32, sde:0:21:36, patl:0:21:38, bta:0:21:40, dest] cost: 27.0
+[source, pnbe:0:15:14, scy:0:15:17, pws:0:15:20, dnr:0:15:24, neo:0:15:30, gnhi:0:15:33, sde:0:15:37, patl:0:15:39, bta:0:15:41, dest] cost: 27.0
+[source, pnbe:0:6:24, scy:0:6:27, pws:0:6:30, dnr:0:6:34, neo:0:6:40, gnhi:0:6:43, sde:0:6:47, patl:0:6:49, bta:0:6:51, dest] cost: 27.0
+[source, pnbe:0:22:49, scy:0:22:52, pws:0:22:55, dnr:0:22:59, neo:0:23:5, gnhi:0:23:8, sde:0:23:12, patl:0:23:14, bta:0:23:16, dest] cost: 27.0
+[source, pnbe:0:9:54, scy:0:9:57, pws:0:10:0, dnr:0:10:4, neo:0:10:10, gnhi:0:10:13, sde:0:10:17, patl:0:10:19, bta:0:10:21, dest] cost: 27.0
+[source, pnbe:0:1:0, scy:0:1:3, pws:0:1:6, dnr:0:1:10, neo:0:1:16, gnhi:0:1:19, sde:0:1:23, patl:0:1:25, bta:0:1:27, dest] cost: 27.0
+[source, pnbe:0:8:5, scy:0:8:8, pws:0:8:11, dnr:0:8:15, neo:0:8:21, gnhi:0:8:24, sde:0:8:28, patl:0:8:30, bta:0:8:32, dest] cost: 27.0
+[source, pnbe:0:7:37, scy:0:7:40, pws:0:7:43, dnr:0:7:47, neo:0:7:53, gnhi:0:7:56, sde:0:8:0, patl:0:8:2, bta:0:8:4, dest] cost: 27.0
+[source, pnbe:0:5:46, scy:0:5:49, pws:0:5:52, dnr:0:5:56, neo:0:6:2, gnhi:0:6:5, sde:0:6:9, patl:0:6:11, bta:0:6:13, dest] cost: 27.0
+[source, pnbe:0:20:42, scy:0:20:45, pws:0:20:48, dnr:0:20:52, neo:0:20:58, gnhi:0:21:1, sde:0:21:5, patl:0:21:7, bta:0:21:9, dest] cost: 27.0

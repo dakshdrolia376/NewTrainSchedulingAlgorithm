@@ -1,0 +1,2 @@
+patna-junction-pnbe 0.0 1 5 5 0 1 1 0
+sachiwalay-halt-scy 2.2 1 1 1 0 1 1 0

@@ -82,16 +82,22 @@ public class Path {
         NonEmptyPath(Path path, Edge edge) {
             super(edge.getTo(), path.totalCost + edge.getWeight(), path.length+1);
             this.predecessor = path;
-            if(super.sourceTime==null) {
+            if(this.predecessor.sourceTime==null) {
                 super.sourceTime = edge.getFrom().getTime();
+            }
+            else{
+                super.sourceTime = this.predecessor.sourceTime;
             }
         }
 
         NonEmptyPath(Path path, Node node, double weight) {
             super(node, weight, path.length+1);
             this.predecessor = path;
-            if(super.sourceTime==null) {
+            if(this.predecessor.sourceTime==null) {
                 super.sourceTime = node.getTime();
+            }
+            else{
+                super.sourceTime = this.predecessor.sourceTime;
             }
         }
 
@@ -107,13 +113,13 @@ public class Path {
             return result;
         }
 
-        @Override
-        public TrainTime getSourceTime(){
-            if(super.sourceTime!=null){
-                return new TrainTime(super.sourceTime);
-            }
-            return null;
-        }
+        // @Override
+        // public TrainTime getSourceTime(){
+        //     if(super.sourceTime!=null){
+        //         return new TrainTime(super.sourceTime);
+        //     }
+        //     return null;
+        // }
 
         @Override
         public List<Double> getWeightList() {

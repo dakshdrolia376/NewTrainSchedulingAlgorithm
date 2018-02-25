@@ -38,16 +38,7 @@ public class GraphFile extends GraphParent{
         }
         else{
             if(!usePreviousComputation) {
-                File file = new File(this.pathDatabase);
-                File[] listOfFiles = file.listFiles();
-                if (listOfFiles == null) {
-                    throw new RuntimeException("Unable to initialize local storage");
-                }
-                for (File file1 : listOfFiles) {
-                    if (file1.isFile() && !file1.delete()) {
-                        throw new RuntimeException("Unable to initialize local storage");
-                    }
-                }
+                Scheduler.deleteFolderContent(this.pathDatabase);
             }
         }
     }

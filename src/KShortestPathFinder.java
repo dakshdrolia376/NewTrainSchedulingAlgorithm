@@ -25,7 +25,9 @@ public class KShortestPathFinder {
 
         HEAP.add(new Path(source));
 
-        while (!HEAP.isEmpty() && countMap.getOrDefault(target.toString(), 0) < k) {
+        int countRejected=0;
+
+        while (!HEAP.isEmpty() && paths.size() < k) {
             Path currentPath = HEAP.remove();
             if(currentPath.getLength()>bestPath.getLength()){
                 System.out.println("Best Path till now cost : " + currentPath.pathCost() + " >> " + currentPath.toString());
@@ -42,7 +44,7 @@ public class KShortestPathFinder {
             // if((currentPath.getLength() + maxDifferenceAllowed) < bestPath.getLength()){
             //     // System.out.println("Rejected Path cost : " + currentPath.pathCost() + " >> " + currentPath.toString());
             //     // System.out.println("Best Path cost : " + p.pathCost() + " >> " + p.toString());
-            //     continue;
+            //     continue;else
             // }
 
             Node endNode = currentPath.getEndNode();
@@ -58,12 +60,13 @@ public class KShortestPathFinder {
                         break;
                     }
                 }
-                if(diversePath) {
+                if((source.getTime()!=null) || diversePath ) {
                     paths.add(currentPath);
-                    System.out.println("Accepted Path found :" + currentPath.toString());
+                    System.out.println("Accepted Path found :" + currentPath.toString() + " cost: " + currentPath.pathCost());
                 }
                 else {
-                    System.out.println("Rejected Path found :" + currentPath.toString());
+                    countRejected++;
+                    // System.out.println("Rejected Path found :" + currentPath.toString() + " cost: " + currentPath.pathCost());
                 }
             }
             else {
@@ -77,7 +80,14 @@ public class KShortestPathFinder {
                 }
             }
         }
+        if(HEAP.isEmpty()) {
+            System.out.print("Heap Empty ");
+        }
+        else{
+            System.out.print("Heap Number of paths found ");
+        }
         System.out.println(paths.toString());
+        System.out.println("Rejected paths:" + countRejected);
         return paths;
     }
 }
