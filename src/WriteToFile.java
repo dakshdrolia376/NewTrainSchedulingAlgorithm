@@ -11,7 +11,7 @@ public class WriteToFile {
         try {
             File file = new File(pathFile);
             System.out.println("Writing data to file: " + file.getName());
-            if(!file.getParentFile().exists() && !file.getParentFile().mkdirs()){
+            if(file.getParentFile()!=null && !file.getParentFile().exists() && !file.getParentFile().mkdirs()){
                 System.out.println("Unable to create file located at " + pathFile);
                 return;
             }

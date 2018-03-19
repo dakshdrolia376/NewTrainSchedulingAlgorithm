@@ -82,8 +82,10 @@ class LinePlotTrains extends ApplicationFrame {
             }
 
             if(pathNewTrainFile!=null) {
-                if(!newTrainFolder && !addTrainFromFile(newTrainNo++, pathNewTrainFile,trainDay, isSingleDay)) {
-                    System.out.println("Error in adding train " + pathNewTrainFile);
+                if(!newTrainFolder) {
+                    if(!addTrainFromFile(newTrainNo, pathNewTrainFile,trainDay, isSingleDay)) {
+                        System.out.println("Error in adding train " + pathNewTrainFile);
+                    }
                 }
                 else{
                     File[] listOfFiles = new File(pathNewTrainFile).listFiles();
@@ -106,7 +108,7 @@ class LinePlotTrains extends ApplicationFrame {
             }
 
             final XYDataset dataset = createDataset();
-            final JFreeChart chart = createChart(dataset, pathPlotFile);
+            final JFreeChart chart = createChart(dataset, pathPlotFile, trainDay);
             final ChartPanel chartPanel = new ChartPanel(chart);
             chartPanel.setPreferredSize(new java.awt.Dimension(windowWidth, windowHeight));
             setContentPane(chartPanel);
@@ -304,7 +306,7 @@ class LinePlotTrains extends ApplicationFrame {
         return dataset;
     }
 
-    public JFreeChart createChart(final XYDataset dataset, String fileName) {
+    public JFreeChart createChart(final XYDataset dataset, String fileName, int trainDay) {
         // create the chart...
         final JFreeChart chart = ChartFactory.createXYLineChart(
                 "Train-tracking " + fileName,      // chart title
@@ -338,7 +340,7 @@ class LinePlotTrains extends ApplicationFrame {
                     String label;
                     double numTickValue = numberTick.getValue();
                     if(numTickValue>=0 && numTickValue<(isSingleDay?1440:10080)){
-                        trainTime = new TrainTime(0,0,0);
+                        trainTime = new TrainTime(((trainDay>=0&& trainDay<=6)?trainDay:0),0,0);
                         trainTime.addMinutes((int)Math.ceil(numberTick.getValue()));
                         label = trainTime.getFullString();
                     }

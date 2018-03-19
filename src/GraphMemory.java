@@ -42,6 +42,7 @@ public class GraphMemory extends GraphParent{
         // //     return false;
         // // }
         // fromMap.put(edge.getTo().toString(), edge);
+        System.out.println("Adding edge : "+ edge.toString());
         vertexEdgeMap.get(edge.getFrom().toString()).put(edge.getTo().toString(), edge);
         return true;
     }

@@ -64,7 +64,8 @@ public class KBestSchedule {
         return true;
     }
 
-    private boolean addStoppageUpTrain(int trainDay, int trainNo, String stationId, TrainTime arrival, TrainTime departure){
+    private boolean addStoppageUpTrain(int trainDay, int trainNo, String stationId, TrainTime arrival,
+                                       TrainTime departure, double distance){
         Train train = this.upTrainMap.getOrDefault(trainDay+":" +trainNo, null);
         if(train==null){
             System.out.println("Train not found "+ trainNo +" originating day "+ trainDay);
@@ -72,10 +73,11 @@ public class KBestSchedule {
         }
         Station station = this.route.getStation(stationId);
         //station==null represents that station is not in the route.
-        return station==null || train.addStoppage(station,arrival,departure);
+        return station==null || train.addStoppage(station, arrival, departure, distance);
     }
 
-    private boolean addStoppageDownTrain(int trainDay, int trainNo, String stationId, TrainTime arrival, TrainTime departure){
+    private boolean addStoppageDownTrain(int trainDay, int trainNo, String stationId, TrainTime arrival,
+                                         TrainTime departure, double distance){
         Train train = this.downTrainMap.getOrDefault(trainDay+":" +trainNo, null);
         if(train==null){
             System.out.println("Train not found "+ trainNo +" originating day "+ trainDay);
@@ -83,7 +85,7 @@ public class KBestSchedule {
         }
         Station station = this.route.getStation(stationId);
         //station==null represents that station is not in the route.
-        return station==null || train.addStoppage(station,arrival,departure);
+        return station==null || train.addStoppage(station, arrival, departure, distance);
     }
 
     private boolean addTrainFromFile(int trainNo, String trainName, String pathTrainSchedule, int trainDay,
@@ -103,6 +105,7 @@ public class KBestSchedule {
             String stationId;
             String data[];
             String data1[];
+            double dist;
             while((line = bReader.readLine()) != null) {
                 data = line.split("\\s+");
                 stationId = data[0].trim().replaceAll(".*-", "");
@@ -118,12 +121,19 @@ public class KBestSchedule {
                     departure.addDay(1);
                     stoppageDay = departure.day;
                 }
-                if(isUpDirection && !addStoppageUpTrain(trainDay, trainNo,stationId,arrival,departure)){
+                try {
+                    dist = Double.parseDouble(data[3]);
+                }
+                catch (Exception e){
+                    dist=0;
+                    e.printStackTrace();
+                }
+                if(isUpDirection && !addStoppageUpTrain(trainDay, trainNo,stationId,arrival,departure, dist)){
                     bReader.close();
                     fReader.close();
                     return false;
                 }
-                else if(!isUpDirection && !addStoppageDownTrain(trainDay, trainNo,stationId,arrival,departure)){
+                else if(!isUpDirection && !addStoppageDownTrain(trainDay, trainNo,stationId,arrival,departure, dist)){
                     bReader.close();
                     fReader.close();
                     return false;
@@ -432,6 +442,7 @@ public class KBestSchedule {
                         // obstructingTrains2.add(train.getTrainNo());
                     }
                 }
+
                 for (Train train : this.downTrainMap.values()) {
                     TrainTime oldTrainArrStation2 = train.getArr(nodeEnd.getStationId());
                     TrainTime oldTrainDeptStation2 = train.getDept(nodeEnd.getStationId());
@@ -491,8 +502,8 @@ public class KBestSchedule {
             }
         }
         else if(timeEarliestToDepart>timeNodeEnd){
-            // System.out.println("Rejected as earliest to depart is more than node time :" + nodeStart.toString() +
-            //         " -> " + nodeEnd.toString());
+            System.out.println("Rejected as earliest to depart is more than node time :" + nodeStart.toString() +
+                    " -> " + nodeEnd.toString());
             return -4;
         }
         else{
@@ -643,6 +654,7 @@ public class KBestSchedule {
                     int codeValidEdge = isValidEdge(delayBwStation, waitTimeStationEnd, nodeStart,
                             nodeEnd, maxDelayBwStations, isSingleDay, minDelayBwTrains,totalUpPlatform, totalDownPlatform,
                             totalDualPlatform,totalUpTrack,totalDownTrack,totalDualTrack, isDirectLineAvailable);
+                    System.out.print(codeValidEdge+" ");
                     if(codeValidEdge==-5){
                         break;
                     }

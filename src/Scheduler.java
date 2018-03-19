@@ -346,7 +346,20 @@ public class Scheduler {
 
     @SuppressWarnings("unused")
     public void putTrainIntoDatabase(String pathTrainDatabase){
-        new FetchTrainDetails(pathTrainDatabase).putAllTrainsInDatabase();
+        // new FetchTrainDetails(pathTrainDatabase).putAllTrainsInMap();
+        new FetchTrainDetails(pathTrainDatabase).putTrainsMapInDatabase();
+    }
+
+    @SuppressWarnings("unused")
+    public void putStationIntoDatabase(String pathStationDatabase){
+        // new FetchStationDetails(pathStationDatabase).putAllStationsInMap();
+        new FetchStationDetails(pathStationDatabase).putStationMapInDatabase();
+    }
+
+    @SuppressWarnings("unused")
+    public void fetchTrainSchedule(String pathTrainList, String pathTemp, String pathTrainBase, String pathTrainDatabase){
+        deleteFolderContent(pathTrainBase);
+        new FetchTrainDetails(pathTrainDatabase).getTrainStoppageFromFile(pathTrainList,pathTemp,pathTrainBase);
     }
 
     @SuppressWarnings("unused")
@@ -514,6 +527,46 @@ public class Scheduler {
         new WriteToFile().write(pathSingleStoppageTrainList, stringBuilder.toString(), false);
     }
 
+    public void createTrainList(String pathRoute, String pathTrainList, String pathTrainDatabase){
+        FileReader fReader;
+        BufferedReader bReader;
+        String line;
+        String stationId;
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        List<String> stationIds = new ArrayList<>();
+        try {
+            fReader = new FileReader(pathRoute);
+            bReader = new BufferedReader(fReader);
+            while((line = bReader.readLine()) != null) {
+                stationId = line.split("\\s+")[0].trim().replaceAll(".*-", "");
+                stationIds.add(stationId);
+            }
+            bReader.close();
+            fReader.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        List<Integer> trainNos = databaseConnector.getTrainNosForStation(stationIds);
+        List<List<Integer>> Trains = new ArrayList<>();
+        for(int i=0;i<7;i++){
+            Trains.add(databaseConnector.getTrainNosForDay(i));
+            Trains.get(i).retainAll(trainNos);
+        }
+
+        StringBuilder stringBuilder = new StringBuilder("");
+        for(int i=0;i<7;i++){
+            stringBuilder.append(i);
+            for(int trainNo: Trains.get(i)){
+                stringBuilder.append('\t');
+                stringBuilder.append(trainNo);
+            }
+            stringBuilder.append('\n');
+        }
+        new WriteToFile().write(pathTrainList, stringBuilder.toString(), false);
+    }
+
     public static void deleteFolderContent(String folderPath){
         File file = new File(folderPath);
         if(!file.exists()){
@@ -533,16 +586,6 @@ public class Scheduler {
         }
     }
 
-    @SuppressWarnings("unused")
-    public void putStationIntoDatabase(String pathStationDatabase){
-        new FetchStationDetails(pathStationDatabase).putAllStationsInDatabase();
-    }
-
-    @SuppressWarnings("unused")
-    public void fetchTrainSchedule(String pathTrainList, String pathTemp, String pathTrainBase, String pathTrainDatabase){
-        deleteFolderContent(pathTrainBase);
-        new FetchTrainDetails(pathTrainDatabase).getTrainStoppageFromFile(pathTrainList,pathTemp,pathTrainBase);
-    }
 
     @SuppressWarnings("unused")
     public void test(String pathTemp, String pathRoute, String pathBestRoute, String pathOldUpTrainSchedule,
@@ -574,7 +617,7 @@ public class Scheduler {
         int startMinutes = 0;
         int endHrs = 23;
         int endMinutes=59;
-        int maxDelayBwStations = 60;
+        int maxDelayBwStations = 20;
         if(isSingleDay){
             startDay = trainDay;
             endDay = trainDay;

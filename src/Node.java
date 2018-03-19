@@ -3,11 +3,15 @@ import static java.util.Objects.requireNonNull;
 public class Node {
     private final TrainTime time;
     private final String stationId;
+    private int inEdgeCount;
+    private int outEdgeCount;
 
     public Node(TrainTime time, String stationId) {
         requireNonNull(stationId, "The station id is null.");
-        this.time = time!=null?(new TrainTime(time)):null;
+        this.time = (time!=null)?(new TrainTime(time)):null;
         this.stationId = stationId;
+        this.inEdgeCount = 0;
+        this.outEdgeCount = 0;
     }
 
     public Node(String label) {
@@ -25,6 +29,24 @@ public class Node {
 
         }
         this.time = trainTime;
+        this.inEdgeCount = 0;
+        this.outEdgeCount = 0;
+    }
+
+    public void incrementInEdgeCount(){
+        this.inEdgeCount++;
+    }
+
+    public void incrementOutEdgeCount(){
+        this.outEdgeCount++;
+    }
+
+    public int getInEdgeCount(){
+        return this.inEdgeCount;
+    }
+
+    public int getOutEdgeCount(){
+        return this.outEdgeCount;
     }
 
     public boolean equals(Node node){

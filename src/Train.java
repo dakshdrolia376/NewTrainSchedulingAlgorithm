@@ -34,14 +34,14 @@ public class Train {
         return this.stoppageMap.getOrDefault(stId, new TrainAtStation("DefaultConstructorForNull")).getDept();
     }
 
-    public boolean addStoppage(Station station, TrainTime arrival, TrainTime departure) {
+    public boolean addStoppage(Station station, TrainTime arrival, TrainTime departure, double distance) {
         if(station==null){
             System.err.println("Station is not in route or some error occurred in adding stoppage for train : "+ this.trainNo);
             return false;
         }
         requireNonNull(arrival, "Arrival is null.");
         requireNonNull(departure, "Departure is null.");
-        TrainAtStation trainAtStation = new TrainAtStation(station.getId(), this.trainNo, arrival, departure);
+        TrainAtStation trainAtStation = new TrainAtStation(station.getId(), this.trainNo, arrival, departure, distance);
         this.stoppageMap.put(station.getId(), trainAtStation);
         return station.addTrain(trainAtStation);
     }

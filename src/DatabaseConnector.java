@@ -2,6 +2,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Objects.requireNonNull;
 
@@ -12,12 +13,13 @@ public class DatabaseConnector {
             throw new RuntimeException("Unable to connect to database.");
         }
     }
+
     private boolean getConnection(){
         try {
             if(con==null) {
                 Class.forName("com.mysql.jdbc.Driver");
                 con = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:7888/trainscheduler?autoReconnect=true&useSSL=false",
+                        "jdbc:mysql://localhost:7888/railwaydetails?autoReconnect=true&useSSL=false",
                         "root", "bittu420");
             }
             return true;
@@ -120,14 +122,13 @@ public class DatabaseConnector {
         }
     }
 
-    public boolean insertIntoTrainBatch(List<Integer> trainIndexes, List<Integer> trainNos, List<String> trainNames,
-                                        List<String> travelDays){
+    public boolean insertIntoTrainBatch(Map<Integer, List<String>> trainDetails){
         try {
             if (!getConnection()) {
                 return false;
             }
-            String query = "insert into train (Name, Num, trainIndex, travelMon, travelTue, travelWed, " +
-                    "travelThu, travelFri, travelSat, travelSun) values (?,?,?,?,?,?,?,?,?,?) " +
+            String query = "insert into train (Name, Num, trainIndex, travelSun, travelMon, travelTue, travelWed, " +
+                    "travelThu, travelFri, travelSat) values (?,?,?,?,?,?,?,?,?,?) " +
                     "ON DUPLICATE KEY UPDATE count=count+1, " +
                     "DuplicateIndexes = CONCAT(DuplicateIndexes,\",\",?);";
             // create the mysql insert prepared statement
@@ -136,18 +137,19 @@ public class DatabaseConnector {
             final int batchSize = 1000;
             int count = 0;
 
-            for(int i=0;i<trainNos.size();i++){
-                preparedStmt.setString(1,trainNames.get(i));
-                preparedStmt.setInt(2,trainNos.get(i));
-                preparedStmt.setString(3,trainIndexes.get(i).toString());
-                preparedStmt.setString(4,travelDays.get(i).charAt(0)=='1'?"Y":"N");
-                preparedStmt.setString(5,travelDays.get(i).charAt(1)=='1'?"Y":"N");
-                preparedStmt.setString(6,travelDays.get(i).charAt(2)=='1'?"Y":"N");
-                preparedStmt.setString(7,travelDays.get(i).charAt(3)=='1'?"Y":"N");
-                preparedStmt.setString(8,travelDays.get(i).charAt(4)=='1'?"Y":"N");
-                preparedStmt.setString(9,travelDays.get(i).charAt(5)=='1'?"Y":"N");
-                preparedStmt.setString(10,travelDays.get(i).charAt(6)=='1'?"Y":"N");
-                preparedStmt.setString(11,trainIndexes.get(i).toString());
+            for(int trainIndex:trainDetails.keySet()){
+                List<String> trainDetail = trainDetails.get(trainIndex);
+                preparedStmt.setString(1,trainDetail.get(1));
+                preparedStmt.setInt(2,Integer.parseInt(trainDetail.get(0)));
+                preparedStmt.setString(3,(trainIndex+""));
+                preparedStmt.setString(4,trainDetail.get(2).charAt(0)=='1'?"Y":"N");
+                preparedStmt.setString(5,trainDetail.get(2).charAt(1)=='1'?"Y":"N");
+                preparedStmt.setString(6,trainDetail.get(2).charAt(2)=='1'?"Y":"N");
+                preparedStmt.setString(7,trainDetail.get(2).charAt(3)=='1'?"Y":"N");
+                preparedStmt.setString(8,trainDetail.get(2).charAt(4)=='1'?"Y":"N");
+                preparedStmt.setString(9,trainDetail.get(2).charAt(5)=='1'?"Y":"N");
+                preparedStmt.setString(10,trainDetail.get(2).charAt(6)=='1'?"Y":"N");
+                preparedStmt.setString(11,(trainIndex+""));
                 preparedStmt.addBatch();
                 if (++count % batchSize == 0) {
                     preparedStmt.executeBatch();
@@ -164,12 +166,7 @@ public class DatabaseConnector {
         }
     }
 
-    public boolean insertIntoStationBatch(List<Integer> stationIndexes, List<String> stationIds,
-                                          List<String> stationNames, List<String> stationTypes,
-                                          List<String> stationTracks, List<Integer> originatingTrains,
-                                          List<Integer> terminatingTrains,List<Integer> haltingTrains,
-                                          List<Integer> platforms,List<String> elevations,
-                                          List<String> railwayZones,List<String> addresses){
+    public boolean insertIntoStationBatch(Map<Integer, List<String>> stationDetails){
         try {
             if (!getConnection()) {
                 return false;
@@ -186,20 +183,21 @@ public class DatabaseConnector {
             final int batchSize = 1000;
             int count = 0;
 
-            for(int i=0;i<stationIds.size();i++){
-                preparedStmt.setString(1,stationNames.get(i));
-                preparedStmt.setString(2,stationIds.get(i));
-                preparedStmt.setString(3,stationIndexes.get(i).toString());
-                preparedStmt.setString(4,stationTypes.get(i));
-                preparedStmt.setString(5,stationTracks.get(i));
-                preparedStmt.setInt(6,originatingTrains.get(i));
-                preparedStmt.setInt(7,terminatingTrains.get(i));
-                preparedStmt.setInt(8,haltingTrains.get(i));
-                preparedStmt.setInt(9,platforms.get(i));
-                preparedStmt.setString(10,elevations.get(i));
-                preparedStmt.setString(11,railwayZones.get(i));
-                preparedStmt.setString(12,addresses.get(i));
-                preparedStmt.setString(13,stationIndexes.get(i).toString());
+            for(int stationIndex: stationDetails.keySet()){
+                List<String> stationDetail = stationDetails.get(stationIndex);
+                preparedStmt.setString(1,stationDetail.get(0));
+                preparedStmt.setString(2,stationDetail.get(1));
+                preparedStmt.setString(3,(stationIndex+""));
+                preparedStmt.setString(4,stationDetail.get(2));
+                preparedStmt.setString(5,stationDetail.get(3));
+                preparedStmt.setInt(6,Integer.parseInt(stationDetail.get(4)));
+                preparedStmt.setInt(7,Integer.parseInt(stationDetail.get(5)));
+                preparedStmt.setInt(8,Integer.parseInt(stationDetail.get(6)));
+                preparedStmt.setInt(9,Integer.parseInt(stationDetail.get(7)));
+                preparedStmt.setString(10,stationDetail.get(8));
+                preparedStmt.setString(11,stationDetail.get(9));
+                preparedStmt.setString(12,stationDetail.get(10));
+                preparedStmt.setString(13,(stationIndex+""));
                 preparedStmt.addBatch();
                 if (++count % batchSize == 0) {
                     preparedStmt.executeBatch();
@@ -424,25 +422,25 @@ public class DatabaseConnector {
             // create the mysql insert prepared statement
             switch (day){
                 case 0:
-                    query += "travelMon";
+                    query += "travelSun";
                     break;
                 case 1:
-                    query += "travelTue";
+                    query += "travelMon";
                     break;
                 case 2:
-                    query += "travelWed";
+                    query += "travelTue";
                     break;
                 case 3:
-                    query += "travelThu";
+                    query += "travelWed";
                     break;
                 case 4:
-                    query += "travelFri";
+                    query += "travelThu";
                     break;
                 case 5:
-                    query += "travelSat";
+                    query += "travelFri";
                     break;
                 case 6:
-                    query += "travelSun";
+                    query += "travelSat";
                     break;
                 default:
                     System.out.print("Invalid day");

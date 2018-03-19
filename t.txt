@@ -1,0 +1,2548 @@
+<!doctype html>
+<html xmlns="https://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:og="https://opengraphprotocol.org/schema/" xmlns:fb="https://www.facebook.com/2008/fbml">
+ <head>
+  <title>♥ IMAGINARY Train List Search - Railway Enquiry</title>
+  <meta name="theme-color" content="#FFC69F">
+  <meta name="description" content="Imaginary Trains are created by RailFans to explore various alternative Train Routes and TTs. Such trains are NOT ACTUALLY RUNNING on the tracks. India Rail Info is a Busy Junction for Travellers &amp; Rail Enthusiasts. It also hosts a Centralized Database of Indian Railways Trains &amp; Stations, and provides crowd-sourced IRCTC Train Enquiry Services.">
+  <meta name="keywords" content="indianrail, irctc, reservation, pnr, fare, time table, railway, india, indian, indian rail, rail, indian railways, travel, tourism, tourist, tickets, ticket, lookup, schedule, schedules, running status, status, accommodation, seat, seats, booking, book, railways, train, timetable, arrival, departure, availability, fares">
+  <meta name="verify-v1" content="sUZ6KEMtIthThuPTLKIV4aHGEhBxn56RaSa3gslwZuA=">
+  <meta name="robots" content="noindex">
+  <meta property="og:title" content="♥ IMAGINARY Train List Search - Railway Enquiry">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://indiarailinfo.com/imgtrains">
+  <meta property="og:description" content="Imaginary Trains are created by RailFans to explore various alternative Train Routes and TTs. Such trains are NOT ACTUALLY RUNNING on the tracks. India Rail Info is a Busy Junction for Travellers &amp; Rail Enthusiasts. It also hosts a Centralized Database of Indian Railways Trains &amp; Stations, and provides crowd-sourced IRCTC Train Enquiry Services.">
+  <meta property="fb:app_id" content="253371170693">
+  <script type="application/ld+json">{ "@context": "http://schema.org", "@type": "Article", "mainEntityOfPage": "https://indiarailinfo.com/imgtrains", "headline": "&hearts; IMAGINARY Train List Search - Railway Enquiry", "datePublished": "2018-03-17T01:43:30+0530", "dateModified": "2018-03-17T01:43:30+0530", "description": "Imaginary Trains are created by RailFans to explore various alternative Train Routes and TTs. Such trains are NOT ACTUALLY RUNNING on the tracks. India Rail Info is a Busy Junction for Travellers & Rail Enthusiasts. It also hosts a Centralized Database of Indian Railways Trains & Stations, and provides crowd-sourced IRCTC Train Enquiry Services.", "author": { "@type": "Person", "name": "system" }, "image": { "@type": "ImageObject", "url": "//st2.indiarailinfo.com/kjfdsuiemjvcya5/0/1978394/0/img60454972968.jpg", "width": 444, "height": 333 }, "publisher": { "@type": "Organization", "name": "India Rail Info", "logo": { "@type": "ImageObject", "url": "https://st.indiarailinfo.com/images/banner-amp.png", "width": 332, "height": 60 } } } </script>
+  <link rel="shortcut icon" href="//st.indiarailinfo.com/images/icon48.png">
+  <link rel="stylesheet" href="//st.indiarailinfo.com/abcd-head.1120.css">
+  <link rel="stylesheet" href="//st.indiarailinfo.com/abcd-gray.1120.css">
+ </head>
+ <body id="mybody">
+  <div id="MainBody">
+   <a name="top"></a>
+   <div style="display:none;" class="alert">
+    <table>
+     <tbody>
+      <tr>
+       <td>&nbsp;</td>
+       <td id="timelinealert">
+        <div>
+         <a href="/timeline">Timeline</a>
+        </div></td>
+       <td id="tipalert">
+        <div>
+         <a href="/tips?n=1">Travel&nbsp;Tip</a>
+        </div></td>
+       <td id="tripalert">
+        <div>
+         <a href="/diary?n=1">Trip</a>
+        </div></td>
+       <td id="racealert">
+        <div>
+         <a href="/blog/race?n=1"><span style="font-size:12px;">Race</span></a>
+        </div></td>
+       <td id="socalert">
+        <div>
+         <a href="/blog/social?n=1"><span style="font-size:12px;">Social</span></a>
+        </div></td>
+       <td id="grtalert">
+        <div>
+         <a href="/blog/greeting?n=1"><span style="font-size:12px;">Greeting</span></a>
+        </div></td>
+       <td id="svalert">
+        <div>
+         <a href="/blog/poll?n=1"><span style="font-size:12px;">Poll</span></a>
+        </div></td>
+       <td id="imgalert">
+        <div>
+         <a href="/blog/imaginary?n=1"><span style="font-size:10px;">♥♥</span></a>
+        </div></td>
+       <td id="pnralert">
+        <div>
+         <a href="/pnr?n=1">PNR</a>
+        </div></td>
+       <td id="picalert">
+        <div>
+         <a href="/gallery?n=1">Pic</a>
+        </div></td>
+       <td id="blogalert">
+        <div>
+         <a href="/blog?n=1">Blog</a>
+        </div></td>
+       <td id="newsalert">
+        <div>
+         <a href="/news?n=1">News</a>
+        </div></td>
+       <td id="tlconfalert">
+        <div>
+         <a href="/timeline/myconf?n=1">Conf&nbsp;TL</a>
+        </div></td>
+       <td id="rfclubalert">
+        <div>
+         <a href="/blog/rfclub?n=1">RF&nbsp;Club</a>
+        </div></td>
+       <td id="convalert">
+        <div>
+         <a href="/blog/convention?n=1">Convention</a>
+        </div></td>
+       <td id="monitoralert">
+        <div>
+         <a href="/blog/monitor?n=1">Monitor</a>
+        </div></td>
+       <td id="adminalert">
+        <div>
+         <a href="/blog/admin?n=1">Admin</a>
+        </div></td>
+       <td id="followedalert">
+        <div>
+         <a href="/blog/followed?n=1">Followed</a>
+        </div></td>
+       <td id="opinionalert">
+        <div>
+         <a href="/blog/mypostratings?n=1">Rating</a>
+        </div></td>
+       <td id="hjalert">
+        <div>
+         <a href="/diary/mytrips">HJ</a>
+        </div></td>
+       <td id="mysvalert">
+        <div>
+         <a href="/blog/mypolls?n=1"><span style="font-size:12px;">Vote</span></a>
+        </div></td>
+       <td id="predalert">
+        <div>
+         <a href="/pnr/mypostpredictions?n=1">Pred</a>
+        </div></td>
+       <td id="attnalert">
+        <div>
+         <a href="/blog/myposts?n=1">@</a>
+        </div></td>
+       <td id="fmalert">
+        <div>
+         <a href="/blog/fmalert?n=1">FM&nbsp;Alert</a>
+        </div></td>
+       <td id="greetingsalert">
+        <div>
+         <a href="/blog/greetings?n=1">Greetings</a>
+        </div></td>
+       <td id="pvtalert">
+        <div>
+         <a href="/blog/pvt?n=1">Pvt</a>
+        </div></td>
+      </tr>
+     </tbody>
+    </table>
+   </div>
+   <table style="height:76px;" class="toppanel">
+    <tbody>
+     <tr>
+      <td style="width:80px;">
+       <div style="margin:2px 5px 0 0;font-size:10px;">
+        <a href="/"><img class="imgBannerI" src="//st.indiarailinfo.com/images/1.png"></a>
+       </div></td>
+      <td>
+       <table id="HyperSrhBox" style="margin:20px 0 0 0;border-spacing:0 0;">
+        <tbody>
+         <tr>
+          <td>
+           <div class="stntrndiv">
+            <div class="stntrnbtn stntrnbtnleft stntrnbtn1">
+             <span style="margin:5px 10px 5px 5px;" class="stntrntxt">Search&nbsp;♥&nbsp;Train&nbsp;Lists</span>▼
+            </div>
+            <div style="display:none;" class="menu">
+             <table class="srhmenu" cellspacing="0" cellpadding="2">
+              <caption>
+               Search Categories
+              </caption>
+              <tbody>
+               <tr pref="/srhform/trains?m=0">
+                <td><b>Search Trains (A-&gt;B)</b></td>
+               </tr>
+               <tr pref="/srhform/arrdep?stptype=1&amp;m=0">
+                <td>Search Departures/Arrivals</td>
+               </tr>
+               <tr pref="/srhform/trainlists?m=0">
+                <td>Search Train Lists</td>
+               </tr>
+               <tr pref="/srhform/imgtrainlists?m=0">
+                <td style="border-bottom:1px dashed black;">Search ♥♥ Train Lists ♥♥<sup style="color:#d70000;">&nbsp;**new</sup></td>
+               </tr>
+               <tr pref="/srhform/routes?m=0">
+                <td style="border-bottom:1px dashed black;">Shortest Route (A-&gt;B)</td>
+               </tr>
+               <tr pref="/srhform/news?m=0">
+                <td>News Super Search</td>
+               </tr>
+               <tr pref="/srhform/blogs?m=0&amp;gallery=0">
+                <td>Forum Super Search</td>
+               </tr>
+               <tr pref="/srhform/blogs?m=0&amp;gallery=1">
+                <td>Gallery Super Search</td>
+               </tr>
+               <tr pref="/srhform/pnrblogs?m=0">
+                <td style="border-bottom:1px dashed black;">PNR Super Search</td>
+               </tr>
+               <tr pref="/srhform/mypnrs?m=0">
+                <td>Search My PNR History</td>
+               </tr>
+              </tbody>
+             </table>
+            </div>
+           </div></td>
+          <td>
+           <div id="CreatedBySpan" class="mydropdownbox" label="train creator" basename="CreatedBy" seq="" style="display:inline" defaultbuttonid="SrhImgTrnListDiv" autoclickbutton="0" autofunction="" refid="0" refrefid="" accumulate="0" freetext="0" displayabove="0" absolutepositioning="1" sp="LappGetUserList">
+            <form style="display:inline;margin:0;" id="CreatedByForm">
+             <input autocomplete="off" style="width:200px;" name="CreatedByBox" id="CreatedByBox" onclick="new myDropDown($(this).parents('.mydropdownbox'))" onfocus="new myDropDown($(this).parents('.mydropdownbox'))" tabindex="1" placeholder="train creator" value="train creator" class="blurtextbox stntrnbox stntrnboxleft">
+            </form>
+            <input baseName="CreatedBy" class="stntrncontent" name="CreatedByContent" id="CreatedByContent" type="hidden" text="" value="">
+            <div id="CreatedByList" style="display:none;" class="list"></div>
+            <div class="stntrndiv" tabindex="1" style="display:none;">
+             <div class="stntrnbtn stntrnbtn1">
+              <span class="stntrntxt"></span>&nbsp;▼
+              <div class="close" style="display:inline;padding:5px;">
+               ×
+              </div>
+             </div>
+            </div>
+           </div></td>
+          <td><select name="TrainType" class="stntrnbox" tabindex="2"><option value="0" selected>Select Train Type</option><option value="0">--------------------</option><option value="2">Rajdhani</option><option value="3">Shatabdi</option><option value="21">Duronto</option><option value="5">Garib Rath</option><option value="18">Sampark Kranti</option><option value="4">Jan Shatabdi</option><option value="7">AC Express</option><option value="8">AC SuperFast</option><option value="26">Suvidha</option><option value="0">--------------------</option><option value="27">Humsafar</option><option value="28">Tejas</option><option value="29">Uday</option><option value="30">Antyodaya</option><option value="0">--------------------</option><option value="24">SuperFast</option><option value="6">Mail/Express</option><option value="9">Special</option><option value="0">--------------------</option><option value="11">Passenger</option><option value="17">Hill Train</option><option value="12">MEMU</option><option value="13">DEMU</option><option value="25">Double Decker</option><option value="0">--------------------</option><option value="15">EMU - Delhi</option><option value="16">Hyderabad Suburban</option><option value="1">EMU - Chennai</option><option value="20">EMU - Kolkata</option><option value="23">EMU - Mumbai</option><option value="31">EMU - Pune</option></select></td>
+          <td>
+           <div tabindex="4" class="stntrnadv">
+            <div class="stntrnbtn stntrnbtn1">
+             &nbsp;♦&nbsp;
+            </div>
+            <div id="ChgSrhDiv" class="adv">
+             <div class="close" onclick="$(this).parent().slideUp();">
+              ×
+             </div>
+             <table cellspacing="0" cellpadding="2">
+              <caption>
+               Train Details
+              </caption>
+              <tbody>
+               <tr>
+                <td class="label">Search Words:</td>
+                <td><input class="blurtextbox" style="width:200px;" autocomplete="off" name="q" tabindex="1" label="enter any words, phrases" defaultButtonID="SrhImgTrnListDiv" placeholder="enter any words, phrases" value="" onfocus="javascript:new myTextBox($(this));"></td>
+               </tr>
+               <tr>
+                <td class="label">LHB/ICF:</td>
+                <td><select style="width:85%;" class="stntrnbox" tabindex="2" name="raketype"><option value="0" selected>ALL Rakes</option><option value="1">ICF Rakes</option><option value="2">ALL LHB Rakes</option><option value="3">Hybrid ICF-LHB Rakes</option><option value="4">FULL LHB Rakes</option></select></td>
+               </tr>
+               <tr>
+                <td class="label">Class:</td>
+                <td><input type="hidden" name="TrainClassBox" value="0">
+                 <table tabindex="5" class="tiles tilesel">
+                  <tbody>
+                   <tr>
+                    <td>2S</td>
+                    <td>SL</td>
+                    <td>CC</td>
+                    <td>Ex</td>
+                    <td>3A</td>
+                    <td>FC</td>
+                    <td>2A</td>
+                    <td>1A</td>
+                    <td>3E</td>
+                    <td>EA</td>
+                   </tr>
+                  </tbody>
+                 </table></td>
+               </tr>
+               <tr>
+                <td class="label">Train Zone:</td>
+                <td><select name="TrainZone" tabindex="6"><option value="0" selected>Select Railway Zone</option><option value="1">CR/Central</option><option value="3">ECoR/East Coast</option><option value="2">ECR/East Central</option><option value="4">ER/Eastern</option><option value="17">KR/Konkan</option><option value="5">NCR/North Central</option><option value="6">NER/North Eastern</option><option value="8">NFR/Northeast Frontier</option><option value="9">NR/Northern</option><option value="7">NWR/North Western</option><option value="10">SCR/South Central</option><option value="11">SECR/South East Central</option><option value="12">SER/South Eastern</option><option value="13">SWR/South Western</option><option value="14">SR/Southern</option><option value="15">WCR/West Central</option><option value="16">WR/Western</option><option value="23">BR/Bangladesh</option><option value="0">--------------</option><option value="35">APCR/Amaravati Metro</option><option value="21">BMRC/Bangalore Metro</option><option value="33">CTMTC/Chandigarh Metro</option><option value="24">CMRL/Chennai Metro</option><option value="20">DMRC/Delhi Metro</option><option value="25">HM/Hyderabad Metro</option><option value="29">JMRC/Jaipur Metro</option><option value="19">KM/Kolkata Metro</option><option value="27">KMRL/Kochi Metro</option><option value="32">LM/Ludhiana Metro</option><option value="34">LMRC/Lucknow Metro</option><option value="30">MEGA/Ahmedabad Metro</option><option value="22">ML/Mumbai Local</option><option value="28">MMOPL/Mumbai Metro</option><option value="26">MMTC/Hyderabad MMTS</option><option value="31">PMRC/Pune Metro</option><option value="0">--------------</option><option value="18">INT/International</option></select></td>
+               </tr>
+               <tr>
+                <td class="label">Pantry:</td>
+                <td><input type="hidden" name="Pantry" value="0">
+                 <table class="tiles tilesel" tabindex="7">
+                  <tbody>
+                   <tr>
+                    <td>In-Coach Catering/Pantry Car</td>
+                   </tr>
+                  </tbody>
+                 </table></td>
+               </tr>
+               <tr>
+                <td class="label">Loco:</td>
+                <td><input class="blurtextbox" autocomplete="off" name="LocoType" tabindex="8" defaultButtonID="SrhImgTrnListDiv" label="e.g. WDP, WAP5, WCAM" placeholder="e.g. WDP, WAP5, WCAM" value="" onfocus="javascript:new myTextBox($(this));"></td>
+               </tr>
+               <tr>
+                <td class="label">Reversal:</td>
+                <td><input type="hidden" name="TrnReversal" value="0">
+                 <table tabindex="9" class="tiles tilesel">
+                  <tbody>
+                   <tr>
+                    <td>Rake Reversal at Any Stn</td>
+                   </tr>
+                  </tbody>
+                 </table></td>
+               </tr>
+               <tr>
+                <td class="label">Rake:</td>
+                <td><input class="blurtextbox" autocomplete="off" name="Rake" tabindex="10" defaultButtonID="SrhImgTrnListDiv" label="e.g. SLR, UR, A3, S12" placeholder="e.g. SLR, UR, A3, S12" value="" onfocus="javascript:new myTextBox($(this));"></td>
+               </tr>
+               <tr>
+                <td class="label">RSA:</td>
+                <td><input type="hidden" name="RSA" value="0">
+                 <table tabindex="11" class="tiles tilesel">
+                  <tbody>
+                   <tr>
+                    <td>With RSA</td>
+                   </tr>
+                  </tbody>
+                 </table></td>
+               </tr>
+               <tr>
+                <td class="label">Inaug Date:</td>
+                <td>
+                 <div id="idfSpan-998" class="mydatebox" label="From" validdates="0" style="display:inline;" basename="idf" pin="0" arp="1" sequencenumber="998" displayposition="down" absolutepositioning="1" defaultbuttonid="SrhImgTrnListDiv">
+                  <input autocomplete="off" size="12" id="idfBox-998" onclick="myDate($(this).parents('.mydatebox'))" onfocus="myDate($(this).parents('.mydatebox'))" tabindex="12" placeholder="From" value="From" class="blurtextbox">
+                  <input name="idf" id="idfContent-998" class="mycontent" type="hidden" value="0">
+                 </div>&nbsp;to&nbsp;
+                 <div id="idtSpan-998" class="mydatebox" label="To" validdates="0" style="display:inline;" basename="idt" pin="0" arp="1" sequencenumber="998" displayposition="down" absolutepositioning="1" defaultbuttonid="SrhImgTrnListDiv">
+                  <input autocomplete="off" size="12" id="idtBox-998" onclick="myDate($(this).parents('.mydatebox'))" onfocus="myDate($(this).parents('.mydatebox'))" tabindex="13" placeholder="To" value="To" class="blurtextbox">
+                  <input name="idt" id="idtContent-998" class="mycontent" type="hidden" value="0">
+                 </div></td>
+               </tr>
+               <tr>
+                <td class="label"># Halts:</td>
+                <td><select name="nhf" tabindex="14" size="1"><option value="-1" selected>##</option><option value="0">00</option><option value="10">10</option><option value="20">20</option><option value="30">30</option><option value="40">40</option><option value="50">50</option><option value="60">60</option><option value="70">70</option><option value="80">80</option><option value="90">90</option></select>&nbsp;to&nbsp;<select name="nht" tabindex="10" size="1"><option value="-1" selected>##</option><option value="0">00</option><option value="10">10</option><option value="20">20</option><option value="30">30</option><option value="40">40</option><option value="50">50</option><option value="60">60</option><option value="70">70</option><option value="80">80</option><option value="90">90</option></select></td>
+               </tr>
+               <tr>
+                <td class="label">Trvl Time:</td>
+                <td><select tabindex="15" name="ttf" size="1"><option value="0" selected>00</option><option value="10">10</option><option value="20">20</option><option value="30">30</option><option value="40">40</option><option value="50">50</option><option value="60">60</option><option value="70">70</option><option value="80">80</option><option value="90">90</option></select>&nbsp;to&nbsp;<select name="ttt" size="1"><option value="0" selected>00</option><option value="10">10</option><option value="20">20</option><option value="30">30</option><option value="40">40</option><option value="50">50</option><option value="60">60</option><option value="70">70</option><option value="80">80</option><option value="90">90</option></select>&nbsp;(in hrs)</td>
+               </tr>
+               <tr>
+                <td class="label">Distance:</td>
+                <td><select name="dstf" tabindex="16" size="1"><option value="0" selected>0</option><option value="50">50</option><option value="100">100</option><option value="150">150</option><option value="200">200</option><option value="250">250</option><option value="300">300</option><option value="350">350</option><option value="400">400</option><option value="450">450</option><option value="500">500</option><option value="1000">1000</option><option value="1500">1500</option><option value="2000">2000</option><option value="2500">2500</option><option value="3000">3000</option><option value="3500">3500</option><option value="4000">4000</option><option value="4500">4500</option></select>&nbsp;to&nbsp;<select name="dstt" size="1"><option value="0" selected>0</option><option value="50">50</option><option value="100">100</option><option value="150">150</option><option value="200">200</option><option value="250">250</option><option value="300">300</option><option value="350">350</option><option value="400">400</option><option value="450">450</option><option value="500">500</option><option value="1000">1000</option><option value="1500">1500</option><option value="2000">2000</option><option value="2500">2500</option><option value="3000">3000</option><option value="3500">3500</option><option value="4000">4000</option><option value="4500">4500</option></select>&nbsp;(in kms)</td>
+               </tr>
+               <tr>
+                <td class="label">Speed:</td>
+                <td><select name="spdf" tabindex="17" size="1"><option value="0" selected>000</option><option value="10">010</option><option value="20">020</option><option value="30">030</option><option value="40">040</option><option value="50">050</option><option value="60">060</option><option value="70">070</option><option value="80">080</option><option value="90">090</option><option value="100">100</option><option value="110">110</option><option value="120">120</option><option value="130">130</option><option value="140">140</option><option value="150">150</option></select>&nbsp;to&nbsp;<select name="spdt" size="1"><option value="0" selected>000</option><option value="10">010</option><option value="20">020</option><option value="30">030</option><option value="40">040</option><option value="50">050</option><option value="60">060</option><option value="70">070</option><option value="80">080</option><option value="90">090</option><option value="100">100</option><option value="110">110</option><option value="120">120</option><option value="130">130</option><option value="140">140</option><option value="150">150</option></select>&nbsp;(in km/h)</td>
+               </tr>
+              </tbody>
+             </table>
+             <hr>
+             <input type="hidden" name="ExactDep" value="1">
+             <table cellspacing="0" cellpadding="2">
+              <caption>
+               Departure Details
+              </caption>
+              <tbody>
+               <tr>
+                <td class="label">Dep Days:</td>
+                <td><input type="hidden" name="DepDays" value="0">
+                 <table tabindex="18" class="tiles tilesel">
+                  <tbody>
+                   <tr>
+                    <td>Sun</td>
+                    <td>Mon</td>
+                    <td>Tue</td>
+                    <td>Wed</td>
+                    <td>Thu</td>
+                    <td>Fri</td>
+                    <td>Sat</td>
+                   </tr>
+                  </tbody>
+                 </table></td>
+               </tr>
+               <tr>
+                <td class="label">Dep Between:</td>
+                <td><select name="dhf" tabindex="19" size="1"><option value="0" selected>00</option><option value="1">01</option><option value="2">02</option><option value="3">03</option><option value="4">04</option><option value="5">05</option><option value="6">06</option><option value="7">07</option><option value="8">08</option><option value="9">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option></select><select name="dmf" size="1"><option value="0" selected>00</option><option value="15">15</option><option value="30">30</option><option value="45">45</option></select>&nbsp;&nbsp;&nbsp;&nbsp;<select name="dht" size="1"><option value="0" selected>00</option><option value="1">01</option><option value="2">02</option><option value="3">03</option><option value="4">04</option><option value="5">05</option><option value="6">06</option><option value="7">07</option><option value="8">08</option><option value="9">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option></select><select name="dmt" size="1"><option value="0" selected>00</option><option value="15">15</option><option value="30">30</option><option value="45">45</option></select></td>
+               </tr>
+               <tr>
+                <td class="label">Dep PF#:</td>
+                <td><input class="blurtextbox" autocomplete="off" name="DepPF" size="5" tabindex="20" defaultButtonID="SrhImgTrnListDiv" label="Dep PF#" placeholder="Dep PF#" value="" onfocus="javascript:new myTextBox($(this));"></td>
+               </tr>
+              </tbody>
+             </table>
+             <hr>
+             <input type="hidden" name="ExactArr" value="1">
+             <table cellspacing="0" cellpadding="2">
+              <caption>
+               Arrival Details
+              </caption>
+              <tbody>
+               <tr>
+                <td class="label">Arr Days:</td>
+                <td><input type="hidden" name="ArrDays" value="0">
+                 <table tabindex="11" class="tiles tilesel">
+                  <tbody>
+                   <tr>
+                    <td>Sun</td>
+                    <td>Mon</td>
+                    <td>Tue</td>
+                    <td>Wed</td>
+                    <td>Thu</td>
+                    <td>Fri</td>
+                    <td>Sat</td>
+                   </tr>
+                  </tbody>
+                 </table></td>
+               </tr>
+               <tr>
+                <td class="label">Arr Between:</td>
+                <td><select name="ahf" tabindex="22" size="1"><option value="0" selected>00</option><option value="1">01</option><option value="2">02</option><option value="3">03</option><option value="4">04</option><option value="5">05</option><option value="6">06</option><option value="7">07</option><option value="8">08</option><option value="9">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option></select><select name="amf" tabindex="28" size="1"><option value="0" selected>00</option><option value="15">15</option><option value="30">30</option><option value="45">45</option></select>&nbsp;&nbsp;&nbsp;&nbsp;<select name="aht" size="1"><option value="0" selected>00</option><option value="1">01</option><option value="2">02</option><option value="3">03</option><option value="4">04</option><option value="5">05</option><option value="6">06</option><option value="7">07</option><option value="8">08</option><option value="9">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option></select><select name="amt" size="1"><option value="0" selected>00</option><option value="15">15</option><option value="30">30</option><option value="45">45</option></select></td>
+               </tr>
+               <tr>
+                <td class="label">Arr PF#:</td>
+                <td><input class="blurtextbox" autocomplete="off" name="ArrPF" size="5" tabindex="23" defaultButtonID="SrhImgTrnListDiv" label="Arr PF#" placeholder="Arr PF#" value="" onfocus="javascript:new myTextBox($(this));"></td>
+               </tr>
+              </tbody>
+             </table>
+             <hr>
+             <table style="width:auto;">
+              <tbody>
+               <tr>
+                <td>
+                 <div name="SrhImgTrnListDiv" tabindex="24" class="stntrnbtn stntrnbtnboth stntrnbtn1">
+                  Search ♥ Train Lists
+                 </div></td>
+               </tr>
+              </tbody>
+             </table>
+            </div>
+           </div></td>
+          <td>
+           <div tabindex="5" id="SrhImgTrnListDiv" name="SrhImgTrnListDiv" class="stntrnbtn stntrnbtnright stntrnbtn1">
+            &nbsp;&nbsp;Go&nbsp;&nbsp;
+           </div></td>
+          <td style="width:30px;"></td>
+         </tr>
+        </tbody>
+       </table>
+       <table style="margin:0;border-spacing:0 0;">
+        <tbody>
+         <tr>
+          <td>
+           <div class="stntrndiv">
+            <div class="stntrnbtn stntrnbtnleft stntrnbtn1">
+             <span style="margin:5px 10px 5px 5px;" class="stntrntxt">Full Site Search</span>
+            </div>
+           </div></td>
+          <td><input class="stntrnbox stntrnboxleft" style="background: url('https://www.google.com/cse/static/en/google_custom_search_watermark.gif') no-repeat center center;width:240px;color:green;font-weight:bold;" autocomplete="off" name="q" tabindex="1" value="" onfocus="$(this).css('background-image', '');" onkeydown="if (event.keyCode == 13) $('#GoogleSearch').trigger('click');"></td>
+          <td>
+           <div tabindex="4" id="GoogleSearch" class="stntrnbtn stntrnbtnright stntrnbtn1" onclick="javascript:location.href='/googlesearch?ie=UTF-8&amp;cx=009319421611820670793%3A3ywa42eymsa&amp;q=' + $(this).parents('table').find('input').val();">
+            &nbsp;&nbsp;Search&nbsp;&nbsp;
+           </div></td>
+         </tr>
+        </tbody>
+       </table></td>
+      <td>&nbsp;</td>
+     </tr>
+    </tbody>
+   </table>
+   <input type="hidden" id="AddTrainLnk">
+   <iframe id="formTargetFrame" name="formTargetFrame" style="display:none;width:0px;height:0px;"></iframe>
+   <input type="hidden" id="ChromeBr" value="1">
+   <input type="hidden" id="AppVersion" value="4.157">
+   <input type="hidden" id="CacheVersion" value="186">
+   <div class="tab">
+    <table>
+     <tbody>
+      <tr>
+       <td nowrap><span class="timestamp"><span id="TS1">Sat Mar 17, 2018 </span><span id="TS2">13:43:30 IST</span></span><input type="hidden" id="MS" value="1521274410123"><a href="/" class="inactive">Home</a><a href="/trains" class="active">Trains</a>
+        <div style="display:none;" class="menu">
+         <table>
+          <tbody>
+           <tr>
+            <td colspan="2" style="border-bottom:1px dashed black;" pref="/imgtrains" nowrap>♥♥All Imaginary Trains♥♥</td>
+           </tr>
+           <tr>
+            <td pref="/trains/time-table-changed/ttchanged" nowrap>Time-Table Changes</td>
+            <td pref="/trains/speeded-up/speededup" nowrap>Speed ups</td>
+           </tr>
+           <tr>
+            <td pref="/trains/newly-added/new" nowrap>New Trains</td>
+            <td pref="/trains/trains-to-be-introduced/tobeintroduced" nowrap>To Be Introduced</td>
+           </tr>
+           <tr>
+            <td pref="/trains/holiday-festival-special/special" nowrap>Special</td>
+            <td pref="/trains/pending" nowrap>Pending</td>
+           </tr>
+           <tr>
+            <td style="border-top:1px dashed black;" pref="/trains/humsafar-express/humsafar" nowrap>Humsafar</td>
+            <td style="border-top:1px dashed black;" pref="/trains/antyodaya-express/antyodaya" nowrap>Antyodaya</td>
+           </tr>
+           <tr>
+            <td pref="/trains/tejas-express/tejas" nowrap>Tejas</td>
+            <td pref="/trains/uday-express/uday" nowrap>Uday<sup style="color:#d70000;">&nbsp;**new</sup></td>
+           </tr>
+           <tr>
+            <td style="border-top:1px dashed black;" pref="/trains/rajdhani-express/rajdhani" nowrap>Rajdhani</td>
+            <td style="border-top:1px dashed black;" pref="/trains/shatabdi-express/shatabdi" nowrap>Shatabdi</td>
+           </tr>
+           <tr>
+            <td pref="/trains/duronto-express/duronto" nowrap>Duronto</td>
+            <td pref="/trains/garib-rath-express/garibrath" nowrap>Garib Rath</td>
+           </tr>
+           <tr>
+            <td pref="/trains/sampark-kranti-express/samparkkranti" nowrap>Sampark Kranti</td>
+            <td pref="/trains/jan-shatabdi-express/janshatabdi" nowrap>Jan Shatabdi</td>
+           </tr>
+           <tr>
+            <td pref="/trains/suvidha-trains/premium" nowrap>Suvidha</td>
+            <td pref="/trains/premium-tatkal/pt" nowrap>Premium Tatkal</td>
+           </tr>
+           <tr>
+            <td style="border-top:1px dashed black;" pref="/trains/ac-express/acexp" nowrap>AC Express</td>
+            <td style="border-top:1px dashed black;" pref="/trains/ac-superfast-express/acsf" nowrap>AC SuperFast</td>
+           </tr>
+           <tr>
+            <td style="border-top:1px dashed black;" pref="/trains/mail-express/mailexpress" nowrap>Mail/Express</td>
+            <td style="border-top:1px dashed black;" pref="/trains/superfast-express/sf" nowrap>SuperFast</td>
+           </tr>
+           <tr>
+            <td style="border-top:1px dashed black;" pref="/trains/passenger" nowrap>Passenger</td>
+            <td style="border-top:1px dashed black;" pref="/trains/toy-hill/toy" nowrap>Toy</td>
+           </tr>
+           <tr>
+            <td pref="/trains/memu-demu/memudemu" nowrap>MEMU/DEMU</td>
+            <td pref="/trains/double-decker/dd" nowrap>Double Decker</td>
+           </tr>
+           <tr>
+            <td style="border-top:1px dashed black;" pref="/trains/delhi-emu/delhiemu" nowrap>Delhi EMU</td>
+            <td style="border-top:1px dashed black;" pref="/trains/hyderabad" nowrap>Hyderabad</td>
+           </tr>
+           <tr>
+            <td pref="/trains/chennai-emu/chennaiemu" nowrap>Chennai EMU</td>
+            <td pref="/trains/kolkata-emu/kolkataemu" nowrap>Kolkata EMU</td>
+           </tr>
+           <tr>
+            <td pref="/trains/mumbai-emu-local/mumbaiemu" nowrap>Mumbai EMU</td>
+            <td pref="/trains/pune-emu-local/puneemu" nowrap>Pune EMU</td>
+           </tr>
+          </tbody>
+         </table>
+        </div><a href="/chains" class="inactive">ΣChains</a>
+        <div style="display:none;" class="menu">
+         <table>
+          <tbody>
+           <tr>
+            <td pref="/chains" nowrap>All ΣChains</td>
+           </tr>
+          </tbody>
+         </table>
+        </div><a href="/atlas" class="inactive">Atlas</a>
+        <div style="display:none;" class="menu">
+         <table>
+          <tbody>
+           <tr>
+            <td pref="/atlas" nowrap>Main</td>
+           </tr>
+           <tr>
+            <td pref="/traintracker" nowrap><span style="color:blue;">Multi-Train Tracker</span></td>
+           </tr>
+          </tbody>
+         </table>
+        </div><a href="/pnr" class="inactive">PNR</a>
+        <div style="display:none;" class="menu">
+         <table>
+          <tbody>
+           <tr>
+            <td pref="/pnr" nowrap>Main</td>
+           </tr>
+           <tr>
+            <td pref="/pnr/surprises" nowrap>Surprises</td>
+           </tr>
+           <tr>
+            <td pref="/pnr/blank" style="border-bottom:1px dashed black;" nowrap>Blank</td>
+           </tr>
+           <tr>
+            <td pref="/pnr/doj/0?f=3" nowrap>Past Un-Stamped<sup style="color:#d70000;">&nbsp;**new</sup></td>
+           </tr>
+           <tr>
+            <td pref="/pnr/doj/15212448" nowrap>Today's PNRs</td>
+           </tr>
+           <tr>
+            <td pref="/pnr/doj/15212448?f=3" nowrap>Today's Un-Stamped</td>
+           </tr>
+           <tr>
+            <td pref="/pnr/doj/15213312" nowrap>Tomorrow's PNRs</td>
+           </tr>
+           <tr>
+            <td pref="/pnr/doj/15213312?f=3" nowrap>Tomorrow's Un-Stamped</td>
+           </tr>
+          </tbody>
+         </table>
+        </div><a href="/blog" class="inactive">Forum</a>
+        <div style="display:none;" class="menu">
+         <table>
+          <tbody>
+           <tr class="blogalert">
+            <td pref="/blog" nowrap>Main</td>
+           </tr>
+           <tr class="tipalert">
+            <td pref="/tips" nowrap>Travel Tips</td>
+           </tr>
+           <tr class="timelinealert">
+            <td pref="/timeline" nowrap>Timeline</td>
+           </tr>
+           <tr class="blogalert">
+            <td pref="/blog/travelogue" nowrap>Travelogues</td>
+           </tr>
+           <tr class="blogalert">
+            <td pref="/blog/poll" style="border-bottom:1px dashed black" nowrap>Polls/Lists/Quizzes</td>
+           </tr>
+           <tr class="blogalert">
+            <td pref="/blog/popular" nowrap>Popular</td>
+           </tr>
+           <tr class="blogalert">
+            <td pref="/blog/unanswered" nowrap>UnAnswered</td>
+           </tr>
+           <tr class="blogalert">
+            <td pref="/blog/locked" style="border-bottom:1px dashed black" nowrap>Archived</td>
+           </tr>
+           <tr class="imgalert">
+            <td pref="/blog/imaginary" nowrap>Imaginary Train Blogs</td>
+           </tr>
+           <tr class="racealert">
+            <td pref="/blog/race" nowrap>Race Blogs</td>
+           </tr>
+           <tr class="socalert">
+            <td pref="/blog/social" style="border-bottom:1px dashed black" nowrap>Social Blogs</td>
+           </tr>
+          </tbody>
+         </table>
+        </div><a href="/gallery" class="inactive">Gallery</a>
+        <div style="display:none;" class="menu">
+         <table>
+          <tbody>
+           <tr>
+            <td pref="/gallery" nowrap>All Pics</td>
+           </tr>
+           <tr>
+            <td pref="/gallery/sb" nowrap>All Station Pics</td>
+           </tr>
+           <tr>
+            <td pref="/gallery/tb" nowrap>All Train Pics</td>
+           </tr>
+           <tr>
+            <td pref="/gallery/lb" nowrap>All Loco Pics</td>
+           </tr>
+          </tbody>
+         </table>
+        </div><a href="/news" class="inactive">News</a>
+        <div style="display:none;" class="menu">
+         <table>
+          <tbody>
+           <tr>
+            <td pref="/news" nowrap>Main</td>
+           </tr>
+           <tr>
+            <td pref="/news/servicedisruptions" nowrap>Major Accidents/Disruptions</td>
+           </tr>
+           <tr>
+            <td pref="/news/newtrains" nowrap>New/Special Trains</td>
+           </tr>
+           <tr>
+            <td pref="/news/pr" nowrap>Official Press Releases</td>
+           </tr>
+           <tr>
+            <td pref="/news/crime" nowrap>Crime</td>
+           </tr>
+           <tr>
+            <td pref="/news/railbudget" style="border-bottom:1px dashed black;" nowrap>Rail Budget</td>
+           </tr>
+           <tr>
+            <td pref="/news/trains" nowrap>Trains in the News</td>
+           </tr>
+           <tr>
+            <td pref="/news/stations" nowrap>Stations in the News</td>
+           </tr>
+          </tbody>
+         </table>
+        </div><a href="/faq" class="inactive">FAQ</a><a href="/diary" class="inactive">Trips</a>
+        <div style="display:none;" class="menu">
+         <table>
+          <tbody>
+           <tr>
+            <td pref="/diary" nowrap>All Trips</td>
+           </tr>
+           <tr>
+            <td pref="/diary/date" nowrap>Today's Departures</td>
+           </tr>
+          </tbody>
+         </table>
+        </div><a style="color:#d70000;padding-left:20px;" href="/" class="inactive">Login</a><a href="/feedback/GetFeedbackForm?height=450&amp;width=550&amp;modal=true&amp;afterLoad=initFeedback" class="thickbox">Feedback</a></td>
+      </tr>
+     </tbody>
+    </table>
+   </div>
+   <div class="shadowtab">
+    <table>
+     <tbody>
+      <tr>
+       <td nowrap><span class="timestamp"><span id="TS1">Sat Mar 17, 2018 </span><span id="TS2">13:43:30 IST</span></span></td>
+      </tr>
+     </tbody>
+    </table>
+   </div>
+   <div class="topcapsule">
+    <table class="hangingtab">
+     <tbody>
+      <tr>
+       <td><span class="ilink" style="font-size:12px;">Post</span><a href="javascript:void(0);" class="alink" style="font-size:12px;" onclick="javascript:usrEdit.blogpost.initForm($(this),0,0,0,0,0,0,0,0,0,0,0);">Post</a></td>
+       <td><span class="ilink" style="font-size:12px;">Post Trn Tip</span><a href="javascript:void(0);" class="alink" style="font-size:12px;" onclick="javascript:usrEdit.blogpost.initForm($(this),0,0,0,0,0,0,0,0,0,1,0);">Post Trn Tip</a></td>
+       <td><span class="ilink" style="font-size:12px;">Post Stn Tip</span><a href="javascript:void(0);" class="alink" style="font-size:12px;" onclick="javascript:usrEdit.blogpost.initForm($(this),0,0,0,0,0,0,0,0,0,2,0);">Post Stn Tip</a></td>
+       <td><a href="javascript:void(0);" style="font-weight:bold;color:#d70000;" onclick="expandAdv(false);">Advanced Search</a></td>
+      </tr>
+     </tbody>
+    </table>
+    <div id="TrainBlogDivNewBlock"></div>
+    <input id="AccQuota" value="0" type="hidden">
+    <h1 style="text-align:center;">♥ IMAGINARY Train Lists Search</h1>
+    <h2 style="text-align:center;">
+     <div style="font-size:11px;">
+      Imaginary Trains are created by RailFans to explore various alternative Train Routes and TTs.
+      <br>Such trains are NOT ACTUALLY RUNNING on the tracks.
+     </div></h2>
+    <div style="text-align:center;">
+     <table style="margin:auto;">
+      <tbody>
+       <tr>
+        <td>
+         <div class="modernbg" style="margin-top:10px;">
+          <h2>45188 Trains</h2>
+          <table class="srhres">
+           <tbody>
+            <tr class="modernbgheader">
+             <td nowrap class="tdborder"><a href="/imgtrains?&amp;s0=1&amp;sr=0">No.</a></td>
+             <td nowrap class="tdborder">Flags</td>
+             <td nowrap class="tdborder"><a href="/imgtrains?&amp;s0=3&amp;sr=0">Name</a></td>
+             <td nowrap class="tdborder"><a href="/imgtrains?&amp;s0=4&amp;sr=0">Type</a></td>
+             <td nowrap class="tdborder"><a href="/imgtrains?&amp;s0=5&amp;sr=0">Zone</a></td>
+             <td nowrap class="tdborder"><a href="/imgtrains?&amp;s0=6&amp;sr=0">From</a></td>
+             <td nowrap class="tdborder"><a href="/imgtrains?&amp;s0=7&amp;sr=0">Dep</a></td>
+             <td nowrap class="tdborder"><a href="/imgtrains?&amp;s0=8&amp;sr=0">To</a></td>
+             <td nowrap class="tdborder"><a href="/imgtrains?&amp;s0=9&amp;sr=0">Arr</a></td>
+             <td nowrap class="tdborder"><a href="/imgtrains?&amp;s0=10&amp;sr=0">Duration</a></td>
+             <td nowrap class="tdborder"><a href="/imgtrains?&amp;s0=11&amp;sr=0">Halts</a></td>
+             <td nowrap class="tdborder">Dep Days</td>
+             <td nowrap class="tdborder">Classes</td>
+             <td nowrap class="tdborder"><a href="/imgtrains?&amp;s0=14&amp;sr=0">Distance</a></td>
+             <td nowrap class="tdborder">Creator</td>
+            </tr>
+            <tr id="Row-78676" class="firstrow darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG35325</td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;">
+               --
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥YOG AS...</td>
+             <td nowrap class="tdborder">SF</td>
+             <td nowrap class="tdborder">NR</td>
+             <td nowrap class="tdborder">JMP</td>
+             <td nowrap class="tdborder">12:00</td>
+             <td nowrap class="tdborder">NDLS</td>
+             <td nowrap class="tdborder">09:00</td>
+             <td nowrap class="tdborder">21h 0m</td>
+             <td nowrap class="tdborder">11</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td>&nbsp;</td>
+                 <td>M</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A 1A </td>
+             <td nowrap class="tdborder">1150 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1480955?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:#c11402;">Niraj Kumar^~</a></td>
+            </tr>
+            <tr style="display:none;" t="78676" ofs="1155" fs="1155" ots="664" ts="664">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78677" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG68476</td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;">
+               --
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Shalim...</td>
+             <td nowrap class="tdborder">SF</td>
+             <td nowrap class="tdborder">ER</td>
+             <td nowrap class="tdborder">SHM</td>
+             <td nowrap class="tdborder">07:00</td>
+             <td nowrap class="tdborder">AZ</td>
+             <td nowrap class="tdborder">12:15</td>
+             <td nowrap class="tdborder">5h 15m</td>
+             <td nowrap class="tdborder">8</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>T</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">2S CC </td>
+             <td nowrap class="tdborder">224 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1696677?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Tupur Goswami~</a></td>
+            </tr>
+            <tr style="display:none;" t="78677" ofs="1913" fs="1913" ots="1801" ts="1801">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-75634" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#B1004C;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG87439</td>
+             <td nowrap class="tdborder" style="background-color:#B1004C;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#B1004C;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Shree ...</td>
+             <td nowrap class="tdborder">ACSF</td>
+             <td nowrap class="tdborder">NR</td>
+             <td nowrap class="tdborder">CAPE</td>
+             <td nowrap class="tdborder">19:10</td>
+             <td nowrap class="tdborder">SVDK</td>
+             <td nowrap class="tdborder">16:10</td>
+             <td nowrap class="tdborder">45h 0m</td>
+             <td nowrap class="tdborder">23</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">3A 2A 1A </td>
+             <td nowrap class="tdborder">3762 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1850266?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Piyush Nishad</a></td>
+            </tr>
+            <tr style="display:none;" t="75634" ofs="1010" fs="1010" ots="10091" ts="10091">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-75633" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#B1004C;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG87438</td>
+             <td nowrap class="tdborder" style="background-color:#B1004C;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#B1004C;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Shree ...</td>
+             <td nowrap class="tdborder">ACSF</td>
+             <td nowrap class="tdborder">NR</td>
+             <td nowrap class="tdborder">SVDK</td>
+             <td nowrap class="tdborder">21:55</td>
+             <td nowrap class="tdborder">CAPE</td>
+             <td nowrap class="tdborder">15:45</td>
+             <td nowrap class="tdborder">41h 50m</td>
+             <td nowrap class="tdborder">18</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>T</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">3A 2A 1A </td>
+             <td nowrap class="tdborder">3762 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1850266?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Piyush Nishad</a></td>
+            </tr>
+            <tr style="display:none;" t="75633" ofs="10091" fs="10091" ots="1010" ts="1010">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-76984" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#B1004C;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG54786</td>
+             <td nowrap class="tdborder" style="background-color:#B1004C;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#B1004C;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Delhi ...</td>
+             <td nowrap class="tdborder">ACSF</td>
+             <td nowrap class="tdborder">CR</td>
+             <td nowrap class="tdborder">DEE</td>
+             <td nowrap class="tdborder">12:00</td>
+             <td nowrap class="tdborder">KYN</td>
+             <td nowrap class="tdborder">06:40</td>
+             <td nowrap class="tdborder">18h 40m</td>
+             <td nowrap class="tdborder">6</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td>&nbsp;</td>
+                 <td>M</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>T</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">3A 2A 1A </td>
+             <td nowrap class="tdborder">1386 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1850266?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Piyush Nishad</a></td>
+            </tr>
+            <tr style="display:none;" t="76984" ofs="350" fs="350" ots="72" ts="72">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-76982" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#B1004C;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG54785</td>
+             <td nowrap class="tdborder" style="background-color:#B1004C;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#B1004C;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Kalyan...</td>
+             <td nowrap class="tdborder">ACSF</td>
+             <td nowrap class="tdborder">CR</td>
+             <td nowrap class="tdborder">KYN</td>
+             <td nowrap class="tdborder">05:20</td>
+             <td nowrap class="tdborder">DEE</td>
+             <td nowrap class="tdborder">23:55</td>
+             <td nowrap class="tdborder">18h 35m</td>
+             <td nowrap class="tdborder">9</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>W</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">3A 2A 1A </td>
+             <td nowrap class="tdborder">1386 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1850266?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Piyush Nishad</a></td>
+            </tr>
+            <tr style="display:none;" t="76982" ofs="72" fs="72" ots="350" ts="350">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-77373" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#E20000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG09424</td>
+             <td nowrap class="tdborder" style="background-color:#E20000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#E20000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥New De...</td>
+             <td nowrap class="tdborder">Raj</td>
+             <td nowrap class="tdborder">NR</td>
+             <td nowrap class="tdborder">NDLS</td>
+             <td nowrap class="tdborder">13:55</td>
+             <td nowrap class="tdborder">DBRT</td>
+             <td nowrap class="tdborder">04:50</td>
+             <td nowrap class="tdborder">38h 55m</td>
+             <td nowrap class="tdborder">18</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">3A 2A 1A </td>
+             <td nowrap class="tdborder">2443 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1850266?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Piyush Nishad</a></td>
+            </tr>
+            <tr style="display:none;" t="77373" ofs="664" fs="664" ots="680" ts="680">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78543" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#E20000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG07079</td>
+             <td nowrap class="tdborder" style="background-color:#E20000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#E20000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Hazrat...</td>
+             <td nowrap class="tdborder">Raj</td>
+             <td nowrap class="tdborder">NR</td>
+             <td nowrap class="tdborder">NZM</td>
+             <td nowrap class="tdborder">06:00</td>
+             <td nowrap class="tdborder">SBC</td>
+             <td nowrap class="tdborder">05:55</td>
+             <td nowrap class="tdborder">23h 55m</td>
+             <td nowrap class="tdborder">6</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td>&nbsp;</td>
+                 <td>M</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>T</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">3A 2A 1A </td>
+             <td nowrap class="tdborder">2286 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1850266?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Piyush Nishad</a></td>
+            </tr>
+            <tr style="display:none;" t="78543" ofs="748" fs="748" ots="136" ts="136">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78675" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG45998</td>
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;">
+               --
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Mumbai...</td>
+             <td nowrap class="tdborder">Exp</td>
+             <td nowrap class="tdborder">CR</td>
+             <td nowrap class="tdborder">DR</td>
+             <td nowrap class="tdborder">21:30</td>
+             <td nowrap class="tdborder">MYS</td>
+             <td nowrap class="tdborder">21:40</td>
+             <td nowrap class="tdborder">24h 10m</td>
+             <td nowrap class="tdborder">25</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td>&nbsp;</td>
+                 <td>M</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A </td>
+             <td nowrap class="tdborder">1218 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1606548?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Kumbhar Shubham~</a></td>
+            </tr>
+            <tr style="display:none;" t="78675" ofs="712" fs="712" ots="1430" ts="1430">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78671" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG85419</td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;">
+               --
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥.ϖ...</td>
+             <td nowrap class="tdborder">SF</td>
+             <td nowrap class="tdborder">???</td>
+             <td nowrap class="tdborder">ERS</td>
+             <td nowrap class="tdborder">20:00</td>
+             <td nowrap class="tdborder">SA</td>
+             <td nowrap class="tdborder">02:55</td>
+             <td nowrap class="tdborder">6h 55m</td>
+             <td nowrap class="tdborder">5</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder"></td>
+             <td nowrap class="tdborder">353 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1806340?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Murugan~</a></td>
+            </tr>
+            <tr style="display:none;" t="78671" ofs="52" fs="52" ots="38" ts="38">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78674" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG38763</td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥LUCKNO...</td>
+             <td nowrap class="tdborder">SF</td>
+             <td nowrap class="tdborder">NER</td>
+             <td nowrap class="tdborder">LJN</td>
+             <td nowrap class="tdborder">00:10</td>
+             <td nowrap class="tdborder">PUNE</td>
+             <td nowrap class="tdborder">05:00</td>
+             <td nowrap class="tdborder">28h 50m</td>
+             <td nowrap class="tdborder">17</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>T</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A 1A </td>
+             <td nowrap class="tdborder">1698 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1449862?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Anshul Pandey~</a></td>
+            </tr>
+            <tr style="display:none;" t="78674" ofs="906" fs="906" ots="76" ts="76">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78670" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG55703</td>
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;">
+               --
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥SCl - ...</td>
+             <td nowrap class="tdborder">Exp</td>
+             <td nowrap class="tdborder">???</td>
+             <td nowrap class="tdborder">SCL</td>
+             <td nowrap class="tdborder">09:00</td>
+             <td nowrap class="tdborder">VSKP</td>
+             <td nowrap class="tdborder">05:25</td>
+             <td nowrap class="tdborder">44h 25m</td>
+             <td nowrap class="tdborder">34</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>F</td>
+                 <td>&nbsp;</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A </td>
+             <td nowrap class="tdborder">2235 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/273216?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Pamidi Anil Kumar</a></td>
+            </tr>
+            <tr style="display:none;" t="78670" ofs="1053" fs="1053" ots="401" ts="401">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78673" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG09289</td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;">
+               --
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Chenna...</td>
+             <td nowrap class="tdborder">SF</td>
+             <td nowrap class="tdborder">SR</td>
+             <td nowrap class="tdborder">MAS</td>
+             <td nowrap class="tdborder">17:10</td>
+             <td nowrap class="tdborder">VSKP</td>
+             <td nowrap class="tdborder">05:10</td>
+             <td nowrap class="tdborder">12h 0m</td>
+             <td nowrap class="tdborder">6</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A 1A </td>
+             <td nowrap class="tdborder">781 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1799637?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">nav1519een</a></td>
+            </tr>
+            <tr style="display:none;" t="78673" ofs="35" fs="35" ots="401" ts="401">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78544" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#E20000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG07080</td>
+             <td nowrap class="tdborder" style="background-color:#E20000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#E20000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥KSR Be...</td>
+             <td nowrap class="tdborder">Raj</td>
+             <td nowrap class="tdborder">NR</td>
+             <td nowrap class="tdborder">SBC</td>
+             <td nowrap class="tdborder">23:55</td>
+             <td nowrap class="tdborder">NZM</td>
+             <td nowrap class="tdborder">23:50</td>
+             <td nowrap class="tdborder">23h 55m</td>
+             <td nowrap class="tdborder">6</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>T</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>F</td>
+                 <td>&nbsp;</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">3A 2A 1A </td>
+             <td nowrap class="tdborder">2286 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1850266?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Piyush Nishad</a></td>
+            </tr>
+            <tr style="display:none;" t="78544" ofs="136" fs="136" ots="748" ts="748">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78672" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#C80072;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG32431</td>
+             <td nowrap class="tdborder" style="background-color:#C80072;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;">
+               --
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#C80072;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Aligar...</td>
+             <td nowrap class="tdborder">DEMU</td>
+             <td nowrap class="tdborder">NCR</td>
+             <td nowrap class="tdborder">ALJN</td>
+             <td nowrap class="tdborder">07:15</td>
+             <td nowrap class="tdborder">BE</td>
+             <td nowrap class="tdborder">11:55</td>
+             <td nowrap class="tdborder">4h 40m</td>
+             <td nowrap class="tdborder">25</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder"></td>
+             <td nowrap class="tdborder">167 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1770627?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:#c11402;">West Central Railway 🇮🇳^~</a></td>
+            </tr>
+            <tr style="display:none;" t="78672" ofs="710" fs="710" ots="337" ts="337">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-70457" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG24113</td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;">
+               --
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Allaha...</td>
+             <td nowrap class="tdborder">SF</td>
+             <td nowrap class="tdborder">NCR</td>
+             <td nowrap class="tdborder">ALD</td>
+             <td nowrap class="tdborder">22:45</td>
+             <td nowrap class="tdborder">DDN</td>
+             <td nowrap class="tdborder">13:40</td>
+             <td nowrap class="tdborder">14h 55m</td>
+             <td nowrap class="tdborder">23</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A 1A </td>
+             <td nowrap class="tdborder">865 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1770627?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:#c11402;">West Central Railway 🇮🇳^~</a></td>
+            </tr>
+            <tr style="display:none;" t="70457" ofs="455" fs="455" ots="1645" ts="1645">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78668" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG07702</td>
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;">
+               --
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Agra C...</td>
+             <td nowrap class="tdborder">Shtb</td>
+             <td nowrap class="tdborder">NCR</td>
+             <td nowrap class="tdborder">AGC</td>
+             <td nowrap class="tdborder">05:55</td>
+             <td nowrap class="tdborder">LJN</td>
+             <td nowrap class="tdborder">10:25</td>
+             <td nowrap class="tdborder">4h 30m</td>
+             <td nowrap class="tdborder">2</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">CC Ex </td>
+             <td nowrap class="tdborder">330 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1805582?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Saksham Maheswari~</a></td>
+            </tr>
+            <tr style="display:none;" t="78668" ofs="450" fs="450" ots="906" ts="906">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78667" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG07706</td>
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;">
+               --
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Luckno...</td>
+             <td nowrap class="tdborder">Shtb</td>
+             <td nowrap class="tdborder">NR</td>
+             <td nowrap class="tdborder">LJN</td>
+             <td nowrap class="tdborder">07:00</td>
+             <td nowrap class="tdborder">ALD</td>
+             <td nowrap class="tdborder">10:45</td>
+             <td nowrap class="tdborder">3h 45m</td>
+             <td nowrap class="tdborder">2</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">CC Ex </td>
+             <td nowrap class="tdborder">266 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1805582?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Saksham Maheswari~</a></td>
+            </tr>
+            <tr style="display:none;" t="78667" ofs="906" fs="906" ots="455" ts="455">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78659" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG07705</td>
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;">
+               --
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Allaha...</td>
+             <td nowrap class="tdborder">Shtb</td>
+             <td nowrap class="tdborder">NR</td>
+             <td nowrap class="tdborder">ALD</td>
+             <td nowrap class="tdborder">16:40</td>
+             <td nowrap class="tdborder">LJN</td>
+             <td nowrap class="tdborder">20:15</td>
+             <td nowrap class="tdborder">3h 35m</td>
+             <td nowrap class="tdborder">2</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">CC Ex </td>
+             <td nowrap class="tdborder">266 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1805582?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Saksham Maheswari~</a></td>
+            </tr>
+            <tr style="display:none;" t="78659" ofs="455" fs="455" ots="906" ts="906">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-70835" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG89797</td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Ernaku...</td>
+             <td nowrap class="tdborder">SF</td>
+             <td nowrap class="tdborder">SR</td>
+             <td nowrap class="tdborder">ERS</td>
+             <td nowrap class="tdborder">07:00</td>
+             <td nowrap class="tdborder">HYB</td>
+             <td nowrap class="tdborder">07:15</td>
+             <td nowrap class="tdborder">24h 15m</td>
+             <td nowrap class="tdborder">22</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A 1A </td>
+             <td nowrap class="tdborder">1357 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1806340?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Murugan~</a></td>
+            </tr>
+            <tr style="display:none;" t="70835" ofs="52" fs="52" ots="834" ts="834">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-52708" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#0027FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG87344</td>
+             <td nowrap class="tdborder" style="background-color:#0027FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#0027FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Anand ...</td>
+             <td nowrap class="tdborder">SKr</td>
+             <td nowrap class="tdborder">NFR</td>
+             <td nowrap class="tdborder">ANVT</td>
+             <td nowrap class="tdborder">17:05</td>
+             <td nowrap class="tdborder">AGTL</td>
+             <td nowrap class="tdborder">13:30</td>
+             <td nowrap class="tdborder">44h 25m</td>
+             <td nowrap class="tdborder">19</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td>&nbsp;</td>
+                 <td>M</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>T</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A 1A </td>
+             <td nowrap class="tdborder">2592 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1484044?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">~</a></td>
+            </tr>
+            <tr style="display:none;" t="52708" ofs="7322" fs="7322" ots="3651" ts="3651">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-75751" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG27040</td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;">
+               --
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Secund...</td>
+             <td nowrap class="tdborder">SF</td>
+             <td nowrap class="tdborder">SCR</td>
+             <td nowrap class="tdborder">SC</td>
+             <td nowrap class="tdborder">16:00</td>
+             <td nowrap class="tdborder">HWH</td>
+             <td nowrap class="tdborder">17:35</td>
+             <td nowrap class="tdborder">25h 35m</td>
+             <td nowrap class="tdborder">24</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A 1A </td>
+             <td nowrap class="tdborder">1544 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1574464?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">dannysebastian~</a></td>
+            </tr>
+            <tr style="display:none;" t="75751" ofs="835" fs="835" ots="1" ts="1">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78617" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG17172</td>
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Mangal...</td>
+             <td nowrap class="tdborder">JShtb</td>
+             <td nowrap class="tdborder">SR</td>
+             <td nowrap class="tdborder">MAQ</td>
+             <td nowrap class="tdborder">12:00</td>
+             <td nowrap class="tdborder">ERS</td>
+             <td nowrap class="tdborder">18:40</td>
+             <td nowrap class="tdborder">6h 40m</td>
+             <td nowrap class="tdborder">12</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">2S CC </td>
+             <td nowrap class="tdborder">414 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1870685?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">~</a></td>
+            </tr>
+            <tr style="display:none;" t="78617" ofs="1470" fs="1470" ots="52" ts="52">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78652" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG83010</td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Valsad...</td>
+             <td nowrap class="tdborder">SF</td>
+             <td nowrap class="tdborder">WR</td>
+             <td nowrap class="tdborder">BL</td>
+             <td nowrap class="tdborder">14:10</td>
+             <td nowrap class="tdborder">VSKP</td>
+             <td nowrap class="tdborder">18:35</td>
+             <td nowrap class="tdborder">28h 25m</td>
+             <td nowrap class="tdborder">17</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A </td>
+             <td nowrap class="tdborder">1642 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/918577?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Swapnil Chaudhari~</a></td>
+            </tr>
+            <tr style="display:none;" t="78652" ofs="67" fs="67" ots="401" ts="401">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-75389" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG83389</td>
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Visakh...</td>
+             <td nowrap class="tdborder">JShtb</td>
+             <td nowrap class="tdborder">SCR</td>
+             <td nowrap class="tdborder">VSKP</td>
+             <td nowrap class="tdborder">06:00</td>
+             <td nowrap class="tdborder">GNT</td>
+             <td nowrap class="tdborder">13:00</td>
+             <td nowrap class="tdborder">7h 0m</td>
+             <td nowrap class="tdborder">13</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">2S CC </td>
+             <td nowrap class="tdborder">409 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1836202?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Ram kumar~</a></td>
+            </tr>
+            <tr style="display:none;" t="75389" ofs="401" fs="401" ots="489" ts="489">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-26009" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG25617</td>
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Ranchi...</td>
+             <td nowrap class="tdborder">Exp</td>
+             <td nowrap class="tdborder">SWR</td>
+             <td nowrap class="tdborder">RNC</td>
+             <td nowrap class="tdborder">20:05</td>
+             <td nowrap class="tdborder">GKP</td>
+             <td nowrap class="tdborder">23:00</td>
+             <td nowrap class="tdborder">26h 55m</td>
+             <td nowrap class="tdborder">10</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>W</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A </td>
+             <td nowrap class="tdborder">792 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1050408?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Muzaffarpurs public~</a></td>
+            </tr>
+            <tr style="display:none;" t="26009" ofs="384" fs="384" ots="539" ts="539">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-75368" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG63355</td>
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Guntur...</td>
+             <td nowrap class="tdborder">JShtb</td>
+             <td nowrap class="tdborder">SCR</td>
+             <td nowrap class="tdborder">GNT</td>
+             <td nowrap class="tdborder">15:30</td>
+             <td nowrap class="tdborder">VSKP</td>
+             <td nowrap class="tdborder">22:30</td>
+             <td nowrap class="tdborder">7h 0m</td>
+             <td nowrap class="tdborder">13</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">2S CC </td>
+             <td nowrap class="tdborder">409 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1836202?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Ram kumar~</a></td>
+            </tr>
+            <tr style="display:none;" t="75368" ofs="489" fs="489" ots="401" ts="401">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78651" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG90449</td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;">
+               --
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Patna ...</td>
+             <td nowrap class="tdborder">SF</td>
+             <td nowrap class="tdborder">???</td>
+             <td nowrap class="tdborder">RJPB</td>
+             <td nowrap class="tdborder">10:00</td>
+             <td nowrap class="tdborder">CSMT</td>
+             <td nowrap class="tdborder">05:00</td>
+             <td nowrap class="tdborder">43h 0m</td>
+             <td nowrap class="tdborder">2</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A </td>
+             <td nowrap class="tdborder">2176 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1490219?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:#c11402;">Aniket^~</a></td>
+            </tr>
+            <tr style="display:none;" t="78651" ofs="854" fs="854" ots="12282" ts="12282">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78650" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG29463</td>
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Pollac...</td>
+             <td nowrap class="tdborder">Exp</td>
+             <td nowrap class="tdborder">SR</td>
+             <td nowrap class="tdborder">POY</td>
+             <td nowrap class="tdborder">19:55</td>
+             <td nowrap class="tdborder">TBM</td>
+             <td nowrap class="tdborder">06:50</td>
+             <td nowrap class="tdborder">10h 55m</td>
+             <td nowrap class="tdborder">15</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A </td>
+             <td nowrap class="tdborder">534 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1663701?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">~</a></td>
+            </tr>
+            <tr style="display:none;" t="78650" ofs="4803" fs="4803" ots="780" ts="780">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78649" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG29363</td>
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Tambar...</td>
+             <td nowrap class="tdborder">Exp</td>
+             <td nowrap class="tdborder">SR</td>
+             <td nowrap class="tdborder">TBM</td>
+             <td nowrap class="tdborder">19:30</td>
+             <td nowrap class="tdborder">POY</td>
+             <td nowrap class="tdborder">06:00</td>
+             <td nowrap class="tdborder">10h 30m</td>
+             <td nowrap class="tdborder">15</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A </td>
+             <td nowrap class="tdborder">534 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1663701?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">~</a></td>
+            </tr>
+            <tr style="display:none;" t="78649" ofs="780" fs="780" ots="4803" ts="4803">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78648" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG06652</td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;">
+               --
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Gorakh...</td>
+             <td nowrap class="tdborder">SF</td>
+             <td nowrap class="tdborder">???</td>
+             <td nowrap class="tdborder">GKP</td>
+             <td nowrap class="tdborder">06:00</td>
+             <td nowrap class="tdborder">AII</td>
+             <td nowrap class="tdborder">00:30</td>
+             <td nowrap class="tdborder">18h 30m</td>
+             <td nowrap class="tdborder">13</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>F</td>
+                 <td>&nbsp;</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A </td>
+             <td nowrap class="tdborder">1098 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/815653?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:#c11402;">Saif Ali^~</a></td>
+            </tr>
+            <tr style="display:none;" t="78648" ofs="539" fs="539" ots="280" ts="280">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78554" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#B1004C;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG24362</td>
+             <td nowrap class="tdborder" style="background-color:#B1004C;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#B1004C;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Naharl...</td>
+             <td nowrap class="tdborder">ACSF</td>
+             <td nowrap class="tdborder">WR</td>
+             <td nowrap class="tdborder">NHLN</td>
+             <td nowrap class="tdborder">07:15</td>
+             <td nowrap class="tdborder">BCT</td>
+             <td nowrap class="tdborder">10:35</td>
+             <td nowrap class="tdborder">51h 20m</td>
+             <td nowrap class="tdborder">26</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>F</td>
+                 <td>&nbsp;</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">3A 2A 1A </td>
+             <td nowrap class="tdborder">3097 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/48649?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Anshuman Mishra</a></td>
+            </tr>
+            <tr style="display:none;" t="78554" ofs="10452" fs="10452" ots="297" ts="297">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-76808" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#AE00D8;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG30737</td>
+             <td nowrap class="tdborder" style="background-color:#AE00D8;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#AE00D8;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Checki...</td>
+             <td nowrap class="tdborder">Svd</td>
+             <td nowrap class="tdborder">???</td>
+             <td nowrap class="tdborder">HWH</td>
+             <td nowrap class="tdborder">04:05</td>
+             <td nowrap class="tdborder">BDTS</td>
+             <td nowrap class="tdborder">18:40</td>
+             <td nowrap class="tdborder">14h 35m</td>
+             <td nowrap class="tdborder">0</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder"></td>
+             <td nowrap class="tdborder">1963 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1649623?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">HowrahBBS Need Tejas</a></td>
+            </tr>
+            <tr style="display:none;" t="76808" ofs="1" fs="1" ots="303" ts="303">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-56792" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG10927</td>
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Tirune...</td>
+             <td nowrap class="tdborder">Exp</td>
+             <td nowrap class="tdborder">NR</td>
+             <td nowrap class="tdborder">TEN</td>
+             <td nowrap class="tdborder">11:45</td>
+             <td nowrap class="tdborder">ASR</td>
+             <td nowrap class="tdborder">03:55</td>
+             <td nowrap class="tdborder">64h 10m</td>
+             <td nowrap class="tdborder">43</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>F</td>
+                 <td>&nbsp;</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A </td>
+             <td nowrap class="tdborder">3486 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1606548?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Kumbhar Shubham~</a></td>
+            </tr>
+            <tr style="display:none;" t="56792" ofs="797" fs="797" ots="344" ts="344">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78522" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG41681</td>
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Chenna...</td>
+             <td nowrap class="tdborder">Exp</td>
+             <td nowrap class="tdborder">WR</td>
+             <td nowrap class="tdborder">MAS</td>
+             <td nowrap class="tdborder">11:15</td>
+             <td nowrap class="tdborder">KOP</td>
+             <td nowrap class="tdborder">12:10</td>
+             <td nowrap class="tdborder">24h 55m</td>
+             <td nowrap class="tdborder">2</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A </td>
+             <td nowrap class="tdborder">1031 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1481155?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Arjun Anbalagan~</a></td>
+            </tr>
+            <tr style="display:none;" t="78522" ofs="35" fs="35" ots="77" ts="77">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-77992" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#6C003E;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG77244</td>
+             <td nowrap class="tdborder" style="background-color:#6C003E;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#6C003E;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Guruva...</td>
+             <td nowrap class="tdborder">MEMU</td>
+             <td nowrap class="tdborder">SR</td>
+             <td nowrap class="tdborder">GUV</td>
+             <td nowrap class="tdborder">21:25</td>
+             <td nowrap class="tdborder">PGTN</td>
+             <td nowrap class="tdborder">23:45</td>
+             <td nowrap class="tdborder">2h 20m</td>
+             <td nowrap class="tdborder">10</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder"></td>
+             <td nowrap class="tdborder">104 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1663701?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">~</a></td>
+            </tr>
+            <tr style="display:none;" t="77992" ofs="1505" fs="1505" ots="576" ts="576">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-77989" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#6C003E;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG77241</td>
+             <td nowrap class="tdborder" style="background-color:#6C003E;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#6C003E;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Palakk...</td>
+             <td nowrap class="tdborder">MEMU</td>
+             <td nowrap class="tdborder">SR</td>
+             <td nowrap class="tdborder">PGTN</td>
+             <td nowrap class="tdborder">03:45</td>
+             <td nowrap class="tdborder">GUV</td>
+             <td nowrap class="tdborder">05:55</td>
+             <td nowrap class="tdborder">2h 10m</td>
+             <td nowrap class="tdborder">10</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder"></td>
+             <td nowrap class="tdborder">104 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1663701?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">~</a></td>
+            </tr>
+            <tr style="display:none;" t="77989" ofs="576" fs="576" ots="1505" ts="1505">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-77991" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#6C003E;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG77243</td>
+             <td nowrap class="tdborder" style="background-color:#6C003E;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#6C003E;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Kannur...</td>
+             <td nowrap class="tdborder">MEMU</td>
+             <td nowrap class="tdborder">SR</td>
+             <td nowrap class="tdborder">CAN</td>
+             <td nowrap class="tdborder">15:45</td>
+             <td nowrap class="tdborder">GUV</td>
+             <td nowrap class="tdborder">20:40</td>
+             <td nowrap class="tdborder">4h 55m</td>
+             <td nowrap class="tdborder">21</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder"></td>
+             <td nowrap class="tdborder">232 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1663701?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">~</a></td>
+            </tr>
+            <tr style="display:none;" t="77991" ofs="1243" fs="1243" ots="1505" ts="1505">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-77990" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#6C003E;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG77242</td>
+             <td nowrap class="tdborder" style="background-color:#6C003E;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#6C003E;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Guruva...</td>
+             <td nowrap class="tdborder">MEMU</td>
+             <td nowrap class="tdborder">SR</td>
+             <td nowrap class="tdborder">GUV</td>
+             <td nowrap class="tdborder">06:50</td>
+             <td nowrap class="tdborder">CAN</td>
+             <td nowrap class="tdborder">11:40</td>
+             <td nowrap class="tdborder">4h 50m</td>
+             <td nowrap class="tdborder">21</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder"></td>
+             <td nowrap class="tdborder">232 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1663701?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">~</a></td>
+            </tr>
+            <tr style="display:none;" t="77990" ofs="1505" fs="1505" ots="1243" ts="1243">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78520" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG41680</td>
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#783000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Kolhap...</td>
+             <td nowrap class="tdborder">Exp</td>
+             <td nowrap class="tdborder">WR</td>
+             <td nowrap class="tdborder">KOP</td>
+             <td nowrap class="tdborder">19:30</td>
+             <td nowrap class="tdborder">MAS</td>
+             <td nowrap class="tdborder">17:55</td>
+             <td nowrap class="tdborder">22h 25m</td>
+             <td nowrap class="tdborder">23</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A </td>
+             <td nowrap class="tdborder">1031 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1481155?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Arjun Anbalagan~</a></td>
+            </tr>
+            <tr style="display:none;" t="78520" ofs="77" fs="77" ots="35" ts="35">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78647" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#0027FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG43028</td>
+             <td nowrap class="tdborder" style="background-color:#0027FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#0027FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Telang...</td>
+             <td nowrap class="tdborder">SKr</td>
+             <td nowrap class="tdborder">???</td>
+             <td nowrap class="tdborder">KRMR</td>
+             <td nowrap class="tdborder">11:30</td>
+             <td nowrap class="tdborder">CDG</td>
+             <td nowrap class="tdborder">15:30</td>
+             <td nowrap class="tdborder">28h 0m</td>
+             <td nowrap class="tdborder">13</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>T</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A </td>
+             <td nowrap class="tdborder">1740 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1816081?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Crouch</a></td>
+            </tr>
+            <tr style="display:none;" t="78647" ofs="6209" fs="6209" ots="1440" ts="1440">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78623" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#007F0E;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG11688</td>
+             <td nowrap class="tdborder" style="background-color:#007F0E;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#007F0E;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥AHMEDA...</td>
+             <td nowrap class="tdborder">GR</td>
+             <td nowrap class="tdborder">WR</td>
+             <td nowrap class="tdborder">ADI</td>
+             <td nowrap class="tdborder">13:00</td>
+             <td nowrap class="tdborder">BJU</td>
+             <td nowrap class="tdborder">20:40</td>
+             <td nowrap class="tdborder">31h 40m</td>
+             <td nowrap class="tdborder">18</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">3A </td>
+             <td nowrap class="tdborder">1951 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1432188?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">अविनाश सूर्यवंशी~</a></td>
+            </tr>
+            <tr style="display:none;" t="78623" ofs="60" fs="60" ots="558" ts="558">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78645" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG62452</td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;">
+               --
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Shram ...</td>
+             <td nowrap class="tdborder">SF</td>
+             <td nowrap class="tdborder">NCR</td>
+             <td nowrap class="tdborder">NDLS</td>
+             <td nowrap class="tdborder">23:55</td>
+             <td nowrap class="tdborder">CNB</td>
+             <td nowrap class="tdborder">06:05</td>
+             <td nowrap class="tdborder">6h 10m</td>
+             <td nowrap class="tdborder">1</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td>&nbsp;</td>
+                 <td>M</td>
+                 <td>&nbsp;</td>
+                 <td>W</td>
+                 <td>&nbsp;</td>
+                 <td>F</td>
+                 <td>&nbsp;</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A 1A </td>
+             <td nowrap class="tdborder">440 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1852258?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Aryan Thakur</a></td>
+            </tr>
+            <tr style="display:none;" t="78645" ofs="664" fs="664" ots="452" ts="452">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78646" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG62451</td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;">
+               --
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Shram ...</td>
+             <td nowrap class="tdborder">SF</td>
+             <td nowrap class="tdborder">NCR</td>
+             <td nowrap class="tdborder">CNB</td>
+             <td nowrap class="tdborder">23:35</td>
+             <td nowrap class="tdborder">NDLS</td>
+             <td nowrap class="tdborder">05:45</td>
+             <td nowrap class="tdborder">6h 10m</td>
+             <td nowrap class="tdborder">1</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>&nbsp;</td>
+                 <td>T</td>
+                 <td>&nbsp;</td>
+                 <td>T</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">SL 3A 2A 1A </td>
+             <td nowrap class="tdborder">440 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1852258?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Aryan Thakur</a></td>
+            </tr>
+            <tr style="display:none;" t="78646" ofs="452" fs="452" ots="664" ts="664">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78407" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG39446</td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#BB4B00;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Bangal...</td>
+             <td nowrap class="tdborder">SF</td>
+             <td nowrap class="tdborder">???</td>
+             <td nowrap class="tdborder">SBC</td>
+             <td nowrap class="tdborder">15:15</td>
+             <td nowrap class="tdborder">TPJ</td>
+             <td nowrap class="tdborder">22:15</td>
+             <td nowrap class="tdborder">7h 0m</td>
+             <td nowrap class="tdborder">12</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">2S CC </td>
+             <td nowrap class="tdborder">380 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1806340?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Murugan~</a></td>
+            </tr>
+            <tr style="display:none;" t="78407" ofs="136" fs="136" ots="787" ts="787">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78644" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG95171</td>
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Ajmer ...</td>
+             <td nowrap class="tdborder">Shtb</td>
+             <td nowrap class="tdborder">???</td>
+             <td nowrap class="tdborder">AII</td>
+             <td nowrap class="tdborder">14:00</td>
+             <td nowrap class="tdborder">ADI</td>
+             <td nowrap class="tdborder">21:30</td>
+             <td nowrap class="tdborder">7h 30m</td>
+             <td nowrap class="tdborder">4</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">CC FC </td>
+             <td nowrap class="tdborder">492 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/135981?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">krishna sreenivasan~</a></td>
+            </tr>
+            <tr style="display:none;" t="78644" ofs="280" fs="280" ots="60" ts="60">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78643" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG95170</td>
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#0092FF;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Ahemed...</td>
+             <td nowrap class="tdborder">Shtb</td>
+             <td nowrap class="tdborder">???</td>
+             <td nowrap class="tdborder">ADI</td>
+             <td nowrap class="tdborder">05:00</td>
+             <td nowrap class="tdborder">AII</td>
+             <td nowrap class="tdborder">12:30</td>
+             <td nowrap class="tdborder">7h 30m</td>
+             <td nowrap class="tdborder">4</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>M</td>
+                 <td>T</td>
+                 <td>W</td>
+                 <td>T</td>
+                 <td>F</td>
+                 <td style="font-weight:bold;color:#007F0E;">S</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">CC FC </td>
+             <td nowrap class="tdborder">492 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/135981?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">krishna sreenivasan~</a></td>
+            </tr>
+            <tr style="display:none;" t="78643" ofs="60" fs="60" ots="280" ts="280">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78640" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#E20000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG03110</td>
+             <td nowrap class="tdborder" style="background-color:#E20000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;background-color:green;color:white;">
+               ✓
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#E20000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥New De...</td>
+             <td nowrap class="tdborder">Raj</td>
+             <td nowrap class="tdborder">NR</td>
+             <td nowrap class="tdborder">NDLS</td>
+             <td nowrap class="tdborder">16:50</td>
+             <td nowrap class="tdborder">DAKA</td>
+             <td nowrap class="tdborder">17:10</td>
+             <td nowrap class="tdborder">24h 20m</td>
+             <td nowrap class="tdborder">6</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>T</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>F</td>
+                 <td>&nbsp;</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">3A 2A 1A </td>
+             <td nowrap class="tdborder">1847 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1852258?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Aryan Thakur</a></td>
+            </tr>
+            <tr style="display:none;" t="78640" ofs="664" fs="664" ots="10586" ts="10586">
+             <td colspan="14"></td>
+            </tr>
+            <tr id="Row-78641" class="darkrow" style="cursor:pointer;">
+             <td nowrap class="tdborder" style="background-color:#E20000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">IMG33110</td>
+             <td nowrap class="tdborder" style="background-color:#E20000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">
+              <div style="text-align:center;">
+               --
+              </div></td>
+             <td nowrap class="tdborder" style="background-color:#E20000;color:#FFFFFF;border-bottom:1px solid #FFFFFF;">♥♥Dhaka ...</td>
+             <td nowrap class="tdborder">Raj</td>
+             <td nowrap class="tdborder">NR</td>
+             <td nowrap class="tdborder">DAKA</td>
+             <td nowrap class="tdborder">11:00</td>
+             <td nowrap class="tdborder">NDLS</td>
+             <td nowrap class="tdborder">09:55</td>
+             <td nowrap class="tdborder">22h 55m</td>
+             <td nowrap class="tdborder">7</td>
+             <td nowrap class="tdborder">
+              <table style="margin:auto;" class="deparrgrid">
+               <tbody>
+                <tr>
+                 <td style="font-weight:bold;color:red;">S</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                 <td>T</td>
+                 <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                </tr>
+               </tbody>
+              </table></td>
+             <td nowrap class="tdborder">3A 2A 1A </td>
+             <td nowrap class="tdborder">1847 km</td>
+             <td nowrap class="tdborder"><a title="" href="javascript:void(0);" onclick="tb_show(null, '/members/profile/1852258?i=2&amp;height=500&amp;width=450&amp;modal=false')" style="color:;">Aryan Thakur</a></td>
+            </tr>
+            <tr style="display:none;" t="78641" ofs="10586" fs="10586" ots="664" ts="664">
+             <td colspan="14"></td>
+            </tr>
+           </tbody>
+          </table>
+         </div></td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <div style="margin-top:10px;">
+     <button style="display:block;width:100%;" class="nextbtn" onclick="javascript:getNextTrainListPageBare($(this).parent(),'/imgtrains/1?i=1&amp;');">
+      <div>
+       <span style="margin-left:75px;font-size:24px;font-weight:bold;float:left;">↓↓</span>
+       <span style="margin-right:75px;font-size:24px;font-weight:bold;float:right;">↓↓</span>
+       <b>NEXT PAGE</b>
+       <br>the next 50 Trains will appear below
+      </div>
+      <div style="display:none;">
+       <img class="imgSpinner" src="//st.indiarailinfo.com/images/1.png">
+      </div></button>
+    </div>
+   </div>
+  </div>
+  <input type="hidden" id="gmap_key" value="AIzaSyCZ99xj5hZrVuv8x9l6vIpAsgCQ56JLbtc">
+  <a id="bot" name="bot"></a>
+  <div class="scrollbtntop">
+   Scroll to Top
+  </div>
+  <div class="scrollbtnbot">
+   Scroll to Bottom
+  </div>
+  <br> 
+  <script>var ss = document.createElement("link");var ref = document.getElementsByTagName("link")[0];ss.rel = "stylesheet";ss.href = "//st.indiarailinfo.com/abcd-foot.1120.css";ss.media = "all";ref.parentNode.insertBefore(ss,ref);setTimeout(function(){ ss.media ="all"; });</script>
+  <script>var ss = document.createElement("link");var ref = document.getElementsByTagName("link")[0];ss.rel = "stylesheet";ss.href = "//st.indiarailinfo.com/abcd-gray-img.1120.css";ss.media = "all";ref.parentNode.insertBefore(ss,ref);setTimeout(function(){ ss.media ="all"; });</script>
+  <script type="text/javascript" src="//www.google.com/jsapi"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript" src="//st.indiarailinfo.com/abcd.1122.js"></script>
+  <input type="hidden" id="scriptTT" value="//st.indiarailinfo.com/abcdtraintt.1122.js">
+  <input type="hidden" id="scriptMyTrains" value="//st.indiarailinfo.com/abcdmytrains.1122.js">
+  <div id="fb-root"></div> 
+  <div id="fb-root"></div> 
+  <script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=253371170693"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script> 
+  <br> 
+  <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-4243187-1', 'auto');ga('send', 'pageview');</script>
+  <div style="text-align:center;margin:15px 0 30px 0;">
+   <a href="//m.indiarailinfo.com/imgtrains">Go to Mobile site</a>
+  </div>
+  <div style="text-align:left;margin:0px 50px 30px 50px;">
+   <b>Disclaimer:</b> This website has 
+   <b>NO affiliation</b> with the Government-run site of Indian Railways. This site does NOT claim 100% accuracy of fast-changing Rail Information. YOU are responsible for independently confirming the validity of information through other sources.
+  </div>
+  <hr>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br> 
+ </body>
+</html>

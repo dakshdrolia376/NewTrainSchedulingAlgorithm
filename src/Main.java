@@ -6,11 +6,12 @@ import java.util.Date;
 public class Main {
 
     public static void main(String[] args) {
+        String pathTrainList = "data" + File.separator+"trainList.txt";
         String pathUpTrainList = "data" + File.separator +"upTrainList.txt";
         String pathDownTrainList = "data" + File.separator +"downTrainList.txt";
         String pathSingleStoppageTrainList = "data" + File.separator +"ssTrainList.txt";
 
-        String pathRoute = "data"+File.separator+"route"+File.separator+"routePnbeNdls.txt";
+        String pathRoute = "data"+File.separator+"route"+File.separator+"routeCreated.txt";
 
         String pathPlotFile = "data"+File.separator+"plot"+File.separator+"plot1.pdf";
         String pathTemp = "data"+File.separator+"temp";
@@ -51,12 +52,12 @@ public class Main {
             System.setOut(o1);
 
             Scheduler scheduler = new Scheduler();
-            ScheduleByDivision scheduleByDivision = new ScheduleByDivision();
-            int count = 0;
-            double avgSpeed=80;
-            double ratio = 1.3;
-            int trainDay=7;
-            boolean isSingleDay =false;
+            // ScheduleByDivision scheduleByDivision = new ScheduleByDivision();
+            // int count = 0;
+            // double avgSpeed=80;
+            // double ratio = 1.3;
+            // int trainDay=7;
+            // boolean isSingleDay =false;
 
             // String pathOldUpTrainSchedule = pathUpTrainBase + "";
             // String pathOldDownTrainSchedule = pathDownTrainBase + "";
@@ -136,55 +137,120 @@ public class Main {
             //                 pathOldDownTrainSchedule,pathOldSSTrainSchedule,isSingleDay, trainDay, ratio, pathLog, avgSpeed, null);
             // }
 
-            count = 20;
-            for(avgSpeed=60;avgSpeed<130;avgSpeed+=20) {
-                count++;
-                isSingleDay = true;
-                TrainTime sourceTime;
-                String pathBestRouteTemp = pathBestRoute + File.separator + count;
-                Scheduler.createFolder(pathBestRouteTemp);
-                for (trainDay = 0; trainDay < 7; trainDay++) {
-                    sourceTime  = new TrainTime(trainDay,12,12);
-                    String pathOldUpTrainSchedule = pathUpTrainBase + File.separator + "day" + trainDay;
-                    String pathOldDownTrainSchedule = pathDownTrainBase + File.separator + "day" + trainDay;
-                    String pathOldSSTrainSchedule = pathSSTrainBase + File.separator + "day" + trainDay;
-                    System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+
-                            " count "+count +" Type Full Day "+trainDay+" AvgSpeed "+avgSpeed +
-                            " maxRatio "+ratio +" conditional ");
-                    scheduler.test(pathTemp, pathRoute, pathBestRouteTemp, pathOldUpTrainSchedule,
-                            pathOldDownTrainSchedule, pathOldSSTrainSchedule, isSingleDay, trainDay,
-                            usePreviousComputation, ratio, avgSpeed, pathLog, sourceTime);
+            // count = 30;
+            // for(avgSpeed=120;avgSpeed<130;avgSpeed+=20) {
+            //     count++;
+            //     isSingleDay = true;
+            //     TrainTime sourceTime;
+            //     String pathBestRouteTemp = pathBestRoute + File.separator + count;
+            //     Scheduler.createFolder(pathBestRouteTemp);
+            //     for (trainDay = 0; trainDay < 7; trainDay++) {
+            //         sourceTime  = new TrainTime(trainDay,12,12);
+            //         String pathOldUpTrainSchedule = pathUpTrainBase + File.separator + "day" + trainDay;
+            //         String pathOldDownTrainSchedule = pathDownTrainBase + File.separator + "day" + trainDay;
+            //         String pathOldSSTrainSchedule = pathSSTrainBase + File.separator + "day" + trainDay;
+            //         System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+
+            //                 " count "+count +" Type Full Day "+trainDay+" AvgSpeed "+avgSpeed +
+            //                 " maxRatio "+ratio +" conditional ");
+            //         scheduler.test(pathTemp, pathRoute, pathBestRouteTemp, pathOldUpTrainSchedule,
+            //                 pathOldDownTrainSchedule, pathOldSSTrainSchedule, isSingleDay, trainDay,
+            //                 usePreviousComputation, ratio, avgSpeed, pathLog, sourceTime);
+            //
+            //         System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+
+            //                 " count "+count +" Type Full Day "+trainDay+" AvgSpeed "+avgSpeed +
+            //                 " maxRatio "+ratio +" unconditional ");
+            //         scheduler.test(pathTemp, pathRoute, pathBestRouteTemp, pathOldUpTrainSchedule,
+            //                 pathOldDownTrainSchedule, pathOldSSTrainSchedule, isSingleDay, trainDay,
+            //                 usePreviousComputation, ratio, avgSpeed, pathLog, null);
+            //     }
+            //     isSingleDay = false;
+            //     sourceTime = new TrainTime(3,12,12);
+            //     trainDay = 7;
+            //     String pathOldUpTrainSchedule = pathUpTrainBase + "";
+            //     String pathOldDownTrainSchedule = pathDownTrainBase + "";
+            //     String pathOldSSTrainSchedule = pathSSTrainBase + "";
+            //     System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+
+            //             " count "+count +" Type Full Day "+trainDay+" AvgSpeed "+avgSpeed +
+            //             " maxRatio "+ratio +" conditional ");
+            //     scheduler.test(pathTemp, pathRoute, pathBestRouteTemp, pathOldUpTrainSchedule, pathOldDownTrainSchedule,
+            //             pathOldSSTrainSchedule, isSingleDay, trainDay, usePreviousComputation, ratio, avgSpeed, pathLog, sourceTime);
+            //     System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+
+            //             " count "+count +" Type Full Day "+trainDay+" AvgSpeed "+avgSpeed +
+            //             " maxRatio "+ratio +" unconditional ");
+            //     scheduler.test(pathTemp, pathRoute, pathBestRouteTemp, pathOldUpTrainSchedule, pathOldDownTrainSchedule,
+            //             pathOldSSTrainSchedule, isSingleDay, trainDay, usePreviousComputation, ratio, avgSpeed, pathLog, null);
+            // }
 
-                    System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+
-                            " count "+count +" Type Full Day "+trainDay+" AvgSpeed "+avgSpeed +
-                            " maxRatio "+ratio +" unconditional ");
-                    scheduler.test(pathTemp, pathRoute, pathBestRouteTemp, pathOldUpTrainSchedule,
-                            pathOldDownTrainSchedule, pathOldSSTrainSchedule, isSingleDay, trainDay,
-                            usePreviousComputation, ratio, avgSpeed, pathLog, null);
-                }
-                isSingleDay = false;
-                sourceTime = new TrainTime(3,12,12);
-                trainDay = 7;
-                String pathOldUpTrainSchedule = pathUpTrainBase + "";
-                String pathOldDownTrainSchedule = pathDownTrainBase + "";
-                String pathOldSSTrainSchedule = pathSSTrainBase + "";
-                System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+
-                        " count "+count +" Type Full Day "+trainDay+" AvgSpeed "+avgSpeed +
-                        " maxRatio "+ratio +" conditional ");
-                scheduler.test(pathTemp, pathRoute, pathBestRouteTemp, pathOldUpTrainSchedule, pathOldDownTrainSchedule,
-                        pathOldSSTrainSchedule, isSingleDay, trainDay, usePreviousComputation, ratio, avgSpeed, pathLog, sourceTime);
-                System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+
-                        " count "+count +" Type Full Day "+trainDay+" AvgSpeed "+avgSpeed +
-                        " maxRatio "+ratio +" unconditional ");
-                scheduler.test(pathTemp, pathRoute, pathBestRouteTemp, pathOldUpTrainSchedule, pathOldDownTrainSchedule,
-                        pathOldSSTrainSchedule, isSingleDay, trainDay, usePreviousComputation, ratio, avgSpeed, pathLog, null);
-            }
+            // count = 100;
+            // for(avgSpeed=60;avgSpeed<130;avgSpeed+=20) {
+            //     count++;
+            //     isSingleDay = true;
+            //     String pathBestRouteTemp = pathBestRoute + File.separator + count;
+            //     Scheduler.createFolder(pathBestRouteTemp);
+            //     for (trainDay = 0; trainDay < 1; trainDay++) {
+            //         String pathOldUpTrainSchedule = pathUpTrainBase + File.separator + "day" + trainDay;
+            //         String pathOldDownTrainSchedule = pathDownTrainBase + File.separator + "day" + trainDay;
+            //         String pathOldSSTrainSchedule = pathSSTrainBase + File.separator + "day" + trainDay;
+            //
+            //         System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+
+            //                 " count "+count +" Type Full Day "+trainDay+" AvgSpeed "+avgSpeed +
+            //                 " maxRatio "+ratio +" unconditional ");
+            //         scheduler.test(pathTemp, pathRoute, pathBestRouteTemp, pathOldUpTrainSchedule,
+            //                 pathOldDownTrainSchedule, pathOldSSTrainSchedule, isSingleDay, trainDay,
+            //                 usePreviousComputation, ratio, avgSpeed, pathLog, null);
+            //     }
+            //
+            //     // isSingleDay = false;
+            //     // trainDay = 7;
+            //     // String pathOldUpTrainSchedule = pathUpTrainBase + "";
+            //     // String pathOldDownTrainSchedule = pathDownTrainBase + "";
+            //     // String pathOldSSTrainSchedule = pathSSTrainBase + "";
+            //     // System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+
+            //     //         " count "+count +" Type Full Day "+trainDay+" AvgSpeed "+avgSpeed +
+            //     //         " maxRatio "+ratio +" unconditional ");
+            //     // scheduler.test(pathTemp, pathRoute, pathBestRouteTemp, pathOldUpTrainSchedule, pathOldDownTrainSchedule,
+            //     //         pathOldSSTrainSchedule, isSingleDay, trainDay, usePreviousComputation, ratio, avgSpeed, pathLog, null);
+            // }
+
+            // count=70;
+            // for(avgSpeed=60;avgSpeed<=120;avgSpeed+=20) {
+            //         count++;
+            //         isSingleDay = true;
+            //         String pathBestRouteTemp = pathBestRoute + File.separator + count;
+            //         Scheduler.createFolder(pathBestRouteTemp);
+            //         for (trainDay = 0; trainDay < 7; trainDay++) {
+            //             String pathOldUpTrainSchedule = pathUpTrainBase + File.separator + "day" + trainDay;
+            //             String pathOldDownTrainSchedule = pathDownTrainBase + File.separator + "day" + trainDay;
+            //             String pathOldSSTrainSchedule = pathSSTrainBase + File.separator + "day" + trainDay;
+            //
+            //             System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+
+            //                     " count "+count +" Type Break Day "+trainDay+" AvgSpeed "+avgSpeed +
+            //                     " maxRatio "+ratio +" unconditional ");
+            //             scheduleByDivision.scheduleByBreaking(pathTemp, pathRoute, pathBestRouteTemp, pathOldUpTrainSchedule,
+            //                     pathOldDownTrainSchedule,pathOldSSTrainSchedule,isSingleDay, trainDay, ratio,
+            //                     pathLog, avgSpeed, null);
+            //         }
+            //         isSingleDay = false;
+            //         trainDay = 7;
+            //         String pathOldUpTrainSchedule = pathUpTrainBase + "";
+            //         String pathOldDownTrainSchedule = pathDownTrainBase + "";
+            //         String pathOldSSTrainSchedule = pathSSTrainBase + "";
+            //         System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+
+            //                 " count "+count +" Type Break Day "+trainDay+" AvgSpeed "+avgSpeed +
+            //                 " maxRatio "+ratio +" unconditional ");
+            //         scheduleByDivision.scheduleByBreaking(pathTemp, pathRoute, pathBestRouteTemp, pathOldUpTrainSchedule,
+            //                 pathOldDownTrainSchedule,pathOldSSTrainSchedule,isSingleDay, trainDay, ratio, pathLog, avgSpeed, null);
+            // }
 
 
             // int newTrainNo = 9910;
-            // String pathNewTrainFile = pathBestRoute+File.separator+"Type 2 AvgSpeed 80.0 path 1 cost 24.0 .path";
-            // scheduler.showPlot(null,newTrainNo,pathPlotFile,pathRoute,pathOldUpTrainSchedule,
-            //         true, isSingleDay, trainDay);
+            // int newTrainDay = 4;
+            // isSingleDay = true;
+            // // String pathNewTrainFile = pathBestRoute+File.separator+"Type Full Day 7 AvgSpeed 80.0 maxRatio 1.3 unconditional  path 1 cost 813.0 .path";
+            // String pathNewTrainFile = pathBestRoute+File.separator+"Type Full Day 7 AvgSpeed 80.0 maxRatio 1.3 unconditional  path 4 cost 842.0 .path";
+            // String pathOldUpTrainSchedule = pathUpTrainBase + File.separator + "day" + newTrainDay;
+            // scheduler.showPlot(pathNewTrainFile,newTrainNo,pathPlotFile,pathRoute,pathOldUpTrainSchedule,
+            //         false, isSingleDay, newTrainDay);
 
 
             // scheduler.fetchStationInfo(pathStationDatabase);
@@ -192,7 +258,7 @@ public class Main {
             // scheduler.getTrainList(pathRoute, pathUpTrainList, pathDownTrainList);
             // scheduler.putStationIntoDatabase(pathStationDatabase);
             // scheduler.putTrainIntoDatabase(pathTrainDatabase);
-            // scheduler.putStoppagesIntoDatabase(pathTrainDatabase);
+            scheduler.putStoppagesIntoDatabase(pathTrainDatabase);
             //
             // scheduler.updateRouteFile(pathRoute, pathStationDatabase);
             // scheduler.createTrainList(pathRoute, pathUpTrainList,pathDownTrainList,pathSingleStoppageTrainList, pathTrainDatabase);

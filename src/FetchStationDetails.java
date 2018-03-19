@@ -16,6 +16,7 @@ public class FetchStationDetails {
 
     private Map<String, Integer> myMap;
     private String pathDatabaseStation;
+    private Map<Integer, List<String>> stationDetails;
 
     public FetchStationDetails(String pathDatabaseStation){
         requireNonNull(pathDatabaseStation, "path of database cant be null.");
@@ -31,6 +32,22 @@ public class FetchStationDetails {
             }
             else{
                 this.myMap = new HashMap<>();
+            }
+        }
+        catch (Exception e){
+            this.myMap = new HashMap<>();
+        }
+
+        try {
+            Type listType = new TypeToken<Map<Integer, List<String>>>(){}.getType();
+            File file = new File(this.pathDatabaseStation + File.separator + "indexStationDetails.db");
+            if(file.exists()) {
+                FileReader fileReader = new FileReader(file);
+                this.stationDetails = gson.fromJson(fileReader, listType);
+                fileReader.close();
+            }
+            else{
+                this.stationDetails = new HashMap<>();
             }
         }
         catch (Exception e){
@@ -70,6 +87,7 @@ public class FetchStationDetails {
             return numOfPlatform;
         }
     }
+
     public int getNumberOfTracks(String stationId){
         int indexStation = this.myMap.getOrDefault(stationId.toLowerCase(), -1);
         if(indexStation==-1){
@@ -140,7 +158,7 @@ public class FetchStationDetails {
 
     public boolean fetchStation(int stationIndexNo){
         String url = "https://indiarailinfo.com/station/map/" + stationIndexNo;
-        String pathStation = this.pathDatabaseStation + File.separator + "station_details_" + stationIndexNo+".txt";
+        String pathStation = this.pathDatabaseStation + File.separator + "station_details_" + stationIndexNo+".html";
         File file = new File(pathStation);
         if(!file.exists()) {
             if(!new GetWebsite().getWebsite(url, pathStation)){
@@ -174,6 +192,12 @@ public class FetchStationDetails {
                 matcher = pattern.matcher(line);
                 if(matcher.find()) {
                     String temp = matcher.group().split("\\s+")[2];
+                    if(temp.equalsIgnoreCase("content=\"https://indiarailinfo.com/station/map/-/0\">")){
+                        System.out.println("Unable to find station id: " + fileName);
+                        bReader.close();
+                        fReader.close();
+                        return false;
+                    }
                     String temp1[] = temp.split("/");
                     if(temp1.length >= 7) {
                         String stationName = temp1[5].toLowerCase();
@@ -256,28 +280,19 @@ public class FetchStationDetails {
         }
     }
 
-    public void putAllStationsInDatabase(){
-
-        List<String> stationNames = new ArrayList<>();
-        List<String> stationIds = new ArrayList<>();
-        List<Integer> stationIndexes = new ArrayList<>();
-        List<String> stationTypes= new ArrayList<>();
-        List<String> stationTracks= new ArrayList<>();
-        List<Integer> originatingTrains= new ArrayList<>();
-        List<Integer> terminatingTrains= new ArrayList<>();
-        List<Integer> haltingTrains= new ArrayList<>();
-        List<Integer> platforms= new ArrayList<>();
-        List<String> elevations= new ArrayList<>();
-        List<String> railwayZones= new ArrayList<>();
-        List<String> addresses= new ArrayList<>();
+    public void putAllStationsInMap(){
+        this.myMap = new HashMap<>();
+        this.stationDetails = new HashMap<>();
 
         FileReader fReader;
         BufferedReader bReader;
         String line;
-        String stationName, stationId, stationType, stationTrack, elevation, railwayZone, address;
+        String stationName, stationId, stationType, stationTrack, elevation, railwayZone;
+        StringBuilder address;
         int originatingTrain,terminatingTrain,haltingTrain,platform;
 
         for(int i=1;i<15000;i++){
+            List<String> tempList = new ArrayList<>();
             System.out.println(i);
             stationName ="";
             stationId = "";
@@ -285,7 +300,7 @@ public class FetchStationDetails {
             stationTrack = "NA";
             elevation = "NA";
             railwayZone = "NA";
-            address = "NA";
+            address = new StringBuilder("");
             originatingTrain=0;
             terminatingTrain =0;
             haltingTrain = 0;
@@ -348,94 +363,61 @@ public class FetchStationDetails {
                         railwayZone = line.split(":")[1].trim().split("/")[0];
                     }
                     else if(line.contains("Station Address")){
-                        address = line.split(":")[1].trim();
+                        address.append(line.split(":")[1].trim());
+                    }
+                    else{
+                        address.append(" ");
+                        address.append(line.trim());
                     }
                 }
                 bReader.close();
                 fReader.close();
             }
             catch (Exception e){
+                System.err.println("Error in executing index: "+ i);
                 e.printStackTrace();
             }
 
             if(!stationName.equals("") && !stationId.equals("")){
-                stationNames.add(stationName);
-                stationIds.add(stationId);
-                stationIndexes.add(i);
-                stationTypes.add(stationType);
-                stationTracks.add(stationTrack);
-                originatingTrains.add(originatingTrain);
-                terminatingTrains.add(terminatingTrain);
-                haltingTrains.add(haltingTrain);
-                platforms.add(platform);
-                elevations.add(elevation);
-                railwayZones.add(railwayZone);
-                addresses.add(address);
+                tempList.add(stationName);
+                tempList.add(stationId);
+                tempList.add(stationType);
+                tempList.add(stationTrack);
+                tempList.add(originatingTrain+"");
+                tempList.add(terminatingTrain+"");
+                tempList.add(haltingTrain+"");
+                tempList.add(platform+"");
+                tempList.add(elevation+"");
+                tempList.add(railwayZone+"");
+                tempList.add(address.toString());
+                this.stationDetails.put(i,tempList);
+                this.myMap.put(stationId, i);
             }
         }
 
         Gson gson = new Gson();
         try {
-            Type listType = new TypeToken<List<Integer>>(){}.getType();
-            FileWriter fileWriter = new FileWriter(this.pathDatabaseStation + File.separator + "indexStationNos.db");
-            gson.toJson(stationIndexes,listType,fileWriter);
+            Type listType = new TypeToken<Map<Integer, List<String>>>(){}.getType();
+            FileWriter fileWriter = new FileWriter(this.pathDatabaseStation + File.separator + "indexStationDetails.db");
+            gson.toJson(this.stationDetails,listType,fileWriter);
             fileWriter.close();
-            listType = new TypeToken<List<String>>(){}.getType();
-            fileWriter = new FileWriter(this.pathDatabaseStation + File.separator + "indexStationIds.db");
-            gson.toJson(stationIds,listType,fileWriter);
-            fileWriter.close();
-            listType = new TypeToken<List<String>>(){}.getType();
-            fileWriter = new FileWriter(this.pathDatabaseStation + File.separator + "indexStationNames.db");
-            gson.toJson(stationNames,listType,fileWriter);
-            fileWriter.close();
-            listType = new TypeToken<List<String>>(){}.getType();
-            fileWriter = new FileWriter(this.pathDatabaseStation + File.separator + "indexStationTracks.db");
-            gson.toJson(stationTracks,listType,fileWriter);
-            fileWriter.close();
-            listType = new TypeToken<List<String>>(){}.getType();
-            fileWriter = new FileWriter(this.pathDatabaseStation + File.separator + "indexStationTypes.db");
-            gson.toJson(stationTypes,listType,fileWriter);
-            fileWriter.close();
-            listType = new TypeToken<List<Integer>>(){}.getType();
-            fileWriter = new FileWriter(this.pathDatabaseStation + File.separator + "indexStationOriginatingTrains.db");
-            gson.toJson(originatingTrains,listType,fileWriter);
-            fileWriter.close();
-            listType = new TypeToken<List<Integer>>(){}.getType();
-            fileWriter = new FileWriter(this.pathDatabaseStation + File.separator + "indexStationTerminatingTrains.db");
-            gson.toJson(terminatingTrains,listType,fileWriter);
-            fileWriter.close();
-            listType = new TypeToken<List<Integer>>(){}.getType();
-            fileWriter = new FileWriter(this.pathDatabaseStation + File.separator + "indexStationHaltingTrains.db");
-            gson.toJson(haltingTrains,listType,fileWriter);
-            fileWriter.close();
-            listType = new TypeToken<List<Integer>>(){}.getType();
-            fileWriter = new FileWriter(this.pathDatabaseStation + File.separator + "indexStationPlatforms.db");
-            gson.toJson(platforms,listType,fileWriter);
-            fileWriter.close();
-            listType = new TypeToken<List<String>>(){}.getType();
-            fileWriter = new FileWriter(this.pathDatabaseStation + File.separator + "indexStationElevations.db");
-            gson.toJson(elevations,listType,fileWriter);
-            fileWriter.close();
-            listType = new TypeToken<List<String>>(){}.getType();
-            fileWriter = new FileWriter(this.pathDatabaseStation + File.separator + "indexStationRailwayZones.db");
-            gson.toJson(railwayZones,listType,fileWriter);
-            fileWriter.close();
-            listType = new TypeToken<List<String>>(){}.getType();
-            fileWriter = new FileWriter(this.pathDatabaseStation + File.separator + "indexStationAddresses.db");
-            gson.toJson(addresses,listType,fileWriter);
+            listType = new TypeToken<Map<String, Integer>>(){}.getType();
+            fileWriter = new FileWriter(this.pathDatabaseStation + File.separator + "indexStation.db");
+            gson.toJson(this.myMap,listType,fileWriter);
             fileWriter.close();
         }
         catch (Exception e){
             e.printStackTrace();
         }
+    }
 
+    public void putStationMapInDatabase(){
         DatabaseConnector databaseConnector = new DatabaseConnector();
-        boolean ans = databaseConnector.insertIntoStationBatch(stationIndexes, stationIds, stationNames,
-                stationTypes, stationTracks,originatingTrains,terminatingTrains,haltingTrains,platforms,
-                elevations,railwayZones,addresses);
+        boolean ans = databaseConnector.insertIntoStationBatch(this.stationDetails);
         if(!ans){
             System.out.println("Unable to put stations into database");
         }
         databaseConnector.closeConnection();
     }
+
 }
