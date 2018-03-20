@@ -1,5 +1,0 @@
-kanpur-central-cnb	04:15	04:35	0.0
-kanpur-goods-marshalling-yard-gmc	04:37	04:37	1.2
-juhi-outer-cabin-cnjo	04:39	04:39	2.0
-govindpuri-junction-goy	04:43	04:45	3.9
-panki-pnk	05:00	05:20	11.3

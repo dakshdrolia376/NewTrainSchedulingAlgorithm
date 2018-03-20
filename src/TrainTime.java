@@ -4,12 +4,6 @@ public class TrainTime {
     byte day;
     byte hour;
     byte minute;
-    private static boolean isSingleDay = false;
-
-    public static void updateIsSingleDay(boolean value){
-        // System.out.println("Setting up duration of days...");
-        TrainTime.isSingleDay = value;
-    }
 
     public TrainTime(int day, int hour, int minute){
         setData((byte)day,(byte)hour,(byte)minute);
@@ -19,7 +13,6 @@ public class TrainTime {
         setData(trainTime.day,trainTime.hour,trainTime.minute);
     }
 
-    @SuppressWarnings("unused")
     public TrainTime(String label){
         String[] data = label.split(":");
         if(data.length!=3){
@@ -71,10 +64,8 @@ public class TrainTime {
     }
 
     public void addDay(int day){
-        if(!TrainTime.isSingleDay) {
-            day += this.day;
-            this.day = (byte) Math.floorMod(day, 7);
-        }
+        day += this.day;
+        this.day = (byte) Math.floorMod(day, 7);
     }
 
     public void addHours(int hours){
@@ -90,11 +81,9 @@ public class TrainTime {
     }
 
     public void subDay(int day){
-        if(!TrainTime.isSingleDay) {
-            day = Math.floorMod(day, 7);
-            this.day -= day;
-            this.day = (byte) Math.floorMod(this.day, 7);
-        }
+        day = Math.floorMod(day, 7);
+        this.day -= day;
+        this.day = (byte) Math.floorMod(this.day, 7);
     }
 
     public void subHours(int hours){
@@ -122,7 +111,7 @@ public class TrainTime {
     }
 
     public int getValue(){
-        return ((isSingleDay?0:this.day)*24 + this.hour)*60 + this.minute;
+        return (this.day*24 + this.hour)*60 + this.minute;
     }
 
     @Override

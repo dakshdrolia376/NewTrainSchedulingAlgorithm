@@ -1,6 +1,0 @@
-patna-junction-pnbe 0.0 1 5 5 0 1 1 0
-sachiwalay-halt-scy 2.2 1 1 1 0 1 1 0
-phulwari-sharif-pws 6.0 1 1 1 1 1 1 0
-danapur-dnr 9.7 1 2 2 1 1 1 0
-phulwari-sharif-pws 13.4 1 1 1 1 1 1 0
-sachiwalay-halt-scy 17.2 1 1 1 0 1 1 0

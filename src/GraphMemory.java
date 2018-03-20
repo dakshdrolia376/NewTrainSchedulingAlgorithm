@@ -34,15 +34,6 @@ public class GraphMemory extends GraphParent{
     public boolean addEdge(Edge edge) {
         requireNonNull(edge, "The edge is null.");
         vertexEdgeMap.putIfAbsent(edge.getFrom().toString(), new HashMap<>());
-        // Map<String, Edge> fromMap = vertexEdgeMap.get(edge.getFrom().toString());
-        //
-        // // only single edge between two nodes.
-        // // if(fromMap.containsKey(edge.getTo().toString())) {
-        // //     System.out.println("Duplicate edge " + edge.toString());
-        // //     return false;
-        // // }
-        // fromMap.put(edge.getTo().toString(), edge);
-        System.out.println("Adding edge : "+ edge.toString());
         vertexEdgeMap.get(edge.getFrom().toString()).put(edge.getTo().toString(), edge);
         return true;
     }

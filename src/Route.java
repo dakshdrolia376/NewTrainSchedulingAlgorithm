@@ -34,14 +34,14 @@ public class Route {
         return mapStation.getOrDefault(id, null);
     }
 
-    public List<List<Node>> getFreeSlots(TrainTime start, TrainTime end, boolean isSingleDay) {
+    public List<List<Node>> getFreeSlots(TrainTime start, TrainTime end) {
         List<List<Node>> nodes = new ArrayList<>(this.stationOrder.size());
         for(String stationId: this.stationOrder) {
             Station station = this.mapStation.get(stationId);
             if(station==null){
                 throw  new RuntimeException("Unable to load station");
             }
-            nodes.add(station.getNodesFreeList(start, end, isSingleDay));
+            nodes.add(station.getNodesFreeList(start, end));
         }
         return nodes;
     }

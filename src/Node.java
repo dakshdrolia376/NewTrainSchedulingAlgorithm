@@ -45,6 +45,7 @@ public class Node {
         return this.inEdgeCount;
     }
 
+    @SuppressWarnings("unused")
     public int getOutEdgeCount(){
         return this.outEdgeCount;
     }

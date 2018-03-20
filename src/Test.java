@@ -35,8 +35,8 @@ public class Test {
                 }
 
                 boolean found =false;
-                for(int j=0;j<st2.size();j++){
-                    if(st1.get(i).equalsIgnoreCase(st2.get(j))){
+                for(String stTemp: st2){
+                    if(st1.get(i).equalsIgnoreCase(stTemp)){
                         found = true;
                     }
                 }
@@ -49,5 +49,6 @@ public class Test {
         catch (Exception e){
             e.printStackTrace();
         }
+
     }
 }

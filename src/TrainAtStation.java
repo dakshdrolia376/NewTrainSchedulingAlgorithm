@@ -6,9 +6,9 @@ public class TrainAtStation {
     private final int trainNo;
     private final TrainTime arrival;
     private final TrainTime departure;
-    private final double distance;
+    private final int stoppageNo;
 
-    public TrainAtStation(String stationId, int trainNo, TrainTime arrival, TrainTime departure, double distance) {
+    public TrainAtStation(String stationId, int trainNo, TrainTime arrival, TrainTime departure, int stoppageNo) {
         requireNonNull(stationId, "Station id is null.");
         requireNonNull(arrival, "Arrival is null.");
         requireNonNull(departure, "Departure is null.");
@@ -16,9 +16,10 @@ public class TrainAtStation {
         this.trainNo =trainNo;
         this.arrival =arrival;
         this.departure = departure;
-        this.distance = distance;
+        this.stoppageNo = stoppageNo;
     }
 
+    @SuppressWarnings("unused")
     public TrainAtStation(String key){
         requireNonNull(key, "Invalid key");
         if(key.equalsIgnoreCase("DefaultConstructorForNull")){
@@ -26,7 +27,7 @@ public class TrainAtStation {
             this.trainNo = 0;
             this.arrival =null;
             this.departure = null;
-            this.distance = 0;
+            this.stoppageNo = 0;
         }
         else{
             throw new IllegalArgumentException("Invalid key");
@@ -49,7 +50,7 @@ public class TrainAtStation {
         return this.departure;
     }
 
-    public double getDistance(){
-        return this.distance;
+    public int getStoppageNo(){
+        return this.stoppageNo;
     }
 }

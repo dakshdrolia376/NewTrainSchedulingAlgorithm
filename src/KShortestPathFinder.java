@@ -55,7 +55,8 @@ public class KShortestPathFinder {
                 TrainTime sourceTimeTemp = currentPath.getSourceTime();
                 boolean diversePath = true;
                 for(Path pathAlreadyFound: paths){
-                    if(Math.abs((pathAlreadyFound.getSourceTime().compareTo(sourceTimeTemp)))<15){
+                    int temp = Math.abs((pathAlreadyFound.getSourceTime().compareTo(sourceTimeTemp)));
+                    if(temp<15 || (Math.abs(temp -10080)<15)){
                         diversePath = false;
                         break;
                     }
@@ -66,7 +67,7 @@ public class KShortestPathFinder {
                 }
                 else {
                     countRejected++;
-                    // System.out.println("Rejected Path found :" + currentPath.toString() + " cost: " + currentPath.pathCost());
+                    System.out.println("Rejected Path found :" + currentPath.toString() + " cost: " + currentPath.pathCost());
                 }
             }
             else {
@@ -84,7 +85,7 @@ public class KShortestPathFinder {
             System.out.print("Heap Empty ");
         }
         else{
-            System.out.print("Heap Number of paths found ");
+            System.out.print("Heap Required Number of paths found ");
         }
         System.out.println(paths.toString());
         System.out.println("Rejected paths:" + countRejected);

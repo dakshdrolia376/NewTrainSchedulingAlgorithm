@@ -52,6 +52,7 @@ public class FetchTrainDetails {
         this.newMethod=true;
     }
 
+    @SuppressWarnings("unused")
     public String getTrainIndexNo(int trainNo){
         int trainIndex = this.myMap.getOrDefault(trainNo, -1);
         if(trainIndex<=0){

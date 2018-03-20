@@ -18,10 +18,7 @@ public class ScheduleByDivision {
     private Queue<Path> bestAns;
 
     public List<Path> getSmallPart(String pathTemp, int firstIndex, int lastIndex, int noOfPaths, TrainTime sourceTime,
-                                   int minDelayBwTrains, double avgSpeed, String pathOldUpTrainSchedule,
-                                   String pathOldDownTrainSchedule, String pathOldSSTrainSchedule, int startDay,
-                                   int startHrs, int startMinutes, int endDay, int endHrs, int endMinutes,
-                                   int maxDelayBwStations, boolean isSingleDay, int trainDay, double ratio,
+                                   int minDelayBwTrains, double avgSpeed, String pathOldTrainSchedule, boolean isSingleDay, int trainDay, double ratio,
                                    boolean aroundSourceTime){
 
         return new KBestSchedule().getScheduleNewTrain(pathTemp, this.stationIdList.subList(firstIndex,lastIndex),
@@ -30,14 +27,11 @@ public class ScheduleByDivision {
                 this.stationNoOFDownPlatformList.subList(firstIndex,lastIndex), this.stationNoOFDualPlatformList.subList(firstIndex,lastIndex),
                 this.stationNoOfUpTrackList.subList(firstIndex,lastIndex), this.stationNoOfDownTrackList.subList(firstIndex,lastIndex),
                 this.stationNoOfDualTrackList.subList(firstIndex,lastIndex), noOfPaths, sourceTime, minDelayBwTrains, avgSpeed,
-                this.stopTimeList.subList(firstIndex,lastIndex), pathOldUpTrainSchedule,pathOldDownTrainSchedule,
-                pathOldSSTrainSchedule, trainDay,startDay,startHrs, startMinutes, endDay,endHrs, endMinutes,maxDelayBwStations,
-                isSingleDay, false, ratio, aroundSourceTime);
+                this.stopTimeList.subList(firstIndex,lastIndex), pathOldTrainSchedule, trainDay, isSingleDay, false, ratio, aroundSourceTime);
     }
 
     public void getPathsRecur(String pathTemp, int i, int stationGroupSizeForPart, int noOfPaths, TrainTime sourceTime,
-                              int minDelayBwTrains, double avgSpeed, String pathOldUpTrainSchedule,
-                              String pathOldDownTrainSchedule, String pathOldSSTrainSchedule, int maxDelayBwStations,
+                              int minDelayBwTrains, double avgSpeed, String pathOldTrainSchedule,
                               boolean isSingleDay, int trainDay, double ratio, Path pathPrevious){
         if(i!=0 && pathPrevious==null){
             System.out.println("Previous path cant be null");
@@ -54,22 +48,10 @@ public class ScheduleByDivision {
             last = this.stationIdList.size();
         }
 
-        int startDay;
-        int endDay;
-        if(isSingleDay){
-            startDay = trainDay;
-            endDay = trainDay;
-        }
-        else{
-            startDay = 0;
-            endDay = 6;
-        }
-
         // add 0 to wait time of first
         noOfPaths = (i==0)?noOfPaths*2:1;
         List<Path> paths = getSmallPart(pathTemp, i, last, noOfPaths, sourceTime, minDelayBwTrains,
-                avgSpeed, pathOldUpTrainSchedule,pathOldDownTrainSchedule, pathOldSSTrainSchedule, startDay,0,0,
-                endDay, 23, 59, maxDelayBwStations, isSingleDay, trainDay, ratio, (i==0));
+                avgSpeed, pathOldTrainSchedule, isSingleDay, trainDay, ratio, (i==0));
 
         for(Path path: paths){
             // System.out.println(" i = " + i + " last = " + last );
@@ -106,7 +88,7 @@ public class ScheduleByDivision {
             }
             if(last<this.stationIdList.size()){
                 getPathsRecur(pathTemp, i1, stationGroupSizeForPart,noOfPaths, sourceTime1, minDelayBwTrains,
-                        avgSpeed,pathOldUpTrainSchedule, pathOldDownTrainSchedule, pathOldSSTrainSchedule, maxDelayBwStations,
+                        avgSpeed,pathOldTrainSchedule,
                         isSingleDay, trainDay, ratio, tempPath);
             }
             else{
@@ -117,8 +99,9 @@ public class ScheduleByDivision {
         }
     }
 
+    @SuppressWarnings("unused")
     public void scheduleByBreaking(String pathTemp, String pathRoute, String pathBestRoute,
-                                   String pathOldUpTrainSchedule, String pathOldDownTrainSchedule,String pathOldSSTrainSchedule,
+                                   String pathOldTrainSchedule,
                                    boolean isSingleDay, int trainDay, double ratio, String pathLog, double avgSpeed,
                                    TrainTime sourceTime){
         if(sourceTime!=null){
@@ -129,7 +112,6 @@ public class ScheduleByDivision {
             return;
         }
         Scheduler scheduler = new Scheduler();
-        int maxDelayBwStations = 60;
         if(!scheduler.addRouteFromFile(pathRoute)){
             System.out.println("Unable to load route file");
             return;
@@ -156,7 +138,7 @@ public class ScheduleByDivision {
 
         int minDelayBwTrains = 3;
         int noOfPaths = 10;
-        int stationGroupSizeForPart = (stopTime.size()/2)+1;
+        int stationGroupSizeForPart = (stopTime.size()/2);
         if(stationGroupSizeForPart>12){
             stationGroupSizeForPart=12;
         }
@@ -177,7 +159,7 @@ public class ScheduleByDivision {
             System.setOut(o1);
 
             getPathsRecur(pathTemp,0,stationGroupSizeForPart, noOfPaths,sourceTime, minDelayBwTrains,avgSpeed,
-                    pathOldUpTrainSchedule,pathOldDownTrainSchedule, pathOldSSTrainSchedule, maxDelayBwStations, isSingleDay, trainDay, ratio,
+                    pathOldTrainSchedule, isSingleDay, trainDay, ratio,
                     null);
 
             int count=0;

@@ -10,14 +10,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisState;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTick;
-import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.axis.TickType;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
@@ -43,11 +41,10 @@ class LinePlotTrains extends ApplicationFrame {
     private int sizeSchedule;
     private List<Double> stationDistance;
     private Map<Double, String> tickLabels;
-    private boolean isSingleDay;
 
     public LinePlotTrains(final String title, int windowHeight, int windowWidth, int newTrainNo, int heightPlotFile,
                           int widthPlotFile, String pathPlotFile, String pathRoute, String pathOldTrains,
-                          String pathNewTrainFile, boolean newTrainFolder, boolean isSingleDay, int trainDay) {
+                          String pathNewTrainFile, int newTrainStartDay) {
         super(title);
         this.stationDistance = new ArrayList<>();
         this.schedule = new ArrayList<>();
@@ -55,8 +52,6 @@ class LinePlotTrains extends ApplicationFrame {
         this.stationId = new ArrayList<>();
         this.trains = new ArrayList<>();
         this.tickLabels = new HashMap<>();
-        this.isSingleDay = isSingleDay;
-        TrainTime.updateIsSingleDay(isSingleDay);
         FileReader fReader;
         BufferedReader bReader;
         try {
@@ -82,33 +77,17 @@ class LinePlotTrains extends ApplicationFrame {
             }
 
             if(pathNewTrainFile!=null) {
-                if(!newTrainFolder) {
-                    if(!addTrainFromFile(newTrainNo, pathNewTrainFile,trainDay, isSingleDay)) {
-                        System.out.println("Error in adding train " + pathNewTrainFile);
-                    }
-                }
-                else{
-                    File[] listOfFiles = new File(pathNewTrainFile).listFiles();
-                    if(listOfFiles==null) {
-                        throw new RuntimeException("Unable to read new train schedule");
-                    }
-
-                    for (File file: listOfFiles) {
-                        if (file.isFile()) {
-                            if(!addTrainFromFile(newTrainNo++, file.getPath(),trainDay, isSingleDay)) {
-                                System.out.println("Error in adding train " + file.getPath());
-                            }
-                        }
-                    }
+                if(!addTrainFromFile(newTrainNo, pathNewTrainFile,newTrainStartDay)) {
+                    System.out.println("Error in adding train " + pathNewTrainFile);
                 }
             }
 
-            if(!addTrainFromFolder(pathOldTrains, trainDay, this.isSingleDay)){
+            if(!addTrainFromFolder(pathOldTrains)){
                 throw new RuntimeException("Unable to read old train schedule");
             }
 
             final XYDataset dataset = createDataset();
-            final JFreeChart chart = createChart(dataset, pathPlotFile, trainDay);
+            final JFreeChart chart = createChart(dataset, pathPlotFile);
             final ChartPanel chartPanel = new ChartPanel(chart);
             chartPanel.setPreferredSize(new java.awt.Dimension(windowWidth, windowHeight));
             setContentPane(chartPanel);
@@ -123,24 +102,7 @@ class LinePlotTrains extends ApplicationFrame {
         }
     }
 
-    private boolean addTrainFromFolder(String pathOldTrainScheduleFolder, int trainDay, boolean isSingleDay){
-        if(!isSingleDay && (trainDay>=7 || trainDay<0)){
-            return addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
-                    "day0", 0, false) &&
-                    addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
-                            "day1", 1, false) &&
-                    addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
-                            "day2", 2, false) &&
-                    addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
-                            "day3", 3, false) &&
-                    addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
-                            "day4", 4, false) &&
-                    addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
-                            "day5", 5, false) &&
-                    addTrainFromFolder(pathOldTrainScheduleFolder+ File.separator +
-                            "day6", 6, false);
-        }
-
+    private boolean addTrainFromFolderSingleDay(String pathOldTrainScheduleFolder, int trainDay){
         File[] listOfFiles = new File(pathOldTrainScheduleFolder).listFiles();
         if(listOfFiles==null) {
             System.out.println("No old trains found");
@@ -159,7 +121,7 @@ class LinePlotTrains extends ApplicationFrame {
                     e.printStackTrace();
                     continue;
                 }
-                if(!addTrainFromFile(trainNo,file.getPath(), trainDay, isSingleDay)){
+                if(!addTrainFromFile(trainNo,file.getPath(), trainDay)){
                     return false;
                 }
             }
@@ -167,7 +129,24 @@ class LinePlotTrains extends ApplicationFrame {
         return true;
     }
 
-    private boolean addTrainFromFile(int trainNo, String filePath, int trainDay, boolean isSingleDay){
+    private boolean addTrainFromFolder(String pathOldTrainScheduleFolder){
+        return addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
+                        "day0", 0) &&
+                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
+                        "day1", 1) &&
+                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
+                        "day2", 2) &&
+                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
+                        "day3", 3) &&
+                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
+                        "day4", 4) &&
+                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
+                        "day5", 5) &&
+                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
+                        "day6", 6);
+    }
+
+    private boolean addTrainFromFile(int trainNo, String filePath, int trainDay){
         int stoppageDay = trainDay;
         try {
             FileReader fReader = new FileReader(filePath);
@@ -180,31 +159,55 @@ class LinePlotTrains extends ApplicationFrame {
             String data1[];
             TrainTime d[];
             Map<String, TrainTime[]> stationTimingsMap = new HashMap<>();
+            Map<String, Integer> stationStoppageNo = new HashMap<>();
+            int count=0;
             while ((line = bReader.readLine()) != null) {
                 d = new TrainTime[2];
                 data = line.split("\\s+");
                 data1 = data[1].split(":");
                 arrival = new TrainTime(stoppageDay, Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
-                if(departure!=null && arrival.compareTo(departure)<0 && !isSingleDay){
+                if(departure!=null && arrival.compareTo(departure)<0){
                     arrival.addDay(1);
                     stoppageDay = arrival.day;
                 }
                 data1 = data[2].split(":");
                 departure = new TrainTime(stoppageDay, Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
-                if(departure.compareTo(arrival)<0 && !isSingleDay){
+                if(departure.compareTo(arrival)<0){
                     departure.addDay(1);
                     stoppageDay = departure.day;
                 }
                 d[0] = arrival;
                 d[1] = departure;
                 stationTimingsMap.put(data[0].trim().replaceAll(".*-", "").toLowerCase(),d);
+                stationStoppageNo.put(data[0].trim().replaceAll(".*-", "").toLowerCase(),++count);
             }
-            for(String stId: this.stationId){
-                this.schedule.get(this.sizeSchedule).add(stationTimingsMap.getOrDefault(stId,null));
+            boolean atLeastSingleStationInRoute = false;
+            boolean sameDirectionTrain = false;
+            for(int j=0;j<this.stationId.size();j++){
+                String stId= this.stationId.get(j);
+                if(j>0){
+                    if(stationStoppageNo.getOrDefault(stId,0)==(stationStoppageNo.getOrDefault(this.stationId.get(j-1),0)+1)){
+                        sameDirectionTrain = true;
+                    }
+                }
+                TrainTime[] temp = stationTimingsMap.getOrDefault(stId, null);
+                this.schedule.get(this.sizeSchedule).add(temp);
+                if(temp!=null){
+                    atLeastSingleStationInRoute = true;
+                }
             }
+
             bReader.close();
             fReader.close();
-            this.sizeSchedule++;
+            if(atLeastSingleStationInRoute && sameDirectionTrain) {
+                this.sizeSchedule++;
+                System.out.println("Adding "+ trainDay+":"+trainNo);
+            }
+            else{
+                this.schedule.remove(this.sizeSchedule);
+                this.trains.remove(trainDay+":"+trainNo);
+                System.out.println("Removing "+ trainDay+":"+trainNo);
+            }
             return true;
         }
         catch (Exception e) {
@@ -277,7 +280,7 @@ class LinePlotTrains extends ApplicationFrame {
 
                     if (temp != null && (temp.compareTo(temp2) > 0)) {
                         double distanceNextDay = this.stationDistance.get(i) - this.stationDistance.get(i - 1);
-                        double timeDiff1 = this.isSingleDay ? 1440 : 10080 - temp.getValue();
+                        double timeDiff1 = 10080 - temp.getValue();
                         double timeDiff2 = temp2.getValue();
 
                         distanceNextDay = (distanceNextDay) * timeDiff1 / (timeDiff1 + timeDiff2);
@@ -306,7 +309,7 @@ class LinePlotTrains extends ApplicationFrame {
         return dataset;
     }
 
-    public JFreeChart createChart(final XYDataset dataset, String fileName, int trainDay) {
+    public JFreeChart createChart(final XYDataset dataset, String fileName) {
         // create the chart...
         final JFreeChart chart = ChartFactory.createXYLineChart(
                 "Train-tracking " + fileName,      // chart title
@@ -339,16 +342,16 @@ class LinePlotTrains extends ApplicationFrame {
 
                     String label;
                     double numTickValue = numberTick.getValue();
-                    if(numTickValue>=0 && numTickValue<(isSingleDay?1440:10080)){
-                        trainTime = new TrainTime(((trainDay>=0&& trainDay<=6)?trainDay:0),0,0);
+                    if(numTickValue>=0 && numTickValue<10080){
+                        trainTime = new TrainTime(0,0,0);
                         trainTime.addMinutes((int)Math.ceil(numberTick.getValue()));
                         label = trainTime.getFullString();
                     }
                     else if(numTickValue<0){
-                        label = isSingleDay?"Prev day":"Prev week";
+                        label = "Prev week";
                     }
                     else{
-                        label = isSingleDay?"Next day":"Next week";
+                        label = "Next week";
                     }
 
                     NumberTick numberTickTemp = new NumberTick(TickType.MINOR, numberTick.getValue(), label,
@@ -380,7 +383,7 @@ class LinePlotTrains extends ApplicationFrame {
         // rangeAxis.setLowerBound(0);
         // rangeAxis.setUpperBound(1439);
         rangeAxis.setLowerBound(0);
-        rangeAxis.setUpperBound(this.isSingleDay?1439:10079);
+        rangeAxis.setUpperBound(10079);
 
         rangeAxis.setAutoRangeIncludesZero(false);
         rangeAxis.setAutoRangeStickyZero(false);

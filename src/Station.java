@@ -86,19 +86,11 @@ public class Station {
         });
     }
 
-    public List<Node> getNodesFreeList(TrainTime startTime, TrainTime endTime, boolean isSingleDay){
+    public List<Node> getNodesFreeList(TrainTime startTime, TrainTime endTime){
         List<Node> nextWeekNodes  = new ArrayList<>();
         if(endTime.compareTo(startTime)<0) {
-            if(isSingleDay && startTime.day==endTime.day) {
-                System.out.println("Single day scheduling");
-                nextWeekNodes = getNodesFreeList(new TrainTime(startTime.day,0,0),endTime, isSingleDay);
-                endTime = new TrainTime(endTime.day, 23, 59);
-            }
-            else{
-                System.out.println("Complete scheduling");
-                nextWeekNodes = getNodesFreeList(new TrainTime(0,0,0),endTime, isSingleDay);
-                endTime = new TrainTime(6, 23, 59);
-            }
+            nextWeekNodes = getNodesFreeList(new TrainTime(0,0,0),endTime);
+            endTime = new TrainTime(6, 23, 59);
         }
         List<Node> stationNodes = new ArrayList<>();
         TrainTime slotDept = new TrainTime(startTime);
