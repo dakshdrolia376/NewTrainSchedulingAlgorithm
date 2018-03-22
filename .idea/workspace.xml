@@ -17,11 +17,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="162">
               <caret line="99" column="0" lean-forward="false" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="KBestSchedule.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/KBestSchedule.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="9">
+              <caret line="866" column="18" lean-forward="false" selection-start-line="866" selection-start-column="8" selection-end-line="866" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -58,7 +68,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>txt</find>
       <find>station_details</find>
       <find>trainIndexNo</find>
       <find>addStoppage</find>
@@ -88,6 +97,7 @@
       <find>Scheduler</find>
       <find>putSt</find>
       <find>route</find>
+      <find>System.out</find>
     </findStrings>
     <replaceStrings>
       <replace>stationIndexNo</replace>
@@ -167,7 +177,6 @@
         <option value="$PROJECT_DIR$/src/KShortestPathFinder.java" />
         <option value="$PROJECT_DIR$/src/FetchStationDetails.java" />
         <option value="$PROJECT_DIR$/src/FetchTrainList.java" />
-        <option value="$PROJECT_DIR$/src/KBestSchedule.java" />
         <option value="$PROJECT_DIR$/src/LinePlotTrains.java" />
         <option value="$PROJECT_DIR$/src/Scheduler.java" />
         <option value="$PROJECT_DIR$/src/TestCountStation.java" />
@@ -175,6 +184,7 @@
         <option value="$PROJECT_DIR$/src/Test.java" />
         <option value="$PROJECT_DIR$/src/TestRename.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
+        <option value="$PROJECT_DIR$/src/KBestSchedule.java" />
       </list>
     </option>
   </component>
@@ -185,7 +195,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="y" value="40" />
     <option name="width" value="1346" />
     <option name="height" value="688" />
@@ -464,7 +474,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -717,14 +727,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/KBestSchedule.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
-          <caret line="125" column="62" lean-forward="false" selection-start-line="125" selection-start-column="62" selection-end-line="125" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/GraphFile.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="87">
@@ -820,6 +822,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="99" column="0" lean-forward="false" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/KBestSchedule.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9">
+          <caret line="866" column="18" lean-forward="false" selection-start-line="866" selection-start-column="8" selection-end-line="866" selection-end-column="18" />
           <folding />
         </state>
       </provider>

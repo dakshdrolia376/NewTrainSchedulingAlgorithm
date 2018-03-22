@@ -542,7 +542,6 @@ public class KBestSchedule {
             System.out.println("Some error occurred...");
             return false;
         }
-        System.out.println("1");
         int totalUpPlatform,totalDownPlatform,totalDualPlatform,totalUpTrack,totalDownTrack,totalDualTrack;
         boolean isDirectLineAvailable;
 
@@ -565,14 +564,10 @@ public class KBestSchedule {
             isDirectLineAvailable = true;
         }
 
-        System.out.println("1");
-
         if((totalUpPlatform+totalDownPlatform+totalDualPlatform)<=0 || (totalUpTrack+totalDownTrack+totalDualTrack)<=0){
             System.out.println("No platforms/tracks is available to schedule "+ station2.getId());
             return false;
         }
-
-        System.out.println("1");
 
         if(!this.graphKBestPath.addMultipleNode(this.nodes.get(i+1))){
             System.out.println("Some error occurred in adding nodes " + this.nodes.get(i+1).get(0).toString());
@@ -800,7 +795,6 @@ public class KBestSchedule {
             System.out.println("Ratio must be greater than 1.0");
             return Collections.emptyList();
         }
-        System.out.println(stationIdList.toString());
         long milli = new Date().getTime();
         System.out.println("---------------------------------------------------------------------------------------------------------");
         System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
