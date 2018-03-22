@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
         String pathTrainList = "data" + File.separator+"trainList.txt";
-        String pathRoute = "data"+File.separator+"route"+File.separator+"routeCreated1.txt";
+        String pathRoute = "data"+File.separator+"route"+File.separator+"routeCreatedReverse.txt";
 
         String pathPlotFile = "data"+File.separator+"plot"+File.separator+"plot1.pdf";
         String pathTemp = "data"+File.separator+"temp";
@@ -41,8 +41,8 @@ public class Main {
             PrintStream console1 = System.out;
             //
             // Assign o to output stream
-            System.setErr(o);
-            System.setOut(o1);
+            // System.setErr(o);
+            // System.setOut(o1);
 
             int count = 0;
             double avgSpeed=80;
@@ -52,8 +52,8 @@ public class Main {
 
             Scheduler scheduler = new Scheduler();
             ScheduleByDivision scheduleByDivision = new ScheduleByDivision();
-            scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 0,
-                    usePreviousComputation, ratio, avgSpeed, pathLog, new TrainTime(0,13,12));
+            // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 0,
+            //         usePreviousComputation, ratio, avgSpeed, pathLog, null);
             // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 1,
             //         usePreviousComputation, ratio, avgSpeed, pathLog, null);
             // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 2,

@@ -40,7 +40,7 @@ public class KBestSchedule {
             throw new IllegalArgumentException("Invalid arguments for route");
         }
         for(int i=0;i<sizeStation;i++){
-            if(!this.route.addStation(stationIdList.get(i), stationNameList.get(i),stationDistanceList.get(i),
+            if(!this.route.addStation((i+1), stationIdList.get(i), stationNameList.get(i),stationDistanceList.get(i),
                     isDirectLineAvailableList.get(i), noOfUpPlatformList.get(i), noOfDownPlatformList.get(i),
                     noOfDualPlatformList.get(i), noOfUpTrackList.get(i), noOfDownTrackList.get(i),
                     noOfDualTrackList.get(i))){
@@ -63,7 +63,7 @@ public class KBestSchedule {
             System.out.println("Train not found "+ trainNo +" originating day "+ trainDay);
             return false;
         }
-        Station station = this.route.getStation(stationId);
+        Station station = this.route.getFirstMatchedStation(stationId);
         //station==null represents that station is not in the route.
         return station==null || train.addStoppage(station, arrival, departure);
     }
@@ -83,7 +83,7 @@ public class KBestSchedule {
             String data1[];
             while((line = bReader.readLine()) != null) {
                 data = line.split("\\s+");
-                stationId = data[0].trim().replaceAll(".*-", "");
+                stationId = Scheduler.getStationIdFromName(data[0]);
                 data1 =data[1].split(":");
                 arrival = new TrainTime(stoppageDay,Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
                 if(departure!=null && arrival.compareTo(departure)<0){
@@ -525,8 +525,8 @@ public class KBestSchedule {
             return false;
         }
 
-        if(!this.nodes.get(i).get(0).getStationId().equalsIgnoreCase(this.stationList.get(i)) ||
-                !this.nodes.get(i+1).get(0).getStationId().equalsIgnoreCase(this.stationList.get(i+1))){
+        if(!this.nodes.get(i).get(0).getStationId().equalsIgnoreCase(this.stationList.get(i).split(":")[0]) ||
+                !this.nodes.get(i+1).get(0).getStationId().equalsIgnoreCase(this.stationList.get(i+1).split(":")[0])){
             System.out.println("Invalid path Info.");
             return false;
         }
@@ -535,13 +535,14 @@ public class KBestSchedule {
             System.out.println("Some error occurred in adding source nodes");
             return false;
         }
-        // System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+" after adding nodes");
+        System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+" after adding nodes");
         Station station2 = this.route.getStation(this.stationList.get(i+1));
 
         if((!this.stationList.get(i+1).equalsIgnoreCase("dest") && station2==null)){
             System.out.println("Some error occurred...");
             return false;
         }
+        System.out.println("1");
         int totalUpPlatform,totalDownPlatform,totalDualPlatform,totalUpTrack,totalDownTrack,totalDualTrack;
         boolean isDirectLineAvailable;
 
@@ -564,10 +565,14 @@ public class KBestSchedule {
             isDirectLineAvailable = true;
         }
 
+        System.out.println("1");
+
         if((totalUpPlatform+totalDownPlatform+totalDualPlatform)<=0 || (totalUpTrack+totalDownTrack+totalDualTrack)<=0){
             System.out.println("No platforms/tracks is available to schedule "+ station2.getId());
             return false;
         }
+
+        System.out.println("1");
 
         if(!this.graphKBestPath.addMultipleNode(this.nodes.get(i+1))){
             System.out.println("Some error occurred in adding nodes " + this.nodes.get(i+1).get(0).toString());
@@ -766,7 +771,7 @@ public class KBestSchedule {
             List<Path> paths;
             KShortestPathFinder kShortestPathFinder = new KShortestPathFinder();
             paths = kShortestPathFinder.findShortestPaths(this.nodes.get(0).get(0),
-                    this.nodes.get(this.nodes.size()-1).get(0), this.graphKBestPath, noOfPaths, maxCostList);
+                    this.nodes.get(this.nodes.size()-1).get(0), this.graphKBestPath, noOfPaths, maxCostList, this.stationList);
 
             if(!this.graphKBestPath.disconnect()){
                 System.out.println("Some error occurred with graph.");
@@ -795,6 +800,7 @@ public class KBestSchedule {
             System.out.println("Ratio must be greater than 1.0");
             return Collections.emptyList();
         }
+        System.out.println(stationIdList.toString());
         long milli = new Date().getTime();
         System.out.println("---------------------------------------------------------------------------------------------------------");
         System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));

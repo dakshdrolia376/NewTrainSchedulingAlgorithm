@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Test {
     public static void main(String... s){
+
         FileReader fReader;
         BufferedReader bReader;
         String fileName1 = "abc1.txt";
@@ -24,7 +25,7 @@ public class Test {
             bReader = new BufferedReader(fReader);
             while((line = bReader.readLine()) != null) {
                 String data = line.split("\\s+")[0];
-                st1.add(data.trim().replaceAll(".*-", ""));
+                st1.add(Scheduler.getStationIdFromName(data));
             }
 
             for(int i=0;i<st1.size();i++){
@@ -44,7 +45,6 @@ public class Test {
                     System.out.println("Not found: "+st1.get(i));
                 }
             }
-
         }
         catch (Exception e){
             e.printStackTrace();

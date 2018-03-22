@@ -21,6 +21,22 @@ public class Scheduler {
     private List<Integer> stationNoOfDownTrackList;
     private List<Integer> stationNoOfDualTrackList;
 
+    public static Map<String, String> uniqueStationIdMap = Map.ofEntries(Map.entry("-k", "unique-k"),
+            Map.entry("-a", "unique-a"),
+            Map.entry("-t", "unique-t"),Map.entry("-b", "unique-b"),Map.entry("-x", "unique-x"),
+            Map.entry("haldibari-chilahati-zero-point-0ph-c", "unique-phc"),
+            Map.entry("radhikapur-birol-zero-point-0pr-b", "unique-prb"),
+            Map.entry("0-point-of-mssn-latu-line-0pm-l", "unique-pml"),
+            Map.entry("petrapole-benapole-zero-point-0pp-b", "unique-ppb"),
+            Map.entry("gede-darshana-zero-point-0pg-d", "unique-pgd"),
+            Map.entry("singabad-rohanpur-zero-point-0ps-r", "unique-psr"),
+            Map.entry("-am","unique-am"),Map.entry("-er","unique-er"),Map.entry("-bq","unique-bq"),
+            Map.entry("-cr","unique-cr"),Map.entry("-yd","unique-yd"),Map.entry("-cy","unique-cy"),
+            Map.entry("-ka","unique-ka"),Map.entry("-ne","unique-ne"),
+            Map.entry("lalmonirhat-junction-br-lmh","br-lmh"),
+            Map.entry("rohri-junction-pr-roh","pr-roh"),
+            Map.entry("mominpur-b-mmpr","b-mmpr"));
+
     public List<String> getStationIdList(){
         return this.stationId;
     }
@@ -61,6 +77,37 @@ public class Scheduler {
         return this.stationNoOfDualTrackList;
     }
 
+    public static String getStationIdFromName(String name){
+        name = name.toLowerCase();
+        if(uniqueStationIdMap.containsKey(name)){
+            return uniqueStationIdMap.get(name);
+        }
+        if(name.contains("-sl-")){
+            return name.trim().replaceAll(".*-(?=-sl-.)", "");
+        }
+        else if(name.contains("-xx-")){
+            return name.trim().replaceAll(".*-(?=-xx-.)", "");
+        }
+        else if(name.contains("-yy-")){
+            return name.trim().replaceAll(".*-(?=-yy-.)", "");
+        }
+        else if(name.endsWith("-dls")){
+            return name.trim().replaceAll(".*-(?=.+?-dls)", "");
+        }
+        else if(name.endsWith("-els")){
+            return name.trim().replaceAll(".*-(?=.+?-els)", "");
+        }
+        else if(name.endsWith("-")){
+            return name.trim().replaceAll(".*-(?=.+?-.)", "");
+        }
+        return name.trim().replaceAll(".*-", "");
+    }
+
+    public static String getTrainNoFromName(String name){
+        name = name.toLowerCase();
+        return name.trim().replaceAll(".*-(?=.)", "");
+    }
+
     public static boolean isNetAvailable() {
         try {
             final URL url = new URL("http://www.iitp.ac.in");
@@ -99,7 +146,7 @@ public class Scheduler {
                     // newRouteData.append('\n');
                     continue;
                 }
-                String id = data[0].trim().replaceAll(".*-", "").toLowerCase();
+                String id = Scheduler.getStationIdFromName(data[0]);
                 if(!stationIdSet.add(id)){
                     System.out.println("Duplicate station found in route : " + id);
                     System.out.println("This can cause problem in scheduling.");
@@ -164,8 +211,7 @@ public class Scheduler {
                     System.out.println("Invalid station info. : " + line);
                     continue;
                 }
-                String station_code[] = data[0].split("-");
-                String id = station_code[station_code.length-1];
+                String id = Scheduler.getStationIdFromName(data[0]);
                 stationId.add(id);
                 stationName.add(data[0]);
                 stationDistance.add(Double.parseDouble(data[1]));
@@ -378,7 +424,7 @@ public class Scheduler {
             fReader = new FileReader(pathRoute);
             bReader = new BufferedReader(fReader);
             while((line = bReader.readLine()) != null) {
-                stationId = line.split("\\s+")[0].trim().replaceAll(".*-", "");
+                stationId =Scheduler.getStationIdFromName(line.split("\\s+")[0]);
                 stationIds.add(stationId);
             }
             bReader.close();

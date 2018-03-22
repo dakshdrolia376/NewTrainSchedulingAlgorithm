@@ -201,7 +201,7 @@ public class FetchStationDetails {
                     String temp1[] = temp.split("/");
                     if(temp1.length >= 7) {
                         String stationName = temp1[5].toLowerCase();
-                        String stationId = stationName.trim().replaceAll(".*-", "").toLowerCase();
+                        String stationId = Scheduler.getStationIdFromName(stationName);
                         String stationIndex = temp1[6];
                         if(stationIndex.endsWith(">")){
                             stationIndex = stationIndex.replace(">", "");
@@ -316,7 +316,7 @@ public class FetchStationDetails {
                 while ((line = bReader.readLine()) != null) {
                     if(line.contains("Station Name")){
                         stationName = line.split(":")[1].trim();
-                        stationId = stationName.replaceAll(".*-", "").toLowerCase();
+                        stationId = Scheduler.getStationIdFromName(stationName);
                     }
                     else if(line.contains("Type of Station")){
                         stationType = line.split(":")[1].trim();

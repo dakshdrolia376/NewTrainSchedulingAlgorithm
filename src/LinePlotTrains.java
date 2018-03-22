@@ -63,7 +63,7 @@ class LinePlotTrains extends ApplicationFrame {
             double st_dist;
             while ((line = bReader.readLine()) != null) {
                 data = line.split("\\s+");
-                st_id = data[0].trim().replaceAll(".*-", "").toLowerCase();
+                st_id = Scheduler.getStationIdFromName(data[0]);
                 this.stationId.add(st_id);
                 st_dist = Math.round(Double.parseDouble(data[1]));
                 this.stationDistance.add(st_dist);
@@ -178,8 +178,8 @@ class LinePlotTrains extends ApplicationFrame {
                 }
                 d[0] = arrival;
                 d[1] = departure;
-                stationTimingsMap.put(data[0].trim().replaceAll(".*-", "").toLowerCase(),d);
-                stationStoppageNo.put(data[0].trim().replaceAll(".*-", "").toLowerCase(),++count);
+                stationTimingsMap.put(Scheduler.getStationIdFromName(data[0]),d);
+                stationStoppageNo.put(Scheduler.getStationIdFromName(data[0]),++count);
             }
             boolean atLeastSingleStationInRoute = false;
             boolean sameDirectionTrain = false;

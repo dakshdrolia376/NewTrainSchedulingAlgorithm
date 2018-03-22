@@ -58,7 +58,7 @@ public class FetchTrainDetails {
         if(trainIndex<=0){
             return "";
         }
-        return this.pathDatabaseTrain + File.separator + trainIndex + ".route";
+        return this.pathDatabaseTrain + File.separator + trainIndex + ".txt";
     }
 
     public boolean fetchTrainNumber(int trainNo, String pathTrainFile){
@@ -67,7 +67,7 @@ public class FetchTrainDetails {
             System.out.println("Train Not found. Please try using google search. trainNo: " + trainNo);
             return false;
         }
-        String fileTrainIndex = this.pathDatabaseTrain + File.separator +indexTrain+".route";
+        String fileTrainIndex = this.pathDatabaseTrain + File.separator +indexTrain+".txt";
         try{
             FileReader fReader;
             BufferedReader bReader;
@@ -127,7 +127,7 @@ public class FetchTrainDetails {
             System.out.println("Unable to parse train Number " + pathTrain);
             return false;
         }
-        String pathTrainScheduleComplete = this.pathDatabaseTrain + File.separator +trainIndexNo+".route";
+        String pathTrainScheduleComplete = this.pathDatabaseTrain + File.separator +trainIndexNo+".txt";
         if(!parseTrainScheduleWebsite(pathTrain, pathTrainScheduleComplete)){
             System.out.println("Unable to parse train schedule " + pathTrain);
             return false;
@@ -164,7 +164,7 @@ public class FetchTrainDetails {
                     String temp1[] = temp.split("/");
                     if (temp1.length >= 7) {
                         String trainName = temp1[5].toLowerCase();
-                        String trainNo = trainName.trim().replaceAll(".*-", "");
+                        String trainNo = Scheduler.getTrainNoFromName(trainName);
                         String trainIndex = temp1[6];
                         if(trainIndex.endsWith(">")){
                             trainIndex = trainIndex.replace(">", "");
@@ -451,7 +451,7 @@ public class FetchTrainDetails {
                     return;
                 }
                 for(int i=1;i<data.length;i++) {
-                    String pathTrainScheduleAll = pathTrainScheduleParent + File.separator + data[i] + ".route";
+                    String pathTrainScheduleAll = pathTrainScheduleParent + File.separator + data[i] + ".txt";
                     if(this.newMethod){
                         if(!fetchTrainNumber(Integer.parseInt(data[i]),pathTrainScheduleAll)){
                             System.out.print("Unable to fetch train.");
@@ -511,7 +511,7 @@ public class FetchTrainDetails {
                         String temp1[] = temp.split("/");
                         if (temp1.length >= 7) {
                             trainName = temp1[5].toLowerCase();
-                            trainNo = Integer.parseInt(trainName.trim().replaceAll(".*-", ""));
+                            trainNo = Integer.parseInt(Scheduler.getTrainNoFromName(trainName));
                             if(!this.myMap.containsKey(trainNo)){
                                 System.out.println("Not found : "+ trainNo);
                             }
@@ -608,14 +608,14 @@ public class FetchTrainDetails {
             List<TrainTime> departures = new ArrayList<>();
             List<Double> distances = new ArrayList<>();
 
-            String pathTrain = this.pathDatabaseTrain + File.separator +i + ".route";
+            String pathTrain = this.pathDatabaseTrain + File.separator +i + ".txt";
 
             try {
                 fReader = new FileReader(pathTrain);
                 bReader = new BufferedReader(fReader);
                 while((line = bReader.readLine()) != null) {
                     data = line.split("\\s+");
-                    stationId = data[0].trim().replaceAll(".*-", "");
+                    stationId = Scheduler.getStationIdFromName(data[0]);
                     arrival = new TrainTime("0:"+data[1]);
                     departure = new TrainTime("0:"+data[2]);
                     distance = Double.parseDouble(data[3]);

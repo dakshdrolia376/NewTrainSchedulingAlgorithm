@@ -26,7 +26,7 @@ public class FetchTrainList {
             fReader = new FileReader(pathRoute);
             bReader = new BufferedReader(fReader);
             while((line = bReader.readLine()) != null) {
-                String stationId =line.split("\\s+")[0].trim().replaceAll(".*-", "");
+                String stationId = Scheduler.getStationIdFromName(line.split("\\s+")[0]);
                 if(stationIds.add(stationId)){
                     stationIdsList.add(stationId);
                 }

@@ -11,14 +11,14 @@ public class Route {
         this.stationOrder = new ArrayList<>();
     }
 
-    public boolean addStation(String id, String name, double distance, boolean isDirectLineAvailable,
+    public boolean addStation(int stoppageNo, String id, String name, double distance, boolean isDirectLineAvailable,
                               int noOfUpPlatform, int noOfDownPlatform, int noOfDualPlatform, int noOfUpTrack,
                               int noOfDownTrack, int noOfDualTrack){
         requireNonNull(id, "Station id is null.");
         requireNonNull(name, "Station name is null.");
-        this.mapStation.put(id, new Station(id, name, distance, isDirectLineAvailable, noOfUpPlatform,
+        this.mapStation.put(id+":"+stoppageNo, new Station(id, name, distance, isDirectLineAvailable, noOfUpPlatform,
                 noOfDownPlatform, noOfDualPlatform, noOfUpTrack, noOfDownTrack, noOfDualTrack));
-        return stationOrder.add(id);
+        return stationOrder.add(id+":"+stoppageNo);
     }
 
     public List<String> getStationList() {
@@ -31,9 +31,18 @@ public class Route {
 
     public Station getStation(String id) {
         requireNonNull(id, "Station id is null.");
-        return mapStation.getOrDefault(id, null);
+        return this.mapStation.getOrDefault(id, null);
     }
 
+    public Station getFirstMatchedStation(String id){
+        requireNonNull(id, "Station id is null.");
+        for(String stId: this.stationOrder) {
+            if(stId.split(":")[0].equalsIgnoreCase(id)){
+                return this.mapStation.getOrDefault(stId,null);
+            }
+        }
+        return null;
+    }
     public List<List<Node>> getFreeSlots(TrainTime start, TrainTime end) {
         List<List<Node>> nodes = new ArrayList<>(this.stationOrder.size());
         for(String stationId: this.stationOrder) {
