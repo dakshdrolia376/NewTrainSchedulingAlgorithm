@@ -5,8 +5,9 @@ public class Edge {
     private final Node from;
     private final Node to;
     private final double weight;
+    private final boolean delay;
 
-    public Edge(Node from, Node to, double weight) {
+    public Edge(Node from, Node to, double weight, boolean delay) {
         requireNonNull(from, "The from node is null.");
         requireNonNull(to, "The to node is null.");
         if (Double.isNaN(weight)) {
@@ -18,6 +19,7 @@ public class Edge {
         this.from = from;
         this.to = to;
         this.weight = weight;
+        this.delay = delay;
     }
 
     public Node getFrom(){
@@ -30,6 +32,10 @@ public class Edge {
 
     public double getWeight(){
         return this.weight;
+    }
+
+    public boolean getDelay(){
+        return this.delay;
     }
 
     @Override

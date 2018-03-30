@@ -482,6 +482,7 @@ public class FetchTrainDetails {
         String line;
         String trainName;
         StringBuilder travelDay;
+        String trainType;
         Pattern pattern = Pattern.compile("<meta property=\"og:url\" content=\".*?\">");
         Matcher matcher;
         int trainNo;
@@ -492,6 +493,7 @@ public class FetchTrainDetails {
             trainName = "";
             trainNo = -1;
             travelDay = new StringBuilder("");
+            trainType = "";
             try {
                 String pathTrain = this.pathDatabaseTrain + File.separator + "train_details_"+i + ".html";
                 if(!new File(pathTrain).exists()){
@@ -516,6 +518,14 @@ public class FetchTrainDetails {
                                 System.out.println("Not found : "+ trainNo);
                             }
                         }
+                    }
+                    else if(line.trim().equalsIgnoreCase("Type:")){
+                        String type = bReader.readLine();
+                        // System.out.println(line+" >>" + type);
+                        type = type.replaceFirst(".*?>", "");
+                        type = type.replaceFirst("<.*","");
+                        // System.out.println(type);
+                        trainType = type;
                     }
                     else if(line.contains("class=\"deparrgrid\">")){
                         bReader.readLine();
@@ -548,6 +558,7 @@ public class FetchTrainDetails {
                 tempList.add(trainNo+"");
                 tempList.add(trainName);
                 tempList.add(travelDay.toString());
+                tempList.add(trainType);
                 this.trainDetails.put(i,tempList);
             }
         }
@@ -597,6 +608,12 @@ public class FetchTrainDetails {
 
         for(int i=1;i<=99999;i++){
             int trainNo = myMapReverse.getOrDefault(i,-1);
+            if(trainNo<900000){
+                continue;
+            }
+            else{
+                System.out.println("Inserting "+ trainNo);
+            }
             if(trainNo==-1){
                 System.out.println("No train for this index : " + i);
                 continue;

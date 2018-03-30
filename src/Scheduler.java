@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DecimalFormat;
 import java.util.*;
 
 import static java.util.Objects.requireNonNull;
@@ -21,6 +22,7 @@ public class Scheduler {
     private List<Integer> stationNoOfDownTrackList;
     private List<Integer> stationNoOfDualTrackList;
 
+    @SuppressWarnings("SpellCheckingInspection")
     public static Map<String, String> uniqueStationIdMap = Map.ofEntries(Map.entry("-k", "unique-k"),
             Map.entry("-a", "unique-a"),
             Map.entry("-t", "unique-t"),Map.entry("-b", "unique-b"),Map.entry("-x", "unique-x"),
@@ -105,6 +107,12 @@ public class Scheduler {
 
     public static String getTrainNoFromName(String name){
         name = name.toLowerCase();
+        if(name.endsWith("-slip")){
+            // System.out.println("Slip: "+name);
+            name = name.substring(0,name.length()-5);
+            // System.out.println("9"+name.trim().replaceAll(".*-(?=.)", ""));
+            return "9"+name.trim().replaceAll(".*-(?=.)", "");
+        }
         return name.trim().replaceAll(".*-(?=.)", "");
     }
 
@@ -129,15 +137,99 @@ public class Scheduler {
         return bytes / MEGABYTE;
     }
 
+    @SuppressWarnings("unused,SpellCheckingInspection")
+    public void updateTrainTypeFile(String pathTrainTypeFile){
+        List<List<String>> trainNames = new DatabaseConnector().getAllTrainNames();
+        Map<String,List<String>> mapTrainTypes = new HashMap<>();
+        for(List<String> trainType: trainNames){
+            mapTrainTypes.putIfAbsent(trainType.get(2).replaceAll("\\s+","-"),new ArrayList<>());
+            mapTrainTypes.get(trainType.get(2).replaceAll("\\s+","-")).add(trainType.get(0));
+        }
+
+        StringBuilder stringBuilder = new StringBuilder("");
+
+        for(String type:mapTrainTypes.keySet()){
+            stringBuilder.append(type);
+            List<String> traiNos = mapTrainTypes.get(type);
+            for(String trainNo: traiNos){
+                stringBuilder.append('\t');
+                stringBuilder.append(trainNo);
+            }
+            stringBuilder.append('\n');
+        }
+        new WriteToFile().write(pathTrainTypeFile,stringBuilder.toString(),false);
+    }
+
+    public static List<Double> loadNewTrainSpeed(String pathRouteSpeedFile, String newTrainType){
+        List<Double> avgSpeedNewTrain = new ArrayList<>();
+        try {
+            FileReader fileReader = new FileReader(pathRouteSpeedFile);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line = bufferedReader.readLine();
+            int count=-1;
+            String data[] = line.split("\\s+");
+            for(int i=0;i<data.length;i++){
+                if(data[i].equalsIgnoreCase(newTrainType)){
+                    count = i;
+                    break;
+                }
+            }
+            while(count>0 && (line=bufferedReader.readLine())!=null){
+                String avgSpeed = line.split("\\s+")[count];
+                double avgSpeedDouble = 1000;
+                try{
+                    if(!avgSpeed.equalsIgnoreCase("NA")) {
+                        avgSpeedDouble = Double.parseDouble(avgSpeed);
+                    }
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+                avgSpeedNewTrain.add(avgSpeedDouble);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return avgSpeedNewTrain;
+    }
+
     @SuppressWarnings("unused")
-    public void updateRouteFile(String pathRouteFile, String pathStationDatabase){
+    public void updateRouteFile(String pathTrainTypeFile, String pathRouteFile, String pathRouteSpeedFile, String pathStationDatabase){
         FetchStationDetails fetchStationDetails = new FetchStationDetails(pathStationDatabase);
+        int lengthMaxName = 25;
         StringBuilder newRouteData = new StringBuilder("");
-        Set<String> stationIdSet = new HashSet<>();
+        StringBuilder speedData = new StringBuilder("");
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        List<List<String>> trainTypesAndNumbers = new ArrayList<>();
+        try {
+            FileReader fReader = new FileReader(pathTrainTypeFile);
+            BufferedReader bReader = new BufferedReader(fReader);
+            String line;
+            while((line = bReader.readLine()) != null) {
+                String[] tempTrainNoArray = line.split("\\s+");
+                if(tempTrainNoArray.length==0){
+                    continue;
+                }
+                List<String> tempTrainNo = new ArrayList<>(Arrays.asList(tempTrainNoArray));
+                trainTypesAndNumbers.add(tempTrainNo);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        double distanceToSubtract = -1;
+        double prevDistance;
+        double currDistance = 0;
         try {
             FileReader fReader = new FileReader(pathRouteFile);
             BufferedReader bReader = new BufferedReader(fReader);
             String line;
+            Map<String, String> departure1;
+            Map<String, String> arrival2;
+            Map<String, String> departure2=null;
+
             while((line = bReader.readLine()) != null) {
                 String data[] = line.split("\\s+");
                 if(data.length<2){
@@ -147,10 +239,83 @@ public class Scheduler {
                     continue;
                 }
                 String id = Scheduler.getStationIdFromName(data[0]);
-                if(!stationIdSet.add(id)){
-                    System.out.println("Duplicate station found in route : " + id);
-                    System.out.println("This can cause problem in scheduling.");
-                    continue;
+                if(distanceToSubtract==-1){
+                    distanceToSubtract = Double.parseDouble(data[1]);
+                    List<Map<String, String>> stationStoppages = databaseConnector.getScheduleForStation(id);
+                    departure2 = stationStoppages.get(1);
+                    speedData.append("Station");
+                    for(int lengthString = "Station".length();lengthString<lengthMaxName;lengthString++){
+                        speedData.append(' ');
+                    }
+                    for(List<String> trainNos: trainTypesAndNumbers) {
+                        speedData.append('\t');
+                        speedData.append(trainNos.get(0));
+                        for(int lengthString = trainNos.get(0).length();lengthString<lengthMaxName;lengthString++){
+                            speedData.append(' ');
+                        }
+                    }
+                    speedData.append('\n');
+                    speedData.append(data[0]);
+                    for(int lengthString = data[0].length();lengthString<lengthMaxName;lengthString++){
+                        speedData.append(' ');
+                    }
+                    for(List<String> trainNos: trainTypesAndNumbers) {
+                        speedData.append('\t');
+                        speedData.append("NA");
+                        for(int lengthString = "NA".length();lengthString<lengthMaxName;lengthString++){
+                            speedData.append(' ');
+                        }
+                    }
+                    speedData.append('\n');
+                    currDistance = distanceToSubtract;
+                }
+                else{
+                    prevDistance = currDistance;
+                    currDistance = Double.parseDouble(data[1]);
+                    departure1 = departure2;
+                    List<Map<String, String>> stationStoppages = databaseConnector.getScheduleForStation(id);
+                    arrival2 = stationStoppages.get(0);
+                    departure2 = stationStoppages.get(1);
+                    List<String> trainNosOriginal;
+                    speedData.append(data[0]);
+                    for(int lengthString = data[0].length();lengthString<lengthMaxName;lengthString++){
+                        speedData.append(' ');
+                    }
+                    for(List<String> trainNos: trainTypesAndNumbers) {
+                        trainNosOriginal = new ArrayList<>(arrival2.keySet());
+                        trainNosOriginal.retainAll(trainNos);
+                        double speedSum = 0;
+                        double speedCount = 0;
+                        for(String trainNo:trainNosOriginal){
+                            String dept = departure1.getOrDefault(trainNo,null);
+                            String arr = arrival2.getOrDefault(trainNo,null);
+                            if(dept==null||arr==null){
+                                continue;
+                            }
+                            int deptTime = new TrainTime("0:"+dept).getValue();
+                            int arrTime = new TrainTime("0:"+arr).getValue();
+                            if(arrTime>deptTime && currDistance!=prevDistance){
+                                speedSum += ((currDistance-prevDistance)/(arrTime-deptTime))*60;
+                                speedCount++;
+                            }
+                        }
+                        if(speedCount>0) {
+                            speedSum = speedSum / speedCount;
+                            speedData.append('\t');
+                            speedData.append(new DecimalFormat("#0.00").format(speedSum));
+                            for(int lengthString = new DecimalFormat("#0.00").format(speedSum).length();lengthString<lengthMaxName;lengthString++){
+                                speedData.append(' ');
+                            }
+                        }
+                        else{
+                            speedData.append('\t');
+                            speedData.append("NA");
+                            for(int lengthString = "NA".length();lengthString<lengthMaxName;lengthString++){
+                                speedData.append(' ');
+                            }
+                        }
+                    }
+                    speedData.append('\n');
                 }
                 int numOfPlatform = fetchStationDetails.getNumberOfPlatform(id);
                 if(numOfPlatform<=0){
@@ -162,7 +327,7 @@ public class Scheduler {
                 int numOfUpTrack = numOfTrack/2;
                 newRouteData.append(data[0]);
                 newRouteData.append(' ');
-                newRouteData.append(data[1]);
+                newRouteData.append(new DecimalFormat("#0.00").format((Double.parseDouble(data[1])) - distanceToSubtract));
                 newRouteData.append(' ');
                 newRouteData.append(1);
                 newRouteData.append(' ');
@@ -182,6 +347,7 @@ public class Scheduler {
             bReader.close();
             fReader.close();
             new WriteToFile().write(pathRouteFile, newRouteData.toString(),false);
+            new WriteToFile().write(pathRouteSpeedFile, speedData.toString(),false);
         }
         catch (Exception e) {
             System.out.println("Unable to update route file");
@@ -269,14 +435,17 @@ public class Scheduler {
 
 
     public void writePathsToFile(Path path, int countPath, String pathBestRouteFile, List<Integer> stopTime,
-                                 double avgSpeed,List<String> stationName, List<Double> stationDistance){
+                                 String pathRouteSpeedFile, String newTrainType,List<String> stationName, List<Double> stationDistance){
         try {
             // System.out.println("In writePaths" +path.toString());
+            List<Double> avgSpeedNewTrain = loadNewTrainSpeed(pathRouteSpeedFile,newTrainType);
+            avgSpeedNewTrain.add(0,avgSpeedNewTrain.get(0));
+            avgSpeedNewTrain.add(avgSpeedNewTrain.get(avgSpeedNewTrain.size()-1));
             BufferedWriter bWriter;
             FileWriter fWriter;
             List<Node> nodePathBestRoute = path.getNodeList();
             String arrivalTimeStation;
-            double distancePrevStation = 0.0;
+            double distancePrevStation = stationDistance.get(0);
             int delayBwStation;
             double delaySecondsAdded=0;
             double delayBwStationActual;
@@ -284,7 +453,7 @@ public class Scheduler {
 
             TrainTime timePrevStation = null;
             fWriter = new FileWriter(pathBestRouteFile + " path " + countPath +
-                    " cost " + path.pathCost() + " .path");
+                    " cost " + (path.pathCost()-stopTime.get(stopTime.size()-1)) + " .path");
             bWriter = new BufferedWriter(fWriter);
 
             for (int i=1;i<nodePathBestRoute.size()-1;i++) {
@@ -293,7 +462,7 @@ public class Scheduler {
                 double nodeDistance = stationDistance.get(i-1);
                 if (timePrevStation != null) {
                     distanceBwStation = nodeDistance - distancePrevStation;
-                    delayBwStationActual =((distanceBwStation)/avgSpeed )*60;
+                    delayBwStationActual =((distanceBwStation)/avgSpeedNewTrain.get(i) )*60;
                     delayBwStation = (int) Math.ceil(delayBwStationActual - delaySecondsAdded);
                     if(stopTime.get(i-1)==0) {
                         delaySecondsAdded = delayBwStation - (delayBwStationActual - delaySecondsAdded);
@@ -306,7 +475,7 @@ public class Scheduler {
                 }
                 else {
                     TrainTime timePrevStationTemp = new TrainTime(bestRouteNode.getTime());
-                    timePrevStationTemp.subMinutes(2);
+                    timePrevStationTemp.subMinutes(20);
                     arrivalTimeStation = timePrevStationTemp.getTimeString();
                 }
                 bWriter.write(stationName.get(i-1) + "\t" + arrivalTimeStation + "\t" +
@@ -474,7 +643,7 @@ public class Scheduler {
 
     @SuppressWarnings("unused")
     public void test(String pathTemp, String pathRoute, String pathBestRoute, String pathOldTrainSchedule, boolean isSingleDay, int trainDay,
-                            boolean usePreviousComputation, double ratio, double avgSpeed, String pathLog, TrainTime sourceTime){
+                            boolean usePreviousComputation, double ratio, String pathRouteSpeedFile, String newTrainType, String pathLog, TrainTime sourceTime){
         if(sourceTime!=null){
             sourceTime = new TrainTime(sourceTime);
         }
@@ -487,6 +656,7 @@ public class Scheduler {
         for(int i=0;i<scheduler.stationId.size();i++) {
             stopTime.add(0);
         }
+        stopTime.set(stopTime.size()-1,20);
         // stopTime.set(5, 2.0);
         // stopTime.set(12, 4.0);
         // stopTime.set(22, 4.0);
@@ -497,25 +667,30 @@ public class Scheduler {
 
         int count;
         try {
-            PrintStream o1 = new PrintStream(new File(pathLog + File.separator + "Output Type Full Day "+trainDay+" AvgSpeed "+avgSpeed +
+            PrintStream o1 = new PrintStream(new File(pathLog + File.separator + "Output Type Full Day "+trainDay+" TrainType "+newTrainType +
                     " maxRatio "+ratio +((sourceTime==null)?" unconditional.log":" conditional.log")));
             PrintStream console = System.out;
             System.setOut(o1);
-            String pathBestRouteFile = pathBestRoute + File.separator +"Type Full Day "+trainDay+" AvgSpeed "+avgSpeed +
+            String pathBestRouteFile = pathBestRoute + File.separator +"Type Full Day "+trainDay+" TrainType "+newTrainType +
                     " maxRatio "+ratio +((sourceTime==null)?" unconditional ":" conditional ");
             paths= new KBestSchedule().getScheduleNewTrain(pathTemp, scheduler.getStationIdList(), scheduler.getStationNameList(),
                     scheduler.getStationDistanceList(), scheduler.getStationDirectLineList(),
                     scheduler.getStationNoOfUpPlatformList(), scheduler.getStationNoOfDownPlatformList(),
                     scheduler.getStationNoOfDualPlatformList(), scheduler.getStationNoOfUpTrackList(),
                     scheduler.getStationNoOfDownTrackList(), scheduler.getStationNoOfDualTrackList(), noOfPaths, sourceTime,
-                    minDelayBwTrains, avgSpeed, stopTime, pathOldTrainSchedule,
+                    minDelayBwTrains, pathRouteSpeedFile,newTrainType, stopTime, pathOldTrainSchedule,
                     trainDay, isSingleDay,
-                    usePreviousComputation, ratio, true);
-            System.out.println(paths.size());
+                    usePreviousComputation, ratio, (sourceTime!=null));
             count=0;
+            System.out.print(paths.size());
             for(Path path: paths) {
-                System.out.println(path.toString() + " cost: " + path.pathCost());
-                writePathsToFile(path,++count,pathBestRouteFile,stopTime,avgSpeed, scheduler.getStationNameList(),
+                System.out.print("\t"+(path.pathCost()-stopTime.get(stopTime.size()-1)));
+            }
+            System.out.println();
+
+            for(Path path: paths) {
+                System.out.println(path.toString() + " cost: " + (path.pathCost()-stopTime.get(stopTime.size()-1)));
+                writePathsToFile(path,++count,pathBestRouteFile,stopTime,pathRouteSpeedFile,newTrainType, scheduler.getStationNameList(),
                         scheduler.getStationDistanceList());
             }
             System.setOut(console);

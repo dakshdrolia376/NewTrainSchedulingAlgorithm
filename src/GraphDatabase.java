@@ -72,7 +72,7 @@ public class GraphDatabase extends GraphParent{
     public Edge get(Node from, Node to) {
         double edgeWeight = databaseConnector.getEdgeWeight(from, to);
         if(edgeWeight>=0){
-            return new Edge(from,to, edgeWeight);
+            return new Edge(from,to, edgeWeight, false);
         }
         else{
             System.out.println("Edge not found.");

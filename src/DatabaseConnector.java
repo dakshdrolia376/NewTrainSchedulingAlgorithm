@@ -1,8 +1,5 @@
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.Objects.requireNonNull;
 
@@ -127,8 +124,8 @@ public class DatabaseConnector {
             if (!getConnection()) {
                 return false;
             }
-            String query = "insert into train (Name, Num, trainIndex, travelSun, travelMon, travelTue, travelWed, " +
-                    "travelThu, travelFri, travelSat) values (?,?,?,?,?,?,?,?,?,?) " +
+            String query = "insert into train (Name, Num, Type, trainIndex, travelSun, travelMon, travelTue, travelWed, " +
+                    "travelThu, travelFri, travelSat) values (?,?,?,?,?,?,?,?,?,?,?) " +
                     "ON DUPLICATE KEY UPDATE count=count+1, " +
                     "DuplicateIndexes = CONCAT(DuplicateIndexes,\",\",?);";
             // create the mysql insert prepared statement
@@ -141,15 +138,16 @@ public class DatabaseConnector {
                 List<String> trainDetail = trainDetails.get(trainIndex);
                 preparedStmt.setString(1,trainDetail.get(1));
                 preparedStmt.setInt(2,Integer.parseInt(trainDetail.get(0)));
-                preparedStmt.setString(3,(trainIndex+""));
-                preparedStmt.setString(4,trainDetail.get(2).charAt(0)=='1'?"Y":"N");
-                preparedStmt.setString(5,trainDetail.get(2).charAt(1)=='1'?"Y":"N");
-                preparedStmt.setString(6,trainDetail.get(2).charAt(2)=='1'?"Y":"N");
-                preparedStmt.setString(7,trainDetail.get(2).charAt(3)=='1'?"Y":"N");
-                preparedStmt.setString(8,trainDetail.get(2).charAt(4)=='1'?"Y":"N");
-                preparedStmt.setString(9,trainDetail.get(2).charAt(5)=='1'?"Y":"N");
-                preparedStmt.setString(10,trainDetail.get(2).charAt(6)=='1'?"Y":"N");
-                preparedStmt.setString(11,(trainIndex+""));
+                preparedStmt.setString(3,trainDetail.get(3));
+                preparedStmt.setString(4,(trainIndex+""));
+                preparedStmt.setString(5,trainDetail.get(2).charAt(0)=='1'?"Y":"N");
+                preparedStmt.setString(6,trainDetail.get(2).charAt(1)=='1'?"Y":"N");
+                preparedStmt.setString(7,trainDetail.get(2).charAt(2)=='1'?"Y":"N");
+                preparedStmt.setString(8,trainDetail.get(2).charAt(3)=='1'?"Y":"N");
+                preparedStmt.setString(9,trainDetail.get(2).charAt(4)=='1'?"Y":"N");
+                preparedStmt.setString(10,trainDetail.get(2).charAt(5)=='1'?"Y":"N");
+                preparedStmt.setString(11,trainDetail.get(2).charAt(6)=='1'?"Y":"N");
+                preparedStmt.setString(12,(trainIndex+""));
                 preparedStmt.addBatch();
                 if (++count % batchSize == 0) {
                     preparedStmt.executeBatch();
@@ -364,7 +362,7 @@ public class DatabaseConnector {
             List<Edge> edgeInfo = new ArrayList<>();
             while (rs.next()){
                 edgeInfo.add(new Edge(new Node(rs.getString("NodeFrom")),
-                        new Node(rs.getString("NodeTo")),rs.getDouble("Weight") ));
+                        new Node(rs.getString("NodeTo")),rs.getDouble("Weight"),false));
             }
             return edgeInfo;
         }
@@ -489,4 +487,63 @@ public class DatabaseConnector {
             return -5;
         }
     }
+
+    public List<Map<String,String>> getScheduleForStation(String stationId){
+        try {
+            if(!getConnection()){
+                return Collections.emptyList();
+            }
+            requireNonNull(stationId, "stationId cant be null.");
+            // the mysql insert statement
+            String query = "select stationId, trainNum, arrival, departure from stoppage where stationId='"+stationId+"';";
+            // create the mysql insert prepared statement
+            PreparedStatement preparedStmt = con.prepareStatement(query);
+            // Array array = con.createArrayOf("VARCHAR", stationId.toArray());
+            // execute the prepared statement
+            ResultSet rs=preparedStmt.executeQuery();
+            List<Map<String,String>> trainSchedules = new ArrayList<>();
+            Map<String, String> arrival = new HashMap<>();
+            Map<String, String> departure = new HashMap<>();
+            while (rs.next()){
+                arrival.put(rs.getString("trainNum"),rs.getString("arrival"));
+                departure.put(rs.getString("trainNum"),rs.getString("departure"));
+            }
+            trainSchedules.add(arrival);
+            trainSchedules.add(departure);
+            return trainSchedules;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+    public List<List<String>> getAllTrainNames(){
+        try {
+            if(!getConnection()){
+                return Collections.emptyList();
+            }
+            // the mysql insert statement
+            String query = "select Name, Num, Type from train;";
+            // create the mysql insert prepared statement
+            PreparedStatement preparedStmt = con.prepareStatement(query);
+            // Array array = con.createArrayOf("VARCHAR", stationId.toArray());
+            // execute the prepared statement
+            ResultSet rs=preparedStmt.executeQuery();
+            List<List<String>> ans =new ArrayList<>();
+            while (rs.next()){
+                List<String> temp = new ArrayList<>();
+                temp.add(rs.getString("Num"));
+                temp.add(rs.getString("Name"));
+                temp.add(rs.getString("Type"));
+                ans.add(temp);
+            }
+            return ans;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
 }

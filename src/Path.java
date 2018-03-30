@@ -11,6 +11,7 @@ public class Path {
     private final double totalCost;
     private final int length;
     private TrainTime sourceTime;
+    private int unScheduledStop = 0;
 
     public Path(Node source) {
         requireNonNull(source, "The input source node is null.");
@@ -20,12 +21,13 @@ public class Path {
         this.sourceTime = source.getTime();
     }
 
-    private Path(Node node, double totalCost, int length) {
+    private Path(Node node, double totalCost, int length, int unScheduledStop) {
         requireNonNull(node, "The input source node is null.");
         this.node = node;
         this.totalCost = totalCost;
         this.length = length;
         this.sourceTime = node.getTime();
+        this.unScheduledStop = unScheduledStop;
     }
 
     public int getLength(){
@@ -77,10 +79,14 @@ public class Path {
         return this.totalCost;
     }
 
+    public int getUnScheduledStop(){
+        return this.unScheduledStop;
+    }
+
     private static class NonEmptyPath extends Path{
         private final Path predecessor;
         NonEmptyPath(Path path, Edge edge) {
-            super(edge.getTo(), path.totalCost + edge.getWeight(), path.length+1);
+            super(edge.getTo(), path.totalCost + edge.getWeight(), path.length+1, path.unScheduledStop+(edge.getDelay()?1:0));
             this.predecessor = path;
             if(this.predecessor.sourceTime==null) {
                 super.sourceTime = edge.getFrom().getTime();
@@ -91,7 +97,7 @@ public class Path {
         }
 
         NonEmptyPath(Path path, Node node, double weight) {
-            super(node, weight, path.length+1);
+            super(node, weight, path.length+1, path.unScheduledStop);
             this.predecessor = path;
             if(this.predecessor.sourceTime==null) {
                 super.sourceTime = node.getTime();

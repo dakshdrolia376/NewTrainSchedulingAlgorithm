@@ -18,20 +18,20 @@ public class ScheduleByDivision {
     private Queue<Path> bestAns;
 
     public List<Path> getSmallPart(String pathTemp, int firstIndex, int lastIndex, int noOfPaths, TrainTime sourceTime,
-                                   int minDelayBwTrains, double avgSpeed, String pathOldTrainSchedule, boolean isSingleDay, int trainDay, double ratio,
-                                   boolean aroundSourceTime){
+                                   int minDelayBwTrains, String pathRouteSpeedFile, String newTrainType, String pathOldTrainSchedule, boolean isSingleDay, int trainDay, double ratio,
+                                   boolean onSourceTime){
 
         return new KBestSchedule().getScheduleNewTrain(pathTemp, this.stationIdList.subList(firstIndex,lastIndex),
                 this.stationNameList.subList(firstIndex,lastIndex), this.stationDistanceList.subList(firstIndex,lastIndex),
                 this.stationIsDirectLineList.subList(firstIndex,lastIndex), this.stationNoOFUpPlatformList.subList(firstIndex,lastIndex),
                 this.stationNoOFDownPlatformList.subList(firstIndex,lastIndex), this.stationNoOFDualPlatformList.subList(firstIndex,lastIndex),
                 this.stationNoOfUpTrackList.subList(firstIndex,lastIndex), this.stationNoOfDownTrackList.subList(firstIndex,lastIndex),
-                this.stationNoOfDualTrackList.subList(firstIndex,lastIndex), noOfPaths, sourceTime, minDelayBwTrains, avgSpeed,
-                this.stopTimeList.subList(firstIndex,lastIndex), pathOldTrainSchedule, trainDay, isSingleDay, false, ratio, aroundSourceTime);
+                this.stationNoOfDualTrackList.subList(firstIndex,lastIndex), noOfPaths, sourceTime, minDelayBwTrains, pathRouteSpeedFile,newTrainType,
+                this.stopTimeList.subList(firstIndex,lastIndex), pathOldTrainSchedule, trainDay, isSingleDay, false, ratio, onSourceTime);
     }
 
     public void getPathsRecur(String pathTemp, int i, int stationGroupSizeForPart, int noOfPaths, TrainTime sourceTime,
-                              int minDelayBwTrains, double avgSpeed, String pathOldTrainSchedule,
+                              int minDelayBwTrains, String pathRouteSpeedFile, String newTrainType, String pathOldTrainSchedule,
                               boolean isSingleDay, int trainDay, double ratio, Path pathPrevious){
         if(i!=0 && pathPrevious==null){
             System.out.println("Previous path cant be null");
@@ -51,7 +51,7 @@ public class ScheduleByDivision {
         // add 0 to wait time of first
         noOfPaths = (i==0)?noOfPaths*2:1;
         List<Path> paths = getSmallPart(pathTemp, i, last, noOfPaths, sourceTime, minDelayBwTrains,
-                avgSpeed, pathOldTrainSchedule, isSingleDay, trainDay, ratio, (i==0));
+                pathRouteSpeedFile,newTrainType, pathOldTrainSchedule, isSingleDay, trainDay, ratio, (i!=0));
 
         for(Path path: paths){
             // System.out.println(" i = " + i + " last = " + last );
@@ -88,7 +88,7 @@ public class ScheduleByDivision {
             }
             if(last<this.stationIdList.size()){
                 getPathsRecur(pathTemp, i1, stationGroupSizeForPart,noOfPaths, sourceTime1, minDelayBwTrains,
-                        avgSpeed,pathOldTrainSchedule,
+                        pathRouteSpeedFile,newTrainType,pathOldTrainSchedule,
                         isSingleDay, trainDay, ratio, tempPath);
             }
             else{
@@ -102,7 +102,7 @@ public class ScheduleByDivision {
     @SuppressWarnings("unused")
     public void scheduleByBreaking(String pathTemp, String pathRoute, String pathBestRoute,
                                    String pathOldTrainSchedule,
-                                   boolean isSingleDay, int trainDay, double ratio, String pathLog, double avgSpeed,
+                                   boolean isSingleDay, int trainDay, double ratio, String pathLog, String pathRouteSpeedFile, String newTrainType,
                                    TrainTime sourceTime){
         if(sourceTime!=null){
             sourceTime = new TrainTime(sourceTime);
@@ -146,19 +146,18 @@ public class ScheduleByDivision {
         for(int i=0;i<stationDistanceList.size();i++){
             sumStopTimes +=stopTime.get(i);
         }
-        double maxCostPathAllowed = (Math.ceil(((this.stationDistanceList.get(this.stationDistanceList.size()-1))/avgSpeed)*60) + sumStopTimes)*ratio;
 
-        String pathBestRouteFile = pathBestRoute + File.separator +"Type Break Day "+trainDay+" AvgSpeed "+avgSpeed +
+        String pathBestRouteFile = pathBestRoute + File.separator +"Type Break Day "+trainDay+" TrainType "+newTrainType +
                 " maxRatio "+ratio +((sourceTime==null)?" unconditional ":" conditional ");
         this.bestAns = new PriorityQueue<>(Comparator.comparingDouble(Path::pathCost));
 
         try {
-            PrintStream o1 = new PrintStream(new File(pathLog + File.separator + "Output Type Break Day "+trainDay+" AvgSpeed "+avgSpeed +
+            PrintStream o1 = new PrintStream(new File(pathLog + File.separator + "Output Type Break Day "+trainDay+" TrainType "+newTrainType +
                     " maxRatio "+ratio +((sourceTime==null)?" unconditional.log":" conditional.log")));
             PrintStream console = System.out;
             System.setOut(o1);
 
-            getPathsRecur(pathTemp,0,stationGroupSizeForPart, noOfPaths,sourceTime, minDelayBwTrains,avgSpeed,
+            getPathsRecur(pathTemp,0,stationGroupSizeForPart, noOfPaths,sourceTime, minDelayBwTrains,pathRouteSpeedFile,newTrainType,
                     pathOldTrainSchedule, isSingleDay, trainDay, ratio,
                     null);
 
@@ -167,11 +166,8 @@ public class ScheduleByDivision {
 
             while(!this.bestAns.isEmpty() && count<noOfPaths){
                 Path path = this.bestAns.remove();
-                if(path.pathCost()>maxCostPathAllowed){
-                    break;
-                }
                 System.out.println("Path Found : " + path.toString() + " cost: " + path.pathCost());
-                scheduler.writePathsToFile(path,++count, pathBestRouteFile, stopTime, avgSpeed,
+                scheduler.writePathsToFile(path,++count, pathBestRouteFile, stopTime, pathRouteSpeedFile,newTrainType,
                         scheduler.getStationNameList(), scheduler.getStationDistanceList());
             }
             System.setOut(console);

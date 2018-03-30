@@ -25,7 +25,19 @@ public class KShortestPathFinder {
 
         List<Path> paths = new ArrayList<>(k);
         Map<String, Integer> countMap = new HashMap<>();
-        Queue<Path> HEAP = new PriorityQueue<>(Comparator.comparingDouble(Path::pathCost));
+        Comparator<Path> comparatorPath = new Comparator<Path>() {
+            @Override
+            public int compare(Path o1, Path o2) {
+                if(o1.pathCost()==o2.pathCost()){
+                    return (o1.getUnScheduledStop() - o2.getUnScheduledStop());
+                }
+                else{
+                    return (int)(o1.pathCost()- o2.pathCost());
+                }
+            }
+        };
+
+        Queue<Path> HEAP = new PriorityQueue<>(comparatorPath);
 
         HEAP.add(new Path(source));
 
@@ -33,6 +45,7 @@ public class KShortestPathFinder {
 
         while (!HEAP.isEmpty() && paths.size() < k) {
             Path currentPath = HEAP.remove();
+            // System.out.println(currentPath.pathCost()+" "+ currentPath.getUnScheduledStop());
             if(currentPath.getLength()>bestPath.getLength()){
                 System.out.println("Best Path till now cost : " + currentPath.pathCost() + " >> " + currentPath.toString());
                 bestPath = currentPath;
@@ -92,6 +105,7 @@ public class KShortestPathFinder {
                         // System.out.println("\t\t Adding edge : " + edge.toString());
                         if(countStationNo>= stationList.size() || edge.getTo().getStationId().equalsIgnoreCase(stationList.get(countStationNo))){
                             Path path = currentPath.append(edge);
+                            // System.out.println("No of stops "+ path.getUnScheduledStop());
                             HEAP.add(path);
                         }
                     }

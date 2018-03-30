@@ -102,6 +102,23 @@ class LinePlotTrains extends ApplicationFrame {
         }
     }
 
+    private boolean addTrainFromFolder(String pathOldTrainScheduleFolder){
+        return addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
+                        "day0", 0) &&
+                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
+                        "day1", 1) &&
+                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
+                        "day2", 2) &&
+                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
+                        "day3", 3) &&
+                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
+                        "day4", 4) &&
+                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
+                        "day5", 5) &&
+                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
+                        "day6", 6);
+    }
+
     private boolean addTrainFromFolderSingleDay(String pathOldTrainScheduleFolder, int trainDay){
         File[] listOfFiles = new File(pathOldTrainScheduleFolder).listFiles();
         if(listOfFiles==null) {
@@ -127,23 +144,6 @@ class LinePlotTrains extends ApplicationFrame {
             }
         }
         return true;
-    }
-
-    private boolean addTrainFromFolder(String pathOldTrainScheduleFolder){
-        return addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
-                        "day0", 0) &&
-                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
-                        "day1", 1) &&
-                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
-                        "day2", 2) &&
-                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
-                        "day3", 3) &&
-                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
-                        "day4", 4) &&
-                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
-                        "day5", 5) &&
-                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
-                        "day6", 6);
     }
 
     private boolean addTrainFromFile(int trainNo, String filePath, int trainDay){
@@ -339,7 +339,6 @@ class LinePlotTrains extends ApplicationFrame {
                 tickLabelArea = new Area();
                 for (Object tick : allTicks) {
                     NumberTick numberTick = (NumberTick) tick;
-
                     String label;
                     double numTickValue = numberTick.getValue();
                     if(numTickValue>=0 && numTickValue<10080){
