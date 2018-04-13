@@ -9,7 +9,7 @@ public class KShortestPathFinder {
     }
 
     public List<Path> findShortestPaths(Node source, Node target, GraphKBestPath graph, int k, List<Double> maxCostList,
-                                        List<String> stationList) {
+                                        List<String> stationList, boolean findNonDiversePath) {
         requireNonNull(source, "The source node is null.");
         requireNonNull(target, "The target node is null.");
         requireNonNull(graph, "The graph is null.");
@@ -85,7 +85,7 @@ public class KShortestPathFinder {
                             break;
                         }
                     }
-                    if ((source.getTime() != null) || diversePath) {
+                    if (findNonDiversePath || diversePath) {
                         paths.add(currentPath);
                         System.out.println("Accepted Path found :" + currentPath.toString() + " cost: " + currentPath.pathCost());
                     } else {

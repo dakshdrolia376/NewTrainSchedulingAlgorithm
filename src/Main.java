@@ -7,8 +7,11 @@ public class Main {
 
     public static void main(String[] args) {
         String pathTrainList = "data" + File.separator+"trainList.txt";
-        String pathRoute = "data"+File.separator+"route"+File.separator+"routePnbeBta.txt";
-        String pathRouteSpeed = pathRoute.split("\\.")[0]+"Speed.txt";
+        String pathRoute = "data"+File.separator+"route"+File.separator+"routePnbeMgs.txt";
+        String pathRouteStopTime = "data"+File.separator+"route"+File.separator+"routeStopTimePnbeMgs.txt";
+        String pathRouteTimeMin = pathRoute.split("\\.")[0]+"TimeMin.txt";
+        String pathRouteTimeAvg = pathRoute.split("\\.")[0]+"TimeAvg.txt";
+
         String pathPlotFile = "data"+File.separator+"plot"+File.separator+"plot1.pdf";
         String pathTemp = "data"+File.separator+"temp";
         String pathLog = "data"+File.separator+"logs";
@@ -49,29 +52,35 @@ public class Main {
             double ratio = 1.3;
             int trainDay=0;
             boolean isSingleDay =true;
-            String newTrainType = "passenger";
+            String newTrainType = "memu";
+
+            TrainTime sourceTime=new TrainTime(0,8,0);
+            int trainNotToLoad = 63227;
+            sourceTime = null;
+            trainNotToLoad = -1;
 
             Scheduler scheduler = new Scheduler();
             ScheduleByDivision scheduleByDivision = new ScheduleByDivision();
             scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 0,
-                    usePreviousComputation, ratio, pathRouteSpeed,newTrainType, pathLog, null);
+                    usePreviousComputation, ratio, pathRouteTimeMin, newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad);
+
             // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 1,
-            //         usePreviousComputation, ratio, pathRouteSpeed,newTrainType, pathLog, null);
+            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad);
             // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 2,
-            //         usePreviousComputation, ratio, pathRouteSpeed,newTrainType, pathLog, null);
+            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad);
             // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 3,
-            //         usePreviousComputation, ratio, pathRouteSpeed,newTrainType, pathLog, null);
+            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad);
             // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 4,
-            //         usePreviousComputation, ratio, pathRouteSpeed,newTrainType, pathLog, null);
+            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad);
             // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 5,
-            //         usePreviousComputation, ratio, pathRouteSpeed,newTrainType, pathLog, null);
+            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad);
             // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 6,
-            //         usePreviousComputation, ratio, pathRouteSpeed,newTrainType, pathLog, null);
+            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad);
             // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, false, 7,
-            //         usePreviousComputation, ratio, pathRouteSpeed,newTrainType, pathLog, null);
+            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad);
             //
             // scheduleByDivision.scheduleByBreaking(pathTemp, pathRoute, pathBestRoute, pathTrainBase,isSingleDay, trainDay, ratio,
-            //         pathLog, pathRouteSpeed,newTrainType, null);
+            //         pathLog, pathRouteTimeMin,newTrainType, sourceTime,pathRouteStopTime,trainNotToLoad);
 
             //             System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+
             //                     " count "+count +" Type Break Day "+trainDay+" AvgSpeed "+avgSpeed +
@@ -79,7 +88,6 @@ public class Main {
 
             // int newTrainNo = 9910;
             // int newTrainDay = 0;
-            // // String pathNewTrainFile = pathBestRoute+File.separator+"Type Full Day 7 AvgSpeed 80.0 maxRatio 1.3 unconditional  path 1 cost 813.0 .path";
             // String pathNewTrainFile = pathBestRoute+File.separator+"Type Full Day 0 AvgSpeed 80.0 maxRatio 1.3 conditional  path 1 cost 45.0 .path";
             // scheduler.showPlot(null,newTrainNo,pathPlotFile,pathRoute,pathTrainBase, newTrainDay);
 
@@ -91,7 +99,8 @@ public class Main {
             // scheduler.putStoppagesIntoDatabase(pathTrainDatabase);
             //
             // scheduler.updateTrainTypeFile(pathTrainTypeFile);
-            // scheduler.updateRouteFile(pathTrainTypeFile, pathRoute, pathRouteSpeed, pathStationDatabase);
+            // scheduler.updateRouteFile(pathTrainTypeFile, pathRoute, pathRouteTimeMin,pathRouteTimeAvg, pathStationDatabase);
+            // scheduler.initializeStopTimeFile(pathRouteStopTime,pathRoute);
             // scheduler.createTrainList(pathRoute, pathTrainList);
             // scheduler.fetchTrainSchedule(pathTrainList,pathTemp, pathTrainBase, pathTrainDatabase);
 

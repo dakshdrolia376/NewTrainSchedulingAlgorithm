@@ -297,6 +297,9 @@ public class KBestSchedule {
                             if((timeOldTrainDeptStation1+minDelayBwTrains)>= timeNodeStart &&
                                     (timeOldTrainDeptStation1-minDelayBwTrains)<= timeNodeStart){
                                 totalUpTrack--;
+                                // if(nodeStart.toString().equalsIgnoreCase("pnbe:0:8:0")){
+                                //     System.out.println("Track up train min delay 1: " + train.getTrainNo() + " "+ oldTrainDeptStation1.toString()+" "+oldTrainArrStation2.toString());
+                                // }
                                 // System.out.println("Track Min Delay Same1: "+nodeStart.toString()+ " "+ delayBwStation+" "+ nodeEnd.toString()+ " "+
                                 //         oldTrainDeptStation1.toString()+ " "+ oldTrainArrStation2.toString()+ " "+train.getTrainNo());
                                 continue;
@@ -305,6 +308,9 @@ public class KBestSchedule {
                             if((timeOldTrainArrStation2+minDelayBwTrains)>= timeEarliestToReach &&
                                     (timeOldTrainArrStation2-minDelayBwTrains)<= timeEarliestToReach){
                                 totalUpTrack--;
+                                // if(nodeStart.toString().equalsIgnoreCase("pnbe:0:8:0")){
+                                //     System.out.println("Track up train min delay2: " + train.getTrainNo() + " "+ oldTrainDeptStation1.toString()+" "+oldTrainArrStation2.toString());
+                                // }
                                 // System.out.println("Track Min Delay Same2: "+nodeStart.toString()+ " "+ delayBwStation+" "+ nodeEnd.toString()+ " "+
                                 //         oldTrainDeptStation1.toString()+ " "+ oldTrainArrStation2.toString()+ " "+train.getTrainNo());
                                 continue;
@@ -314,6 +320,9 @@ public class KBestSchedule {
                                 if((timeNodeStart<timeOldTrainDeptStation1) && (timeEarliestToReach > timeOldTrainArrStation2) ||
                                         ((timeNodeStart > timeOldTrainDeptStation1) && (timeEarliestToReach < timeOldTrainArrStation2))){
                                     totalUpTrack--;
+                                    // if(nodeStart.toString().equalsIgnoreCase("pnbe:0:8:0")){
+                                    //     System.out.println("Track up train 1: " + train.getTrainNo() + " "+ oldTrainDeptStation1.toString()+" "+oldTrainArrStation2.toString());
+                                    // }
                                     // System.out.println("Track Same: "+nodeStart.toString()+ " "+ delayBwStation+" "+ nodeEnd.toString()+ " "+
                                     //         oldTrainDeptStation1.toString()+ " "+ oldTrainArrStation2.toString()+ " "+train.getTrainNo());
                                 }
@@ -322,6 +331,9 @@ public class KBestSchedule {
                                 timeOldTrainArrStation2-=10080;
                                 if((timeEarliestToReach< timeOldTrainArrStation2) || (timeNodeStart > timeOldTrainDeptStation1)){
                                     totalUpTrack --;
+                                    // if(nodeStart.toString().equalsIgnoreCase("pnbe:0:8:0")){
+                                    //     System.out.println("Track up train 2: " + train.getTrainNo() + " "+ oldTrainDeptStation1.toString()+" "+oldTrainArrStation2.toString());
+                                    // }
                                     // System.out.println("Track Same: "+nodeStart.toString()+ " "+ delayBwStation+" "+ nodeEnd.toString()+ " "+
                                     //         oldTrainDeptStation1.toString()+ " "+ oldTrainArrStation2.toString()+ " "+train.getTrainNo());
                                 }
@@ -329,6 +341,9 @@ public class KBestSchedule {
                             else if(timeEarliestToReach>=10080){
                                 if ((timeOldTrainArrStation2 < (timeEarliestToReach-10080)) || (timeOldTrainDeptStation1 > timeNodeStart)) {
                                     totalUpTrack--;
+                                    // if(nodeStart.toString().equalsIgnoreCase("pnbe:0:8:0")){
+                                    //     System.out.println("Track up train 3: " + train.getTrainNo() + " "+ oldTrainDeptStation1.toString()+" "+oldTrainArrStation2.toString());
+                                    // }
                                     // System.out.println("Track Same: "+nodeStart.toString()+ " "+ delayBwStation+" "+ nodeEnd.toString()+ " "+
                                     //         oldTrainDeptStation1.toString()+ " "+ oldTrainArrStation2.toString()+ " "+train.getTrainNo());
                                 }
@@ -337,6 +352,9 @@ public class KBestSchedule {
                                 if((timeNodeStart<timeOldTrainDeptStation1) && (timeEarliestToReach > timeOldTrainArrStation2) ||
                                         ((timeNodeStart > timeOldTrainDeptStation1) && (timeEarliestToReach < timeOldTrainArrStation2))){
                                     totalUpTrack--;
+                                    // if(nodeStart.toString().equalsIgnoreCase("pnbe:0:8:0")){
+                                    //     System.out.println("Track up train 4: " + train.getTrainNo() + " "+ oldTrainDeptStation1.toString()+" "+oldTrainArrStation2.toString());
+                                    // }
                                     // System.out.println("Track Same: "+nodeStart.toString()+ " "+ delayBwStation+" "+ nodeEnd.toString()+ " "+
                                     //         oldTrainDeptStation1.toString()+ " "+ oldTrainArrStation2.toString()+ " "+train.getTrainNo());
                                 }
@@ -345,7 +363,6 @@ public class KBestSchedule {
 
                         s2 = train.getStationInfo(nodeEnd.getStationId(), nodeStart.getStationId(),true);
                         s1 = train.getStationInfo(nodeEnd.getStationId(), nodeStart.getStationId(), false);
-
 
                         if(s1!=null && s2 !=null){
                             //opposite direction train
@@ -364,6 +381,9 @@ public class KBestSchedule {
                             if((timeOldTrainArrStation1+minDelayBwTrains)>= timeNodeStart &&
                                     (timeOldTrainArrStation1-minDelayBwTrains)<= timeNodeStart){
                                 totalUpTrack--;
+                                // if(nodeStart.toString().equalsIgnoreCase("pnbe:0:8:0")){
+                                //     System.out.println("Track down train min delay 1: " + train.getTrainNo() + " "+ oldTrainArrStation1.toString()+" "+oldTrainDeptStation2.toString());
+                                // }
                                 // System.out.println("Track Min delay Opposite1: "+nodeStart.toString()+ " "+ delayBwStation+" "+ nodeEnd.toString()+ " "+
                                 //         oldTrainDeptStation2.toString()+ " "+ oldTrainArrStation1.toString()+ " "+train.getTrainNo());
                                 continue;
@@ -372,6 +392,9 @@ public class KBestSchedule {
                             if((timeOldTrainDeptStation2+minDelayBwTrains)>= timeEarliestToReach &&
                                     (timeOldTrainDeptStation2-minDelayBwTrains)<= timeEarliestToReach){
                                 totalUpTrack--;
+                                // if(nodeStart.toString().equalsIgnoreCase("pnbe:0:8:0")){
+                                //     System.out.println("Track down train min delay 2: " + train.getTrainNo() + " "+ oldTrainArrStation1.toString()+" "+oldTrainDeptStation2.toString());
+                                // }
                                 // System.out.println("Track Min delay Opposite2: "+nodeStart.toString()+ " "+ delayBwStation+" "+ nodeEnd.toString()+ " "+
                                 //         oldTrainDeptStation2.toString()+ " "+ oldTrainArrStation1.toString()+ " "+train.getTrainNo());
                                 continue;
@@ -380,6 +403,9 @@ public class KBestSchedule {
                             if(timeEarliestToReach>=10080 && addedOldTrain){
                                 if((timeNodeStart<timeOldTrainArrStation1) && (timeEarliestToReach > timeOldTrainDeptStation2)){
                                     totalUpTrack--;
+                                    // if(nodeStart.toString().equalsIgnoreCase("pnbe:0:8:0")){
+                                    //     System.out.println("Track down train 1: " + train.getTrainNo() + " "+ oldTrainArrStation1.toString()+" "+oldTrainDeptStation2.toString());
+                                    // }
                                     // System.out.println("Track Opposite: "+nodeStart.toString()+ " "+ delayBwStation+" "+ nodeEnd.toString()+ " "+
                                     //         oldTrainDeptStation2.toString()+ " "+ oldTrainArrStation1.toString()+ " "+train.getTrainNo());
                                 }
@@ -388,6 +414,9 @@ public class KBestSchedule {
                                 timeOldTrainArrStation1 -=10080;
                                 if((timeEarliestToReach> timeOldTrainDeptStation2) || (timeNodeStart < timeOldTrainArrStation1)){
                                     totalUpTrack --;
+                                    // if(nodeStart.toString().equalsIgnoreCase("pnbe:0:8:0")){
+                                    //     System.out.println("Track down train 2: " + train.getTrainNo() + " "+ oldTrainArrStation1.toString()+" "+oldTrainDeptStation2.toString());
+                                    // }
                                     // System.out.println("Track Opposite: "+nodeStart.toString()+ " "+ delayBwStation+" "+ nodeEnd.toString()+ " "+
                                     //         oldTrainDeptStation2.toString()+ " "+ oldTrainArrStation1.toString()+ " "+train.getTrainNo());
                                 }
@@ -395,6 +424,9 @@ public class KBestSchedule {
                             else if(timeEarliestToReach>=10080){
                                 if(((timeEarliestToReach-10080)> timeOldTrainDeptStation2) || (timeNodeStart < timeOldTrainArrStation1)){
                                     totalUpTrack --;
+                                    // if(nodeStart.toString().equalsIgnoreCase("pnbe:0:8:0")){
+                                    //     System.out.println("Track down train 3: " + train.getTrainNo() + " "+ oldTrainArrStation1.toString()+" "+oldTrainDeptStation2.toString());
+                                    // }
                                     // System.out.println("Track Opposite: "+nodeStart.toString()+ " "+ delayBwStation+" "+ nodeEnd.toString()+ " "+
                                     //         oldTrainDeptStation2.toString()+ " "+ oldTrainArrStation1.toString()+ " "+train.getTrainNo());
                                 }
@@ -402,6 +434,9 @@ public class KBestSchedule {
                             else{
                                 if((timeNodeStart<timeOldTrainArrStation1) && (timeEarliestToReach > timeOldTrainDeptStation2)){
                                     totalUpTrack--;
+                                    // if(nodeStart.toString().equalsIgnoreCase("pnbe:0:8:0")){
+                                    //     System.out.println("Track down train 4: " + train.getTrainNo() + " "+ oldTrainArrStation1.toString()+" "+oldTrainDeptStation2.toString());
+                                    // }
                                     // System.out.println("Track Opposite: "+nodeStart.toString()+ " "+ delayBwStation+" "+ nodeEnd.toString()+ " "+
                                     //         oldTrainDeptStation2.toString()+ " "+ oldTrainArrStation1.toString()+ " "+train.getTrainNo());
                                 }
@@ -611,7 +646,9 @@ public class KBestSchedule {
                                       boolean isSingleDay, int minDelayBwTrains, int trainDay,
                                       List<Integer> maxDelayList, TrainTime sourceTime, boolean onSourceTime){
         // System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+" addEdge started");
-        boolean addedFirstEdge = false;
+
+        // boolean addedFirstEdge = false;
+
         Node nodeStart;
         Node nodeEnd;
         if(this.nodes.get(i).isEmpty()) {
@@ -633,7 +670,8 @@ public class KBestSchedule {
             System.out.println("Some error occurred in adding source nodes");
             return false;
         }
-        System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+" after adding nodes");
+
+        // System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+" after adding nodes");
         Station station2 = this.route.getStation(this.stationList.get(i+1));
 
         if((!this.stationList.get(i+1).equalsIgnoreCase("dest") && station2==null)){
@@ -675,9 +713,9 @@ public class KBestSchedule {
         }
 
         // System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+" after adding multiple nodes all");
-
-        System.out.print("Adding edge bw stations " + this.stationList.get(i) +"->" + this.stationList.get(i+1)+" ");
-        System.out.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+" MinDelay "+delayBwStation);
+        System.out.print(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+"\t");
+        System.out.print("Adding edge bw stations " + this.stationList.get(i) +"\t->\t" + this.stationList.get(i+1)+"\t");
+        System.out.println("MinDelay: "+delayBwStation + ", StopTime: "+ waitTimeStationEnd +", TotalTime: "+ (delayBwStation+waitTimeStationEnd));
         Scheduler.getRuntimeMemory();
 
         // System.out.println("Max delay :"+ maxDelayList.get(i)+ " for i: "+ i);
@@ -716,7 +754,7 @@ public class KBestSchedule {
                         }
                     }
 
-                    if(isValidStartEdge(20,nodeStart,nodeEnd,totalUpPlatform,totalDownPlatform,
+                    if(isValidStartEdge(waitTimeStationEnd,nodeStart,nodeEnd,totalUpPlatform,totalDownPlatform,
                             totalDualPlatform, isDirectLineAvailable)) {
                         if (this.graphKBestPath.addEdge(new Edge(nodeStart, nodeEnd, edgeCost, (edgeCost!=0)))) {
                             this.edgeCount++;
@@ -780,6 +818,9 @@ public class KBestSchedule {
                     int codeValidEdge = isValidEdge(delayBwStation, waitTimeStationEnd, nodeStart,
                             nodeEnd, maxDelayList.get(i), minDelayBwTrains,totalUpPlatform, totalDownPlatform,
                             totalDualPlatform,totalUpTrack,totalDownTrack,totalDualTrack, isDirectLineAvailable);
+                    // if(nodeStart.toString().equalsIgnoreCase("pnbe:0:8:0")){
+                    //     System.out.println("Node pnbe:0:8:0 -> "+ nodeEnd.toString()+" : " +codeValidEdge);
+                    // }
                     // System.out.println(codeValidEdge+" ");
                     if(codeValidEdge==-5){
                         break;
@@ -808,7 +849,7 @@ public class KBestSchedule {
     public List<Path>
     scheduleKBestPathOptimized(String pathTemp, int noOfPaths, TrainTime sourceTime,
                                int minDelayBwTrains, List<Integer> stopTime,
-                               List<Double> avgSpeedNewTrain, boolean isSingleDay,
+                               List<Double> avgTimeNewTrain, boolean isSingleDay,
                                boolean usePreviousComputation, List<Double> maxCostList, int trainDay,
                                List<Integer> maxDelayList, boolean onSourceTime){
         try{
@@ -828,26 +869,27 @@ public class KBestSchedule {
                 this.edgeCount = 0;
                 System.out.println("Station size: " + (this.nodes.size() - 2));
                 System.out.println("Initializing graph");
-                double distanceStationStart;
-                double distanceStationEnd = 0.0;
+                // double distanceStationStart;
+                // double distanceStationEnd = 0.0;
                 int waitTimeStationEnd;
-                double distanceBwStation;
+                // double distanceBwStation;
                 int delayBwStation;
                 double delaySecondsAdded=0;
                 double delayBwStationActual;
 
                 for (int i = 0; i < this.stationList.size() - 1; i++) {
                     // Scheduler.getRuntimeMemory();
-                    distanceStationStart = distanceStationEnd;
+                    // distanceStationStart = distanceStationEnd;
                     if (i < this.stationList.size() - 2) {
-                        distanceStationEnd = this.route.getStation(this.stationList.get(i + 1)).getDistance();
+                        // distanceStationEnd = this.route.getStation(this.stationList.get(i + 1)).getDistance();
                         waitTimeStationEnd = stopTime.get(i);
                     }
                     else{
                         waitTimeStationEnd = 0;
                     }
-                    distanceBwStation = (i==0)?0:(distanceStationEnd - distanceStationStart);
-                    delayBwStationActual =((distanceBwStation)/avgSpeedNewTrain.get(i+1) )*60;
+                    // distanceBwStation = (i==0)?0:(distanceStationEnd - distanceStationStart);
+                    // delayBwStationActual =((distanceBwStation)/avgSpeedNewTrain.get(i+1) )*60;
+                    delayBwStationActual = avgTimeNewTrain.get(i+1);
                     delayBwStation = (int) Math.ceil(delayBwStationActual - delaySecondsAdded);
                     if(waitTimeStationEnd==0) {
                         delaySecondsAdded = delayBwStation - (delayBwStationActual - delaySecondsAdded);
@@ -876,7 +918,7 @@ public class KBestSchedule {
             List<Path> paths;
             KShortestPathFinder kShortestPathFinder = new KShortestPathFinder();
             paths = kShortestPathFinder.findShortestPaths(this.nodes.get(0).get(0),
-                    this.nodes.get(this.nodes.size()-1).get(0), this.graphKBestPath, noOfPaths, maxCostList, this.stationList);
+                    this.nodes.get(this.nodes.size()-1).get(0), this.graphKBestPath, noOfPaths, maxCostList, this.stationList,onSourceTime);
 
             if(!this.graphKBestPath.disconnect()){
                 System.out.println("Some error occurred with graph.");
@@ -898,10 +940,10 @@ public class KBestSchedule {
                                           List<Integer> noOfDualPlatformList, List<Integer> noOfUpTrackList,
                                           List<Integer> noOfDownTrackList, List<Integer> noOfDualTrackList,
                                           int noOfPaths, TrainTime sourceTime,
-                                          int minDelayBwTrains, String pathRouteSpeedFile, String newTrainType, List<Integer> stopTime,
+                                          int minDelayBwTrains, String pathRouteTimeFile, String newTrainType, List<Integer> stopTime,
                                           String pathOldTrainSchedule, int trainDay, boolean isSingleDay,
                                           boolean usePreviousComputation, double ratio,
-                                          boolean onSourceTime) {
+                                          boolean onSourceTime, int trainNotToLoad) {
         if(ratio<1){
             System.out.println("Ratio must be greater than 1.0");
             return Collections.emptyList();
@@ -928,14 +970,20 @@ public class KBestSchedule {
             return Collections.emptyList();
         }
 
-        List<Double> avgSpeedNewTrain = Scheduler.loadNewTrainSpeed(pathRouteSpeedFile,newTrainType);
-        if(avgSpeedNewTrain.size()!=stationDistanceList.size()){
-            System.out.println("Some error occurred in fetching new train speed");
+        if(trainNotToLoad!=-1){
+            for(int i=0;i<7;i++) {
+                this.trainMap.remove(i+":" + trainNotToLoad);
+            }
+        }
+
+        List<Double> avgTimeNewTrain = Scheduler.loadNewTrainTimeData(pathRouteTimeFile,newTrainType);
+        if(avgTimeNewTrain.size()!=stationDistanceList.size()){
+            System.out.println("Some error occurred in fetching new train best possible time");
             return Collections.emptyList();
         }
-        avgSpeedNewTrain.add(0,avgSpeedNewTrain.get(0));
-        avgSpeedNewTrain.add(avgSpeedNewTrain.get(avgSpeedNewTrain.size()-1));
-        System.out.println(avgSpeedNewTrain.toString());
+        avgTimeNewTrain.add(0,0.0);
+        avgTimeNewTrain.add(0.0);
+        System.out.println("New train Ideal Time: "+avgTimeNewTrain.toString());
 
         // System.out.println(this.route.toString());
         // System.out.println("***********************************************************************************");
@@ -968,30 +1016,32 @@ public class KBestSchedule {
         maxCostList.add(60.0);
         maxDelayList.add(60);
 
-        double startDistance = stationDistanceList.get(0);
-        double sumStopTimes = 0;
-        double previousDistance = startDistance;
-        double initialDelay= maxDelayList.get(0);
+        // double startDistance = stationDistanceList.get(0);
+        // double sumStopTimes = 0;
+        // double previousDistance = startDistance;
+        // double initialDelay= maxDelayList.get(0);
         double previousCost=maxCostList.get(0);
         for(int i=0;i<stationDistanceList.size();i++){
-            sumStopTimes +=stopTime.get(i);
-            int temp1 = (int)Math.ceil(((stationDistanceList.get(i)-previousDistance)/avgSpeedNewTrain.get(i+1))*60);
+            // sumStopTimes +=stopTime.get(i);
+            // int temp1 = (int)Math.ceil(((stationDistanceList.get(i)-previousDistance)/avgSpeedNewTrain.get(i+1))*60);
+            int temp1= (int)Math.ceil(avgTimeNewTrain.get(i+1));
             if(temp1<5){
                 temp1 = 5;
             }
             if(i>0) {
                 maxDelayList.add(temp1*5+ stopTime.get(i));
             }
-            maxCostList.add((previousCost+ temp1) * ratio+ sumStopTimes+ initialDelay);
-            previousDistance = stationDistanceList.get(i);
+            previousCost+=temp1*ratio + stopTime.get(i);
+            maxCostList.add(previousCost);
+            // previousDistance = stationDistanceList.get(i);
         }
         maxCostList.add(maxCostList.get(maxCostList.size()-1));
         maxDelayList.add(0);
-        System.out.println(maxCostList.toString());
-        System.out.println(maxDelayList.toString());
+        System.out.println("Max Cost List: "+ maxCostList.toString());
+        System.out.println("Max Delay List: "+ maxDelayList.toString());
         List<Path> paths;
         paths= scheduleKBestPathOptimized(pathTemp, noOfPaths, sourceTime,
-                minDelayBwTrains, stopTime,avgSpeedNewTrain, isSingleDay, usePreviousComputation, maxCostList, trainDay,
+                minDelayBwTrains, stopTime,avgTimeNewTrain, isSingleDay, usePreviousComputation, maxCostList, trainDay,
                 maxDelayList, onSourceTime);
         milli = new Date().getTime() - milli;
         System.out.println("Duration: " + milli + " ms");

@@ -41,8 +41,10 @@ public class Route {
                 return this.mapStation.getOrDefault(stId,null);
             }
         }
+
         return null;
     }
+
     public List<List<Node>> getFreeSlots(TrainTime start, TrainTime end) {
         List<List<Node>> nodes = new ArrayList<>(this.stationOrder.size());
         for(String stationId: this.stationOrder) {
