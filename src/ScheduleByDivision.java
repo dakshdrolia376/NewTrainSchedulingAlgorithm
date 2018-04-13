@@ -49,13 +49,11 @@ public class ScheduleByDivision {
             last = this.stationIdList.size();
         }
 
-        // add 0 to wait time of first
         noOfPaths = (i==0)?noOfPaths*2:1;
         List<Path> paths = getSmallPart(pathTemp, i, last, noOfPaths, sourceTime, minDelayBwTrains,
                 pathRouteTimeFile,newTrainType, pathOldTrainSchedule, isSingleDay, trainDay, ratio, (i!=0), trainNotToLoad);
 
         for(Path path: paths){
-            // System.out.println(" i = " + i + " last = " + last );
             List<Node> nodes1;
             List<Double> weights1;
             TrainTime sourceTime1;
@@ -159,7 +157,7 @@ public class ScheduleByDivision {
 
             while(!this.bestAns.isEmpty() && count<noOfPaths){
                 Path path = this.bestAns.remove();
-                System.out.println("Path Found : " + path.toString() + " cost: " + path.pathCost());
+                System.out.println( "Path Found Cost: " + (path.pathCost()-stopTime.get(0)-stopTime.get(stopTime.size()-1))+" Unscheduled Stop: "+path.getUnScheduledStop()+" "+path.toString());
                 scheduler.writePathsToFile(path,++count, pathBestRouteFile, stopTime, pathRouteTimeFile,newTrainType,
                         scheduler.getStationNameList(), scheduler.getStationDistanceList());
             }

@@ -108,9 +108,7 @@ public class Scheduler {
     public static String getTrainNoFromName(String name){
         name = name.toLowerCase();
         if(name.endsWith("-slip")){
-            // System.out.println("Slip: "+name);
             name = name.substring(0,name.length()-5);
-            // System.out.println("9"+name.trim().replaceAll(".*-(?=.)", ""));
             return "9"+name.trim().replaceAll(".*-(?=.)", "");
         }
         return name.trim().replaceAll(".*-(?=.)", "");
@@ -236,8 +234,6 @@ public class Scheduler {
                 String data[] = line.split("\\s+");
                 if(data.length<2){
                     System.out.println("Skipping station as incomplete data :" + line);
-                    // newRouteData.append(line);
-                    // newRouteData.append('\n');
                     continue;
                 }
                 String id = Scheduler.getStationIdFromName(data[0]);
@@ -473,7 +469,6 @@ public class Scheduler {
     public void writePathsToFile(Path path, int countPath, String pathBestRouteFile, List<Integer> stopTime,
                                  String pathRouteTimeFile, String newTrainType,List<String> stationName, List<Double> stationDistance){
         try {
-            // System.out.println("In writePaths" +path.toString());
             List<Double> avgTimeNewTrain = loadNewTrainTimeData(pathRouteTimeFile,newTrainType);
             avgTimeNewTrain.add(0,0.0);
             avgTimeNewTrain.add(0.0);
@@ -481,11 +476,9 @@ public class Scheduler {
             FileWriter fWriter;
             List<Node> nodePathBestRoute = path.getNodeList();
             String arrivalTimeStation;
-            // double distancePrevStation = stationDistance.get(0);
             int delayBwStation;
             double delaySecondsAdded=0;
             double delayBwStationActual;
-            // double distanceBwStation;
 
             TrainTime timePrevStation = null;
             fWriter = new FileWriter(pathBestRouteFile + " path " + countPath +
@@ -493,12 +486,9 @@ public class Scheduler {
             bWriter = new BufferedWriter(fWriter);
 
             for (int i=1;i<nodePathBestRoute.size()-1;i++) {
-                // System.out.println("In writePaths before loop : " +i + " " +path.toString());
                 Node bestRouteNode = nodePathBestRoute.get(i);
                 double nodeDistance = stationDistance.get(i-1);
                 if (timePrevStation != null) {
-                    // distanceBwStation = nodeDistance - distancePrevStation;
-                    // delayBwStationActual =((distanceBwStation)/avgTimeNewTrain.get(i) )*60;
                     delayBwStationActual =avgTimeNewTrain.get(i);
                     delayBwStation = (int) Math.ceil(delayBwStationActual - delaySecondsAdded);
                     if(stopTime.get(i-1)==0) {
@@ -518,9 +508,7 @@ public class Scheduler {
                 bWriter.write(stationName.get(i-1) + "\t" + arrivalTimeStation + "\t" +
                         bestRouteNode.getTime().getTimeString() + "\t" + nodeDistance);
                 bWriter.write("\n");
-                // distancePrevStation = nodeDistance;
                 timePrevStation = new TrainTime(bestRouteNode.getTime());
-                // System.out.println("In writePaths after loop : " +i + " " +path.toString());
             }
             bWriter.close();
             fWriter.close();
@@ -528,7 +516,6 @@ public class Scheduler {
         catch (Exception e){
             e.printStackTrace();
         }
-        // System.out.println("After writePaths" +path.toString());
     }
 
     public static boolean createFolder(String path){
@@ -545,14 +532,14 @@ public class Scheduler {
 
     @SuppressWarnings("unused")
     public void showPlot(String pathNewTrainFile, int newTrainNo, String pathPlotFile, String pathRoute,
-                                String pathOldTrainSchedule, int trainDay){
+                                String pathOldTrainSchedule, int trainDay, int requiredDay){
         String titlePlot = "Train Schedule";
         int windowHeight = 600;
         int windowWidth = 1000;
         int heightPlotFile = 600;
         int widthPlotFile = 1000;
         LinePlotTrains demo = new LinePlotTrains(titlePlot, windowHeight, windowWidth, newTrainNo, heightPlotFile,
-                widthPlotFile, pathPlotFile, pathRoute, pathOldTrainSchedule, pathNewTrainFile, trainDay);
+                widthPlotFile, pathPlotFile, pathRoute, pathOldTrainSchedule, pathNewTrainFile, trainDay,requiredDay);
         demo.pack();
         RefineryUtilities.centerFrameOnScreen(demo);
         demo.setVisible(true);
@@ -772,7 +759,7 @@ public class Scheduler {
             System.out.println();
 
             for(Path path: paths) {
-                System.out.println(path.toString() + " cost: " + (path.pathCost()-stopTime.get(0)-stopTime.get(stopTime.size()-1)));
+                System.out.println( "Cost: " + (path.pathCost()-stopTime.get(0)-stopTime.get(stopTime.size()-1))+" Unscheduled Stop: "+path.getUnScheduledStop()+" "+path.toString());
                 writePathsToFile(path,++count,pathBestRouteFile,stopTime,pathRouteTimeFile,newTrainType, scheduler.getStationNameList(),
                         scheduler.getStationDistanceList());
             }

@@ -5,11 +5,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.awt.geom.Rectangle2D;
-import java.util.Map;
+import java.util.List;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -19,6 +18,7 @@ import org.jfree.chart.axis.NumberTick;
 import org.jfree.chart.axis.TickType;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.xy.XYDataItem;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -32,26 +32,22 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 
-class LinePlotTrains extends ApplicationFrame {
+public class LinePlotTrains extends ApplicationFrame {
 
     private static final long serialVersionUID = 1L;
-    private List<String> trains;
-    private List<List<TrainTime[]>> schedule;
-    private List<String> stationId;
-    private int sizeSchedule;
-    private List<Double> stationDistance;
+    private Map<String, List<XYSeries>> schedule;
+    private Map<String, Double> reverseTickLabels;
     private Map<Double, String> tickLabels;
+    private int requiredDay;
 
     public LinePlotTrains(final String title, int windowHeight, int windowWidth, int newTrainNo, int heightPlotFile,
-                          int widthPlotFile, String pathPlotFile, String pathRoute, String pathOldTrains,
-                          String pathNewTrainFile, int newTrainStartDay) {
+                    int widthPlotFile, String pathPlotFile, String pathRoute, String pathOldTrains,
+                    String pathNewTrainFile, int newTrainStartDay, int requiredDay) {
         super(title);
-        this.stationDistance = new ArrayList<>();
-        this.schedule = new ArrayList<>();
-        this.sizeSchedule = 0;
-        this.stationId = new ArrayList<>();
-        this.trains = new ArrayList<>();
+        this.schedule = new HashMap<>();
         this.tickLabels = new HashMap<>();
+        this.reverseTickLabels = new HashMap<>();
+        this.requiredDay = requiredDay;
         FileReader fReader;
         BufferedReader bReader;
         try {
@@ -64,10 +60,9 @@ class LinePlotTrains extends ApplicationFrame {
             while ((line = bReader.readLine()) != null) {
                 data = line.split("\\s+");
                 st_id = Scheduler.getStationIdFromName(data[0]);
-                this.stationId.add(st_id);
                 st_dist = Math.round(Double.parseDouble(data[1]));
-                this.stationDistance.add(st_dist);
                 this.tickLabels.put(st_dist, st_id);
+                this.reverseTickLabels.put(st_id, st_dist);
             }
             bReader.close();
             fReader.close();
@@ -76,15 +71,17 @@ class LinePlotTrains extends ApplicationFrame {
                 pathPlotFile += ".pdf";
             }
 
-            if(pathNewTrainFile!=null) {
-                if(!addTrainFromFile(newTrainNo, pathNewTrainFile,newTrainStartDay)) {
+            if (pathNewTrainFile != null) {
+                if (!addTrainFromFile(newTrainNo, pathNewTrainFile, newTrainStartDay)) {
                     System.out.println("Error in adding train " + pathNewTrainFile);
                 }
             }
 
-            if(!addTrainFromFolder(pathOldTrains)){
+            if (!addTrainFromFolder(pathOldTrains)) {
                 throw new RuntimeException("Unable to read old train schedule");
             }
+
+            System.out.println(this.schedule.toString());
 
             final XYDataset dataset = createDataset();
             final JFreeChart chart = createChart(dataset, pathPlotFile);
@@ -96,49 +93,47 @@ class LinePlotTrains extends ApplicationFrame {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private boolean addTrainFromFolder(String pathOldTrainScheduleFolder){
-        return addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
-                        "day0", 0) &&
-                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
+    private boolean addTrainFromFolder(String pathOldTrainScheduleFolder) {
+        return addTrainFromFolderSingleDay(pathOldTrainScheduleFolder + File.separator +
+                "day0", 0) &&
+                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder + File.separator +
                         "day1", 1) &&
-                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
+                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder + File.separator +
                         "day2", 2) &&
-                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
+                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder + File.separator +
                         "day3", 3) &&
-                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
+                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder + File.separator +
                         "day4", 4) &&
-                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
+                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder + File.separator +
                         "day5", 5) &&
-                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder+ File.separator +
+                addTrainFromFolderSingleDay(pathOldTrainScheduleFolder + File.separator +
                         "day6", 6);
     }
 
-    private boolean addTrainFromFolderSingleDay(String pathOldTrainScheduleFolder, int trainDay){
+    private boolean addTrainFromFolderSingleDay(String pathOldTrainScheduleFolder, int trainDay) {
         File[] listOfFiles = new File(pathOldTrainScheduleFolder).listFiles();
-        if(listOfFiles==null) {
+        if (listOfFiles == null) {
             System.out.println("No old trains found");
             return true;
         }
 
-        for (File file: listOfFiles) {
+        for (File file : listOfFiles) {
             if (file.isFile()) {
                 int trainNo;
                 try {
                     trainNo = Integer.parseInt(file.getName().split("\\.")[0]);
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     System.out.println("File name should be train Number.");
                     System.out.println("Skipping file : " + file.getPath());
                     e.printStackTrace();
                     continue;
                 }
-                if(!addTrainFromFile(trainNo,file.getPath(), trainDay)){
+                if (!addTrainFromFile(trainNo, file.getPath(), trainDay)) {
                     return false;
                 }
             }
@@ -146,71 +141,130 @@ class LinePlotTrains extends ApplicationFrame {
         return true;
     }
 
-    private boolean addTrainFromFile(int trainNo, String filePath, int trainDay){
+    private boolean addTrainFromFile(int trainNo, String filePath, int trainDay) {
         int stoppageDay = trainDay;
         try {
+            String mapKey = trainDay + ":" + trainNo;
             FileReader fReader = new FileReader(filePath);
             BufferedReader bReader = new BufferedReader(fReader);
-            this.trains.add(trainDay+":"+trainNo);
-            this.schedule.add(new ArrayList<>(this.stationId.size()));
+            this.schedule.put(mapKey, new ArrayList<>());
             String line;
-            TrainTime arrival, departure=null;
+            TrainTime arrival, departure = null;
             String data[];
             String data1[];
-            TrainTime d[];
-            Map<String, TrainTime[]> stationTimingsMap = new HashMap<>();
-            Map<String, Integer> stationStoppageNo = new HashMap<>();
-            int count=0;
+            int countPart = 0;
+            XYSeries stationTimingsSeries = new XYSeries(mapKey + "-" + (++countPart));
+            Set<Double> stationAlreadySeen = new HashSet<>();
+            double prevDist = 0;
+            boolean up_or_down;
+            int station_count = 0;
             while ((line = bReader.readLine()) != null) {
-                d = new TrainTime[2];
                 data = line.split("\\s+");
-                data1 = data[1].split(":");
-                arrival = new TrainTime(stoppageDay, Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
-                if(departure!=null && arrival.compareTo(departure)<0){
-                    arrival.addDay(1);
-                    stoppageDay = arrival.day;
+                String st_id = Scheduler.getStationIdFromName(data[0]);
+                double st_dist = this.reverseTickLabels.getOrDefault(st_id, -1.0);
+                if (st_dist == -1.0) {
+                    stationTimingsSeries.add(prevDist, null);
+                    continue;
                 }
-                data1 = data[2].split(":");
-                departure = new TrainTime(stoppageDay, Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
-                if(departure.compareTo(arrival)<0){
-                    departure.addDay(1);
-                    stoppageDay = departure.day;
-                }
-                d[0] = arrival;
-                d[1] = departure;
-                stationTimingsMap.put(Scheduler.getStationIdFromName(data[0]),d);
-                stationStoppageNo.put(Scheduler.getStationIdFromName(data[0]),++count);
-            }
-            boolean atLeastSingleStationInRoute = false;
-            boolean sameDirectionTrain = false;
-            for(int j=0;j<this.stationId.size();j++){
-                String stId= this.stationId.get(j);
-                if(j>0){
-                    if(stationStoppageNo.getOrDefault(stId,0)==(stationStoppageNo.getOrDefault(this.stationId.get(j-1),0)+1)){
-                        sameDirectionTrain = true;
+                up_or_down = st_dist >= prevDist;
+                if (station_count == 1 && !up_or_down) {
+                    XYDataItem tt;
+                    List<Double> prev_tt = new ArrayList<>();
+                    try {
+                        tt = stationTimingsSeries.remove(prevDist);
+                        while (tt != null) {
+                            prev_tt.add(tt.getYValue());
+                            prevDist -= 0.001;
+                            tt = stationTimingsSeries.remove(prevDist);
+                        }
+                    } catch (Exception e) {
+                        prevDist += 0.001;
+                    }
+                    System.out.println(prev_tt.toString());
+                    for (double tt1 : prev_tt) {
+                        stationTimingsSeries.add(prevDist, tt1);
+                        prevDist += 0.001;
                     }
                 }
-                TrainTime[] temp = stationTimingsMap.getOrDefault(stId, null);
-                this.schedule.get(this.sizeSchedule).add(temp);
-                if(temp!=null){
-                    atLeastSingleStationInRoute = true;
+                station_count++;
+                if (!stationAlreadySeen.add(st_dist)) {
+                    System.out.println(trainDay + " " + trainNo + " " + line);
+                    this.schedule.get(mapKey).add(stationTimingsSeries);
+                    stationTimingsSeries = new XYSeries(mapKey + "-" + (++countPart));
+                    stationAlreadySeen = new HashSet<>();
+                    stationTimingsSeries.add(prevDist, departure.getValue());
                 }
-            }
+                System.out.println("Up or down " + up_or_down);
+                double temp_dist = st_dist;
+                data1 = data[1].split(":");
+                arrival = new TrainTime(stoppageDay, Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
+                if (departure != null && arrival.compareTo(departure) < 0) {
+                    arrival.addDay(1);
+                    stoppageDay = arrival.day;
+                    if (arrival.day == 0) {
+                        double distanceNextDay = st_dist - prevDist;
+                        double timeDiff1 = 10080 - departure.getValue();
+                        double timeDiff2 = arrival.getValue();
+                        distanceNextDay = (distanceNextDay) * timeDiff1 / (timeDiff1 + timeDiff2);
+                        distanceNextDay += prevDist;
+                        stationTimingsSeries.add(distanceNextDay, new TrainTime(6, 23, 59).getValue());
+                        if (up_or_down) {
+                            distanceNextDay += 0.001;
+                        } else {
+                            distanceNextDay -= 0.001;
+                        }
+                        stationTimingsSeries.add(distanceNextDay, null);
+                        if (up_or_down) {
+                            distanceNextDay += 0.001;
+                        } else {
+                            distanceNextDay -= 0.001;
+                        }
+                        stationTimingsSeries.add(distanceNextDay, new TrainTime(0, 0, 0).getValue());
+                    }
+                }
 
+                stationTimingsSeries.add(temp_dist, arrival.getValue());
+
+                if (up_or_down) {
+                    temp_dist += 0.001;
+                } else {
+                    temp_dist -= 0.001;
+                }
+
+                data1 = data[2].split(":");
+                departure = new TrainTime(stoppageDay, Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
+                if (departure.compareTo(arrival) < 0) {
+                    departure.addDay(1);
+                    stoppageDay = departure.day;
+                    if (departure.day == 0) {
+                        stationTimingsSeries.add(temp_dist, new TrainTime(6, 23, 59).getValue());
+                        if (up_or_down) {
+                            temp_dist += 0.001;
+                        } else {
+                            temp_dist -= 0.001;
+                        }
+                        stationTimingsSeries.add(temp_dist, null);
+                        if (up_or_down) {
+                            temp_dist += 0.001;
+                        } else {
+                            temp_dist -= 0.001;
+                        }
+                        stationTimingsSeries.add(temp_dist, new TrainTime(0, 0, 0).getValue());
+                        if (up_or_down) {
+                            temp_dist += 0.001;
+                        } else {
+                            temp_dist -= 0.001;
+                        }
+                    }
+                }
+                stationTimingsSeries.add(temp_dist, departure.getValue());
+                prevDist = temp_dist;
+            }
+            this.schedule.get(mapKey).add(stationTimingsSeries);
             bReader.close();
             fReader.close();
-            if(atLeastSingleStationInRoute && sameDirectionTrain) {
-                this.sizeSchedule++;
-                System.out.println("Adding "+ trainDay+":"+trainNo);
-            }
-            else{
-                this.schedule.remove(this.sizeSchedule);
-                this.trains.remove(trainDay+":"+trainNo);
-                System.out.println("Removing "+ trainDay+":"+trainNo);
-            }
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -240,12 +294,10 @@ class LinePlotTrains extends ApplicationFrame {
                 chart.draw(g2, r2D);
                 g2.dispose();
                 cb.addTemplate(tp, 0, 0);
-            }
-            finally {
+            } finally {
                 document.close();
             }
-        }
-        finally {
+        } finally {
             if (out != null) {
                 out.close();
             }
@@ -255,56 +307,11 @@ class LinePlotTrains extends ApplicationFrame {
     public XYDataset createDataset() {
         // create the dataset...
         final XYSeriesCollection dataset = new XYSeriesCollection();
-        TrainTime temp, temp2, temp3;
-        TrainTime d[];
-        for (int j = 0; j < this.trains.size(); j++) {
-            XYSeries series1 = new XYSeries(this.trains.get(j));
-            temp=null;
-            for (int i = 0; i < this.schedule.get(j).size(); i++) {
-                d = this.schedule.get(j).get(i);
-                if(d==null){
-                    //train's route not passes by this station..
-                    series1.add(this.stationDistance.get(i).doubleValue(), null);
-                    temp = null;
-                    continue;
-                }
-                temp2 = this.schedule.get(j).get(i)[0];
-                temp3 = this.schedule.get(j).get(i)[1];
-
-                if (temp2 == null) {
-                    series1.add(this.stationDistance.get(i).doubleValue(), null);
-                    System.out.println("Invalid schedule for train " + this.trains.get(j) +
-                            " at station " + this.stationId.get(i));
-                }
-                else {
-
-                    if (temp != null && (temp.compareTo(temp2) > 0)) {
-                        double distanceNextDay = this.stationDistance.get(i) - this.stationDistance.get(i - 1);
-                        double timeDiff1 = 10080 - temp.getValue();
-                        double timeDiff2 = temp2.getValue();
-
-                        distanceNextDay = (distanceNextDay) * timeDiff1 / (timeDiff1 + timeDiff2);
-                        distanceNextDay += this.stationDistance.get(i - 1);
-                        series1.add(distanceNextDay, new TrainTime(6, 23, 59).getValue());
-                        series1.add(distanceNextDay, null);
-                        series1.add(distanceNextDay, new TrainTime(0, 0, 0).getValue());
-                    }
-                    series1.add(this.stationDistance.get(i).doubleValue(), temp2.getValue());
-                }
-
-                if(temp3 != null) {
-                    if (temp2!=null && temp3.compareTo(temp2) < 0) {
-                        series1.add(this.stationDistance.get(i).doubleValue(),
-                                new TrainTime(6, 23, 59).getValue());
-                        series1.add(this.stationDistance.get(i).doubleValue(), null);
-                        series1.add(this.stationDistance.get(i).doubleValue(),
-                                new TrainTime(0, 0, 0).getValue());
-                    }
-                    series1.add(this.stationDistance.get(i).doubleValue(), temp3.getValue());
-                }
-                temp = temp3;
+        for (String keyTrain : this.schedule.keySet()) {
+            List<XYSeries> scheduleList = this.schedule.get(keyTrain);
+            for (XYSeries series1 : scheduleList) {
+                dataset.addSeries(series1);
             }
-            dataset.addSeries(series1);
         }
         return dataset;
     }
@@ -330,6 +337,7 @@ class LinePlotTrains extends ApplicationFrame {
         NumberAxis rangeAxis = new NumberAxis(plot.getRangeAxis().getLabel()) {
             private static final long serialVersionUID = 1L;
             Area tickLabelArea = new Area();
+
             @SuppressWarnings("rawtypes")
             @Override
             public List<NumberTick> refreshTicks(Graphics2D g2, AxisState state, Rectangle2D dataArea, RectangleEdge edge) {
@@ -341,15 +349,13 @@ class LinePlotTrains extends ApplicationFrame {
                     NumberTick numberTick = (NumberTick) tick;
                     String label;
                     double numTickValue = numberTick.getValue();
-                    if(numTickValue>=0 && numTickValue<10080){
-                        trainTime = new TrainTime(0,0,0);
-                        trainTime.addMinutes((int)Math.ceil(numberTick.getValue()));
+                    if (numTickValue >= 0 && numTickValue < 10080) {
+                        trainTime = new TrainTime(0, 0, 0);
+                        trainTime.addMinutes((int) Math.ceil(numberTick.getValue()));
                         label = trainTime.getFullString();
-                    }
-                    else if(numTickValue<0){
+                    } else if (numTickValue < 0) {
                         label = "Prev week";
-                    }
-                    else{
+                    } else {
                         label = "Next week";
                     }
 
@@ -381,8 +387,8 @@ class LinePlotTrains extends ApplicationFrame {
         rangeAxis.setAutoRange(true);
         // rangeAxis.setLowerBound(0);
         // rangeAxis.setUpperBound(1439);
-        rangeAxis.setLowerBound(0);
-        rangeAxis.setUpperBound(10079);
+        rangeAxis.setLowerBound(((this.requiredDay == 7) ? 0 : requiredDay * 1440));
+        rangeAxis.setUpperBound(((this.requiredDay == 7) ? 10079 : (requiredDay + 1) * 1440));
 
         rangeAxis.setAutoRangeIncludesZero(false);
         rangeAxis.setAutoRangeStickyZero(false);
@@ -393,6 +399,7 @@ class LinePlotTrains extends ApplicationFrame {
             private static final long serialVersionUID = 1L;
 
             Area tickLabelArea = new Area();
+
             @SuppressWarnings("rawtypes")
             @Override
             public List<NumberTick> refreshTicks(Graphics2D g2, AxisState state, Rectangle2D dataArea, RectangleEdge edge) {
@@ -446,4 +453,3 @@ class LinePlotTrains extends ApplicationFrame {
         return chart;
     }
 }
-

@@ -7,8 +7,8 @@ public class Main {
 
     public static void main(String[] args) {
         String pathTrainList = "data" + File.separator+"trainList.txt";
-        String pathRoute = "data"+File.separator+"route"+File.separator+"routePnbeMgs.txt";
-        String pathRouteStopTime = "data"+File.separator+"route"+File.separator+"routeStopTimePnbeMgs.txt";
+        String pathRoute = "data"+File.separator+"route"+File.separator+"routePnbeBta.txt";
+        String pathRouteStopTime = "data"+File.separator+"route"+File.separator+"routeStopTimePnbeBta.txt";
         String pathRouteTimeMin = pathRoute.split("\\.")[0]+"TimeMin.txt";
         String pathRouteTimeAvg = pathRoute.split("\\.")[0]+"TimeAvg.txt";
 
@@ -61,8 +61,8 @@ public class Main {
 
             Scheduler scheduler = new Scheduler();
             ScheduleByDivision scheduleByDivision = new ScheduleByDivision();
-            scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 0,
-                    usePreviousComputation, ratio, pathRouteTimeMin, newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad);
+            // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 0,
+            //         usePreviousComputation, ratio, pathRouteTimeMin, newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad);
 
             // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 1,
             //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad);
@@ -86,10 +86,11 @@ public class Main {
             //                     " count "+count +" Type Break Day "+trainDay+" AvgSpeed "+avgSpeed +
             //                     " maxRatio "+ratio +" conditional ");
 
-            // int newTrainNo = 9910;
-            // int newTrainDay = 0;
-            // String pathNewTrainFile = pathBestRoute+File.separator+"Type Full Day 0 AvgSpeed 80.0 maxRatio 1.3 conditional  path 1 cost 45.0 .path";
-            // scheduler.showPlot(null,newTrainNo,pathPlotFile,pathRoute,pathTrainBase, newTrainDay);
+            int newTrainNo = 9910;
+            int newTrainDay = 0;
+            int requiredDay = 0;
+            String pathNewTrainFile = pathBestRoute+File.separator+"Type Full Day 0 TrainType memu maxRatio 1.3 unconditional  path 1 cost 256.0 .txt";
+            scheduler.showPlot(pathNewTrainFile,newTrainNo,pathPlotFile,pathRoute,pathTrainBase, newTrainDay, requiredDay);
 
             // scheduler.fetchStationInfo(pathStationDatabase);
             // scheduler.fetchTrainInfo(pathTrainDatabase);

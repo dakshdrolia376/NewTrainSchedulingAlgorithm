@@ -10,6 +10,7 @@ import java.util.*;
 
 import static java.util.Objects.requireNonNull;
 
+@SuppressWarnings("unused")
 public class GraphFile extends GraphParent{
     private final String pathDatabase;
 
@@ -146,7 +147,6 @@ public class GraphFile extends GraphParent{
     @Override
     public boolean addEdge(Edge edge) {
         requireNonNull(edge, "The edge is null.");
-        // System.out.println("Adding edge :" + edge.toString());
         String fileName = edge.getFrom().toString().split(":")[0];
         if(tempFile.equalsIgnoreCase("")){
             tempMap = new HashMap<>();
@@ -166,7 +166,6 @@ public class GraphFile extends GraphParent{
         try {
             this.tempMap.putIfAbsent(edge.getFrom().toString(), new HashMap<>());
             Map<String , Edge> previousData = this.tempMap.get(edge.getFrom().toString());
-            // only single edge between two nodes.
             if(previousData.containsKey(edge.getTo().toString())) {
                 System.out.println("Duplicate edge " + edge.toString());
                 return false;

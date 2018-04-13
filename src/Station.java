@@ -41,6 +41,7 @@ public class Station {
         return this.name;
     }
 
+    @SuppressWarnings("unused")
     public double getDistance() {
         return this.distance;
     }

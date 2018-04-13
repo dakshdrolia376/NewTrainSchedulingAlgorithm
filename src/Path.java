@@ -119,14 +119,6 @@ public class Path {
             return result;
         }
 
-        // @Override
-        // public TrainTime getSourceTime(){
-        //     if(super.sourceTime!=null){
-        //         return new TrainTime(super.sourceTime);
-        //     }
-        //     return null;
-        // }
-
         @Override
         public List<Double> getWeightList() {
             LinkedList<Double> result = new LinkedList<>();

@@ -1,5 +1,6 @@
 import java.io.File;
 
+@SuppressWarnings("unused")
 public class TestRename {
     public static void renameStationDetails(){
         File[] listOfFiles = new File("data/temp/databaseStation").listFiles();

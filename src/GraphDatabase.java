@@ -2,6 +2,7 @@ import java.util.*;
 
 import static java.util.Objects.requireNonNull;
 
+@SuppressWarnings("unused")
 public class GraphDatabase extends GraphParent{
     private List<Edge> edgeList;
     private final DatabaseConnector databaseConnector;
@@ -50,7 +51,6 @@ public class GraphDatabase extends GraphParent{
         requireNonNull(edge, "The edge is null.");
         edgeList.add(edge);
         if(edgeList.size()>=10000){
-            // System.out.println(edgeList.toString());
             boolean result = addMultipleEdge(edgeList);
             if(result){
                 edgeList = new ArrayList<>();

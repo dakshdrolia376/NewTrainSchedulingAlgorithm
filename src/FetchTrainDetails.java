@@ -521,10 +521,8 @@ public class FetchTrainDetails {
                     }
                     else if(line.trim().equalsIgnoreCase("Type:")){
                         String type = bReader.readLine();
-                        // System.out.println(line+" >>" + type);
                         type = type.replaceFirst(".*?>", "");
                         type = type.replaceFirst("<.*","");
-                        // System.out.println(type);
                         trainType = type;
                     }
                     else if(line.contains("class=\"deparrgrid\">")){

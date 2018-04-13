@@ -26,12 +26,9 @@ public class TestCountStation {
                 continue;
             }
             map = new HashMap<>();
-            // int count = 0;
             try {
-                // System.out.print(file1.getName()+"\t");
                 fReader = new FileReader(file1);
                 bReader = new BufferedReader(fReader);
-                // String prev=file1.getName();
                 while ((line = bReader.readLine()) != null) {
                     String[] data = line.split("\\s+");
                     String data1 = Scheduler.getStationIdFromName(data[0]);
@@ -57,6 +54,7 @@ public class TestCountStation {
         }
     }
 
+
     public static void testStationOnly(){
         File file = new File("data/temp/databaseStation");
         FileReader fReader;
@@ -80,7 +78,7 @@ public class TestCountStation {
                 fReader = new FileReader(file1);
                 bReader = new BufferedReader(fReader);
                 while ((line = bReader.readLine()) != null) {
-                    String data="";
+                    String data;
                     if(line.contains("Station Name")){
                         data = line.split(":")[1].trim();
                         String data1 = Scheduler.getStationIdFromName(data);
@@ -104,7 +102,7 @@ public class TestCountStation {
     }
 
     public static void main(String... S){
-        // testStationOnly();
+        testStationOnly();
         testStationTrain();
     }
 }
