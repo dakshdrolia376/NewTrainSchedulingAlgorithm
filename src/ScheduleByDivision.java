@@ -16,12 +16,18 @@ public class ScheduleByDivision {
     private List<Integer> stationNoOfDualTrackList;
     private List<Integer> stopTimeList;
     private Queue<Path> bestAns;
+    private String pathStationDatabase;
+
+    public ScheduleByDivision(String pathStationDatabase){
+        this.pathStationDatabase = pathStationDatabase;
+    }
+
 
     public List<Path> getSmallPart(String pathTemp, int firstIndex, int lastIndex, int noOfPaths, TrainTime sourceTime,
                                    int minDelayBwTrains, String pathRouteTimeFile, String newTrainType, String pathOldTrainSchedule, boolean isSingleDay, int trainDay, double ratio,
                                    boolean onSourceTime, int trainNotToLoad){
 
-        return new KBestSchedule().getScheduleNewTrain(pathTemp, this.stationIdList.subList(firstIndex,lastIndex),
+        return new KBestSchedule(pathStationDatabase).getScheduleNewTrain(pathTemp, this.stationIdList.subList(firstIndex,lastIndex),
                 this.stationNameList.subList(firstIndex,lastIndex), this.stationDistanceList.subList(firstIndex,lastIndex),
                 this.stationIsDirectLineList.subList(firstIndex,lastIndex), this.stationNoOFUpPlatformList.subList(firstIndex,lastIndex),
                 this.stationNoOFDownPlatformList.subList(firstIndex,lastIndex), this.stationNoOFDualPlatformList.subList(firstIndex,lastIndex),

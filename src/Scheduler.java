@@ -140,8 +140,10 @@ public class Scheduler {
         List<List<String>> trainNames = new DatabaseConnector().getAllTrainNames();
         Map<String,List<String>> mapTrainTypes = new HashMap<>();
         for(List<String> trainType: trainNames){
-            mapTrainTypes.putIfAbsent(trainType.get(2).replaceAll("\\s+","-"),new ArrayList<>());
-            mapTrainTypes.get(trainType.get(2).replaceAll("\\s+","-")).add(trainType.get(0));
+            String temp = trainType.get(2).replaceAll("\\s+","-");
+            temp = temp.replaceAll("/","-");
+            mapTrainTypes.putIfAbsent(temp,new ArrayList<>());
+            mapTrainTypes.get(temp).add(trainType.get(0));
         }
 
         StringBuilder stringBuilder = new StringBuilder("");
@@ -237,6 +239,11 @@ public class Scheduler {
                     continue;
                 }
                 String id = Scheduler.getStationIdFromName(data[0]);
+                int numOfPlatform = fetchStationDetails.getNumberOfPlatform(id);
+                if(numOfPlatform<=0){
+                    System.out.println("Unable to find Num of platforms in station : " + id+". Skipping it.");
+                    continue;
+                }
                 if(distanceToSubtract==-1){
                     distanceToSubtract = Double.parseDouble(data[1]);
                     List<Map<String, String>> stationStoppages = databaseConnector.getScheduleForStation(id);
@@ -347,11 +354,6 @@ public class Scheduler {
                     }
                     routeTimeAvgData.append('\n');
                     routeTimeMinData.append('\n');
-                }
-                int numOfPlatform = fetchStationDetails.getNumberOfPlatform(id);
-                if(numOfPlatform<=0){
-                    System.out.println("Unable to find Num of platforms in station : " + id+". Skipping it.");
-                    continue;
                 }
                 int numOfUpPlatform = numOfPlatform/2;
                 int numOfTrack = fetchStationDetails.getNumberOfTracks(id);
@@ -486,6 +488,7 @@ public class Scheduler {
             bWriter = new BufferedWriter(fWriter);
 
             for (int i=1;i<nodePathBestRoute.size()-1;i++) {
+                String stopType;
                 Node bestRouteNode = nodePathBestRoute.get(i);
                 double nodeDistance = stationDistance.get(i-1);
                 if (timePrevStation != null) {
@@ -502,13 +505,31 @@ public class Scheduler {
                 }
                 else {
                     TrainTime timePrevStationTemp = new TrainTime(bestRouteNode.getTime());
-                    timePrevStationTemp.subMinutes(stopTime.get(i-1));
+                    timePrevStationTemp.subMinutes(stopTime.get(i - 1));
                     arrivalTimeStation = timePrevStationTemp.getTimeString();
                 }
+                TrainTime timeStation = new TrainTime(bestRouteNode.getTime());
+                if(timePrevStation.compareTo(timeStation)==0){
+                    stopType="N";
+                }
+                else{
+                    if(stopTime.get(i - 1)==0){
+                        stopType = "U";
+                    }
+                    else{
+                        timePrevStation.addMinutes(stopTime.get(i-1));
+                        if(timePrevStation.compareTo(timeStation)==0) {
+                            stopType = "S";
+                        }
+                        else{
+                            stopType = "E";
+                        }
+                    }
+                }
                 bWriter.write(stationName.get(i-1) + "\t" + arrivalTimeStation + "\t" +
-                        bestRouteNode.getTime().getTimeString() + "\t" + nodeDistance);
+                        bestRouteNode.getTime().getTimeString() + "\t" + nodeDistance +"\t"+ stopType);
                 bWriter.write("\n");
-                timePrevStation = new TrainTime(bestRouteNode.getTime());
+                timePrevStation = timeStation;
             }
             bWriter.close();
             fWriter.close();
@@ -532,14 +553,13 @@ public class Scheduler {
 
     @SuppressWarnings("unused")
     public void showPlot(String pathNewTrainFile, int newTrainNo, String pathPlotFile, String pathRoute,
-                                String pathOldTrainSchedule, int trainDay, int requiredDay){
+                         String pathOldTrainSchedule, int trainDay, String pathStationDatabase,
+                         String pathName){
         String titlePlot = "Train Schedule";
         int windowHeight = 600;
         int windowWidth = 1000;
-        int heightPlotFile = 600;
-        int widthPlotFile = 1000;
-        LinePlotTrains demo = new LinePlotTrains(titlePlot, windowHeight, windowWidth, newTrainNo, heightPlotFile,
-                widthPlotFile, pathPlotFile, pathRoute, pathOldTrainSchedule, pathNewTrainFile, trainDay,requiredDay);
+        LinePlotTrains demo = new LinePlotTrains(titlePlot, windowHeight, windowWidth, newTrainNo, pathPlotFile, pathRoute,
+                pathOldTrainSchedule, pathNewTrainFile, trainDay, pathStationDatabase,pathName);
         demo.pack();
         RefineryUtilities.centerFrameOnScreen(demo);
         demo.setVisible(true);
@@ -720,7 +740,7 @@ public class Scheduler {
     @SuppressWarnings("unused")
     public void test(String pathTemp, String pathRoute, String pathBestRoute, String pathOldTrainSchedule, boolean isSingleDay,
                      int trainDay, boolean usePreviousComputation, double ratio, String pathRouteTimeFile, String newTrainType,
-                     String pathLog, TrainTime sourceTime, String pathRouteStopTime, int trainNotToLoad){
+                     String pathLog, TrainTime sourceTime, String pathRouteStopTime, int trainNotToLoad, String pathStationDatabase){
         if(sourceTime!=null){
             sourceTime = new TrainTime(sourceTime);
         }
@@ -730,7 +750,6 @@ public class Scheduler {
             return;
         }
         ArrayList<Integer> stopTime = getStopTime(pathRouteStopTime);
-
         int minDelayBwTrains = 3;
         int noOfPaths = 10;
         List<Path> paths;
@@ -743,7 +762,7 @@ public class Scheduler {
             System.setOut(o1);
             String pathBestRouteFile = pathBestRoute + File.separator +"Type Full Day "+trainDay+" TrainType "+newTrainType +
                     " maxRatio "+ratio +((sourceTime==null)?" unconditional ":" conditional ");
-            paths= new KBestSchedule().getScheduleNewTrain(pathTemp, scheduler.getStationIdList(), scheduler.getStationNameList(),
+            paths= new KBestSchedule(pathStationDatabase).getScheduleNewTrain(pathTemp, scheduler.getStationIdList(), scheduler.getStationNameList(),
                     scheduler.getStationDistanceList(), scheduler.getStationDirectLineList(),
                     scheduler.getStationNoOfUpPlatformList(), scheduler.getStationNoOfDownPlatformList(),
                     scheduler.getStationNoOfDualPlatformList(), scheduler.getStationNoOfUpTrackList(),

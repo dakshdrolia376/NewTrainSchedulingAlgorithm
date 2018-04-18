@@ -9,14 +9,16 @@ import static java.util.Objects.requireNonNull;
 public class KBestSchedule {
 
     private Route route;
-    private final Map<String, Train> trainMap;
+    private final Map<String, List<Train>> trainMap;
     private List<String> stationList;
     private List<List<Node>> nodes;
     private GraphKBestPath graphKBestPath;
     private long edgeCount;
+    private FetchStationDetails fetchStationDetails;
 
-    public KBestSchedule(){
+    public KBestSchedule(String pathStationDatabase){
         this.trainMap = new HashMap<>();
+        this.fetchStationDetails = new FetchStationDetails(pathStationDatabase);
     }
 
     private boolean addRoute(List<String> stationIdList, List<String> stationNameList,
@@ -50,40 +52,56 @@ public class KBestSchedule {
         return true;
     }
 
-    private boolean addTrain(int trainDay, int trainNo, String trainName){
-        requireNonNull(trainName, "Train name is null.");
-        this.trainMap.put(trainDay+":"+trainNo, new Train(trainNo, trainName));
-        return true;
-    }
-
-    private boolean addStoppageTrain(int trainDay, int trainNo, String stationId, TrainTime arrival,
-                                       TrainTime departure){
-        Train train = this.trainMap.getOrDefault(trainDay+":" +trainNo, null);
-        if(train==null){
-            System.out.println("Train not found "+ trainNo +" originating day "+ trainDay);
-            return false;
-        }
-        Station station = this.route.getFirstMatchedStation(stationId);
-        //station==null represents that station is not in the route.
-        return station==null || train.addStoppage(station, arrival, departure);
-    }
-
     private boolean addTrainFromFile(int trainNo, String trainName, String pathTrainSchedule, int trainDay){
         int stoppageDay = trainDay;
         try {
-            if(!addTrain(trainDay, trainNo, trainName)){
-                return false;
-            }
+            this.trainMap.putIfAbsent(trainNo+"",new ArrayList<>());
             FileReader fReader = new FileReader(pathTrainSchedule);
             BufferedReader bReader = new BufferedReader(fReader);
             String line;
             TrainTime arrival, departure=null;
             String stationId;
+            String prevStationId="";
             String data[];
             String data1[];
+            Train train = new Train(trainNo,trainName);
+            Set<String> stationIdsInTrain = new HashSet<>();
+            boolean atLeastOneStationInRoute = false;
+            int stoppageNo= 0;
             while((line = bReader.readLine()) != null) {
                 data = line.split("\\s+");
                 stationId = Scheduler.getStationIdFromName(data[0]);
+
+                int numOfPlatform = fetchStationDetails.getNumberOfPlatform(stationId);
+                if(numOfPlatform<=0){
+                    continue;
+                }
+                //need to increment if station has platforms
+                stoppageNo++;
+
+                Station station = this.route.getFirstMatchedStation(stationId);
+                if(station==null || prevStationId.equalsIgnoreCase(stationId)){
+                    prevStationId = stationId;
+                    continue;
+                }
+
+                if(!stationIdsInTrain.add(stationId)){
+                    this.trainMap.get(trainNo+"").add(train);
+                    train = new Train(trainNo,trainName);
+                    stationIdsInTrain = new HashSet<>();
+                    stationIdsInTrain.add(stationId);
+                    Station station1 = this.route.getFirstMatchedStation(prevStationId);
+                    if(station1!=null){
+                        stationIdsInTrain.add(prevStationId);
+                        if(!train.addStoppage(station1, departure, departure, (stoppageNo-1))){
+                            System.out.println("Some error occurred");
+                            bReader.close();
+                            fReader.close();
+                            return false;
+                        }
+                    }
+                }
+
                 data1 =data[1].split(":");
                 arrival = new TrainTime(stoppageDay,Integer.parseInt(data1[0]), Integer.parseInt(data1[1]));
                 if(departure!=null && arrival.compareTo(departure)<0){
@@ -96,11 +114,18 @@ public class KBestSchedule {
                     departure.addDay(1);
                     stoppageDay = departure.day;
                 }
-                if(!addStoppageTrain(trainDay, trainNo,stationId,arrival,departure)){
+                if(!train.addStoppage(station, arrival, departure, stoppageNo)){
+                    System.out.println("Some error occurred");
                     bReader.close();
                     fReader.close();
                     return false;
                 }
+                atLeastOneStationInRoute = true;
+                prevStationId = stationId;
+            }
+            this.trainMap.get(trainNo+"").add(train);
+            if(!atLeastOneStationInRoute){
+                this.trainMap.remove(trainNo+"");
             }
             bReader.close();
             fReader.close();
@@ -206,225 +231,151 @@ public class KBestSchedule {
 
             if(!nodeStart.getStationId().equalsIgnoreCase("source") &&
                     !nodeEnd.getStationId().equalsIgnoreCase("dest") ) {
-                for (Train train : this.trainMap.values()) {
-                    TrainAtStation s1 = train.getStationInfo(nodeStart.getStationId(),0);
-                    TrainAtStation s2 = train.getStationInfo(nodeEnd.getStationId(),0);
-                    if(s2==null){
-                        continue;
-                    }
-                    //check platform requirement
-                    int count=0;
-                    do{
+                for (List<Train> trains : this.trainMap.values()) {
+                    for (Train train : trains) {
+                        TrainAtStation s1 = train.getStationInfo(nodeStart.getStationId());
+                        TrainAtStation s2 = train.getStationInfo(nodeEnd.getStationId());
+                        if (s2 == null) {
+                            continue;
+                        }
+                        //check platform requirement
                         boolean addedOldTrain = false;
                         TrainTime oldTrainArrStation2 = s2.getArr();
                         TrainTime oldTrainDeptStation2 = s2.getDept();
-                        if(oldTrainArrStation2==null || oldTrainDeptStation2==null){
-                            s2= train.getStationInfo(nodeEnd.getStationId(), ++count);
+                        if (oldTrainArrStation2 == null || oldTrainDeptStation2 == null) {
+                            System.out.println("Some error occurred in fetching timings for train: "+ train.getTrainNo());
                             continue;
                         }
 
                         int timeOldTrainArrStation2 = oldTrainArrStation2.getValue();
                         int timeOldTrainDeptStation2 = oldTrainDeptStation2.getValue();
 
-                        if(oldTrainDeptStation2.day==0 && oldTrainArrStation2.day==6){
+                        if (oldTrainDeptStation2.day == 0 && oldTrainArrStation2.day == 6) {
                             addedOldTrain = true;
                         }
 
-                        if(!( isDirectLineAvailable && timeOldTrainArrStation2==timeOldTrainDeptStation2)){
+                        if (!(isDirectLineAvailable && timeOldTrainArrStation2 == timeOldTrainDeptStation2)) {
                             //need to check availability of platform
-                            if(addedNodeEnd && addedOldTrain) {
+                            if (addedNodeEnd && addedOldTrain) {
                                 totalUpPlatform--;
-                            }
-                            else if(addedOldTrain){
-                                if((timeNodeEnd>=timeOldTrainArrStation2 )|| ( timeEarliestToReach<=timeOldTrainDeptStation2)){
+                            } else if (addedOldTrain) {
+                                if ((timeNodeEnd >= timeOldTrainArrStation2) || (timeEarliestToReach <= timeOldTrainDeptStation2)) {
                                     totalUpPlatform--;
                                 }
-                            }
-                            else if(addedNodeEnd){
-                                if(timeEarliestToReach>=10080){
-                                    if(!((timeNodeEnd-10080)<timeOldTrainArrStation2 || (timeEarliestToReach-10080) >timeOldTrainDeptStation2)){
+                            } else if (addedNodeEnd) {
+                                if (timeEarliestToReach >= 10080) {
+                                    if (!((timeNodeEnd - 10080) < timeOldTrainArrStation2 || (timeEarliestToReach - 10080) > timeOldTrainDeptStation2)) {
                                         totalUpPlatform--;
                                     }
-                                }
-                                else {
+                                } else {
                                     if (((timeNodeEnd - 10080) >= timeOldTrainArrStation2) || (timeEarliestToReach <= timeOldTrainDeptStation2)) {
                                         totalUpPlatform--;
                                     }
                                 }
-                            }
-                            else if(!(timeNodeEnd<timeOldTrainArrStation2 || timeEarliestToReach >timeOldTrainDeptStation2)){
+                            } else if (!(timeNodeEnd < timeOldTrainArrStation2 || timeEarliestToReach > timeOldTrainDeptStation2)) {
                                 totalUpPlatform--;
                             }
                         }
-                        s2= train.getStationInfo(nodeEnd.getStationId(), ++count);
-                    }
-                    while(s2!=null);
 
-                    if(s1!=null){
+                        if (s1 != null) {
 
-                        s1 = train.getStationInfo(nodeStart.getStationId(), nodeEnd.getStationId(),true);
-                        s2 = train.getStationInfo(nodeStart.getStationId(), nodeEnd.getStationId(), false);
+                            if (s1.getStoppageNo()==(s2.getStoppageNo()-1)) {
+                                //same direction train
+                                TrainTime oldTrainDeptStation1 = s1.getDept();
+                                oldTrainArrStation2 = s2.getArr();
 
-                        if(s1!=null && s2 !=null){
-                            //same direction train
-                            TrainTime oldTrainDeptStation1 = s1.getDept();
-                            TrainTime oldTrainArrStation2 = s2.getArr();
-
-                            int timeOldTrainDeptStation1 = oldTrainDeptStation1.getValue();
-                            int timeOldTrainArrStation2 = oldTrainArrStation2.getValue();
-                            boolean addedOldTrain = false;
-                            if(timeOldTrainArrStation2<timeOldTrainDeptStation1){
-                                timeOldTrainArrStation2+=10080;
-                                addedOldTrain=true;
-                            }
-                            if((timeOldTrainDeptStation1+minDelayBwTrains)>= timeNodeStart &&
-                                    (timeOldTrainDeptStation1-minDelayBwTrains)<= timeNodeStart){
-                                totalUpTrack--;
-                                continue;
-                            }
-
-                            if((timeOldTrainArrStation2+minDelayBwTrains)>= timeEarliestToReach &&
-                                    (timeOldTrainArrStation2-minDelayBwTrains)<= timeEarliestToReach){
-                                totalUpTrack--;
-                                continue;
-                            }
-
-                            if(timeEarliestToReach>=10080 && addedOldTrain){
-                                if((timeNodeStart<timeOldTrainDeptStation1) && (timeEarliestToReach > timeOldTrainArrStation2) ||
-                                        ((timeNodeStart > timeOldTrainDeptStation1) && (timeEarliestToReach < timeOldTrainArrStation2))){
+                                int timeOldTrainDeptStation1 = oldTrainDeptStation1.getValue();
+                                timeOldTrainArrStation2 = oldTrainArrStation2.getValue();
+                               addedOldTrain = false;
+                                if (timeOldTrainArrStation2 < timeOldTrainDeptStation1) {
+                                    timeOldTrainArrStation2 += 10080;
+                                    addedOldTrain = true;
+                                }
+                                if ((timeOldTrainDeptStation1 + minDelayBwTrains) >= timeNodeStart &&
+                                        (timeOldTrainDeptStation1 - minDelayBwTrains) <= timeNodeStart) {
                                     totalUpTrack--;
+                                    continue;
+                                }
+
+                                if ((timeOldTrainArrStation2 + minDelayBwTrains) >= timeEarliestToReach &&
+                                        (timeOldTrainArrStation2 - minDelayBwTrains) <= timeEarliestToReach) {
+                                    totalUpTrack--;
+                                    continue;
+                                }
+
+                                if (timeEarliestToReach >= 10080 && addedOldTrain) {
+                                    if ((timeNodeStart < timeOldTrainDeptStation1) && (timeEarliestToReach > timeOldTrainArrStation2) ||
+                                            ((timeNodeStart > timeOldTrainDeptStation1) && (timeEarliestToReach < timeOldTrainArrStation2))) {
+                                        totalUpTrack--;
+                                    }
+                                } else if (addedOldTrain) {
+                                    timeOldTrainArrStation2 -= 10080;
+                                    if ((timeEarliestToReach < timeOldTrainArrStation2) || (timeNodeStart > timeOldTrainDeptStation1)) {
+                                        totalUpTrack--;
+                                    }
+                                } else if (timeEarliestToReach >= 10080) {
+                                    if ((timeOldTrainArrStation2 < (timeEarliestToReach - 10080)) || (timeOldTrainDeptStation1 > timeNodeStart)) {
+                                        totalUpTrack--;
+                                    }
+                                } else {
+                                    if ((timeNodeStart < timeOldTrainDeptStation1) && (timeEarliestToReach > timeOldTrainArrStation2) ||
+                                            ((timeNodeStart > timeOldTrainDeptStation1) && (timeEarliestToReach < timeOldTrainArrStation2))) {
+                                        totalUpTrack--;
+                                    }
                                 }
                             }
-                            else if(addedOldTrain){
-                                timeOldTrainArrStation2-=10080;
-                                if((timeEarliestToReach< timeOldTrainArrStation2) || (timeNodeStart > timeOldTrainDeptStation1)){
-                                    totalUpTrack --;
+                            else if (s2.getStoppageNo()==(s1.getStoppageNo()-1)) {
+                                //opposite direction train
+                                TrainTime oldTrainArrStation1 = s1.getArr();
+                                oldTrainDeptStation2 = s2.getDept();
+
+                                int timeOldTrainArrStation1 = oldTrainArrStation1.getValue();
+                                timeOldTrainDeptStation2 = oldTrainDeptStation2.getValue();
+
+                                addedOldTrain = false;
+                                if (timeOldTrainArrStation1 < timeOldTrainDeptStation2) {
+                                    addedOldTrain = true;
+                                    timeOldTrainArrStation1 += 10080;
                                 }
-                            }
-                            else if(timeEarliestToReach>=10080){
-                                if ((timeOldTrainArrStation2 < (timeEarliestToReach-10080)) || (timeOldTrainDeptStation1 > timeNodeStart)) {
+
+                                if ((timeOldTrainArrStation1 + minDelayBwTrains) >= timeNodeStart &&
+                                        (timeOldTrainArrStation1 - minDelayBwTrains) <= timeNodeStart) {
                                     totalUpTrack--;
+                                    continue;
+                                }
+
+                                if ((timeOldTrainDeptStation2 + minDelayBwTrains) >= timeEarliestToReach &&
+                                        (timeOldTrainDeptStation2 - minDelayBwTrains) <= timeEarliestToReach) {
+                                    totalUpTrack--;
+                                    continue;
+                                }
+
+                                if (timeEarliestToReach >= 10080 && addedOldTrain) {
+                                    if ((timeNodeStart < timeOldTrainArrStation1) && (timeEarliestToReach > timeOldTrainDeptStation2)) {
+                                        totalUpTrack--;
+                                    }
+                                } else if (addedOldTrain) {
+                                    timeOldTrainArrStation1 -= 10080;
+                                    if ((timeEarliestToReach > timeOldTrainDeptStation2) || (timeNodeStart < timeOldTrainArrStation1)) {
+                                        totalUpTrack--;
+                                    }
+                                } else if (timeEarliestToReach >= 10080) {
+                                    if (((timeEarliestToReach - 10080) > timeOldTrainDeptStation2) || (timeNodeStart < timeOldTrainArrStation1)) {
+                                        totalUpTrack--;
+                                    }
+                                } else {
+                                    if ((timeNodeStart < timeOldTrainArrStation1) && (timeEarliestToReach > timeOldTrainDeptStation2)) {
+                                        totalUpTrack--;
+                                    }
                                 }
                             }
                             else{
-                                if((timeNodeStart<timeOldTrainDeptStation1) && (timeEarliestToReach > timeOldTrainArrStation2) ||
-                                        ((timeNodeStart > timeOldTrainDeptStation1) && (timeEarliestToReach < timeOldTrainArrStation2))){
-                                    totalUpTrack--;
-                                }
-                            }
-                        }
-
-                        s2 = train.getStationInfo(nodeEnd.getStationId(), nodeStart.getStationId(),true);
-                        s1 = train.getStationInfo(nodeEnd.getStationId(), nodeStart.getStationId(), false);
-
-                        if(s1!=null && s2 !=null){
-                            //opposite direction train
-                            TrainTime oldTrainArrStation1 = s1.getArr();
-                            TrainTime oldTrainDeptStation2 = s2.getDept();
-
-                            int timeOldTrainArrStation1 = oldTrainArrStation1.getValue();
-                            int timeOldTrainDeptStation2 = oldTrainDeptStation2.getValue();
-
-                            boolean addedOldTrain = false;
-                            if(timeOldTrainArrStation1<timeOldTrainDeptStation2){
-                                addedOldTrain=true;
-                                timeOldTrainArrStation1 += 10080;
-                            }
-
-                            if((timeOldTrainArrStation1+minDelayBwTrains)>= timeNodeStart &&
-                                    (timeOldTrainArrStation1-minDelayBwTrains)<= timeNodeStart){
-                                totalUpTrack--;
-                                continue;
-                            }
-
-                            if((timeOldTrainDeptStation2+minDelayBwTrains)>= timeEarliestToReach &&
-                                    (timeOldTrainDeptStation2-minDelayBwTrains)<= timeEarliestToReach){
-                                totalUpTrack--;
-                                continue;
-                            }
-
-                            if(timeEarliestToReach>=10080 && addedOldTrain){
-                                if((timeNodeStart<timeOldTrainArrStation1) && (timeEarliestToReach > timeOldTrainDeptStation2)){
-                                    totalUpTrack--;
-                                }
-                            }
-                            else if(addedOldTrain){
-                                timeOldTrainArrStation1 -=10080;
-                                if((timeEarliestToReach> timeOldTrainDeptStation2) || (timeNodeStart < timeOldTrainArrStation1)){
-                                    totalUpTrack --;
-                                }
-                            }
-                            else if(timeEarliestToReach>=10080){
-                                if(((timeEarliestToReach-10080)> timeOldTrainDeptStation2) || (timeNodeStart < timeOldTrainArrStation1)){
-                                    totalUpTrack --;
-                                }
-                            }
-                            else{
-                                if((timeNodeStart<timeOldTrainArrStation1) && (timeEarliestToReach > timeOldTrainDeptStation2)){
-                                    totalUpTrack--;
-                                }
+                                //goes via another direction
+                                System.out.println(train.toString());
                             }
                         }
                     }
                 }
-            }
-            else if(nodeStart.getStationId().equalsIgnoreCase("source")){
-                for (Train train : this.trainMap.values()) {
-                    TrainAtStation s2 = train.getStationInfo(nodeEnd.getStationId(), 0);
-                    if (s2 == null) {
-                        continue;
-                    }
-                    //check platform requirement
-                    int count = 0;
-                    do{
-                        boolean addedOldTrain = false;
-                        TrainTime oldTrainArrStation2 = s2.getArr();
-                        TrainTime oldTrainDeptStation2 = s2.getDept();
-                        if(oldTrainArrStation2==null || oldTrainDeptStation2==null){
-                            s2= train.getStationInfo(nodeEnd.getStationId(), ++count);
-                            continue;
-                        }
-
-                        int timeOldTrainArrStation2 = oldTrainArrStation2.getValue();
-                        int timeOldTrainDeptStation2 = oldTrainDeptStation2.getValue();
-
-                        if(oldTrainDeptStation2.day==0 && oldTrainArrStation2.day==6){
-                            addedOldTrain = true;
-                        }
-
-                        if(!( isDirectLineAvailable && timeOldTrainArrStation2==timeOldTrainDeptStation2)){
-                            //need to check availability of platform
-                            if(addedNodeEnd && addedOldTrain) {
-                                totalUpPlatform--;
-                            }
-                            else if(addedOldTrain){
-                                if((timeNodeEnd>=timeOldTrainArrStation2 )|| ( timeEarliestToReach<=timeOldTrainDeptStation2)){
-                                    totalUpPlatform--;
-                                }
-                            }
-                            else if(addedNodeEnd){
-                                if(timeEarliestToReach>=10080){
-                                    if(!((timeNodeEnd-10080)<timeOldTrainArrStation2 || (timeEarliestToReach-10080) >timeOldTrainDeptStation2)){
-                                        totalUpPlatform--;
-                                    }
-                                }
-                                else {
-                                    if (((timeNodeEnd - 10080) >= timeOldTrainArrStation2) || (timeEarliestToReach <= timeOldTrainDeptStation2)) {
-                                        totalUpPlatform--;
-                                    }
-                                }
-                            }
-                            else if(!(timeNodeEnd<timeOldTrainArrStation2 || timeEarliestToReach >timeOldTrainDeptStation2)){
-                                totalUpPlatform--;
-                            }
-                        }
-                        s2= train.getStationInfo(nodeEnd.getStationId(), ++count);
-                    }
-                    while(s2!=null);
-                }
-            }
-            else if(nodeEnd.getStationId().equalsIgnoreCase("dest")){
-                return 1;
             }
 
             if((totalUpTrack+ totalDualTrack+ totalDownTrack)<0){
@@ -473,60 +424,52 @@ public class KBestSchedule {
             addedNodeEnd = true;
         }
 
-        for (Train train : this.trainMap.values()) {
-            TrainAtStation s2 = train.getStationInfo(nodeEnd.getStationId(), 0);
-            if (s2 == null) {
-                continue;
-            }
-            //check platform requirement
-            int count = 0;
-            do{
+        for (List<Train> trains : this.trainMap.values()) {
+            for(Train train:trains) {
+                TrainAtStation s2 = train.getStationInfo(nodeEnd.getStationId());
+                if (s2 == null) {
+                    continue;
+                }
+                //check platform requirement
                 boolean addedOldTrain = false;
                 TrainTime oldTrainArrStation2 = s2.getArr();
                 TrainTime oldTrainDeptStation2 = s2.getDept();
-                if(oldTrainArrStation2==null || oldTrainDeptStation2==null){
-                    s2= train.getStationInfo(nodeEnd.getStationId(), ++count);
+                if (oldTrainArrStation2 == null || oldTrainDeptStation2 == null) {
+                    System.out.println("Some error occurred in fetching timings for train: "+ train.getTrainNo());
                     continue;
                 }
 
                 int timeOldTrainArrStation2 = oldTrainArrStation2.getValue();
                 int timeOldTrainDeptStation2 = oldTrainDeptStation2.getValue();
 
-                if(oldTrainDeptStation2.day==0 && oldTrainArrStation2.day==6){
+                if (oldTrainDeptStation2.day == 0 && oldTrainArrStation2.day == 6) {
                     addedOldTrain = true;
                 }
 
-                if(!( isDirectLineAvailable && timeOldTrainArrStation2==timeOldTrainDeptStation2)){
+                if (!(isDirectLineAvailable && timeOldTrainArrStation2 == timeOldTrainDeptStation2)) {
                     //need to check availability of platform
-                    if(addedNodeEnd && addedOldTrain) {
+                    if (addedNodeEnd && addedOldTrain) {
                         totalUpPlatform--;
-                    }
-                    else if(addedOldTrain){
-                        if((timeNodeEnd>=timeOldTrainArrStation2 )|| ( timeEarliestToReach<=timeOldTrainDeptStation2)){
+                    } else if (addedOldTrain) {
+                        if ((timeNodeEnd >= timeOldTrainArrStation2) || (timeEarliestToReach <= timeOldTrainDeptStation2)) {
                             totalUpPlatform--;
                         }
-                    }
-                    else if(addedNodeEnd){
-                        if(timeEarliestToReach>=10080){
-                            if(!((timeNodeEnd-10080)<timeOldTrainArrStation2 || (timeEarliestToReach-10080) >timeOldTrainDeptStation2)){
+                    } else if (addedNodeEnd) {
+                        if (timeEarliestToReach >= 10080) {
+                            if (!((timeNodeEnd - 10080) < timeOldTrainArrStation2 || (timeEarliestToReach - 10080) > timeOldTrainDeptStation2)) {
                                 totalUpPlatform--;
                             }
-                        }
-                        else {
+                        } else {
                             if (((timeNodeEnd - 10080) >= timeOldTrainArrStation2) || (timeEarliestToReach <= timeOldTrainDeptStation2)) {
                                 totalUpPlatform--;
                             }
                         }
-                    }
-                    else if(!(timeNodeEnd<timeOldTrainArrStation2 || timeEarliestToReach >timeOldTrainDeptStation2)){
+                    } else if (!(timeNodeEnd < timeOldTrainArrStation2 || timeEarliestToReach > timeOldTrainDeptStation2)) {
                         totalUpPlatform--;
                     }
                 }
-                s2= train.getStationInfo(nodeEnd.getStationId(), ++count);
             }
-            while(s2!=null);
         }
-
         return ((totalUpPlatform+totalDualPlatform+ totalDownPlatform)>=0);
     }
 
@@ -673,6 +616,7 @@ public class KBestSchedule {
                                List<Integer> maxDelayList, boolean onSourceTime){
         try{
             this.graphKBestPath = new GraphKBestPath(usePreviousComputation, pathTemp);
+
             if(!usePreviousComputation) {
                 getStationList();
                 getNodesFreeSlot();
@@ -778,9 +722,7 @@ public class KBestSchedule {
         }
 
         if(trainNotToLoad!=-1){
-            for(int i=0;i<7;i++) {
-                this.trainMap.remove(i+":" + trainNotToLoad);
-            }
+            this.trainMap.remove(trainNotToLoad+"");
         }
 
         List<Double> avgTimeNewTrain = Scheduler.loadNewTrainTimeData(pathRouteTimeFile,newTrainType);
@@ -790,15 +732,12 @@ public class KBestSchedule {
         }
         avgTimeNewTrain.add(0,0.0);
         avgTimeNewTrain.add(0.0);
-        System.out.println("New train Ideal Time: "+avgTimeNewTrain.toString());
+        System.out.println("New train delay Time: "+avgTimeNewTrain.toString());
 
         // System.out.println(this.route.toString());
         // System.out.println("***********************************************************************************");
-        // System.out.println(this.upTrainMap.values().toString());
-        // System.out.println("***********************************************************************************");
-        // System.out.println(this.downTrainMap.values().toString());
+        // System.out.println(this.trainMap.values().toString());
         System.out.println("***********************************************************************************");
-        // System.out.println(this.downTrainMap.values().toString());
         if(stopTime.size() != this.route.getNumberOfStation()){
             System.out.println("Please give stop time for every station in route. if it does not stop at " +
                     "any particular station, give stop time as 0.");

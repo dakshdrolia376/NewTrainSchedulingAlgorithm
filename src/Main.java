@@ -7,12 +7,14 @@ public class Main {
 
     public static void main(String[] args) {
         String pathTrainList = "data" + File.separator+"trainList.txt";
-        String pathRoute = "data"+File.separator+"route"+File.separator+"routePnbeBta.txt";
-        String pathRouteStopTime = "data"+File.separator+"route"+File.separator+"routeStopTimePnbeBta.txt";
+        String pathRoute = "data"+File.separator+"route"+File.separator+"routePnbeNdls.txt";
+        String pathName = "Pnbe-Ndls";
+        String pathRouteStopTime = "data"+File.separator+"route"+File.separator+"routeStopTimeMgs.txt";
+
         String pathRouteTimeMin = pathRoute.split("\\.")[0]+"TimeMin.txt";
         String pathRouteTimeAvg = pathRoute.split("\\.")[0]+"TimeAvg.txt";
 
-        String pathPlotFile = "data"+File.separator+"plot"+File.separator+"plot1.pdf";
+        String pathPlotFile = "data"+File.separator+"plot"+File.separator+"plot.pdf";
         String pathTemp = "data"+File.separator+"temp";
         String pathLog = "data"+File.separator+"logs";
         String pathTrainBase = "data"+File.separator+"final";
@@ -60,24 +62,80 @@ public class Main {
             trainNotToLoad = -1;
 
             Scheduler scheduler = new Scheduler();
-            ScheduleByDivision scheduleByDivision = new ScheduleByDivision();
+            ScheduleByDivision scheduleByDivision = new ScheduleByDivision(pathStationDatabase);
+
+            // newTrainType = "memu";
+            // sourceTime = null;
+            // trainNotToLoad = -1;
+            // pathRouteStopTime = "data"+File.separator+"route"+File.separator+"routeStopTimePnbeMgsMemu.txt";
             // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 0,
-            //         usePreviousComputation, ratio, pathRouteTimeMin, newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad);
+            //         usePreviousComputation, ratio, pathRouteTimeMin, newTrainType, pathLog, sourceTime,pathRouteStopTime,
+            //         trainNotToLoad,pathStationDatabase);
+
+            // newTrainType = "Mail-Express";
+            // sourceTime = null;
+            // trainNotToLoad = -1;
+            // pathRouteStopTime = "data"+File.separator+"route"+File.separator+"routeStopTimePnbeNdlsExp.txt";
+            // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 0,
+            //         usePreviousComputation, ratio, pathRouteTimeMin, newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad,pathStationDatabase);
+            //
+            // newTrainType = "SuperFast";
+            // sourceTime = null;
+            // trainNotToLoad = -1;
+            // pathRouteStopTime = "data"+File.separator+"route"+File.separator+"routeStopTimePnbeNdlsSF.txt";
+            // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 0,
+            //         usePreviousComputation, ratio, pathRouteTimeMin, newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad,pathStationDatabase);
+            //
+            // newTrainType = "Rajdhani";
+            // sourceTime = null;
+            // trainNotToLoad = -1;
+            // pathRouteStopTime = "data"+File.separator+"route"+File.separator+"routeStopTimePnbeNdlsRaj.txt";
+            // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 0,
+            //         usePreviousComputation, ratio, pathRouteTimeMin, newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad,pathStationDatabase);
+
+
+            // newTrainType = "memu";
+            // sourceTime = new TrainTime(0,8,0);
+            // trainNotToLoad = 63227;
+            // pathRouteStopTime = "data"+File.separator+"route"+File.separator+"routeStopTimePnbeNdlsMemu.txt";
+            // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 0,
+            //         usePreviousComputation, ratio, pathRouteTimeMin, newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad,pathStationDatabase);
+
+            // newTrainType = "Mail-Express";
+            // sourceTime = new TrainTime(0,21,25);
+            // trainNotToLoad = 13007;
+            // pathRouteStopTime = "data"+File.separator+"route"+File.separator+"routeStopTimePnbeNdlsExp.txt";
+            // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 0,
+            //         usePreviousComputation, ratio, pathRouteTimeMin, newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad,pathStationDatabase);
+            //
+            // newTrainType = "SuperFast";
+            // sourceTime = new TrainTime(0,18,10);
+            // trainNotToLoad = 12401;
+            // pathRouteStopTime = "data"+File.separator+"route"+File.separator+"routeStopTimePnbeNdlsSF.txt";
+            // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 0,
+            //         usePreviousComputation, ratio, pathRouteTimeMin, newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad,pathStationDatabase);
+            //
+            // newTrainType = "Rajdhani";
+            // sourceTime = new TrainTime(0,21,10);
+            // trainNotToLoad = 12305;
+            // pathRouteStopTime = "data"+File.separator+"route"+File.separator+"routeStopTimePnbeNdlsRaj.txt";
+            // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 0,
+            //         usePreviousComputation, ratio, pathRouteTimeMin, newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad),pathStationDatabase;
 
             // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 1,
-            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad);
+            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad,pathStationDatabase);
             // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 2,
-            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad);
+            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad,pathStationDatabase);
             // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 3,
-            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad);
+            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad,pathStationDatabase);
             // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 4,
-            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad);
+            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad,pathStationDatabase);
             // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 5,
-            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad);
+            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad,pathStationDatabase);
             // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, true, 6,
-            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad);
+            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad,pathStationDatabase);
             // scheduler.test(pathTemp, pathRoute, pathBestRoute, pathTrainBase, false, 7,
-            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad);
+            //         usePreviousComputation, ratio, pathRouteTimeMin,newTrainType, pathLog, sourceTime,pathRouteStopTime,trainNotToLoad,pathStationDatabase);
             //
             // scheduleByDivision.scheduleByBreaking(pathTemp, pathRoute, pathBestRoute, pathTrainBase,isSingleDay, trainDay, ratio,
             //         pathLog, pathRouteTimeMin,newTrainType, sourceTime,pathRouteStopTime,trainNotToLoad);
@@ -88,9 +146,9 @@ public class Main {
 
             int newTrainNo = 9910;
             int newTrainDay = 0;
-            int requiredDay = 0;
-            String pathNewTrainFile = pathBestRoute+File.separator+"Type Full Day 0 TrainType memu maxRatio 1.3 unconditional  path 1 cost 256.0 .txt";
-            scheduler.showPlot(pathNewTrainFile,newTrainNo,pathPlotFile,pathRoute,pathTrainBase, newTrainDay, requiredDay);
+            // String pathNewTrainFile = pathBestRoute+File.separator+"Type Full Day 0 TrainType memu maxRatio 1.3 unconditional  path 1 cost 256.0 .txt";
+            scheduler.showPlot(null,newTrainNo,pathPlotFile,pathRoute,pathTrainBase, newTrainDay,
+                    pathStationDatabase,pathName);
 
             // scheduler.fetchStationInfo(pathStationDatabase);
             // scheduler.fetchTrainInfo(pathTrainDatabase);

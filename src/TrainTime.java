@@ -13,6 +13,10 @@ public class TrainTime {
         setData(trainTime.day,trainTime.hour,trainTime.minute);
     }
 
+    public TrainTime(int timeInt){
+        setData((byte)((timeInt/1440)%7),(byte)((timeInt/60)%24),(byte)(timeInt%60));
+    }
+
     public TrainTime(String label){
         String[] data = label.split(":");
         if(data.length!=3){

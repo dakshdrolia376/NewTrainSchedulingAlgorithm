@@ -75,6 +75,7 @@ public class Station {
     }
 
     public boolean addTrain(TrainAtStation TrainAtStation) {
+
         return this.arrDeptSchedule.add(TrainAtStation);
     }
 
