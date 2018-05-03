@@ -8,7 +8,6 @@ import java.io.FileReader;
 import java.util.*;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -29,6 +28,7 @@ import com.itextpdf.text.pdf.DefaultFontMapper;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.jfree.ui.TextAnchor;
 
 public class LinePlotTrains extends ApplicationFrame {
 
@@ -38,6 +38,7 @@ public class LinePlotTrains extends ApplicationFrame {
     private List<Color> seriesColor;
     private Map<String, Double> reverseTickLabels;
     private Map<Double, String> tickLabels;
+    private double lastDistance;
     private FetchStationDetails fetchStationDetails;
     private String pathName;
 
@@ -67,6 +68,7 @@ public class LinePlotTrains extends ApplicationFrame {
                 st_dist = Math.round(Double.parseDouble(data[1]));
                 this.tickLabels.put(st_dist, st_id);
                 this.reverseTickLabels.put(st_id, st_dist);
+                this.lastDistance = st_dist;
             }
             bReader.close();
             fReader.close();
@@ -256,9 +258,6 @@ public class LinePlotTrains extends ApplicationFrame {
                         }
                     }
                 }
-                if(arrival.compareTo(new TrainTime(0,0,0))==0){
-                    System.out.println(trainNo+" arrival "+ line);
-                }
 
                 stationTimingsSeries.add(temp_dist, arrival.getValue());
 
@@ -334,7 +333,7 @@ public class LinePlotTrains extends ApplicationFrame {
     public JFreeChart createChart(final XYDataset dataset) {
         // create the chart...
         final JFreeChart chart = ChartFactory.createXYLineChart(
-                "Train-tracking " + this.pathName,      // chart title
+                "Train Schedule Plot " + this.pathName,      // chart title
                 "Station",                      // x axis label
                 "Time",                      // y axis label
                 dataset,                  // data
@@ -382,15 +381,19 @@ public class LinePlotTrains extends ApplicationFrame {
                         trainTime = new TrainTime(0, 0, 0);
                         trainTime.addMinutes((int) Math.ceil(numberTick.getValue()));
                         label = trainTime.getFullString();
-                    } else if (numTickValue < 0) {
+                    }
+                    else if (numTickValue < 0) {
                         label = "Prev week";
-                    } else {
+                    }
+                    else {
                         label = "Next week";
                     }
 
+                    // NumberTick numberTickTemp = new NumberTick(TickType.MINOR, numberTick.getValue(), label,
+                    //         numberTick.getTextAnchor(), numberTick.getRotationAnchor(), (2 * Math.PI * 0) / 360.0f);
+
                     NumberTick numberTickTemp = new NumberTick(TickType.MINOR, numberTick.getValue(), label,
-                            numberTick.getTextAnchor(), numberTick.getRotationAnchor(),
-                            (2 * Math.PI * 0) / 360.0f);
+                            TextAnchor.CENTER_RIGHT, TextAnchor.CENTER, (2 * Math.PI * 0) / 360.0f);
 
                     Rectangle2D labelBounds = getTickBounds(numberTickTemp, g2);
                     double java2dValue = valueToJava2D(numberTick.getValue(), g2.getClipBounds(), edge);
@@ -435,19 +438,27 @@ public class LinePlotTrains extends ApplicationFrame {
                 List allTicks = super.refreshTicks(g2, state, dataArea, edge);
                 List<NumberTick> myTicks = new ArrayList<>();
                 tickLabelArea = new Area();
+                boolean lastLabelAdded = false;
                 for (Object tick : allTicks) {
                     NumberTick numberTick = (NumberTick) tick;
-                    String label = "";
-                    if (tickLabels.containsKey(numberTick.getValue())) {
-                        label = tickLabels.get(numberTick.getValue());
+                    double numberTickValue = numberTick.getValue();
+                    String label = tickLabels.getOrDefault(numberTickValue,"");
+                    if(numberTickValue>=lastDistance && !lastLabelAdded){
+                        if(label.equals("")){
+                            label = tickLabels.getOrDefault(lastDistance,"End");
+                        }
+                        lastLabelAdded = true;
                     }
-                    NumberTick numberTickTemp = new NumberTick(TickType.MINOR, numberTick.getValue(), label,
-                            numberTick.getTextAnchor(), numberTick.getRotationAnchor(),
-                            (2 * Math.PI * 270) / 360.0f);
-
+                    NumberTick numberTickTemp = new NumberTick(TickType.MINOR, numberTickValue, label,
+                            TextAnchor.TOP_CENTER, TextAnchor.CENTER, (2 * Math.PI * 270) / 360.0f);
                     Rectangle2D labelBounds = getTickBounds(numberTickTemp, g2);
-                    double java2dValue = valueToJava2D(numberTick.getValue(), g2.getClipBounds(), edge);
-                    labelBounds.setRect(labelBounds.getX(), java2dValue, labelBounds.getWidth(), labelBounds.getHeight());
+                    double java2dValue = valueToJava2D(numberTickValue, g2.getClipBounds(), edge);
+                    double labelHeight=0;
+                    double labelWidth = labelBounds.getWidth();
+                    if(labelWidth>0){
+                        labelHeight =labelBounds.getHeight();
+                    }
+                    labelBounds.setRect(labelBounds.getX(), java2dValue, labelWidth, labelHeight);
                     if (!tickLabelIsOverlapping(tickLabelArea, labelBounds)) {
                         myTicks.add(numberTickTemp);
                         tickLabelArea.add(new Area(labelBounds));
@@ -471,7 +482,7 @@ public class LinePlotTrains extends ApplicationFrame {
         // domainAxis.setUpperBound(212);
         domainAxis.setAutoRangeIncludesZero(false);
         domainAxis.setAutoRangeStickyZero(false);
-        // domainAxis.setTickUnit(new NumberTickUnit(0.5));
+        // domainAxis.setTickUnit(new NumberTickUnit(1));
         plot.setDomainAxis(domainAxis);
 
         plot.setBackgroundPaint(Color.white);

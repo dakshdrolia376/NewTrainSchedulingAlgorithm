@@ -118,8 +118,8 @@ public class TestDuplicateTrains {
             PrintStream o = new PrintStream(new File(pathLog + File.separator + "errDuplicateTrains.log"));
             PrintStream o1 = new PrintStream(new File(pathLog + File.separator + "outputDuplicateTrains.log"));
             // Store current System.out before assigning a new value
-            PrintStream console = System.err;
-            PrintStream console1 = System.out;
+            // PrintStream console = System.err;
+            // PrintStream console1 = System.out;
             //
             // Assign o to output stream
             System.setErr(o);

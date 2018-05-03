@@ -369,10 +369,10 @@ public class KBestSchedule {
                                     }
                                 }
                             }
-                            else{
-                                //goes via another direction
-                                System.out.println(train.toString());
-                            }
+                            // else{
+                            //     //goes via another direction
+                            //     System.out.println(train.toString());
+                            // }
                         }
                     }
                 }
@@ -666,6 +666,7 @@ public class KBestSchedule {
                 System.out.println("Edge size: " + this.edgeCount);
             }
 
+            // System.out.println(this.graphKBestPath.toString());
             List<Path> paths;
             KShortestPathFinder kShortestPathFinder = new KShortestPathFinder();
             paths = kShortestPathFinder.findShortestPaths(this.nodes.get(0).get(0),
@@ -674,7 +675,6 @@ public class KBestSchedule {
             if(!this.graphKBestPath.disconnect()){
                 System.out.println("Some error occurred with graph.");
             }
-            // System.out.println(this.graphKBestPath.toString());
             this.graphKBestPath = null;
             return paths;
         }

@@ -6,6 +6,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.List;
 
 import static java.util.Objects.requireNonNull;
 
@@ -196,12 +197,13 @@ public class Scheduler {
 
     @SuppressWarnings("unused")
     public void updateRouteFile(String pathTrainTypeFile, String pathRouteFile, String pathRouteTimeMinFile,
-                                String pathRouteTimeAvgFile, String pathStationDatabase){
+                                String pathRouteTimeAvgFile,String pathRouteTimeMedFile, String pathStationDatabase){
         FetchStationDetails fetchStationDetails = new FetchStationDetails(pathStationDatabase);
         int lengthMaxName = 18;
         StringBuilder newRouteData = new StringBuilder("");
         StringBuilder routeTimeAvgData = new StringBuilder("");
         StringBuilder routeTimeMinData = new StringBuilder("");
+        StringBuilder routeTimeMedData = new StringBuilder("");
         DatabaseConnector databaseConnector = new DatabaseConnector();
         List<List<String>> trainTypesAndNumbers = new ArrayList<>();
         try {
@@ -250,40 +252,52 @@ public class Scheduler {
                     departure2 = stationStoppages.get(1);
                     routeTimeAvgData.append("Station");
                     routeTimeMinData.append("Station");
+                    routeTimeMedData.append("Station");
                     for(int lengthString = "Station".length();lengthString<(lengthMaxName+20);lengthString++){
                         routeTimeAvgData.append(' ');
                         routeTimeMinData.append(' ');
+                        routeTimeMedData.append(' ');
                     }
                     for(List<String> trainNos: trainTypesAndNumbers) {
                         routeTimeAvgData.append('\t');
                         routeTimeMinData.append('\t');
+                        routeTimeMedData.append('\t');
                         routeTimeAvgData.append(trainNos.get(0));
                         routeTimeMinData.append(trainNos.get(0));
+                        routeTimeMedData.append(trainNos.get(0));
                         for(int lengthString = trainNos.get(0).length();lengthString<lengthMaxName;lengthString++){
                             routeTimeAvgData.append(' ');
                             routeTimeMinData.append(' ');
+                            routeTimeMedData.append(' ');
                         }
                     }
                     routeTimeAvgData.append('\n');
                     routeTimeMinData.append('\n');
+                    routeTimeMedData.append('\n');
                     routeTimeAvgData.append(data[0]);
                     routeTimeMinData.append(data[0]);
+                    routeTimeMedData.append(data[0]);
                     for(int lengthString = data[0].length();lengthString<(lengthMaxName+20);lengthString++){
                         routeTimeAvgData.append(' ');
                         routeTimeMinData.append(' ');
+                        routeTimeMedData.append(' ');
                     }
                     for(List<String> trainNos: trainTypesAndNumbers) {
                         routeTimeAvgData.append('\t');
                         routeTimeMinData.append('\t');
+                        routeTimeMedData.append('\t');
                         routeTimeAvgData.append("NA");
                         routeTimeMinData.append("NA");
+                        routeTimeMedData.append("NA");
                         for(int lengthString = "NA".length();lengthString<lengthMaxName;lengthString++){
                             routeTimeAvgData.append(' ');
                             routeTimeMinData.append(' ');
+                            routeTimeMedData.append(' ');
                         }
                     }
                     routeTimeAvgData.append('\n');
                     routeTimeMinData.append('\n');
+                    routeTimeMedData.append('\n');
                     currDistance = distanceToSubtract;
                 }
                 else{
@@ -296,9 +310,11 @@ public class Scheduler {
                     List<String> trainNosOriginal;
                     routeTimeAvgData.append(data[0]);
                     routeTimeMinData.append(data[0]);
+                    routeTimeMedData.append(data[0]);
                     for(int lengthString = data[0].length();lengthString<(lengthMaxName+20);lengthString++){
                         routeTimeAvgData.append(' ');
                         routeTimeMinData.append(' ');
+                        routeTimeMedData.append(' ');
                     }
                     for(List<String> trainNos: trainTypesAndNumbers) {
                         trainNosOriginal = new ArrayList<>(arrival2.keySet());
@@ -307,6 +323,7 @@ public class Scheduler {
                         double timeTrainCount = 0;
                         double timeTrainMin = Double.MAX_VALUE;
                         double tempTimeTrain;
+                        List<Double> timings = new ArrayList<>();
                         for(String trainNo:trainNosOriginal){
                             String dept = departure1.getOrDefault(trainNo,null);
                             String arr = arrival2.getOrDefault(trainNo,null);
@@ -315,14 +332,15 @@ public class Scheduler {
                             }
                             int deptTime = new TrainTime("0:"+dept).getValue();
                             int arrTime = new TrainTime("0:"+arr).getValue();
-                            if(arrTime<deptTime){
+                            if(arrTime<=deptTime){
                                 arrTime+=1440;
                             }
                             if(currDistance!=prevDistance){
                                 tempTimeTrain = arrTime - deptTime;
-                                if(tempTimeTrain>600){
+                                if(tempTimeTrain>600 || tempTimeTrain<=0){
                                     continue;
                                 }
+                                timings.add(tempTimeTrain);
                                 timeTrainSum +=tempTimeTrain;
                                 if(tempTimeTrain<timeTrainMin){
                                     timeTrainMin = tempTimeTrain;
@@ -330,30 +348,39 @@ public class Scheduler {
                                 timeTrainCount++;
                             }
                         }
+
                         if(timeTrainCount>0) {
+                            Collections.sort(timings);
                             timeTrainSum = timeTrainSum / timeTrainCount;
                             routeTimeAvgData.append('\t');
                             routeTimeMinData.append('\t');
+                            routeTimeMedData.append('\t');
                             routeTimeAvgData.append(new DecimalFormat("#0.00").format(timeTrainSum));
                             routeTimeMinData.append(new DecimalFormat("#0.00").format(timeTrainMin));
+                            routeTimeMedData.append(new DecimalFormat("#0.00").format(timings.get(timings.size()/2)));
                             for(int lengthString = new DecimalFormat("#0.00").format(timeTrainSum).length();lengthString<lengthMaxName;lengthString++){
                                 routeTimeAvgData.append(' ');
                                 routeTimeMinData.append(' ');
+                                routeTimeMedData.append(' ');
                             }
                         }
                         else{
                             routeTimeAvgData.append('\t');
                             routeTimeMinData.append('\t');
+                            routeTimeMedData.append('\t');
                             routeTimeAvgData.append("NA");
                             routeTimeMinData.append("NA");
+                            routeTimeMedData.append("NA");
                             for(int lengthString = "NA".length();lengthString<lengthMaxName;lengthString++){
                                 routeTimeAvgData.append(' ');
                                 routeTimeMinData.append(' ');
+                                routeTimeMedData.append(' ');
                             }
                         }
                     }
                     routeTimeAvgData.append('\n');
                     routeTimeMinData.append('\n');
+                    routeTimeMedData.append('\n');
                 }
                 int numOfUpPlatform = numOfPlatform/2;
                 int numOfTrack = fetchStationDetails.getNumberOfTracks(id);
@@ -382,6 +409,7 @@ public class Scheduler {
             new WriteToFile().write(pathRouteFile, newRouteData.toString(),false);
             new WriteToFile().write(pathRouteTimeAvgFile, routeTimeAvgData.toString(),false);
             new WriteToFile().write(pathRouteTimeMinFile, routeTimeMinData.toString(),false);
+            new WriteToFile().write(pathRouteTimeMedFile, routeTimeMedData.toString(),false);
         }
         catch (Exception e) {
             System.out.println("Unable to update route file");
@@ -484,7 +512,7 @@ public class Scheduler {
 
             TrainTime timePrevStation = null;
             fWriter = new FileWriter(pathBestRouteFile + " path " + countPath +
-                    " cost " + (path.pathCost()-stopTime.get(0)-stopTime.get(stopTime.size()-1)) + " .txt");
+                    " cost " + (path.pathCost()-stopTime.get(stopTime.size()-1)) + " .txt");
             bWriter = new BufferedWriter(fWriter);
 
             for (int i=1;i<nodePathBestRoute.size()-1;i++) {
@@ -504,9 +532,9 @@ public class Scheduler {
                     arrivalTimeStation = timePrevStation.getTimeString();
                 }
                 else {
-                    TrainTime timePrevStationTemp = new TrainTime(bestRouteNode.getTime());
-                    timePrevStationTemp.subMinutes(stopTime.get(i - 1));
-                    arrivalTimeStation = timePrevStationTemp.getTimeString();
+                    timePrevStation = new TrainTime(bestRouteNode.getTime());
+                    timePrevStation.subMinutes(stopTime.get(i - 1));
+                    arrivalTimeStation = timePrevStation.getTimeString();
                 }
                 TrainTime timeStation = new TrainTime(bestRouteNode.getTime());
                 if(timePrevStation.compareTo(timeStation)==0){
@@ -526,8 +554,17 @@ public class Scheduler {
                         }
                     }
                 }
-                bWriter.write(stationName.get(i-1) + "\t" + arrivalTimeStation + "\t" +
-                        bestRouteNode.getTime().getTimeString() + "\t" + nodeDistance +"\t"+ stopType);
+                bWriter.append(stationName.get(i-1));
+                for(int lengthString = stationName.get(i-1).length();lengthString<40;lengthString++){
+                    bWriter.append(' ');
+                }
+                bWriter.append(arrivalTimeStation);
+                bWriter.append('\t');
+                bWriter.append(bestRouteNode.getTime().getTimeString());
+                bWriter.append('\t');
+                bWriter.append(new DecimalFormat("#0.00").format(nodeDistance));
+                bWriter.append('\t');
+                bWriter.append(stopType);
                 bWriter.write("\n");
                 timePrevStation = timeStation;
             }
@@ -773,12 +810,12 @@ public class Scheduler {
             count=0;
             System.out.print(paths.size());
             for(Path path: paths) {
-                System.out.print("\t"+(path.pathCost()-stopTime.get(0)-stopTime.get(stopTime.size()-1)));
+                System.out.print("\t"+(path.pathCost()-stopTime.get(stopTime.size()-1)));
             }
             System.out.println();
 
             for(Path path: paths) {
-                System.out.println( "Cost: " + (path.pathCost()-stopTime.get(0)-stopTime.get(stopTime.size()-1))+" Unscheduled Stop: "+path.getUnScheduledStop()+" "+path.toString());
+                System.out.println( "Cost: " + (path.pathCost()-stopTime.get(stopTime.size()-1))+" Unscheduled Stop: "+path.getUnScheduledStop()+" "+path.toString());
                 writePathsToFile(path,++count,pathBestRouteFile,stopTime,pathRouteTimeFile,newTrainType, scheduler.getStationNameList(),
                         scheduler.getStationDistanceList());
             }

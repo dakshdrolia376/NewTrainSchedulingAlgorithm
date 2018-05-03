@@ -163,7 +163,7 @@ public class ScheduleByDivision {
 
             while(!this.bestAns.isEmpty() && count<noOfPaths){
                 Path path = this.bestAns.remove();
-                System.out.println( "Path Found Cost: " + (path.pathCost()-stopTime.get(0)-stopTime.get(stopTime.size()-1))+" Unscheduled Stop: "+path.getUnScheduledStop()+" "+path.toString());
+                System.out.println( "Path Found Cost: " + (path.pathCost()-stopTime.get(stopTime.size()-1))+" Unscheduled Stop: "+path.getUnScheduledStop()+" "+path.toString());
                 scheduler.writePathsToFile(path,++count, pathBestRouteFile, stopTime, pathRouteTimeFile,newTrainType,
                         scheduler.getStationNameList(), scheduler.getStationDistanceList());
             }

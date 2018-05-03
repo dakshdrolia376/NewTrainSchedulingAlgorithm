@@ -63,7 +63,7 @@ public class GraphMemory extends GraphParent{
         StringBuilder stringBuilder = new StringBuilder("");
         for(String nodeFrom:this.vertexEdgeMap.keySet()){
             stringBuilder.append(nodeFrom);
-            stringBuilder.append("->> ");
+            stringBuilder.append("->>");
             stringBuilder.append(vertexEdgeMap.getOrDefault(nodeFrom, Collections.emptyMap()).values().toString());
             stringBuilder.append('\n');
         }
