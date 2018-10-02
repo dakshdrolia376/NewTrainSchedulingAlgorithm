@@ -1,3 +1,8 @@
 out
 data/temp
-data
+data/
+.idea
+.idea/
+.git/
+.gitignore
+*.iml
